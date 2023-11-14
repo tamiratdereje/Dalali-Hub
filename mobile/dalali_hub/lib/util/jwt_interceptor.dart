@@ -6,7 +6,8 @@ import 'package:injectable/injectable.dart';
 @injectable
 class JwtInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler)  {
     var token = SharedPreference.getString(tokenKey);
     options.headers['Authorization'] = 'Bearer $token';
     super.onRequest(options, handler);

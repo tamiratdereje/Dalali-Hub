@@ -14,13 +14,18 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.home,
     debugLogDiagnostics: true,
+    initialLocation: AppRoutes.home,
     routes: <GoRoute>[
       GoRoute(
           path: AppRoutes.home,
           builder: (BuildContext context, GoRouterState state) =>
               const Login()),
+      GoRoute(
+        path: AppRoutes.onBoarding,
+        builder: (BuildContext context, GoRouterState state) =>
+            const Signup(),
+        ),
       GoRoute(
         path: AppRoutes.register,
         builder: (BuildContext context, GoRouterState state) => const Signup(),
@@ -32,12 +37,18 @@ class AppRouter {
     ],
     redirect: (BuildContext context, GoRouterState state) {
       final bool loggedIn = authCubit.state == const AuthState.authenticated();
-      final bool loggingIn = state.name == AppRoutes.login;
+      final bool loggingIn = state.name == '/login';
+      final bool firstTime = authCubit.state == const AuthState.firstTime();
+
+      if (firstTime) {
+        return '/onBoarding';
+      }
+
       if (!loggedIn) {
-        return loggingIn ? null : AppRoutes.login;
+        return loggingIn ? null : '/login';
       }
       if (loggingIn) {
-        return AppRoutes.home;
+        return '/';
       }
       return null;
     },

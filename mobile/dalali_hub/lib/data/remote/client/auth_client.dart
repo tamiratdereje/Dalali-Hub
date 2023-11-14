@@ -11,7 +11,7 @@ part 'auth_client.g.dart';
 abstract class AuthClient {
   factory AuthClient(Dio dio, {String baseUrl}) = _AuthClient;
 
-  @GET('v4/articles/')
-  Future<HttpResponse<JSendResponse<LoginResponse>>> login(
+  @POST('v4/articles/')
+  Future<HttpResponse<JSendResponse<LoginResponseDto>>> login(
       @Body() LoginDto loginDto);
 }
