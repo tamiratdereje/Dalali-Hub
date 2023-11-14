@@ -50,6 +50,7 @@ dependencies:
   go_router: ^12.1.1
   floor: ^1.4.2
   sqflite: ^2.3.0
+  flutter_svg: ^2.0.9
 
 
   
