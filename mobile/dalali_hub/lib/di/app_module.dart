@@ -1,10 +1,9 @@
-import 'package:dalali_hub/data/local/db/app_database.dart';
+import 'package:dio/dio.dart' hide LogInterceptor;
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
 import 'package:dalali_hub/data/remote/client/user_client.dart';
 import 'package:dalali_hub/domain/config/network_config.dart';
 import 'package:dalali_hub/util/jwt_interceptor.dart';
 import 'package:dalali_hub/util/log_interceptor.dart';
-import 'package:dio/dio.dart' hide LogInterceptor;
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,8 +33,4 @@ abstract class AppModule {
   @singleton
   UserClient userClient(Dio dio) => UserClient(dio);
 
-   @preResolve
-  @singleton
-  Future<AppDatabase> appDatabase() async =>
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
 }

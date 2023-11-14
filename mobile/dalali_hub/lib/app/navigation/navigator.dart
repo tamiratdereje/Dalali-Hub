@@ -14,7 +14,6 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.home,
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
@@ -24,10 +23,6 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.register,
         builder: (BuildContext context, GoRouterState state) => const Signup(),
-      ),
-      GoRoute(
-        path: AppRoutes.login,
-        builder: (BuildContext context, GoRouterState state) => const Login(),
       ),
     ],
     redirect: (BuildContext context, GoRouterState state) {
