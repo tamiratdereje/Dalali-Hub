@@ -14,12 +14,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthCubit _authCubit;
   AuthBloc(this._authCubit) : super(const _Initial()) {
     on<_UpdateAuthStatus>((event, emit) {
-      var firstTime = SharedPreference.getBool(firsTimeKey);
-      if (firstTime == null) {
-        _authCubit.firstTime();
-        SharedPreference.setBool(firsTimeKey, true);
-        return;
-      }
       var token = SharedPreference.getString(tokenKey);
       if (token != null) {
         _authCubit.authenticated();

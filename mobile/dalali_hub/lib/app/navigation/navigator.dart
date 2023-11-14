@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
+import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart';
 import 'package:dalali_hub/app/pages/auth/login.dart';
 import 'package:dalali_hub/app/pages/auth/signup.dart';
 import 'package:injectable/injectable.dart';
@@ -17,22 +17,23 @@ class AppRouter {
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
-          path: AppRoutes.home,
+          name: 'home',
+          path: '/',
           builder: (BuildContext context, GoRouterState state) =>
               const Login()),
       GoRoute(
-        path: AppRoutes.register,
+        path: '/register',
         builder: (BuildContext context, GoRouterState state) => const Signup(),
       ),
     ],
     redirect: (BuildContext context, GoRouterState state) {
       final bool loggedIn = authCubit.state == const AuthState.authenticated();
-      final bool loggingIn = state.name == AppRoutes.login;
+      final bool loggingIn = state.name == '/login';
       if (!loggedIn) {
-        return loggingIn ? null : AppRoutes.login;
+        return loggingIn ? null : '/login';
       }
       if (loggingIn) {
-        return AppRoutes.home;
+        return '/';
       }
       return null;
     },

@@ -1,8 +1,8 @@
-import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/core/widgets/dismiss_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalali_hub/app/navigation/navigator.dart';
+import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart';
 import 'package:dalali_hub/injection.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -20,13 +20,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(
-            create: (context) =>
-                getIt<AuthBloc>()..add(const AuthEvent.updateAuthStatus())),
+        BlocProvider<LoginBloc>(create: (context) => getIt<LoginBloc>()),
       ],
       child: Builder(
         builder: (context) => MaterialApp(
-          title: 'Dalali Hub',
+          title: 'Property Management',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
