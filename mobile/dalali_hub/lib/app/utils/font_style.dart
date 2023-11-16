@@ -31,9 +31,42 @@ TextStyle inputFieldHintStyle = TextStyle(
   fontWeight: FontWeight.w400,
   color: AppColors.ultimateGray,
 );
+TextStyle inputFieldLabelMinStyle = TextStyle(
+  fontSize: 14.sp,
+  fontWeight: FontWeight.w400,
+  color: AppColors.buttonContainerBoldColor,
+);
 
 TextStyle bodyTextStyle = TextStyle(
   fontSize: 16.sp,
   fontWeight: FontWeight.w400,
   color: AppColors.ultimateGray,
+);
+
+
+TextStyle appBarTitleStyle = TextStyle(
+  fontSize: 20.sp,
+  fontWeight: FontWeight.w700,
+  color: AppColors.black,
+);
+
+
+
+TextStyle buttonContainerWatermarkStyle = TextStyle(
+  fontSize: 11.sp,
+  fontWeight: FontWeight.w400,
+  color: AppColors.buttonContainerWatermarkColor,
+);
+
+
+TextStyle buttonContainerBoldStyle = TextStyle(
+  fontSize: 13.sp,
+  fontWeight: FontWeight.w400,
+  color: AppColors.buttonContainerBoldColor,
+);
+
+TextStyle boldbodyTextStyle = TextStyle(
+  fontSize: 16.sp,
+  fontWeight: FontWeight.w700,
+  color: AppColors.black,
 );

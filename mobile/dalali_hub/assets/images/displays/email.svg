@@ -1,0 +1,11 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon">
+<g id="bg">
+<circle id="Ellipse 19" opacity="0.1" cx="25" cy="25" r="25" fill="#2A5F73"/>
+</g>
+<g id="icon_2">
+<path id="Stroke 1" d="M30.2524 23.7715L26.5497 27.0011C25.8501 27.5964 24.8658 27.5964 24.1662 27.0011L20.4323 23.7715" stroke="#2A5F73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Stroke 3" fill-rule="evenodd" clip-rule="evenodd" d="M29.4241 34.6309C31.9585 34.6384 33.6667 32.4047 33.6667 29.6595V23.52C33.6667 20.7747 31.9585 18.541 29.4241 18.541H21.2426C18.7082 18.541 17 20.7747 17 23.52V29.6595C17 32.4047 18.7082 34.6384 21.2426 34.6309H29.4241Z" stroke="#2A5F73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>
