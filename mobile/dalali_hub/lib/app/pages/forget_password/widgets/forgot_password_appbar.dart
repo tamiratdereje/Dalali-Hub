@@ -1,29 +1,43 @@
+import 'package:dalali_hub/app/utils/colors.dart';
+import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/color_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ForgotPasswordAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   String title;
-  ForgotPasswordAppBar({super.key, required this.title});
+  bool isCenter;
+  ForgotPasswordAppBar({super.key, required this.title, this.isCenter = false});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+    return Container(
+      margin: EdgeInsets.only(top: 3.7.h, left: 6.6.w),
+      child: Row(
+        children: [
+          Container(
+            width: 10.6.w,
+            height: 4.6.h,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: AppColors.ultimateGray)),
+            child: const Center(
+              child: Icon(
+                Icons.arrow_back_ios_sharp,
+                size: 15,
+              ),
+            ),
           ),
-          child: const Center(
-            child: Icon(Icons.arrow_back_ios_sharp),
+          SizedBox(
+            width: !isCenter ? 4.8.w : 23.3.w,
           ),
-        ),
-        const SizedBox(
-          width: 50,
-        ),
-        Text(title),
-      ],
+          Text(
+            title,
+            style: appBarTitleStyle,
+          ),
+        ],
+      ),
     );
   }
 

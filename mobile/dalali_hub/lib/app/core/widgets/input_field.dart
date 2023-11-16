@@ -121,6 +121,21 @@ class _AppInputFieldState extends State<AppInputField> {
                 ],
               ),
             ),
+             Offstage(
+              offstage: !state.hasError,
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                  child: Text(
+                    state.errorText ?? "",
+                    style: inputFieldLabelMinStyle.copyWith(color: AppColors.errorColor.withOpacity(0.8)),
+                  ),
+                ),
+              ),
+            ),
+
           ],
         );
       },

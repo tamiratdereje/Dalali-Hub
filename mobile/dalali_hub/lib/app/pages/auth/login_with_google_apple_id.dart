@@ -1,57 +1,72 @@
 import 'package:dalali_hub/app/core/widgets/button.dart';
+import 'package:dalali_hub/app/pages/auth/widgets/sign_in_container.dart';
+import 'package:dalali_hub/app/pages/forget_password/widgets/forgot_password_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class WhoAreYou extends StatelessWidget {
-  const WhoAreYou({super.key});
+class LogInWithGoogleOrAppleId extends StatefulWidget {
+  const LogInWithGoogleOrAppleId({super.key});
 
+  @override
+  State<LogInWithGoogleOrAppleId> createState() =>
+      _LogInWithGoogleOrAppleIdState();
+}
+
+class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: ForgotPasswordAppBar(
+        title: "Welcome",
+        isCenter: true,
+      ),
       body: Padding(
         padding: EdgeInsets.only(
-            left: 6.6.w, right: 6.6.w, bottom: 5.6.h, top: 9.3.h),
+          left: 6.6.w,
+          right: 6.6.w,
+          bottom: 5.6.h,
+        ),
         child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: 9.3.h,
+            ),
             SvgPicture.asset(
               ImageConstants.dalaliLogoIllu,
             ),
             SizedBox(
-              height: 10.4.h,
+              height: 11.9.h,
             ),
-            Text(
-              "Welcome",
-              style: appBarTitleStyle,
-            ),
-            SizedBox(
-              height: 0.7.h,
-            ),
-            Text(
-              "Who are you?",
-              style: appBarTitleStyle,
+            SingInContainer(
+              title: "Sign in using Google account",
+              icon: googleLogo,
+              tap: () {},
+              color: AppColors.selectedContainer,
             ),
             SizedBox(
-              height: 4.3.h,
+              height: 1.2.h,
             ),
-            AppButtonPrimary(
-              text: "Customer",
-              onPressed: () {},
+            SingInContainer(
+              title: "Sign in using apple ID",
+              icon: appleLogo,
+              tap: () {},
+              color: AppColors.selectedContainer,
             ),
             SizedBox(
-              height: 3.3.h,
+              height: 2.8.h,
             ),
             Row(
               children: [
                 Container(
-                  height: 4,
+                  height: 1,
                   decoration: const BoxDecoration(
-                    color: AppColors.nauticalCreatures,
+                    color: AppColors.dividerLineSemiBoldColor,
                   ),
                   child: SizedBox(
                     width: 37.5.w,
@@ -62,8 +77,8 @@ class WhoAreYou extends StatelessWidget {
                 ),
                 Text(
                   "or",
-                  style: appBarTitleStyle.copyWith(
-                    color: AppColors.welcomeOrTextColor,
+                  style: boldbodyTextStyle.copyWith(
+                    color: AppColors.semiBoldContainerColor,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -71,9 +86,9 @@ class WhoAreYou extends StatelessWidget {
                   width: 2.4.w,
                 ),
                 Container(
-                  height: 4,
+                  height: 1,
                   decoration: const BoxDecoration(
-                    color: AppColors.nauticalCreatures,
+                    color: AppColors.dividerLineSemiBoldColor,
                   ),
                   child: SizedBox(
                     width: 37.5.w,
@@ -82,26 +97,29 @@ class WhoAreYou extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 3.3.h,
+              height: 2.8.h,
+            ),
+            SizedBox(
+              height: 4.5.h,
             ),
             AppButtonPrimary(
-              text: "Broker/Agent",
+              text: "Log in with existing account",
               onPressed: () {},
             ),
             SizedBox(
-              height: 7.7.h,
+              height: 12.7.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "You don't have an account?",
+                  "Don't have an account?",
                   style: inputFieldHintStyle,
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Text(
-                    "Sign up here ",
+                    "Click here ",
                     style: inputFieldLabelMinStyle.copyWith(
                         color: AppColors.minBodyTextColor),
                   ),

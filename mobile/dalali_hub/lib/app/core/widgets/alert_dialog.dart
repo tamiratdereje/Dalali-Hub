@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dalali_hub/app/core/widgets/button.dart';
+import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -38,12 +39,20 @@ Future<void> showAppDialog(
                   ),
                   Text(
                     title,
-                    style: titleFont,
+                    style: titleFont.copyWith(fontSize: 20.sp),
                   ),
                   SizedBox(
                     height: 2.h,
                   ),
-                  Text(description, textAlign: TextAlign.center),
+                  Text(description,
+                      textAlign: TextAlign.center,
+                      style: errorAlert
+                          ? inputFieldLabelMinStyle.copyWith(
+                              color: AppColors.errorColor,
+                            )
+                          : inputFieldLabelMinStyle.copyWith(
+                              color: AppColors.successColor,
+                            )),
                   SizedBox(
                     height: 6.h,
                   ),
