@@ -1,3 +1,4 @@
+import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/core/widgets/dismiss_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginBloc>(create: (context) => getIt<LoginBloc>()),
+        BlocProvider<AuthBloc>(
+          lazy: false,
+          create: (context) =>
+              getIt<AuthBloc>()..add(const AuthEvent.updateAuthStatus()),
+        )
       ],
       child: Builder(
         builder: (context) => MaterialApp(

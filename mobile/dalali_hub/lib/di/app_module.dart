@@ -18,9 +18,11 @@ abstract class AppModule {
     LogInterceptor logInterceptor,
     JwtInterceptor jwtInterceptor,
   ) {
-    Dio dio = Dio();
-    dio.options.headers = config.headers;
-    return dio
+    return Dio()
+      ..options = BaseOptions(
+        baseUrl: config.baseUrl,
+        headers: config.headers,
+      )
       ..interceptors.addAll([
         jwtInterceptor,
         logInterceptor,
@@ -32,5 +34,4 @@ abstract class AppModule {
 
   @singleton
   UserClient userClient(Dio dio) => UserClient(dio);
-
 }

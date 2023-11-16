@@ -52,6 +52,8 @@ dependencies:
   sqflite: ^2.3.0
   flutter_svg: ^2.0.9
   responsive_sizer: ^3.2.0
+  image_picker: ^1.0.4
+
  
 
 
@@ -89,7 +91,8 @@ flutter:
     - assets/images/displays/
     - assets/images/backgrounds/
     - assets/images/illustrations/
-
+    - assets/illustrations/
+    - assets/logos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
