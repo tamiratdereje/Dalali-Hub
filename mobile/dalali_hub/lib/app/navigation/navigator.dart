@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:dalali_hub/app/pages/onboarding/who_are_you.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
-import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart';
 import 'package:dalali_hub/app/pages/auth/login.dart';
 import 'package:dalali_hub/app/pages/auth/signup.dart';
 import 'package:injectable/injectable.dart';
@@ -25,17 +25,22 @@ class AppRouter {
         path: '/register',
         builder: (BuildContext context, GoRouterState state) => const Signup(),
       ),
+      GoRoute(
+        path: '/current',
+        builder: (BuildContext context, GoRouterState state) => const WhoAreYou(),
+      ),
     ],
     redirect: (BuildContext context, GoRouterState state) {
-      final bool loggedIn = authCubit.state == const AuthState.authenticated();
-      final bool loggingIn = state.name == '/login';
-      if (!loggedIn) {
-        return loggingIn ? null : '/login';
-      }
-      if (loggingIn) {
-        return '/';
-      }
-      return null;
+      // final bool loggedIn = authCubit.state == const AuthState.authenticated();
+      // final bool loggingIn = state.name == '/login';
+      // if (!loggedIn) {
+      //   return loggingIn ? null : '/login';
+      // }
+      // if (loggingIn) {
+      //   return '/';
+      // }
+      // return null;
+      return '/current';
     },
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
   );
