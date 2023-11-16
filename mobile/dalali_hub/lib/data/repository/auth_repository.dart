@@ -1,12 +1,14 @@
 import 'package:dalali_hub/constants/string_constants.dart';
 import 'package:dalali_hub/data/local/pref/pref.dart';
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
+import 'package:dalali_hub/data/remote/model/article.dart';
 import 'package:dalali_hub/data/remote/model/login_dto.dart';
 import 'package:dalali_hub/data/remote/model/login_response_dto.dart';
 import 'package:dalali_hub/domain/entity/login.dart';
 import 'package:dalali_hub/domain/entity/login_response.dart';
 import 'package:dalali_hub/domain/repository/auth_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: IAuthRepository)
@@ -24,10 +26,12 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<Resource<LoginResponse>> login(Login login) async {
     var response =
-        await handleApiCall(_authClient.login(LoginDto.fromLogin(login)));
+        await handleApiCall<AllArticles>(_authClient.getAllArticles());
+    response.data!.results.forEach((element) {
+      debugPrint(element.title);
+    });
     if (response is Success) {
-      SharedPreference.setString(tokenKey, response.data!.token);
-      return Success(response.data!.toLoginResponse());
+      return Success(LoginResponse(token: ''));
     } else {
       return Error(response.error!);
     }

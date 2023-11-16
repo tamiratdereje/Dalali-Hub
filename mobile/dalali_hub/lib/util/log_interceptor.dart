@@ -20,6 +20,9 @@ class LogInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    debugPrint('>> ERROR[${err.stackTrace}]');
+    debugPrint(
+        'ERROR[${err.response == null ? 'NO RESPONSE' : 'HAS RESPONSE'}]');
     debugPrint(
         'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
     debugPrint(

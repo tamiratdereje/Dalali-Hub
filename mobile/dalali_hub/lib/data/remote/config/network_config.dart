@@ -7,5 +7,7 @@ class NetworkConfig implements INetworkConfig {
   String get baseUrl => 'https://api.spaceflightnewsapi.net/';
 
   @override
-  Map<String, String> get headers => {'Content-Type': 'application/json'};
+  Map<String, String> get headers => {
+    'accept': 'application/json',
+    'Content-Type': 'application/json'};
 }
