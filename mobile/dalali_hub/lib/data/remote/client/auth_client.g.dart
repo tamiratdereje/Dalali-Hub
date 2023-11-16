@@ -12,7 +12,9 @@ class _AuthClient implements AuthClient {
   _AuthClient(
     this._dio, {
     this.baseUrl,
-  });
+  }) {
+    baseUrl ??= 'https://api.spaceflightnewsapi.net/';
+  }
 
   final Dio _dio;
 

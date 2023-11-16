@@ -20,7 +20,6 @@ abstract class AppModule {
   ) {
     return Dio()
       ..options = BaseOptions(
-        baseUrl: config.baseUrl,
         headers: config.headers,
       )
       ..interceptors.addAll([

@@ -9,9 +9,9 @@ import 'package:retrofit/retrofit.dart';
 
 part 'auth_client.g.dart';
 
-@RestApi()
+@RestApi(baseUrl: baseUrl)
 abstract class AuthClient {
-  factory AuthClient(Dio dio) = _AuthClient;
+  factory AuthClient(Dio dio, {String baseUrl}) = _AuthClient;
 
   @POST('v4/articles/')
   Future<HttpResponse<JSendResponse<LoginResponseDto>>> login(

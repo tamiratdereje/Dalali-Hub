@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dalali_hub/constants/string_constants.dart';
 import 'package:dalali_hub/data/local/pref/pref.dart';
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
@@ -8,6 +10,7 @@ import 'package:dalali_hub/domain/entity/login.dart';
 import 'package:dalali_hub/domain/entity/login_response.dart';
 import 'package:dalali_hub/domain/repository/auth_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,9 +30,6 @@ class AuthRepository implements IAuthRepository {
   Future<Resource<LoginResponse>> login(Login login) async {
     var response =
         await handleApiCall<AllArticles>(_authClient.getAllArticles());
-    response.data!.results.forEach((element) {
-      debugPrint(element.title);
-    });
     if (response is Success) {
       return Success(LoginResponse(token: ''));
     } else {

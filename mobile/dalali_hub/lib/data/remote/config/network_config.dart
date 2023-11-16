@@ -8,6 +8,6 @@ class NetworkConfig implements INetworkConfig {
 
   @override
   Map<String, String> get headers => {
-    'accept': 'application/json',
-    'Content-Type': 'application/json'};
+        'accept': 'application/json',
+      };
 }

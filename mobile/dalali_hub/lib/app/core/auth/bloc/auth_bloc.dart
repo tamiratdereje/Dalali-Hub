@@ -16,11 +16,12 @@ part 'auth_bloc.freezed.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthCubit _authCubit;
   final IAuthRepository _authRepository;
-  AuthBloc(this._authCubit, this._authRepository) : super(const _Initial()) {
+  final SharedPreference _sharedPreference;
+  AuthBloc(this._authCubit, this._authRepository, this._sharedPreference) : super(const _Initial()) {
     on<_UpdateAuthStatus>((event, emit) async {
       var response = await _authRepository.login(Login(email: '', password: ''));
       debugPrint('AuthBloc: ${response.toString()}'); 
-      var token = SharedPreference.getString(tokenKey);
+      var token = _sharedPreference.getString(tokenKey);
       if (token != null) {
         _authCubit.authenticated();
       } else {
