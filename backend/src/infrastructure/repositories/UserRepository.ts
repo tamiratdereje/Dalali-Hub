@@ -5,7 +5,6 @@ import { BadRequestError } from "@error-custom/BadRequestError";
 import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 import { IOtpService } from "@interfaces/services/IOtpService";
 import * as bcrypt from "bcrypt";
-import { Gender } from "domain/types/gender";
 import * as jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { GenericRepository } from "./GenericRepository";
@@ -16,7 +15,6 @@ export class UserRepository
 {
   constructor(
     schema: mongoose.Model<UserEntity>,
-    private _otpService: IOtpService,
   ) {
     super(schema);
   }
@@ -24,17 +22,9 @@ export class UserRepository
   async Login(loginDTO: LoginDTO): Promise<LoginResponseDTO> {
     const user = await this._schema.findOne({ phone: loginDTO.phoneNumber });
 
-    if (!user) {
-      throw new BadRequestError("Invalid credentials");
-    }
-
-    // Verify OTP
-    if (
-      !(await this._otpService.VerifyOtp(loginDTO.phoneNumber, loginDTO.otp))
-    ) {
-      throw new BadRequestError("Invalid OTP");
-    }
-
+    if (!user) { throw new BadRequestError("Invalid credentials"); }
+    if (!user.isVerified) { throw new BadRequestError("User is not verified"); }
+    
     const token = await this.generateToken(user);
     const response = new LoginResponseDTO(user.id, token);
     return response;
@@ -52,5 +42,47 @@ export class UserRepository
     return token;
   }
 
-  
+  async GetByEmail(email: string): Promise<UserEntity> {
+    const query = { email: email };
+    const user = await this._schema.findOne(query);
+    if (!user) {
+      throw new Error("User not found with this email");
+    }
+    return user;
+  }
+
+  async GetByPhone(phone: string): Promise<UserEntity> {
+    const query = { phone: phone };
+    const user = await this._schema.findOne(query);
+    if (!user) {
+      throw new Error("User not found with this phone number");
+    }
+    return user;
+  }
+
+  async userExists(email: string, phone: string): Promise<boolean> {
+    const query = { $or: [{ email: email }, { phone: phone }] , isActive: true};
+    const user = await this._schema.findOne(query);
+    if (user) {
+      return true;
+    }
+    return false;
+  }
+
+  async activeUserExistsDifferentId(
+    email: string,
+    phone: string,
+    id: mongoose.Types.ObjectId,
+  ): Promise<boolean> {
+    const query = {
+      $or: [{ email: email }, { phone: phone }],
+      _id: { $ne: id },
+      isActive: true
+    };
+    const user = await this._schema.findOne(query);
+    if (user) {
+      return true;
+    }
+    return false;
+  }
 }

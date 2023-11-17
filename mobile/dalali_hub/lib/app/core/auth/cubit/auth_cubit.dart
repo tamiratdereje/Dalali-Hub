@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
-@injectable
+@singleton
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(const AuthState.initial());
 

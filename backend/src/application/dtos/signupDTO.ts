@@ -1,9 +1,11 @@
 import {
   IsDateString,
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
+  IsStrongPassword,
 } from "class-validator";
 import { Gender } from "domain/types/gender";
 import { File } from "tsoa";
@@ -19,26 +21,35 @@ export class SignUpDTO {
 
   @IsNotEmpty()
   @IsString()
-  lastName: string;
+  midName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  sirName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsPhoneNumber()
+  phoneNumber: string;
 
   @IsNotEmpty()
   @IsEnum(Gender)
   gender: Gender;
 
-  // TODO: Add validation for age
   @IsNotEmpty()
-  @IsDateString()
-  dateOfBirth: Date;
+  @IsString()
+  region: string;
 
   @IsNotEmpty()
   @IsString()
-  @IsPhoneNumber("ET")
-  phone: string;
+  @IsStrongPassword()
+  password: string;
 
-  // @IsNotEmpty()
-  interests: string[];
-
-  @IsNotEmpty()
-  @IsString()
-  otp: string;
 }
+
+
