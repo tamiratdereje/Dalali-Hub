@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dalali_hub/app/pages/onboarding/who_are_you.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +14,11 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: authCubit.state.map(
+      authenticated: (_) => AppRoutes.home,
+      unauthenticated: (_) => AppRoutes.login,
+      initial: (_) => AppRoutes.login,
+    ),
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
@@ -23,26 +26,33 @@ class AppRouter {
           builder: (BuildContext context, GoRouterState state) => Login()),
       GoRoute(
         path: AppRoutes.register,
-        builder: (BuildContext context, GoRouterState state) =>  Signup(),
+        builder: (BuildContext context, GoRouterState state) => Signup(),
       ),
       GoRoute(
         path: AppRoutes.login,
         builder: (BuildContext context, GoRouterState state) => Login(),
       )
     ],
-    redirect: (BuildContext context, GoRouterState state) {
-      final bool loggedIn = authCubit.state == const AuthState.authenticated();
-      final bool loggingIn = state.name == AppRoutes.login;
-      if (!loggedIn) {
-        return loggingIn ? null : AppRoutes.register;
-      }
-      if (loggingIn) {
-        return AppRoutes.home;
-      }
-      return null;
-    },
+    redirect: (context, state) => redirecter(context, state),
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
   );
+
+  FutureOr<String?> redirecter(BuildContext context, GoRouterState state) {
+    final bool loggedIn = authCubit.state.map(
+      authenticated: (_) => true,
+      unauthenticated: (_) => false,
+      initial: (_) => false,
+    );
+    
+    final bool loggingIn = state.name == AppRoutes.login;
+    if (!loggedIn) {
+      return loggingIn ? null : AppRoutes.register;
+    }
+    if (loggingIn) {
+      return AppRoutes.home;
+    }
+    return null;
+  }
 }
 
 class GoRouterRefreshStream extends ChangeNotifier {

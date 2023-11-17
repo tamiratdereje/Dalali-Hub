@@ -7,22 +7,29 @@ import mongoose from "mongoose";
 export class UserProfileDTO {
   constructor(props: UserEntity) {
     const res: any = Object.assign({}, { ...props, age: 0 });
-    // filter fields that are in UserProfileDTO only
-    Object.keys(res).forEach((key) => {
-      if (!(key in this)) {
-        delete res[key];
-      }
-    });
-
     Object.assign(this, res);
-    this.age = differenceInYears(new Date(), props.dateOfBirth);
   }
 
   readonly id: string;
   readonly firstName: string;
-  readonly lastName: string;
+  readonly middleName: string;
+  readonly sirName: string;
+  readonly email: string;
+  readonly phoneNumber: string;
   readonly gender: Gender;
-  readonly age: number;
-  readonly photos: PhotoEntity[] | mongoose.ObjectId[];
+  readonly region: string;
+  readonly photos: PhotoEntity[] | mongoose.Types.ObjectId[];
 
 }
+/*
+firstName: string;
+  middleName: string;
+  sirName: string;
+  email: string;
+  phoneNumber: string;
+  gender: Gender;
+  region: string;
+  photos: mongoose.Types.ObjectId[];
+  password: string;
+  isVerified: boolean;
+*/ 

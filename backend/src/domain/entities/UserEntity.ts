@@ -1,108 +1,64 @@
 import { Gender } from "domain/types/gender";
 import mongoose, { Schema } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
+import * as bcrypt from "bcrypt";
 
-
-const pointSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ["Point"],
-    required: true,
-  },
-  coordinates: {
-    type: [Number],
-    required: true,
-  },
-});
-
-export interface DiscoverySettingsEntity extends IBaseEntity {
-  targetGender: Gender;
-  minAge: number;
-  maxAge: number;
-  maxDistanceKilometers: number;
-}
 
 export interface UserEntity extends IBaseEntity {
-  id: string;
+  _id: mongoose.Types.ObjectId;
   firstName: string;
-  lastName: string;
+  middleName: string;
+  sirName: string;
+  email: string;
+  phoneNumber: string;
   gender: Gender;
-  dateOfBirth: Date;
-  height: number;
-
-  photos: mongoose.ObjectId[];
-  interests: mongoose.ObjectId[];
-  relationshipGoals: mongoose.ObjectId;
-  languages: mongoose.ObjectId[];
-  religion: mongoose.ObjectId;
-
-  bio: string;
-  jobTitle: string;
-  company: string;
-  school: string;
-  hometown: string;
-  location: { type: string; coordinates: [number, number] };
-
-  phone: string;
-
-  discoverySettings: DiscoverySettingsEntity;
+  region: string;
+  photos: mongoose.Types.ObjectId[];
+  password: string;
+  isVerified: boolean;
 }
 
-let discoverySettingsSchema = new Schema<DiscoverySettingsEntity>(
-  {
-    minAge: { type: Number, required: [true, "Min age is required"] },
-    maxAge: { type: Number, required: [true, "Max age is required"] },
-    maxDistanceKilometers: {
-      type: Number,
-      required: [true, "Max distance is required"],
-    },
-  },
-  { timestamps: true },
-);
+
 
 let userSchema = new Schema<UserEntity>(
   {
     firstName: { type: String, required: [true, "First name is required"] },
-    lastName: { type: String, required: [true, "Last name is required"] },
+    middleName: { type: String, required: [true, "Middle name is required"] },
+    sirName: { type: String, required: [true, "Sir name is required"] },
     gender: {
       type: String,
       enum: Gender,
       required: [true, "Gender is required"],
     },
-    dateOfBirth: { type: Date, required: [true, "Date of birth is required"] },
-    height: { type: Number },
     photos: [{ type: Schema.Types.ObjectId, ref: "Photo" }],
-    interests: [{ type: Schema.Types.ObjectId, ref: "Attribute" }],
-    relationshipGoals: { type: Schema.Types.ObjectId, ref: "Attribute" },
-    languages: [{ type: Schema.Types.ObjectId, ref: "Attribute" }],
-    religion: { type: Schema.Types.ObjectId, ref: "Attribute" },
-    bio: { type: String },
-    jobTitle: { type: String },
-    company: { type: String },
-    school: { type: String },
-    hometown: { type: String },
-    location: {
-      type: pointSchema,
-      default: { type: "Point", coordinates: [0, 0] },
-    },
-    phone: {
+    phoneNumber: {
       type: String,
       required: [true, "Phone is required"],
       unique: true,
     },
-    discoverySettings: {
-      type: discoverySettingsSchema,
-      default: {
-        minAge: 18,
-        maxAge: 70,
-        maxDistanceKilometers: 10,
-      },
-    },
+    email: { type: String, required: [true, "Email is required"] },
+    password: { type: String, required: [true, "Password is required"] },
+    region: { type: String, required: [true, "Region is required"] },
+    isVerified: { type: Boolean, default: false },
+
   },
   { timestamps: true },
 );
 
-// TODO: Add indexes
-userSchema.index({ location: "2dsphere" });
+userSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
+
+userSchema.pre("save", function (next) {
+
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
+
 
 export const User = mongoose.model<UserEntity>("User", userSchema);
