@@ -70,3 +70,10 @@ TextStyle boldbodyTextStyle = TextStyle(
   fontWeight: FontWeight.w700,
   color: AppColors.black,
 );
+
+
+TextStyle categoryContainerStyle = TextStyle(
+  fontSize: 14.sp,
+  fontWeight: FontWeight.w700,
+  color: AppColors.white,
+);

@@ -3,11 +3,14 @@ import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+// ignore: must_be_immutable
 class AppButtonPrimary extends StatefulWidget {
   final void Function() onPressed;
   final String text;
-  const AppButtonPrimary(
-      {super.key, required this.onPressed, required this.text});
+  Color? color;
+  TextStyle? textStyle = onPrimaryButtonTextStyle;
+  AppButtonPrimary(
+      {super.key, required this.onPressed, required this.text, this.color = AppColors.nauticalCreatures, this.textStyle});
 
   @override
   State<AppButtonPrimary> createState() => _AppButtonPrimaryState();
@@ -21,9 +24,9 @@ class _AppButtonPrimaryState extends State<AppButtonPrimary> {
           padding: EdgeInsets.all(2.h),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: AppColors.nauticalCreatures),
+              color: widget.color),
           child: Center(
-              child: Text(widget.text, style: onPrimaryButtonTextStyle))),
+              child: Text(widget.text, style: widget.textStyle))),
       onTap: () => widget.onPressed(),
     );
   }
