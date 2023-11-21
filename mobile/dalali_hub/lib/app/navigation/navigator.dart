@@ -4,6 +4,7 @@ import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/create_hall/add_hall.dart';
 import 'package:dalali_hub/app/pages/create_house/add_house.dart';
 import 'package:dalali_hub/app/pages/create_office/create_office.dart';
+import 'package:dalali_hub/app/pages/create_plot/add_plot.dart';
 import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/halls/hall_filter.dart';
 import 'package:dalali_hub/app/pages/house_filter/house_filter.dart';
@@ -24,7 +25,7 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.addOffice,
+    initialLocation: AppRoutes.addPlot,
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
@@ -90,10 +91,16 @@ class AppRouter {
           return CreateHall(serviceName: "Add hall information");
         },
       ),
-       GoRoute(
+      GoRoute(
         path: AppRoutes.addOffice,
         builder: (BuildContext context, GoRouterState state) {
           return CreateOffice(serviceName: "Add office information");
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.addPlot,
+        builder: (BuildContext context, GoRouterState state) {
+          return CreatePlot(serviceName: "Add Plot information");
         },
       ),
     ],

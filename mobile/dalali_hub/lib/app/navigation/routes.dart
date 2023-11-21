@@ -14,6 +14,7 @@ class AppRoutes {
   static const String addHall = "/addHall";
   static const String addLand = "/addLand";
   static const String addOffice = "/addOffice";
+  static const String addPlot = "/addPlot";
   
   
 }
