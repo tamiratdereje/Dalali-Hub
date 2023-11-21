@@ -78,6 +78,7 @@ class _AppInputFieldState extends State<AppInputField> {
                     obscureText: obscureText!,
                     textAlign: widget.alignment,
                     decoration: InputDecoration(
+                      
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 3.w, vertical: 2.h),
                         prefixIcon: widget.prefixIcon != null

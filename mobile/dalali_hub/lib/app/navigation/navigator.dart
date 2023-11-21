@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
+import 'package:dalali_hub/app/pages/create_hall/add_hall.dart';
+import 'package:dalali_hub/app/pages/create_house/add_house.dart';
+import 'package:dalali_hub/app/pages/create_office/create_office.dart';
 import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/halls/hall_filter.dart';
 import 'package:dalali_hub/app/pages/house_filter/house_filter.dart';
@@ -20,7 +24,7 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.customerHome,
+    initialLocation: AppRoutes.addOffice,
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
@@ -43,29 +47,53 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.houseFilter,
         builder: (BuildContext context, GoRouterState state) {
-           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return HouseFilter(serviceName: args["serviceName"]!);
         },
       ),
       GoRoute(
         path: AppRoutes.officeFilter,
         builder: (BuildContext context, GoRouterState state) {
-           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return OfficeFilter(serviceName: args["serviceName"]!);
         },
       ),
       GoRoute(
         path: AppRoutes.hallFilter,
         builder: (BuildContext context, GoRouterState state) {
-           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return HallFilter(serviceName: args["serviceName"]!);
         },
       ),
       GoRoute(
         path: AppRoutes.landFilter,
         builder: (BuildContext context, GoRouterState state) {
-           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return LandFilter(serviceName: args["serviceName"]!);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.brokerHome,
+        builder: (BuildContext context, GoRouterState state) {
+          return const BrokerHomePage();
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.addHouse,
+        builder: (BuildContext context, GoRouterState state) {
+          return CreateHouse(serviceName: "Add house information");
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.addHall,
+        builder: (BuildContext context, GoRouterState state) {
+          return CreateHall(serviceName: "Add hall information");
+        },
+      ),
+       GoRoute(
+        path: AppRoutes.addOffice,
+        builder: (BuildContext context, GoRouterState state) {
+          return CreateOffice(serviceName: "Add office information");
         },
       ),
     ],
