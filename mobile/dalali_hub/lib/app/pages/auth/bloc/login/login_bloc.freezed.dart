@@ -317,6 +317,7 @@ mixin _$LoginState {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
+    required TResult Function() unVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -325,6 +326,7 @@ mixin _$LoginState {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
+    TResult? Function()? unVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -333,6 +335,7 @@ mixin _$LoginState {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
+    TResult Function()? unVerified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -342,6 +345,7 @@ mixin _$LoginState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
+    required TResult Function(_UnVerified value) unVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -350,6 +354,7 @@ mixin _$LoginState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UnVerified value)? unVerified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -358,6 +363,7 @@ mixin _$LoginState {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
+    TResult Function(_UnVerified value)? unVerified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -423,6 +429,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
+    required TResult Function() unVerified,
   }) {
     return initial();
   }
@@ -434,6 +441,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
+    TResult? Function()? unVerified,
   }) {
     return initial?.call();
   }
@@ -445,6 +453,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
+    TResult Function()? unVerified,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -460,6 +469,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
+    required TResult Function(_UnVerified value) unVerified,
   }) {
     return initial(this);
   }
@@ -471,6 +481,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UnVerified value)? unVerified,
   }) {
     return initial?.call(this);
   }
@@ -482,6 +493,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
+    TResult Function(_UnVerified value)? unVerified,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -537,6 +549,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
+    required TResult Function() unVerified,
   }) {
     return loading();
   }
@@ -548,6 +561,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
+    TResult? Function()? unVerified,
   }) {
     return loading?.call();
   }
@@ -559,6 +573,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
+    TResult Function()? unVerified,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -574,6 +589,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
+    required TResult Function(_UnVerified value) unVerified,
   }) {
     return loading(this);
   }
@@ -585,6 +601,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UnVerified value)? unVerified,
   }) {
     return loading?.call(this);
   }
@@ -596,6 +613,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
+    TResult Function(_UnVerified value)? unVerified,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -651,6 +669,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
+    required TResult Function() unVerified,
   }) {
     return success();
   }
@@ -662,6 +681,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
+    TResult? Function()? unVerified,
   }) {
     return success?.call();
   }
@@ -673,6 +693,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
+    TResult Function()? unVerified,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -688,6 +709,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
+    required TResult Function(_UnVerified value) unVerified,
   }) {
     return success(this);
   }
@@ -699,6 +721,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UnVerified value)? unVerified,
   }) {
     return success?.call(this);
   }
@@ -710,6 +733,7 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
+    TResult Function(_UnVerified value)? unVerified,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -791,6 +815,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(String message) error,
+    required TResult Function() unVerified,
   }) {
     return error(message);
   }
@@ -802,6 +827,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(String message)? error,
+    TResult? Function()? unVerified,
   }) {
     return error?.call(message);
   }
@@ -813,6 +839,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(String message)? error,
+    TResult Function()? unVerified,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -828,6 +855,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Error value) error,
+    required TResult Function(_UnVerified value) unVerified,
   }) {
     return error(this);
   }
@@ -839,6 +867,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UnVerified value)? unVerified,
   }) {
     return error?.call(this);
   }
@@ -850,6 +879,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Error value)? error,
+    TResult Function(_UnVerified value)? unVerified,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -866,4 +896,124 @@ abstract class _Error implements LoginState {
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UnVerifiedImplCopyWith<$Res> {
+  factory _$$UnVerifiedImplCopyWith(
+          _$UnVerifiedImpl value, $Res Function(_$UnVerifiedImpl) then) =
+      __$$UnVerifiedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UnVerifiedImplCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$UnVerifiedImpl>
+    implements _$$UnVerifiedImplCopyWith<$Res> {
+  __$$UnVerifiedImplCopyWithImpl(
+      _$UnVerifiedImpl _value, $Res Function(_$UnVerifiedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$UnVerifiedImpl implements _UnVerified {
+  const _$UnVerifiedImpl();
+
+  @override
+  String toString() {
+    return 'LoginState.unVerified()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$UnVerifiedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function(String message) error,
+    required TResult Function() unVerified,
+  }) {
+    return unVerified();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function(String message)? error,
+    TResult? Function()? unVerified,
+  }) {
+    return unVerified?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function(String message)? error,
+    TResult Function()? unVerified,
+    required TResult orElse(),
+  }) {
+    if (unVerified != null) {
+      return unVerified();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Error value) error,
+    required TResult Function(_UnVerified value) unVerified,
+  }) {
+    return unVerified(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_UnVerified value)? unVerified,
+  }) {
+    return unVerified?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Error value)? error,
+    TResult Function(_UnVerified value)? unVerified,
+    required TResult orElse(),
+  }) {
+    if (unVerified != null) {
+      return unVerified(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UnVerified implements LoginState {
+  const factory _UnVerified() = _$UnVerifiedImpl;
 }

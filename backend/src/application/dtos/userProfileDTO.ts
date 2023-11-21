@@ -1,7 +1,7 @@
 import { PhotoEntity } from "@entities/PhotoEntity";
 import { UserEntity } from "@entities/UserEntity";
 import { differenceInYears } from "date-fns";
-import { Gender } from "domain/types/gender";
+import { Gender } from "domain/types/types";
 import mongoose from "mongoose";
 
 export class UserProfileDTO {

@@ -8,6 +8,7 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { GenericRepository } from "./GenericRepository";
+import { UnAuthorizedError } from "@error-custom/UnAuthorizedError";
 
 export class UserRepository
   extends GenericRepository<UserEntity>
@@ -19,16 +20,7 @@ export class UserRepository
     super(schema);
   }
 
-  async Login(loginDTO: LoginDTO): Promise<LoginResponseDTO> {
-    const user = await this._schema.findOne({ phone: loginDTO.phoneNumber });
-
-    if (!user) { throw new BadRequestError("Invalid credentials"); }
-    if (!user.isVerified) { throw new BadRequestError("User is not verified"); }
-    
-    const token = await this.generateToken(user);
-    const response = new LoginResponseDTO(user.id, token);
-    return response;
-  }
+  
 
   async ComparePassword(password: string, user: any): Promise<boolean> {
     const isMatch = await bcrypt.compare(password, user.password);
@@ -54,18 +46,14 @@ export class UserRepository
   async GetByPhone(phone: string): Promise<UserEntity> {
     const query = { phone: phone };
     const user = await this._schema.findOne(query);
-    if (!user) {
-      throw new Error("User not found with this phone number");
-    }
+    if (!user) { throw new Error("User not found with this phone number");}
     return user;
   }
 
   async userExists(email: string, phone: string): Promise<boolean> {
     const query = { $or: [{ email: email }, { phone: phone }] , isActive: true};
     const user = await this._schema.findOne(query);
-    if (user) {
-      return true;
-    }
+    if (user) { return true; }
     return false;
   }
 
@@ -80,9 +68,7 @@ export class UserRepository
       isActive: true
     };
     const user = await this._schema.findOne(query);
-    if (user) {
-      return true;
-    }
+    if (user) { return true; }
     return false;
   }
 }

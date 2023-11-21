@@ -56,3 +56,46 @@ class _AppButtonPrimaryCircularState extends State<AppButtonPrimaryCircular> {
     );
   }
 }
+
+class AppBackButton extends StatelessWidget {
+  final Function onTap;
+
+  const AppBackButton({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        width: 6.w,
+        height: 6.w,
+        padding: EdgeInsets.fromLTRB(0.8.h, 0.5.h, 0.2.h, 0.5.h),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: AppColors.ultimateGray, width: .3.w)),
+        child: const Center(
+            child: Icon(Icons.arrow_back_ios, color: AppColors.black)),
+      ),
+    );
+  }
+}
+
+class AppMenuButton extends StatelessWidget {
+  final Function onTap;
+
+  const AppMenuButton({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+          padding: EdgeInsets.all(3.w),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.ultimateGray, width: .3.w)),
+          child: const Center(
+              child: Icon(Icons.more_vert, color: AppColors.black))),
+    );
+  }
+}

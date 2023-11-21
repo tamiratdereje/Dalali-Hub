@@ -1,11 +1,13 @@
 import 'package:dalali_hub/app/core/widgets/alert_dialog.dart';
+import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';
-import 'package:dalali_hub/app/pages/forget_password/widgets/forgot_password_appbar.dart';
+import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CreateNewPassword extends StatefulWidget {
@@ -22,8 +24,15 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ForgotPasswordAppBar(
-        title: "Create a new password",
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(8.h),
+        child: DalaliAppBar(
+          leadingButtonAction: () => context.go(AppRoutes.login),
+          titleWidget: Text(
+            'Create a new Password',
+            style: titleFont,
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.only(

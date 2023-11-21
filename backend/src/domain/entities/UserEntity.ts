@@ -1,11 +1,11 @@
-import { Gender } from "domain/types/gender";
-import mongoose, { Schema } from "mongoose";
+import { Gender } from "domain/types/types";
+import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 import * as bcrypt from "bcrypt";
 
 
 export interface UserEntity extends IBaseEntity {
-  _id: mongoose.Types.ObjectId;
+  _id: Types.ObjectId;
   firstName: string;
   middleName: string;
   sirName: string;
@@ -22,6 +22,7 @@ export interface UserEntity extends IBaseEntity {
 
 let userSchema = new Schema<UserEntity>(
   {
+    _id: { type: Schema.Types.ObjectId, auto: true},
     firstName: { type: String, required: [true, "First name is required"] },
     middleName: { type: String, required: [true, "Middle name is required"] },
     sirName: { type: String, required: [true, "Sir name is required"] },
@@ -36,7 +37,10 @@ let userSchema = new Schema<UserEntity>(
       required: [true, "Phone is required"],
       unique: true,
     },
-    email: { type: String, required: [true, "Email is required"] },
+    email: { 
+      type: String,
+      unique: true, 
+      required: [true, "Email is required"] },
     password: { type: String, required: [true, "Password is required"] },
     region: { type: String, required: [true, "Region is required"] },
     isVerified: { type: Boolean, default: false },

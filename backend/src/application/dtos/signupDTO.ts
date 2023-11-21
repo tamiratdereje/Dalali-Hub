@@ -7,13 +7,18 @@ import {
   IsString,
   IsStrongPassword,
 } from "class-validator";
-import { Gender } from "domain/types/gender";
+import { Gender } from "domain/types/types";
+import mongoose from "mongoose";
 import { File } from "tsoa";
+import { User } from "@entities/UserEntity";
+
+
 
 export class SignUpDTO {
   constructor(props: SignUpDTO) {
     Object.assign(this, props);
   }
+
 
   @IsNotEmpty()
   @IsString()
@@ -21,7 +26,7 @@ export class SignUpDTO {
 
   @IsNotEmpty()
   @IsString()
-  midName: string;
+  middleName: string;
 
   @IsNotEmpty()
   @IsString()
@@ -50,6 +55,7 @@ export class SignUpDTO {
   @IsStrongPassword()
   password: string;
 
+  
 }
 
 

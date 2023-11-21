@@ -1,10 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, {Types} from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 import * as bcrypt from "bcrypt";
 
+enum EmailTemplate{
+    VERIFICATION_TEMPLATE = 'verification_template',
+    RESET_PASSWORD_TEMPLATE = 'reset_password_template',
+}
+
+enum OtpPurpose {
+    VERIFICATION = 'verification',
+    RESET_PASSWORD = 'reset_password',
+}
 
 export interface OtpEntity extends IBaseEntity {
-    _id: mongoose.Types.ObjectId;
     otp: string;
     user: mongoose.Types.ObjectId;
     expiresAt: Date;

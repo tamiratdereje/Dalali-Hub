@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dalali_hub/domain/entity/login.dart';
-import 'package:dalali_hub/domain/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -18,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SharedPreference _sharedPreference;
   AuthBloc(this._authCubit, this._sharedPreference) : super(const _Initial()) {
     on<_UpdateAuthStatus>((event, emit) async {
+      _sharedPreference.clear();
       var token = _sharedPreference.getString(tokenKey);
       if (token != null) {
         _authCubit.authenticated();

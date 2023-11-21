@@ -1,3 +1,4 @@
+import 'package:dalali_hub/data/remote/model/jsend_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:dalali_hub/util/app_exception.dart';
@@ -19,10 +20,10 @@ class Error<T> extends Resource<T> {
 }
 
 Future<Resource<T>> handleApiCall<T>(
-    Future<HttpResponse<T>> service) async {
+    Future<HttpResponse<JSendResponse<T>>> service) async {
   try {
     var httpResponse = await service;
-    return Success(httpResponse.data);
+    return Success(httpResponse.data.data as T);
   } on DioException catch (e) {
     return Error(AppException.fromDioException(e));
   }
