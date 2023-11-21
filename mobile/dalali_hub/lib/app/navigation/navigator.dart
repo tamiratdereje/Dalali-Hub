@@ -106,6 +106,7 @@ class AppRouter {
     debugPrint(firstTime.toString());
 
     if (firstTime) {
+      authCubit.unauthenticated();
       return AppRoutes.onBoarding;
     }
 
