@@ -6,4 +6,5 @@ class LoginState with _$LoginState {
   const factory LoginState.loading() = _Loading;
   const factory LoginState.success() = _Success;
   const factory LoginState.error(String message) = _Error;
+  const factory LoginState.unVerified() = _UnVerified;
 }

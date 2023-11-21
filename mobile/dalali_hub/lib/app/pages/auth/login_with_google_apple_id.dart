@@ -1,11 +1,12 @@
+import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/pages/auth/widgets/sign_in_container.dart';
-import 'package:dalali_hub/app/pages/forget_password/widgets/forgot_password_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LogInWithGoogleOrAppleId extends StatefulWidget {
@@ -20,9 +21,15 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ForgotPasswordAppBar(
-        title: "Welcome",
-        isCenter: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(8.h),
+        child: DalaliAppBar(
+          leadingButtonAction: () => context.pop(),
+          titleWidget: Text(
+            'Welcome',
+            style: titleFont,
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.only(

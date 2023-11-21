@@ -6,6 +6,6 @@ export interface IOtpService {
 }
 
 export enum OtpType {
-  EMAIL = "email",
-  PHONE = "phone",
+  EMAIL = "EMAIL",
+  PHONE = "PHONE",
 }

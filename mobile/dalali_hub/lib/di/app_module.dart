@@ -21,6 +21,9 @@ abstract class AppModule {
     return Dio()
       ..options = BaseOptions(
         headers: config.headers,
+        baseUrl: config.baseUrl,
+        sendTimeout: config.timeout,
+        connectTimeout: config.timeout,
       )
       ..interceptors.addAll([
         jwtInterceptor,

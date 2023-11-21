@@ -12,9 +12,8 @@ export class OtpRepository
     }
     
     async GetOtpByUserId(userId: mongoose.Types.ObjectId): Promise<OtpEntity> {
-        var query = { userId: userId };
-        var otp = await this.schema.findOne(query);
-        if (!otp) { throw new Error("Otp not found"); }
+        var query = { user: userId };
+        var otp = await this._schema.findOne(query);
         return otp;
     }
     

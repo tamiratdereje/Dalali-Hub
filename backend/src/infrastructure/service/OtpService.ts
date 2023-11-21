@@ -32,12 +32,17 @@ export class OtpService implements IOtpService {
         subject: '[ Dalali Hub ] please verify your email',
         template: 'verification_template',
         context: {
-          name: `${user.firstName} ${user.sirName}`,
+          name: `${user.firstName } ${user.sirName}`,
           otp: otp
-        }
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+
       };
       var emailSent = await this.mailService.sendEmail(mailOptions);
-      if(!emailSent){ throw new Error("Could not send email"); }
+      console.log("Email sent: ", emailSent)
+     
     }
 
     const otpEntity =  new OtpModel({
@@ -48,12 +53,20 @@ export class OtpService implements IOtpService {
 
     // find existing otp of current user
     const existingOtp = await this.otpRepository.GetOtpByUserId(user._id);
-    if(existingOtp){ await this.otpRepository.Update(existingOtp._id, otpEntity); }
-    else { await this.otpRepository.Create(otpEntity); }
+    if(existingOtp){ 
+      console.log("Another otp exists for current user", existingOtp)
+      existingOtp.otp = otpEntity.otp;
+      existingOtp.expiresAt = otpEntity.expiresAt;
+      await this.otpRepository.Update(existingOtp._id, existingOtp); }
+    else { 
+      console.log("No Existing otp found ", existingOtp)
+      await this.otpRepository.Create(otpEntity); }
+    if(!emailSent){ throw new Error("Could not send email"); }
     return Promise.resolve(true);
   }
 
 
+  
   async VerifyOtp(user: UserEntity, otp: string): Promise<boolean> {
     // check if otp exists
     const storedOtp = await this.otpRepository.GetOtpByUserId(user._id);
@@ -73,6 +86,8 @@ export class OtpService implements IOtpService {
     const isMatch = bcrypt.compare(otp, storedOtp.otp);
     if (isMatch) { 
       await this.otpRepository.Delete(storedOtp._id);
+      var deletedOtp = await this.otpRepository.GetOtpByUserId(user._id);
+      console.log("Deleted otp", deletedOtp)
       return Promise.resolve(true); 
     }
     return Promise.resolve(false);

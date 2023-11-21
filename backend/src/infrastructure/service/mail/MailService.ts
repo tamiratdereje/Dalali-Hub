@@ -14,40 +14,43 @@ export interface IMailOptions {
 }
 export class MailService implements IMailService {
     async sendEmail(mailOptions: IMailOptions) : Promise<boolean> {
-
+        
+        // create reusable transporter object using the default SMTP transport
         var transporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.EMAIL_PASSWORD
             }
         });
 
-        
+        // define mail template
+        const templatePath = path.resolve('./', 'src', 'infrastructure', 'service', 'mail');
         const handlebarOptions: hbs.NodemailerExpressHandlebarsOptions = {
             viewEngine: {
                 extname: '.handlebars',
-                partialsDir: path.resolve('./'),
+                partialsDir: templatePath,
                 defaultLayout: false,
             },
-            viewPath: path.resolve('./'),
+            viewPath: templatePath,
             extName: '.handlebars',
         };
 
-        
+        // send mail with defined transport object
         transporter.use('compile', hbs(handlebarOptions));
-        var isSent = false;
-        transporter.sendMail(mailOptions, function(error, info){
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-              console.log(error);
-              throw error;
+                transporter.close();
+                throw error;
             } else {
-              console.log('Email sent: ' + info.response);
-              isSent = true;    
+                transporter.close();
             }
-          });
-        
-        return isSent;
+
+        }); 
+        return true;
     }
 }
  

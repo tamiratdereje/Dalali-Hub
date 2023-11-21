@@ -11,7 +11,7 @@ JSendResponse<T> _$JSendResponseFromJson<T>(
   T Function(Object? json) fromJsonT,
 ) =>
     JSendResponse<T>(
-      status: json['status'] as int,
+      status: json['status'] as String,
       data: _$nullableGenericFromJson(json['data'], fromJsonT),
       message: json['message'] as String?,
     );

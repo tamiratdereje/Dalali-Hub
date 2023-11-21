@@ -1,5 +1,6 @@
 import { OtpType } from "@interfaces/services/IOtpService";
 import { IsEmail, IsEnum, IsNotEmpty, IsPhoneNumber, IsString, ValidateIf } from "class-validator";
+import { OtpPurpose } from "domain/types/types";
 
 export class RequestOtpDTO {
   constructor(props: RequestOtpDTO) {
@@ -8,6 +9,10 @@ export class RequestOtpDTO {
   @IsNotEmpty()
   @IsEnum(OtpType)
   otpType: string;
+
+  @IsNotEmpty()
+  @IsEnum(OtpPurpose)
+  otpPurpose: string;
 
   @IsString()
   @IsEmail()

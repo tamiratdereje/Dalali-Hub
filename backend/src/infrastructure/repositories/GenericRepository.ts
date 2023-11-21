@@ -32,6 +32,6 @@ export abstract class GenericRepository<T extends IBaseEntity>
   }
 
   async Delete(id: mongoose.Types.ObjectId): Promise<void> {
-    this._schema.findByIdAndDelete(id);
+    this._schema.findByIdAndDelete(id).exec(); 
   }
 }

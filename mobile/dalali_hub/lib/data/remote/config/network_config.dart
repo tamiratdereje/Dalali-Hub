@@ -4,7 +4,10 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: INetworkConfig)
 class NetworkConfig implements INetworkConfig {
   @override
-  String get baseUrl => 'https://api.spaceflightnewsapi.net/';
+  String get baseUrl => 'http://192.168.176.1:3000/';
+
+  @override
+  Duration get timeout => const Duration(seconds: 30);
 
   @override
   Map<String, String> get headers => {

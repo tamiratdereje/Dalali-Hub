@@ -12,8 +12,10 @@ export class CustomValidationError extends CustomError {
 
   public static Instance(errors: ValidationError[]): CustomValidationError {
     const message = errors.map((error) => {
+      
       return JSON.stringify(Object.values(error.constraints));
     });
-    return new CustomValidationError(message.join(", "));
+    console.log(message.join("\n"));
+    return new CustomValidationError(message[0].substring(2, message[0].length - 2).replace(/"/g, ''));
   }
 }
