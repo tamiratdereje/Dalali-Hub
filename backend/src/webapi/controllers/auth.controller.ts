@@ -31,6 +31,10 @@ export class AuthController {
     private _tokenRepository: ITokenRepository
   ) {}
 
+
+
+
+
   requestOtp = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       // Validate request
@@ -51,6 +55,10 @@ export class AuthController {
       res.status(StatusCodes.OK).json(new JSendResponse().success({}));
     },
   );
+
+
+
+
 
   signup = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -100,6 +108,10 @@ export class AuthController {
     },
   );
 
+
+
+
+
   login = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       // Validate request
@@ -134,6 +146,10 @@ export class AuthController {
         );
     },
   );
+
+
+
+
 
   verifyOtp = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -170,6 +186,10 @@ export class AuthController {
         .json(new JSendResponse().success(token ?? {}, "OTP verified successfully"));
     },
   );
+
+
+
+  
 
   resetPassword = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
