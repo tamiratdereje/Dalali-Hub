@@ -27,7 +27,10 @@ export class ExpressConfig {
       this.app.use(cors({ origin: "*" }));
 
       this.app.use("/api/v1/auth", authRoute);
-      
+      this.app.use("/api/v1/all", (req, res) => {
+        res.send("Hello World!");
+      });
+
       this.app.use(errorHandler);
     } catch (error) {
       console.error(error);
