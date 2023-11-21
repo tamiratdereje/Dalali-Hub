@@ -11,4 +11,5 @@ class AuthCubit extends Cubit<AuthState> {
 
   void authenticated() => emit(const AuthState.authenticated());
   void unauthenticated() => emit(const AuthState.unauthenticated());
+  void firstTime() => emit(const AuthState.initial());
 }

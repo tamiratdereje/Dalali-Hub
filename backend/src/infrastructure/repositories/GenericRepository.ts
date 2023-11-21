@@ -27,7 +27,8 @@ export abstract class GenericRepository<T extends IBaseEntity>
   }
 
   async Update(id: mongoose.Types.ObjectId, entity: T): Promise<T> {
-    await this._schema.findByIdAndUpdate(id, entity);
+    (await this._schema.findByIdAndUpdate(id, entity)).save();
+    
     return entity;
   }
 

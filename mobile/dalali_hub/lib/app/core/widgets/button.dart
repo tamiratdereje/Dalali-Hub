@@ -6,8 +6,9 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class AppButtonPrimary extends StatefulWidget {
   final void Function() onPressed;
   final String text;
-  const AppButtonPrimary(
-      {super.key, required this.onPressed, required this.text});
+  Icon? icon;
+  AppButtonPrimary(
+      {super.key, required this.onPressed, required this.text, this.icon});
 
   @override
   State<AppButtonPrimary> createState() => _AppButtonPrimaryState();
@@ -22,8 +23,14 @@ class _AppButtonPrimaryState extends State<AppButtonPrimary> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: AppColors.nauticalCreatures),
-          child: Center(
-              child: Text(widget.text, style: onPrimaryButtonTextStyle))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              widget.icon ?? const SizedBox.shrink(),
+              Center(child: Text(widget.text, style: onPrimaryButtonTextStyle)),
+              const SizedBox.shrink()
+            ],
+          )),
       onTap: () => widget.onPressed(),
     );
   }

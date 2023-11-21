@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dalali_hub/app/core/widgets/alert_dialog.dart';
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
@@ -80,9 +82,12 @@ class _SignupState extends State<Signup> {
             listener: (context, state) {
               state.mapOrNull(
                 success: (value) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) =>
-                      showSuccessSnackBar(
-                          'Account created successfully', context));
+                  showAppDialog(
+                      context: context,
+                      title: 'Congratulation!',
+                      description: 'Your account is ready',
+                      buttonLabel: 'Login');
+                  // sleep for 1 sec
                   context.go(AppRoutes.login);
                 },
                 error: (error) => WidgetsBinding.instance.addPostFrameCallback(

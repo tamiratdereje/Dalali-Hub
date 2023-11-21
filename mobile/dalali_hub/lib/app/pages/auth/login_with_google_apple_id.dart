@@ -1,5 +1,6 @@
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
+import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/auth/widgets/sign_in_container.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
@@ -24,7 +25,7 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(8.h),
         child: DalaliAppBar(
-          leadingButtonAction: () => context.pop(),
+          leadingButtonAction: () {},
           titleWidget: Text(
             'Welcome',
             style: titleFont,
@@ -32,17 +33,15 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          left: 6.6.w,
-          right: 6.6.w,
-          bottom: 5.6.h,
+        padding: EdgeInsets.symmetric(
+          horizontal: 6.w,
         ),
         child: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 9.3.h,
+              height: 3.h,
             ),
             SvgPicture.asset(
               ImageConstants.dalaliLogoIllu,
@@ -52,7 +51,7 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
             ),
             SingInContainer(
               title: "Sign in using Google account",
-              icon: googleLogo,
+              icon: ImageConstants.googleLogo,
               tap: () {},
               color: AppColors.selectedContainer,
             ),
@@ -61,7 +60,7 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
             ),
             SingInContainer(
               title: "Sign in using apple ID",
-              icon: appleLogo,
+              icon: ImageConstants.appleLogo,
               tap: () {},
               color: AppColors.selectedContainer,
             ),
@@ -111,27 +110,31 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
             ),
             AppButtonPrimary(
               text: "Log in with existing account",
-              onPressed: () {},
+              onPressed: () => context.go(AppRoutes.login),
             ),
             SizedBox(
-              height: 12.7.h,
+              height: 4.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Don't have an account?",
-                  style: inputFieldHintStyle,
+                  style: inputFieldLabelStyle,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(AppRoutes.register);
+                  },
                   child: Text(
                     "Click here ",
-                    style: inputFieldLabelMinStyle.copyWith(
-                        color: AppColors.minBodyTextColor),
+                    style: linkTextStylePrimary,
                   ),
                 )
               ],
+            ),
+            SizedBox(
+              height: 6.h,
             )
           ],
         )),

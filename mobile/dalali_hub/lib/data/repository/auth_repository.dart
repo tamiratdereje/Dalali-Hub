@@ -7,6 +7,7 @@ import 'package:dalali_hub/data/remote/model/login_dto.dart';
 import 'package:dalali_hub/data/remote/model/login_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/otp.dart';
 import 'package:dalali_hub/data/remote/model/otp_verification_response_dto.dart';
+import 'package:dalali_hub/data/remote/model/reset_password.dart';
 import 'package:dalali_hub/data/remote/model/signup_form_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
 import 'package:dalali_hub/domain/entity/login.dart';
@@ -93,8 +94,15 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<Resource<Empty>> resetPassword(ResetPassword resetPassword) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
+  Future<Resource<Empty>> resetPassword(ResetPassword resetPassword) async {
+    var response = await handleApiCall<EmptyResponse>(
+        _authClient.resetPassword(ResetPasswordDto.fromEntity(resetPassword, _pref)));
+    
+    if (response is Success) {
+      await _pref.remove(resetPasswordKey);
+      return const Success(Empty());
+    } else {
+      return Error(response.error!);
+    }
   }
 }

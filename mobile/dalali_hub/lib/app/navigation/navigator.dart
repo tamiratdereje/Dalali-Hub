@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
+import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/forget_password/create_new_password.dart';
 import 'package:dalali_hub/app/pages/forget_password/forgot_password.dart';
 import 'package:dalali_hub/app/pages/forget_password/verify_otp.dart';
 import 'package:dalali_hub/app/pages/home/home.dart';
+import 'package:dalali_hub/app/pages/onboarding/who_are_you.dart';
 import 'package:dalali_hub/domain/entity/verify_otp.dart';
 import 'package:dalali_hub/domain/type/types.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,9 @@ class AppRouter {
   late final GoRouter router = GoRouter(
     initialLocation: authCubit.state.map(
       authenticated: (_) => AppRoutes.home,
-      unauthenticated: (_) => AppRoutes.login,
-      initial: (_) => AppRoutes.login,
+      unauthenticated: (_) => AppRoutes.loginOptions,
+      initial: (_) => AppRoutes.loginOptions,
+      firstTime: (_) => AppRoutes.onBoarding,
     ),
     redirect: (context, state) => redirecter(context, state),
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
@@ -69,11 +72,19 @@ class AppRouter {
           name: 'create_new_password',
           path: AppRoutes.createNewPassword,
           builder: (BuildContext context, GoRouterState state) {
-            Map<String, dynamic> args =
-                state.extra as Map<String, dynamic>;
-                
             return const CreateNewPassword();
-          })
+          }),
+      GoRoute(
+          name: 'onBoarding',
+          path: AppRoutes.onBoarding,
+          builder: (BuildContext context, GoRouterState state) =>
+              const WhoAreYou()),
+      GoRoute(
+        name: 'loginOptions',
+        path: AppRoutes.loginOptions,
+        builder: (BuildContext context, GoRouterState state) =>
+            const LogInWithGoogleOrAppleId(),
+      ),
     ],
   );
 
@@ -82,13 +93,26 @@ class AppRouter {
       authenticated: (_) => true,
       unauthenticated: (_) => false,
       initial: (_) => false,
+      firstTime: (_) => false,
     );
 
-    debugPrint('Matched Location: ${state.matchedLocation}');
+    final bool firstTime = authCubit.state.map(
+      authenticated: (_) => false,
+      unauthenticated: (_) => false,
+      initial: (_) => true,
+      firstTime: (_) => true,
+    );
 
-    final bool loggingIn = state.matchedLocation != AppRoutes.login;
+    debugPrint(firstTime.toString());
+
+    if (firstTime) {
+      return AppRoutes.onBoarding;
+    }
+
+    debugPrint('Matched Location: ${state.matchedLocation}');
+    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions;
     if (!loggedIn) {
-      return loggingIn ? null : AppRoutes.login;
+      return loggingIn ? null : AppRoutes.loginOptions;
     }
 
     return null;

@@ -16,10 +16,10 @@ export class TokenRepository
     constructor( private schema: mongoose.Model<TokenEntity> ){ super(schema);
     }
     verifyToken(token: string): Promise<mongoose.Types.ObjectId> {
-        var userId = null
-        jwt.verify(token, process.env.JWT_SECRET, (err: Error, payload: any) => {
+        let userId = null
+        jwt.verify(token, process.env.RESET_TOKEN_SECRET, (err: Error, payload: any) => {
             if (err)
-                throw new BadRequestError(err.message)
+                throw new UnAuthorizedError('Invalid or expired token')
             userId = payload.id
             }
         );
@@ -33,7 +33,7 @@ export class TokenRepository
     async createToken(userId: mongoose.Types.ObjectId): Promise<TokenEntity> {
         const generatedToken = jwt.sign({ id: userId }, process.env.RESET_TOKEN_SECRET, {
             expiresIn: process.env.RESET_TOKEN_EXPIRES_IN})
-        var existingToken = await this.getTokenByUserId(userId)
+        let existingToken = await this.getTokenByUserId(userId)
         
         // if token exists for current user update otherwise create new
         if (existingToken){
@@ -48,11 +48,6 @@ export class TokenRepository
         return existingToken;
     }
 
-    async generateToken(userId: any) {
-        const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-          expiresIn: process.env.JWT_EXPIRES_IN,
-        });
-        return token;
-      }
+   
     
   }

@@ -9,11 +9,11 @@ part of 'reset_password.dart';
 ResetPasswordDto _$ResetPasswordDtoFromJson(Map<String, dynamic> json) =>
     ResetPasswordDto(
       newPassword: json['newPassword'] as String,
-      token: json['token'] as String,
+      resetToken: json['resetToken'] as String,
     );
 
 Map<String, dynamic> _$ResetPasswordDtoToJson(ResetPasswordDto instance) =>
     <String, dynamic>{
       'newPassword': instance.newPassword,
-      'token': instance.token,
+      'resetToken': instance.resetToken,
     };

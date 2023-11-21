@@ -19,8 +19,8 @@ import { validate } from "class-validator";
 import { OtpPurpose } from "domain/types/types";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import mongoose, { mongo } from "mongoose";
 import { asyncHandler } from "webapi/middlewares/async.handler.middleware";
+import * as bcrypt from "bcrypt";
 
 export class AuthController {
   constructor(
@@ -167,13 +167,14 @@ export class AuthController {
       await this._userRepository.Update(user._id, user);
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(token, "OTP verified successfully"));
+        .json(new JSendResponse().success(token ?? {}, "OTP verified successfully"));
     },
   );
 
   resetPassword = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       // Validate request
+      console.log("Reset Password Body : ", req.body)
       const resetPasswordDto = new ResetPasswordDTO(req.body);
       const ValidationError = await validate(resetPasswordDto);
       if (ValidationError.length > 0) {
@@ -182,7 +183,8 @@ export class AuthController {
 
       // Verify token
       const userId = await this._tokenRepository.verifyToken(resetPasswordDto.resetToken);
-      if (!userId) { throw new BadRequestError("Invalid token"); }
+
+      if (!userId) { throw new UnAuthorizedError("Your token has expired!"); }
 
       // Get user
       const user = await this._userRepository.GetById(userId);
@@ -190,12 +192,12 @@ export class AuthController {
 
 
       // Update user password
-      user.password = resetPasswordDto.newPassword;
+      user.password = bcrypt.hashSync(resetPasswordDto.newPassword, 10);
       await this._userRepository.Update(user._id, user);
 
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(null, "Password reset successfully"));
+        .json(new JSendResponse().success({}, "Password reset successfully"));
       
     }
   );

@@ -13,17 +13,19 @@ import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart' as _i3;
 import 'package:dalali_hub/app/navigation/navigator.dart' as _i8;
 import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart' as _i17;
 import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart' as _i18;
-import 'package:dalali_hub/app/pages/auth/bloc/signup/signup_bloc.dart' as _i20;
+import 'package:dalali_hub/app/pages/auth/bloc/signup/signup_bloc.dart' as _i21;
 import 'package:dalali_hub/app/pages/forget_password/bloc/request_bloc/request_otp_bloc.dart'
     as _i19;
+import 'package:dalali_hub/app/pages/forget_password/bloc/reset_password/reset_password_bloc_bloc.dart'
+    as _i20;
 import 'package:dalali_hub/app/pages/forget_password/bloc/verify_otp/verify_otp_bloc.dart'
-    as _i21;
+    as _i22;
 import 'package:dalali_hub/data/local/pref/pref.dart' as _i9;
 import 'package:dalali_hub/data/remote/client/auth_client.dart' as _i14;
 import 'package:dalali_hub/data/remote/client/user_client.dart' as _i13;
 import 'package:dalali_hub/data/remote/config/network_config.dart' as _i5;
 import 'package:dalali_hub/data/repository/auth_repository.dart' as _i16;
-import 'package:dalali_hub/di/app_module.dart' as _i22;
+import 'package:dalali_hub/di/app_module.dart' as _i23;
 import 'package:dalali_hub/domain/config/network_config.dart' as _i4;
 import 'package:dalali_hub/domain/repository/auth_repository.dart' as _i15;
 import 'package:dalali_hub/util/jwt_interceptor.dart' as _i11;
@@ -82,12 +84,14 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i19.RequestOtpBloc>(
         () => _i19.RequestOtpBloc(gh<_i15.IAuthRepository>()));
-    gh.factory<_i20.SignupBloc>(
-        () => _i20.SignupBloc(gh<_i15.IAuthRepository>()));
-    gh.factory<_i21.VerifyOtpBloc>(
-        () => _i21.VerifyOtpBloc(gh<_i15.IAuthRepository>()));
+    gh.factory<_i20.ResetPasswordBloc>(
+        () => _i20.ResetPasswordBloc(gh<_i15.IAuthRepository>()));
+    gh.factory<_i21.SignupBloc>(
+        () => _i21.SignupBloc(gh<_i15.IAuthRepository>()));
+    gh.factory<_i22.VerifyOtpBloc>(
+        () => _i22.VerifyOtpBloc(gh<_i15.IAuthRepository>()));
     return this;
   }
 }
 
-class _$AppModule extends _i22.AppModule {}
+class _$AppModule extends _i23.AppModule {}

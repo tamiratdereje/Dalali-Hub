@@ -8,9 +8,9 @@ part 'reset_password.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ResetPasswordDto {
   final String newPassword;
-  final String token;
+  final String resetToken;
 
-  ResetPasswordDto({required this.newPassword, required this.token});
+  ResetPasswordDto({required this.newPassword, required this.resetToken});
 
   Map<String, dynamic> toJson() => _$ResetPasswordDtoToJson(this);
 
@@ -18,7 +18,7 @@ class ResetPasswordDto {
       ResetPassword resetPassword, SharedPreference pref) {
     return ResetPasswordDto(
       newPassword: resetPassword.newPassword,
-      token: pref.getString(resetPasswordKey) ?? '',
+      resetToken: pref.getString(resetPasswordKey) ?? '',
     );
   }
 }

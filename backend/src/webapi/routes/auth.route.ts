@@ -35,5 +35,6 @@ authRoute.post("/request-otp", authController.requestOtp);
 authRoute.post("/signup", authController.signup);
 authRoute.post("/login", authController.login);
 authRoute.post("/verify-otp", authController.verifyOtp);
+authRoute.post("/reset-password", authController.resetPassword);
 
 export { authRoute };

@@ -36,7 +36,8 @@ class _SettingsState extends State<Settings> {
             const SettingTileList(),
             SizedBox(height: 3.h),
             AppButtonPrimary(
-              onPressed: () => context.goNamed(AppRoutes.login),
+              icon: const Icon(Icons.logout, color: Colors.white,),
+              onPressed: () => context.go(AppRoutes.login),
               text: 'Sign Out',
             )
           ],

@@ -7,5 +7,6 @@ class AppRoutes {
   static const String otp = '/otp';
   static const String forgotPassword = '/forgotPassword';
   static const String createNewPassword = '/createNewPassword';
-  
+  static const String onBoarding = '/onBoarding';
+  static const String loginOptions = '/loginOptions';
 }

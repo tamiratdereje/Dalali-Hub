@@ -82,13 +82,8 @@ class SettingTileList extends StatelessWidget {
           title: 'About',
           onTap: () {},
         ),
-        SizedBox(height: 2.h),
-        SettingTile(
-          icon: Icon(Icons.logout),
-          title: 'Logout',
-          onTap: () {},
-        ),
-        SizedBox(height: 2.h),
+        SizedBox(height: 4.h),
+        
       ],
     );
   }

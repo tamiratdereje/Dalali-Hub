@@ -1,6 +1,7 @@
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
 import 'package:dalali_hub/data/remote/model/otp.dart';
 import 'package:dalali_hub/data/remote/model/otp_verification_response_dto.dart';
+import 'package:dalali_hub/data/remote/model/reset_password.dart';
 import 'package:dalali_hub/data/remote/model/signup_form_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
@@ -29,4 +30,8 @@ abstract class AuthClient {
   @POST('auth/request-otp')
   Future<HttpResponse<JSendResponse<EmptyResponse>>> requestOtp(
       @Body() Otp otpRequest);
+  
+  @POST('auth/reset-password')
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> resetPassword(
+      @Body() ResetPasswordDto resetPasswordDto);
 }
