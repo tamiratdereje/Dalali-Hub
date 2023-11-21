@@ -4,7 +4,6 @@ import 'package:dalali_hub/domain/repository/auth_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 
 part 'reset_password_bloc_event.dart';
 part 'reset_password_bloc_state.dart';
