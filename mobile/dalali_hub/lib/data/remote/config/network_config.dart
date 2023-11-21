@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: INetworkConfig)
 class NetworkConfig implements INetworkConfig {
   @override
-  String get baseUrl => 'http://192.168.176.1:3000/';
+  String get baseUrl => 'https://dalali-hub.onrender.com/';
 
   @override
   Duration get timeout => const Duration(seconds: 30);
