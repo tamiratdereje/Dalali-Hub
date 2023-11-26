@@ -1,3 +1,6 @@
+import 'package:dalali_hub/app/pages/chat/contact_screen.dart';
+import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
+import 'package:dalali_hub/app/pages/favorite/favorite_screen.dart';
 import 'package:dalali_hub/app/pages/settings/settings.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +16,9 @@ class _BottomNavigationState extends State {
   int _selectedTab = 0;
 
   final List _pages = [
-    const Center(
-      child: Text("Home"),
-    ),
-    const Center(
-      child: Text("Settings"),
-    ),
+    const CustomerHomePage(),
+    const Favorite(),
+    const ContactScreem(),
     const Settings(),
   ];
 
@@ -39,6 +39,8 @@ class _BottomNavigationState extends State {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: "Favorite"),
           BottomNavigationBarItem(icon: Icon(Icons.mail), label: "Messages"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
