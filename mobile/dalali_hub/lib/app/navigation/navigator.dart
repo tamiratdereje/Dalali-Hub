@@ -12,6 +12,7 @@ import 'package:dalali_hub/app/pages/lands/land_filter.dart';
 import 'package:dalali_hub/app/pages/offices/offices_filter.dart';
 import 'package:dalali_hub/app/pages/onboarding/who_are_you.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
+import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -25,7 +26,7 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.addPlot,
+    initialLocation: AppRoutes.houseDetail,
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
@@ -101,6 +102,12 @@ class AppRouter {
         path: AppRoutes.addPlot,
         builder: (BuildContext context, GoRouterState state) {
           return CreatePlot(serviceName: "Add Plot information");
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.houseDetail,
+        builder: (BuildContext context, GoRouterState state) {
+          return const PropertyDetailPage();
         },
       ),
     ],

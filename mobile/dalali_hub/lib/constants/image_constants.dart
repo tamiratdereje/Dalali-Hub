@@ -5,6 +5,7 @@ class ImageConstants {
   static const String createNewPassword = 'assets/images/illustrations/login_illu.svg';
   static const String sms = 'assets/images/displays/sms.svg';
   static const String email = 'assets/images/displays/email.svg';
+  static const String detailApartmentImage = 'assets/images/displays/apartment_image.png';
 }
 
 // illustrations
