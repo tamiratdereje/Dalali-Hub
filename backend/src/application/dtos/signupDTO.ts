@@ -1,17 +1,24 @@
 import {
   IsDateString,
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
+  IsStrongPassword,
 } from "class-validator";
-import { Gender } from "domain/types/gender";
+import { Gender } from "domain/types/types";
+import mongoose from "mongoose";
 import { File } from "tsoa";
+import { User } from "@entities/UserEntity";
+
+
 
 export class SignUpDTO {
   constructor(props: SignUpDTO) {
     Object.assign(this, props);
   }
+
 
   @IsNotEmpty()
   @IsString()
@@ -19,26 +26,36 @@ export class SignUpDTO {
 
   @IsNotEmpty()
   @IsString()
-  lastName: string;
+  middleName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  sirName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsPhoneNumber()
+  phoneNumber: string;
 
   @IsNotEmpty()
   @IsEnum(Gender)
   gender: Gender;
 
-  // TODO: Add validation for age
   @IsNotEmpty()
-  @IsDateString()
-  dateOfBirth: Date;
+  @IsString()
+  region: string;
 
   @IsNotEmpty()
   @IsString()
-  @IsPhoneNumber("ET")
-  phone: string;
+  @IsStrongPassword()
+  password: string;
 
-  // @IsNotEmpty()
-  interests: string[];
-
-  @IsNotEmpty()
-  @IsString()
-  otp: string;
+  
 }
+
+

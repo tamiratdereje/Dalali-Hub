@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
 export class LoginDTO {
   constructor(props: LoginDTO) {
@@ -7,10 +7,11 @@ export class LoginDTO {
 
   @IsNotEmpty()
   @IsString()
-  @IsPhoneNumber("ET")
-  phoneNumber: string;
+  @IsEmail()
+  email: string;
 
   @IsNotEmpty()
   @IsString()
-  otp: string;
+  @IsStrongPassword()
+  password: string;
 }

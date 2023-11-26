@@ -1,9 +1,11 @@
 import 'package:dalali_hub/app/core/widgets/button.dart';
+import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class WhoAreYou extends StatelessWidget {
@@ -17,7 +19,7 @@ class WhoAreYou extends StatelessWidget {
             left: 6.6.w, right: 6.6.w, bottom: 5.6.h, top: 9.3.h),
         child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(
               ImageConstants.dalaliLogoIllu,
@@ -41,7 +43,10 @@ class WhoAreYou extends StatelessWidget {
             ),
             AppButtonPrimary(
               text: "Customer",
-              onPressed: () {},
+              onPressed: () {
+                debugPrint("Customer");
+                context.go(AppRoutes.loginOptions);
+              },
             ),
             SizedBox(
               height: 3.3.h,
@@ -86,7 +91,10 @@ class WhoAreYou extends StatelessWidget {
             ),
             AppButtonPrimary(
               text: "Broker/Agent",
-              onPressed: () {},
+              onPressed: () {
+                debugPrint("Broker/Agent");
+                context.go(AppRoutes.loginOptions);
+              },
             ),
             SizedBox(
               height: 7.7.h,
@@ -99,7 +107,7 @@ class WhoAreYou extends StatelessWidget {
                   style: inputFieldHintStyle,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => context.go(AppRoutes.register),
                   child: Text(
                     "Sign up here ",
                     style: inputFieldLabelMinStyle.copyWith(

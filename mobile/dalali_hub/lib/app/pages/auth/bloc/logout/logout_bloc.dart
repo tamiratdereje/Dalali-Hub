@@ -21,7 +21,7 @@ class LogoutBloc extends Bloc<LogoutEvent, LogoutState> {
             _authCubit.unauthenticated();
             emit(const _Success());
           },
-          onError: (error) => emit(_Error(error!.message)));
+          onError: (error) => emit(_Error(error.message)));
     });
   }
 }

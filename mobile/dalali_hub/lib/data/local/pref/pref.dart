@@ -1,4 +1,3 @@
-import 'package:dalali_hub/injection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

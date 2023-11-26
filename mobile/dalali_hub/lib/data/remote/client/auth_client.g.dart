@@ -13,7 +13,7 @@ class _AuthClient implements AuthClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://api.spaceflightnewsapi.net/';
+    baseUrl ??= 'api/v1/';
   }
 
   final Dio _dio;
@@ -36,7 +36,7 @@ class _AuthClient implements AuthClient {
     )
             .compose(
               _dio.options,
-              'v4/articles/',
+              'auth/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -54,20 +54,22 @@ class _AuthClient implements AuthClient {
   }
 
   @override
-  Future<HttpResponse<AllArticles>> getAllArticles() async {
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> register(
+      SignupFormDto signupFormDto) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(signupFormDto.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<AllArticles>>(Options(
-      method: 'GET',
+        _setStreamType<HttpResponse<JSendResponse<EmptyResponse>>>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'v4/articles/',
+              'auth/signup',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -76,7 +78,111 @@ class _AuthClient implements AuthClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = AllArticles.fromJson(_result.data!);
+    final value = JSendResponse<EmptyResponse>.fromJson(
+      _result.data!,
+      (json) => EmptyResponse.fromJson(json as Map<String, dynamic>),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<JSendResponse<OtpVerificationResponseDto>>> verifyOtp(
+      Otp otp) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(otp.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<OtpVerificationResponseDto>>>(
+            Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  'auth/verify-otp',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    final value = JSendResponse<OtpVerificationResponseDto>.fromJson(
+      _result.data!,
+      (json) =>
+          OtpVerificationResponseDto.fromJson(json as Map<String, dynamic>),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> requestOtp(
+      Otp otpRequest) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(otpRequest.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<EmptyResponse>>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'auth/request-otp',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = JSendResponse<EmptyResponse>.fromJson(
+      _result.data!,
+      (json) => EmptyResponse.fromJson(json as Map<String, dynamic>),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> resetPassword(
+      ResetPasswordDto resetPasswordDto) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(resetPasswordDto.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<EmptyResponse>>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'auth/reset-password',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = JSendResponse<EmptyResponse>.fromJson(
+      _result.data!,
+      (json) => EmptyResponse.fromJson(json as Map<String, dynamic>),
+    );
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

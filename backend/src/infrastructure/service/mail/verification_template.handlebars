@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Your Company</title>
+  <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Alata', sans-serif;
+      background-color: #ffffff;
+    }
+
+    /* Your existing CSS styles */
+    /* ... */
+
+    /* Define styles for the welcome message */
+    .welcome-message {
+      font-size: 32px;
+      line-height: 40px;
+      color: #000000;
+      margin: 0;
+    }
+
+    /* Define styles for the main content area */
+    .main-content {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 28px; /* Adjusted line height */
+      color: #000000;
+    }
+
+    /* Define styles for the verification code button */
+    #copyButton {
+      display: inline-block;
+      background: #2A5F73;
+      color: #ffffff;
+      font-family: 'Alata', sans-serif;
+      font-size: 20px; /* Larger font size */
+      font-weight: bold;
+      line-height: 50px; /* Larger line height */
+      margin: 0;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 15px 35px; /* Increased padding */
+      border-radius: 5px; /* Slightly rounded corners */
+      cursor: pointer;
+    }
+
+    /* Define styles for social icons (replace with actual images) */
+    .social-icon {
+      display: inline-block;
+      padding: 6px;
+      border-radius: 3px;
+      width: 24px; /* Adjusted size */
+      background-color: #ea4a40;
+      margin-right: 8px; /* Increased margin */
+    }
+
+    /* Adjusted size for the OTP div */
+    #otp {
+      font-size: 28px; /* Larger font size */
+      line-height: 40px; /* Larger line height */
+    }
+  </style>
+</head>
+
+<body>
+  <div style="background-color: #ffffff; margin: 0 auto; max-width: 600px;">
+    <!-- Header Section with Logo -->
+    <!-- ... -->
+
+    <!-- Social Media Icons -->
+    <!-- ... -->
+
+    <!-- Image Section -->
+    <!-- ... -->
+
+    <!-- Main Content Section -->
+    <div style="text-align: left; padding: 0 40px;">
+      <h1 class="welcome-message">Hi {{name}}!<br>Welcome to Dalali Hub</h1>
+      <p class="main-content">
+        Discover your dream home with Dalali Hub! We offer an extensive range of properties tailored to your needs. Whether you're searching for a cozy apartment, a spacious villa, or a commercial space, we've got you covered. Our user-friendly platform simplifies the search process, providing detailed listings, virtual tours, and expert guidance to make your real estate journey seamless.
+      </p>
+      <p class="main-content">Copy your verification code below:</p>
+      <table align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="start" bgcolor="#ea4a40" style="border-radius: 5px;">
+            <div id="copyButton" onclick="copyCode()">
+                    <span id="otp" style="padding: 7px 20px; letter-spacing: 3px;">{{otp}}</span>
+
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Divider -->
+    <!-- ... -->
+
+    <!-- Footer Section -->
+    <!-- ... -->
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function copyCode() {
+      var text = document.getElementById('otp');
+      var selection = window.getSelection();
+      var range = document.createRange();
+      range.selectNodeContents(text);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand('copy');
+      alert('Code copied to clipboard');
+    }
+  </script>
+</body>
+
+</html>

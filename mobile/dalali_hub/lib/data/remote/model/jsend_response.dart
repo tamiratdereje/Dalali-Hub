@@ -4,7 +4,7 @@ part 'jsend_response.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
 class JSendResponse<T> {
-  final int status;
+  final String status;
   final T? data;
   final String? message;
 

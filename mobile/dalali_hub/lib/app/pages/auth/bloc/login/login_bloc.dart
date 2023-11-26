@@ -19,12 +19,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<_Login>((event, emit) async {
       emit(const _Loading());
       var response = await _authRepository.login(event.login);
-      response.fold(
-          onSuccess: (data) {
-            _authCubit.authenticated();
-            emit(const _Success());
-          },
-          onError: (error) => emit(_Error(error.message)));
+      response.fold(onSuccess: (data) {
+        _authCubit.authenticated();
+        emit(const _Success());
+      }, onError: (error) {
+        if (error.statusCode != null && error.statusCode == 401) {
+          emit(const LoginState.unVerified());
+        } else {
+          emit(LoginState.error(error.message));
+        }
+      });
     });
   }
 }

@@ -78,7 +78,10 @@ class _AppInputFieldState extends State<AppInputField> {
                     obscureText: obscureText!,
                     textAlign: widget.alignment,
                     decoration: InputDecoration(
-                      
+                        errorBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.errorColor, width: 2),
+                        ),
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 3.w, vertical: 2.h),
                         prefixIcon: widget.prefixIcon != null
@@ -93,8 +96,12 @@ class _AppInputFieldState extends State<AppInputField> {
                         filled: true,
                         fillColor: AppColors.doctor,
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none),
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                        ),
                         hintText: widget.hint,
                         hintStyle: widget.hintStyle,
                         suffixIcon: widget.obscureText == true
@@ -106,8 +113,8 @@ class _AppInputFieldState extends State<AppInputField> {
                                 },
                                 icon: Icon(
                                   obscureText == true
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                   color: Colors.black,
                                 ),
                               )
@@ -122,7 +129,7 @@ class _AppInputFieldState extends State<AppInputField> {
                 ],
               ),
             ),
-             Offstage(
+            Offstage(
               offstage: !state.hasError,
               child: SizedBox(
                 width: double.infinity,
@@ -131,12 +138,12 @@ class _AppInputFieldState extends State<AppInputField> {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
                   child: Text(
                     state.errorText ?? "",
-                    style: inputFieldLabelMinStyle.copyWith(color: AppColors.errorColor.withOpacity(0.8)),
+                    style: inputFieldLabelMinStyle.copyWith(
+                        color: AppColors.errorColor.withOpacity(0.8)),
                   ),
                 ),
               ),
             ),
-
           ],
         );
       },

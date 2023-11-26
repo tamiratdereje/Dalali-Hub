@@ -23,7 +23,6 @@ class SingInContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: color,
@@ -34,8 +33,8 @@ class SingInContainer extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: AppColors.avatorBackground,
-              radius: 6.2.w,
-              child: SvgPicture.asset(icon),
+              radius: 10.w,
+              child: Image.asset(icon),
             ),
             SizedBox(
               width: 5.w,

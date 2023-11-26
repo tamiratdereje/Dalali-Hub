@@ -1,14 +1,15 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class AppException implements Exception {
   final String message;
+  final int? statusCode;
 
-  AppException(this.message);
+  AppException(this.message, {this.statusCode});
 
   factory AppException.fromDioException(Exception exception) {
     String message;
+    int? statusCode;
     try {
       if (exception is DioException) {
         switch (exception.type) {
@@ -29,7 +30,10 @@ class AppException implements Exception {
             break;
 
           case DioExceptionType.badResponse:
-            message = exception.response != null ? exception.response!.data['message'] : 'Bad response';
+            message = exception.response != null
+                ? exception.response!.data['message']
+                : 'Bad response';
+            statusCode = exception.response?.statusCode;
             debugPrint('AppException : BadResponse Dio Exception >> $message');
             break;
 
@@ -39,12 +43,14 @@ class AppException implements Exception {
 
           case DioExceptionType.unknown:
             message = 'Unknown error';
-            debugPrint('AppException : Unknown Dio Exception >> ${exception.message}');
+            debugPrint(
+                'AppException : Unknown Dio Exception >> ${exception.message}');
             break;
 
           default:
             message = 'Error unrecognized';
-            debugPrint('AppException : Unrecognized Dio Exception >> ${exception.message}');
+            debugPrint(
+                'AppException : Unrecognized Dio Exception >> ${exception.message}');
         }
       } else {
         message = 'Error unrecognized';
@@ -56,6 +62,6 @@ class AppException implements Exception {
       message = 'Error unrecognized';
       debugPrint('AppException : UnknownException >> ${e.toString()}');
     }
-    return AppException(message);
+    return AppException(message, statusCode: statusCode);
   }
 }

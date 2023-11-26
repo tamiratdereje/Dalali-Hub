@@ -11,10 +11,11 @@ Future<void> showAppDialog(
     bool errorAlert = false,
     required String title,
     required String description,
+    Function? buttonAction,
     required String buttonLabel}) async {
   return showDialog<void>(
     context: context,
-    barrierDismissible: true, // user must tap button!
+    barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 1.h, sigmaY: 1.h),
@@ -59,6 +60,9 @@ Future<void> showAppDialog(
                   AppButtonPrimary(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        if (buttonAction != null) {
+                          buttonAction();
+                        }
                       },
                       text: buttonLabel)
                 ],

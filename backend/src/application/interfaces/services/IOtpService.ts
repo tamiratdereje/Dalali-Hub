@@ -1,4 +1,11 @@
+import { UserEntity } from "@entities/UserEntity";
+
 export interface IOtpService {
-  SendOtp(phoneNumber: string): Promise<boolean>;
-  VerifyOtp(phoneNumber: string, otp: string): Promise<boolean>;
+  SendOtp(user: UserEntity, otpType: OtpType): Promise<boolean>;
+  VerifyOtp(user: UserEntity, otp: string): Promise<boolean>;
+}
+
+export enum OtpType {
+  EMAIL = "EMAIL",
+  PHONE = "PHONE",
 }

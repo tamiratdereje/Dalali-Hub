@@ -10,9 +10,9 @@ import 'package:dalali_hub/app/pages/halls/hall_filter.dart';
 import 'package:dalali_hub/app/pages/house_filter/house_filter.dart';
 import 'package:dalali_hub/app/pages/lands/land_filter.dart';
 import 'package:dalali_hub/app/pages/offices/offices_filter.dart';
-import 'package:dalali_hub/app/pages/onboarding/who_are_you.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
+import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -26,20 +26,31 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.houseDetail,
+    initialLocation: authCubit.state.map(
+      authenticated: (_) => AppRoutes.home,
+      unauthenticated: (_) => AppRoutes.loginOptions,
+      initial: (_) => AppRoutes.loginOptions,
+      firstTime: (_) => AppRoutes.onBoarding,
+    ),
+    redirect: (context, state) => redirecter(context, state),
+    refreshListenable: GoRouterRefreshStream(authCubit.stream),
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
+          name: 'home',
           path: AppRoutes.home,
-          builder: (BuildContext context, GoRouterState state) => Login()),
+          builder: (BuildContext context, GoRouterState state) =>
+              const BottomNavigation()),
       GoRoute(
+        name: 'signup',
         path: AppRoutes.register,
         builder: (BuildContext context, GoRouterState state) =>
-            const CustomerHomePage(),
+            const Signup(isEditingProfile: false),
       ),
       GoRoute(
+        name: 'login',
         path: AppRoutes.login,
-        builder: (BuildContext context, GoRouterState state) => Login(),
+        builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
       ),
       GoRoute(
         path: AppRoutes.customerHome,
@@ -111,19 +122,38 @@ class AppRouter {
         },
       ),
     ],
-    // redirect: (BuildContext context, GoRouterState state) {
-    //   final bool loggedIn = authCubit.state == const AuthState.authenticated();
-    //   final bool loggingIn = state.name == AppRoutes.login;
-    //   if (!loggedIn) {
-    //     return loggingIn ? null : AppRoutes.register;
-    //   }
-    //   if (loggingIn) {
-    //     return AppRoutes.home;
-    //   }
-    //   return null;
-    // },
-    refreshListenable: GoRouterRefreshStream(authCubit.stream),
   );
+
+  FutureOr<String?> redirecter(BuildContext context, GoRouterState state) {
+    final bool loggedIn = authCubit.state.map(
+      authenticated: (_) => true,
+      unauthenticated: (_) => false,
+      initial: (_) => false,
+      firstTime: (_) => false,
+    );
+
+    final bool firstTime = authCubit.state.map(
+      authenticated: (_) => false,
+      unauthenticated: (_) => false,
+      initial: (_) => true,
+      firstTime: (_) => true,
+    );
+
+    debugPrint(firstTime.toString());
+
+    if (firstTime) {
+      authCubit.unauthenticated();
+      return AppRoutes.onBoarding;
+    }
+
+    debugPrint('Matched Location: ${state.matchedLocation}');
+    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions;
+    if (!loggedIn) {
+      return loggingIn ? null : AppRoutes.loginOptions;
+    }
+
+    return null;
+  }
 }
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -140,5 +170,16 @@ class GoRouterRefreshStream extends ChangeNotifier {
   void dispose() {
     _subscription.cancel();
     super.dispose();
+  }
+}
+
+extension GoRouterExtension on GoRouter {
+  String get location {
+    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : routerDelegate.currentConfiguration;
+    final String location = matchList.uri.toString();
+    return location;
   }
 }
