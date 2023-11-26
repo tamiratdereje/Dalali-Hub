@@ -9,8 +9,9 @@ class AppButtonPrimary extends StatefulWidget {
   final String text;
   Color? color;
   TextStyle? textStyle = onPrimaryButtonTextStyle;
+  final Widget? icon;
   AppButtonPrimary(
-      {super.key, required this.onPressed, required this.text, this.color = AppColors.nauticalCreatures, this.textStyle});
+      {super.key, required this.onPressed, required this.text, this.color = AppColors.nauticalCreatures, this.textStyle, this.icon});
 
   @override
   State<AppButtonPrimary> createState() => _AppButtonPrimaryState();
