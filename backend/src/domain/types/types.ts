@@ -8,5 +8,11 @@ export enum OtpPurpose {
   ResetPassword = "RESET_PASSWORD",
 }
 
+export enum HouseCategory {
+  HOUSEFORRENT = "House for rent",
+  HOUSEFORSELL = "House for sell",
+  SHORTSTAYAPRTMENT = "Short stay apartment",
+}
+
 
 

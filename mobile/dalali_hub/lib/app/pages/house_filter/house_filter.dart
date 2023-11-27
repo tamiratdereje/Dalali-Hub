@@ -180,7 +180,13 @@ class _HouseFilterState extends State<HouseFilter> {
               SizedBox(
                 height: 5.h,
               ),
-              AppButtonPrimary(onPressed: () {}, text: "Search", color: AppColors.ultimateGray, textStyle: onPrimaryButtonTextStyle.copyWith(color: AppColors.white),),
+              AppButtonPrimary(
+                onPressed: () {},
+                text: "Search",
+                color: AppColors.ultimateGray,
+                textStyle:
+                    onPrimaryButtonTextStyle.copyWith(color: AppColors.white),
+              ),
               SizedBox(
                 height: 10.3.h,
               ),
@@ -207,9 +213,10 @@ class _HouseFilterState extends State<HouseFilter> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 8,
                   itemBuilder: (context, index) {
-                    return const HouseCard();
+                    return HouseCard(
+                      onTap: () {},
+                    );
                   }),
-              const HouseCard()
             ],
           ),
         ),

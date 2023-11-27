@@ -39,22 +39,22 @@ class _BrokerHomePageState extends State<BrokerHomePage> {
                 children: [
                   BrokerServiceContainer(
                     onTap: () {
-                      // context.push(AppRoutes.houseFilter,
-                      //     extra: {"serviceName": "House for rent"});
+                      context.push(AppRoutes.addHouse,
+                          extra: {"serviceName": "House for rent"});
                     },
                     serviceName: "House for rent House",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      // context.push(AppRoutes.houseFilter,
-                      //     extra: {"serviceName": "House for sell"});
+                      context.push(AppRoutes.addHouse,
+                          extra: {"serviceName": "House for sell"});
                     },
                     serviceName: "House for sell",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      // context.push(AppRoutes.houseFilter,
-                      //     extra: {"serviceName": "Office for rent"});
+                      context.push(AppRoutes.addOffice,
+                          extra: {"serviceName": "Office for rent"});
                     },
                     serviceName: "Office for rent",
                   ),
@@ -69,22 +69,22 @@ class _BrokerHomePageState extends State<BrokerHomePage> {
                 children: [
                   BrokerServiceContainer(
                     onTap: () {
-                      // context.push(AppRoutes.houseFilter,
-                      //     extra: {"serviceName": "Halls for rent"});
+                      context.push(AppRoutes.addHall,
+                          extra: {"serviceName": "Halls for rent"});
                     },
                     serviceName: "Halls for rent",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      // context.push(AppRoutes.houseFilter,
-                      //     extra: {"serviceName": "Short stay houses"});
+                      context.push(AppRoutes.addHouse,
+                          extra: {"serviceName": "Short stay houses"});
                     },
                     serviceName: "Short stay houses",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      // context.push(AppRoutes.officeFilter,
-                      //     extra: {"serviceName": "Office Space for rent"});
+                      context.push(AppRoutes.addOffice,
+                          extra: {"serviceName": "Office Space for rent"});
                     },
                     serviceName: "Office for rent",
                   ),

@@ -27,7 +27,9 @@ class _FavoriteState extends State<Favorite> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 15,
                 itemBuilder: (context, index) {
-                  return const HouseCard();
+                  return HouseCard(
+                    onTap: () {},
+                  );
                 })
           ],
         ),
