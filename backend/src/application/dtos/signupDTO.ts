@@ -8,9 +8,6 @@ import {
   IsStrongPassword,
 } from "class-validator";
 import { Gender } from "domain/types/types";
-import mongoose from "mongoose";
-import { File } from "tsoa";
-import { User } from "@entities/UserEntity";
 
 
 
