@@ -12,4 +12,6 @@ export class HouseRepository extends
         const houseEntities = await this._schema.find(filter);
         return houseEntities;
     }
+
+    
 }

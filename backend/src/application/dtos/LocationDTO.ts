@@ -3,6 +3,7 @@ import {
   IsString,
 } from "class-validator";
 
+
 export class LocationDTO {
   constructor(props: LocationDTO) {
     Object.assign(this, props);

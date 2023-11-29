@@ -50,7 +50,7 @@
       "ESNext",
       "dom",
     ],
-    "target": "ESNext",
+    "target": "esnext",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./build",

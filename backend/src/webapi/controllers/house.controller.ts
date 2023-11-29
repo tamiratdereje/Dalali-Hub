@@ -26,12 +26,14 @@ export class HouseController {
   ) {}
   createHouse = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      console.log(req.body)
       const houseDto = new HouseDTO(req.body);
+      console.log(houseDto)
       const ValidationError = await validate(houseDto);
       if (ValidationError.length > 0) {
+        console.log("validation error", ValidationError.length);
         throw CustomValidationError.Instance(ValidationError);
       }
+      console.log(req.body);
 
       const house = new House(houseDto);
       // Upload photos

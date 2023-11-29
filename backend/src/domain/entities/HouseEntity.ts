@@ -13,10 +13,10 @@ export interface HouseEntity extends IBaseEntity {
   _id: Types.ObjectId;
   title: String;
   photos: mongoose.Types.ObjectId[];
-  price: {
-    minPrice: Number;
-    maxPrice: Number;
-  };
+  
+  minPrice: Number;
+  maxPrice: Number;
+
   category: HouseCategory;
   rooms: Number;
   beds: Number;
@@ -35,10 +35,8 @@ let houseSchema = new Schema<HouseEntity>(
     _id: { type: Schema.Types.ObjectId, auto: true },
     title: { type: String, required: [true, "Title is required"] },
     photos: [{ type: Schema.Types.ObjectId, ref: "Photo" }],
-    price: {
-      minPrice: { type: Number, required: [true, "Min price is required"] },
-      maxPrice: { type: Number, required: [true, "Max price is required"] },
-    },
+    minPrice: { type: Number, required: [true, "Min price is required"] },
+    maxPrice: { type: Number, required: [true, "Max price is required"] },
     category: {
       type: String,
       enum: HouseCategory,
