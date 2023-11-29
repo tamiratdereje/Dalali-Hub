@@ -24,7 +24,7 @@ export interface HouseEntity extends IBaseEntity {
   kitchens: Number;
   size: Number;
   sizeUnit: String;
-  location: mongoose.Types.ObjectId;
+  location: {};
   otherFeatures: String[];
   description: String;
   isApproved: Boolean;
@@ -51,9 +51,9 @@ let houseSchema = new Schema<HouseEntity>(
     size: { type: Number, required: [true, "Size is required"] },
     sizeUnit: { type: String, required: [true, "Size unit is required"] },
     location: {
-      type: Schema.Types.ObjectId,
-      ref: "Location",
-      required: [true, "Location is required"],
+      region: { type: String, required: [true, "Region is required"] },
+      district: { type: String, required: [true, "District is required"] },
+      ward: { type: String, required: [true, "Ward is required"] },
     },
     otherFeatures: [{ type: String }],
     description: { type: String, required: [true, "Description is required"] },

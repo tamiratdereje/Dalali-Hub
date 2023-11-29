@@ -20,10 +20,10 @@ const houseController = new HouseController(
 );
 
 // Routes for HouseController
-houseRoute.post("/create", upload.array("photos", 5), houseController.createHouse);
-houseRoute.get("/:id", houseController.getHouseById);
-houseRoute.get("/all", houseController.getAllHouse);
+houseRoute.post("/", upload.array("photos", 5), houseController.createHouse);
 houseRoute.post("/filter", houseController.getHouseByFilter);
+houseRoute.get("/all", houseController.getAllHouse);
+houseRoute.get("/:id", houseController.getHouseById);
 houseRoute.delete("/:id", houseController.deleteHouse);
 houseRoute.put("/:id", houseController.updateHouse);
 houseRoute.delete("/:id/photo/:photoId", houseController.deleteHousePhoto);

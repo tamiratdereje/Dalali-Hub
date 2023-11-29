@@ -3,6 +3,8 @@ import * as express from 'express';
 import { ExpressConfig } from "@express-config";
 import { config } from "dotenv";
 import { DBConfig } from "config/DB.config";
+import 'reflect-metadata';
+
 
 
 const main = async () => {

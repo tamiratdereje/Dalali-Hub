@@ -26,6 +26,7 @@ export class HouseController {
   ) {}
   createHouse = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log(req.body)
       const houseDto = new HouseDTO(req.body);
       const ValidationError = await validate(houseDto);
       if (ValidationError.length > 0) {
@@ -73,6 +74,7 @@ export class HouseController {
 
   getAllHouse = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      
       const houses = await this.houseRepository.GetAll();
       res.status(StatusCodes.OK).json(new JSendResponse().success(houses));
     }

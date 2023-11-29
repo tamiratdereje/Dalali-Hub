@@ -10,13 +10,13 @@ export class LocationDTO {
 
   @IsNotEmpty()
   @IsString()
-  country: String;
+  region: String;
 
   @IsNotEmpty()
   @IsString()
-  city: String;
+  district: String;
 
   @IsNotEmpty()
   @IsString()
-  street: String;
+  ward: String;
 }

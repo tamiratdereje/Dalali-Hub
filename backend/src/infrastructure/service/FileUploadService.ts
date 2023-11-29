@@ -8,7 +8,7 @@ export class FileUploadService implements IFileUploadService {
   public async uploadFile(file: File): Promise<uploadedFileDTO> {
     try {
       let result = await cloudinary.uploader.upload(file.path, {
-        folder: "profile",
+        folder: "houses",
       });
       return new uploadedFileDTO(result.public_id, result.secure_url);
     } catch (err) {
