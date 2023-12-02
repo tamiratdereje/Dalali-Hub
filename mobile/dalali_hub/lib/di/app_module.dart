@@ -1,3 +1,5 @@
+import 'package:dalali_hub/data/remote/client/house_client.dart';
+import 'package:dalali_hub/domain/entity/house.dart';
 import 'package:dio/dio.dart' hide LogInterceptor;
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
 import 'package:dalali_hub/data/remote/client/user_client.dart';
@@ -36,4 +38,7 @@ abstract class AppModule {
 
   @singleton
   UserClient userClient(Dio dio) => UserClient(dio);
+
+  @singleton
+  HouseClient houseClient(Dio dio) => HouseClient(dio);
 }

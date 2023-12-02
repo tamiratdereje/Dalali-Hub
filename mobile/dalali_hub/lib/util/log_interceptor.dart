@@ -28,6 +28,7 @@ class LogInterceptor extends Interceptor {
         'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
     debugPrint(
         'ERROR[${err.response?.statusCode}] => DATA: ${err.response?.data}');
+       
     return super.onError(err, handler);
   }
 }
