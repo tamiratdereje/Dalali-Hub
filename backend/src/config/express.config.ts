@@ -6,6 +6,9 @@ import { errorHandler } from "webapi/middlewares/error.handler.middleware";
 import { authRoute } from "webapi/routes/auth.route";
 import morgan = require("morgan");
 import { houseRoute } from "webapi/routes/house.route";
+import { hallRoute } from "webapi/routes/hall.route";
+import { officeRoute } from "webapi/routes/office.route";
+import { landRoute } from "webapi/routes/land.route";
 
 export class ExpressConfig {
   private app: Express;
@@ -29,6 +32,9 @@ export class ExpressConfig {
 
       this.app.use("/api/v1/auth", authRoute);
       this.app.use("/api/v1/house", houseRoute);
+      this.app.use("/api/v1/hall", hallRoute);
+      this.app.use("/api/v1/office", officeRoute);
+      this.app.use("/api/v1/land", landRoute);
       this.app.use("/api/v1/all", (req, res) => {
         res.send("Hello World!");
       });

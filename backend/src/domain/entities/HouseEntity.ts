@@ -2,21 +2,12 @@ import { HouseCategory } from "domain/types/types";
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 
-export interface RegionEntity extends IBaseEntity {
-  _id: Types.ObjectId;
-  region: String;
-  district: String;
-  ward: String;
-}
-
 export interface HouseEntity extends IBaseEntity {
   _id: Types.ObjectId;
   title: String;
   photos: mongoose.Types.ObjectId[];
-  
   minPrice: Number;
   maxPrice: Number;
-
   category: HouseCategory;
   rooms: Number;
   beds: Number;
@@ -24,7 +15,7 @@ export interface HouseEntity extends IBaseEntity {
   kitchens: Number;
   size: Number;
   sizeUnit: String;
-  location: {};
+  location: {region: String, district: String, ward: String};
   otherFeatures: String[];
   description: String;
   isApproved: Boolean;

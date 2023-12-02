@@ -8,6 +8,10 @@ export class LandRepository extends
   constructor(private schema: mongoose.Model<LandEntity>) {
     super(schema);
   }
+ async CreateLand(house: LandEntity): Promise<LandEntity> {
+    const entityCreate = (await this._schema.create(house)).populate("photos");
+    return entityCreate;
+  }
    async GetByFilter(filter: {}): Promise<LandEntity[]> {
         const landEntities = await this._schema.find(filter);
         return landEntities;

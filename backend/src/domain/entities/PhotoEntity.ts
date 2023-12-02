@@ -1,10 +1,10 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 
 export interface PhotoEntity extends IBaseEntity {
   secureUrl: string;
   publicId: string;
-  userId: string;
+  _id: Types.ObjectId;
 }
 
 let photoSchema = new Schema<PhotoEntity>(

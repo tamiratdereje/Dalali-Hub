@@ -7,7 +7,6 @@ declare namespace Express {
       pagination: { [key: string]: { page: number; limit: number } };
       data: any[];
     };
+    customQuery: {};
   }
 }
-
-

@@ -8,10 +8,14 @@ export class HouseRepository extends
   constructor(private schema: mongoose.Model<HouseEntity>) {
     super(schema);
   }
-   async GetByFilter(filter: {}): Promise<HouseEntity[]> {
-        const houseEntities = await this._schema.find(filter);
-        return houseEntities;
-    }
-
+  async GetByFilter(filter: {}): Promise<HouseEntity[]> {
+    const houseEntity = (await this._schema.find(filter));
+    return houseEntity
+  }
+  async CreateHouse(house: HouseEntity): Promise<HouseEntity> {
+    const entityCreate = (await this._schema.create(house)).populate("photos");
+    return entityCreate;
+  }
+  
     
 }
