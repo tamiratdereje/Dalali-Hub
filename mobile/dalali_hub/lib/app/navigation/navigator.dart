@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/create_hall/add_hall.dart';
 import 'package:dalali_hub/app/pages/create_house/add_house.dart';
@@ -121,24 +122,26 @@ class AppRouter {
           return const PropertyDetailPage();
         },
       ),
+      GoRoute(
+        path: AppRoutes.loginOptions,
+        builder: (BuildContext context, GoRouterState state) {
+          return const LogInWithGoogleOrAppleId();
+        },
+      )
     ],
   );
 
   FutureOr<String?> redirecter(BuildContext context, GoRouterState state) {
-    final bool loggedIn = authCubit.state.map(
-      authenticated: (_) => true,
-      unauthenticated: (_) => false,
-      initial: (_) => false,
-      firstTime: (_) => false,
+    final bool loggedIn = authCubit.state.maybeWhen(
+      authenticated: () => true,
+      orElse: () => false,
     );
 
-    final bool firstTime = authCubit.state.map(
-      authenticated: (_) => false,
-      unauthenticated: (_) => false,
-      initial: (_) => true,
-      firstTime: (_) => true,
+    final bool firstTime = authCubit.state.maybeWhen(
+      firstTime: () => true,
+      orElse: () => false,
     );
-
+    
     debugPrint(firstTime.toString());
 
     if (firstTime) {

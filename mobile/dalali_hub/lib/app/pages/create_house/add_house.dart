@@ -7,8 +7,10 @@ import 'package:dalali_hub/app/pages/broker_home/widgets/broker_statics.dart';
 import 'package:dalali_hub/app/pages/cutomer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
+import 'package:dalali_hub/app/widgets/multi_image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 // ignore: must_be_immutable
@@ -34,6 +36,7 @@ class _CreateHouseState extends State<CreateHouse> {
     'Item7',
     'Item8',
   ];
+  List<XFile> selectedImages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +245,6 @@ class _CreateHouseState extends State<CreateHouse> {
                         useItemBuilderForSelectedValue: false,
                         itemBuilder: (String item) {
                           return Container(
-                            width: 70.w,
                             padding: EdgeInsets.symmetric(horizontal: 3.1.w),
                             child: Text(
                               item,
@@ -256,32 +258,10 @@ class _CreateHouseState extends State<CreateHouse> {
                     SizedBox(
                       width: 3.7.h,
                     ),
-                    Expanded(
-                      child: AppDropDown(
-                        labelStyle:
-                            bodyTextStyle.copyWith(color: AppColors.white),
-                        selectedValue: selectedNumberOfRooms,
-                        dropDownValues: numberOfRooms,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedNumberOfRooms = value!;
-                          });
-                        },
-                        hint: "Add pictures",
-                        useItemBuilderForSelectedValue: false,
-                        itemBuilder: (String item) {
-                          return Container(
-                            width: 70.w,
-                            padding: EdgeInsets.symmetric(horizontal: 3.1.w),
-                            child: Text(
-                              item,
-                              style: categoryContainerStyle.copyWith(
-                                  color: AppColors.black.withOpacity(0.5)),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    MultiImagePicker(
+                      selectedImages: selectedImages,
+                      child: const Text('Add Pictures'),
+                    )
                   ],
                 ),
                 SizedBox(

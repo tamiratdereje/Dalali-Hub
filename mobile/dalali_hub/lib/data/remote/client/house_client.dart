@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
@@ -20,21 +21,8 @@ abstract class HouseClient {
 
   @POST('houses')
   @MultiPart()
-  Future<HttpResponse<JSendResponse<EmptyResponse>>> addHouse({
-    @Part() String title,
-    @Part() double minPrice,
-    @Part() double maxPrice,
-    @Part() double rooms,
-    @Part() double beds,
-    @Part() double baths,
-    @Part() double kitchens,
-    @Part() double size,
-    @Part() String sizeUnit,
-    @Part() List<String> otherFeatures,
-    @Part() String description,
-    @Part() bool isApproved,
-    @Part() String category,
-    @Part() List<File?> photos,
-
-  });
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> addHouse(
+    @Part(name: 'house') Map<String, dynamic> house,
+    @Part(name: 'photos') List<File> photos,
+  );
 }
