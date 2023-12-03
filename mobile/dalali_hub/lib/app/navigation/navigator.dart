@@ -28,8 +28,8 @@ class AppRouter {
   late final GoRouter router = GoRouter(
     initialLocation: authCubit.state.map(
       authenticated: (_) => AppRoutes.home,
-      unauthenticated: (_) => AppRoutes.loginOptions,
-      initial: (_) => AppRoutes.loginOptions,
+      unauthenticated: (_) => AppRoutes.loginOptions ,
+      initial: (_) => AppRoutes.loginOptions ,
       firstTime: (_) => AppRoutes.onBoarding,
     ),
     redirect: (context, state) => redirecter(context, state),
@@ -147,9 +147,9 @@ class AppRouter {
     }
 
     debugPrint('Matched Location: ${state.matchedLocation}');
-    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions;
+    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions ;
     if (!loggedIn) {
-      return loggingIn ? null : AppRoutes.loginOptions;
+      return loggingIn ? null : AppRoutes.loginOptions ;
     }
 
     return null;

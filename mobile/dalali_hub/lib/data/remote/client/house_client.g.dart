@@ -66,7 +66,6 @@ class _HouseClient implements HouseClient {
     required String description,
     required bool isApproved,
     required String category,
-    required LocationDto location,
     required List<File?> photos,
   }) async {
     const _extra = <String, dynamic>{};
@@ -123,10 +122,6 @@ class _HouseClient implements HouseClient {
     _data.fields.add(MapEntry(
       'category',
       category,
-    ));
-    _data.fields.add(MapEntry(
-      'location',
-      jsonEncode(location),
     ));
     _data.files.addAll(photos.map((i) => MapEntry(
         'photos',

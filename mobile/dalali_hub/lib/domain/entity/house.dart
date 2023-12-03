@@ -23,7 +23,7 @@ class House {
 
   House({
     this.id,
-    required this.title,
+    required this.title, 
     required this.category,
     required this.photos,
     required this.minPrice,
