@@ -31,7 +31,7 @@ export class ExpressConfig {
       this.app.use(cors({ origin: "*" }));
 
       this.app.use("/api/v1/auth", authRoute);
-      this.app.use("/api/v1/house", houseRoute);
+      this.app.use("/api/v1/houses", houseRoute);
       this.app.use("/api/v1/hall", hallRoute);
       this.app.use("/api/v1/office", officeRoute);
       this.app.use("/api/v1/land", landRoute);

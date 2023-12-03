@@ -10,7 +10,6 @@ part 'house_dto.g.dart';
 class HouseDto {
   final String? id;
   final String title;
-  final List<String> photos;
   final double minPrice;
   final double maxPrice;
   final double rooms;
@@ -23,12 +22,11 @@ class HouseDto {
   final String description;
   final bool isApproved;
   final String category;
-  final LocationDto location;
+  final Map location;
 
   HouseDto({
     required this.title,
     required this.category,
-    required this.photos,
     required this.minPrice,
     required this.maxPrice,
     required this.rooms,
@@ -39,18 +37,16 @@ class HouseDto {
     required this.sizeUnit,
     required this.otherFeatures,
     required this.description,
-    required this.isApproved, 
+    required this.isApproved,
     this.id,
     required this.location,
   });
   Map<String, dynamic> toJson() => _$HouseDtoToJson(this);
 
-  factory HouseDto.fromHouse(House house) {
+ static HouseDto toHouseDto(House house) {
     return HouseDto(
       title: house.title,
       category: house.category,
-      id: house.id,
-      photos: house.photos,
       minPrice: house.minPrice,
       maxPrice: house.maxPrice,
       rooms: house.rooms,
@@ -62,28 +58,11 @@ class HouseDto {
       otherFeatures: house.otherFeatures,
       description: house.description,
       isApproved: house.isApproved,
-      location: LocationDto.fromLocation(house.location),
-    );
-  }
-
-  House toHouse() {
-    return House(
-      category: category,
-      title: title,
-      id: id,
-      photos: photos,
-      minPrice: minPrice,
-      maxPrice: maxPrice,
-      rooms: rooms,
-      beds: beds,
-      baths: baths,
-      kitchens: kitchens,
-      size: size,
-      sizeUnit: sizeUnit,
-      otherFeatures: otherFeatures,
-      description: description,
-      isApproved: isApproved,
-      location: location.toLocation(),
+      location: {
+        "region": house.location.region,
+        "district": house.location.district,
+        "ward": house.location.ward
+      },
     );
   }
 }

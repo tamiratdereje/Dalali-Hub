@@ -53,7 +53,7 @@ class _HouseClient implements HouseClient {
 
   @override
   Future<HttpResponse<JSendResponse<EmptyResponse>>> addHouse(
-    Map<String, dynamic> house,
+    HouseDto house,
     List<File> photos,
   ) async {
     const _extra = <String, dynamic>{};

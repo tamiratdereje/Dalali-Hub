@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dalali_hub/data/remote/client/house_client.dart';
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
+import 'package:dalali_hub/data/remote/model/house_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
 import 'package:dalali_hub/domain/entity/house.dart';
 import 'package:dalali_hub/domain/entity/house_response.dart';
@@ -17,31 +18,12 @@ class HouseRepository implements IHouseRepository {
 
   @override
   Future<Resource<Empty>> addHouse(House house) async {
-    var houseDto = {
-      'title': house.title,
-      'minPrice': house.minPrice,
-      'maxPrice': house.maxPrice,
-      'rooms': house.rooms,
-      'beds': house.beds,
-      'baths': house.baths,
-      'kitchens': house.kitchens,
-      'size': house.size,
-      'sizeUnit': house.sizeUnit,
-      'otherFeatures': house.otherFeatures,
-      'description': house.description,
-      'isApproved': false,
-      'category': house.category,
-      'location': {
-        'region': house.location.region,
-        'ward': house.location.ward,
-        'district': house.location.district
-      },
-    };
+    
 
     var photosDto = house.photos.map((e) => File(e)).toList();
-
+    
     var response = await handleApiCall<EmptyResponse>(
-        _houseClient.addHouse(houseDto, photosDto));
+        _houseClient.addHouse(HouseDto.toHouseDto(house), photosDto));
 
     if (response is Success) {
       return const Success(Empty());

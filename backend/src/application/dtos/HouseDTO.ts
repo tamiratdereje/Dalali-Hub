@@ -11,7 +11,6 @@ import {
   IsNotEmptyObject,
   IsObject,
   IsBooleanString,
-  IsNumberString
 } from "class-validator";
 
 
@@ -29,11 +28,11 @@ export class HouseDTO {
   title: String;
 
   @IsNotEmpty({ message: "Min price is required" })
-  @IsNumberString({}, { message: "Min price must be a Number" })
+  @IsNumber({}, { message: "Min price must be a Number" })
   minPrice: Number;
 
   @IsNotEmpty({ message: "Max price is required" })
-  @IsNumberString({}, { message: "Max price must be a Number" })
+  @IsNumber({}, { message: "Max price must be a Number" })
   maxPrice: Number;
 
   @IsNotEmpty({ message: "Category is required" })
@@ -41,23 +40,23 @@ export class HouseDTO {
   category: HouseCategory;
 
   @IsNotEmpty({ message: "Rooms is required" })
-  @IsNumberString({}, { message: "Rooms must be a Number" })
+  @IsNumber({}, { message: "Rooms must be a Number" })
   rooms: Number;
 
   @IsNotEmpty({ message: "Beds is required" })
-  @IsNumberString({}, { message: "Beds must be a Number" })
+  @IsNumber({}, { message: "Beds must be a Number" })
   beds: Number;
 
   @IsNotEmpty({ message: "Baths is required" })
-  @IsNumberString({}, { message: "Baths must be a Number" })
+  @IsNumber({}, { message: "Baths must be a Number" })
   baths: Number;
 
   @IsNotEmpty({ message: "Kitchens is required" })
-  @IsNumberString({}, { message: "Kitchens must be a Number" })
+  @IsNumber({}, { message: "Kitchens must be a Number" })
   kitchens: Number;
 
   @IsNotEmpty({ message: "Size is required" })
-  @IsNumberString({}, { message: "Size must be a Number" })
+  @IsNumber({}, { message: "Size must be a Number" })
   size: Number;
 
   @IsNotEmpty({ message: "Size unit is required" })
@@ -78,6 +77,6 @@ export class HouseDTO {
   description: String;
 
   @Transform(({ value }: TransformFnParams) => value?.trim())
-  @IsBooleanString({ message: "isApproved must be a boolean"})
+  @IsBoolean({ message: "isApproved must be a boolean"})
   isApproved: Boolean;
 }

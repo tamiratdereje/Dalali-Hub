@@ -9,8 +9,6 @@ part of 'house_dto.dart';
 HouseDto _$HouseDtoFromJson(Map<String, dynamic> json) => HouseDto(
       title: json['title'] as String,
       category: json['category'] as String,
-      photos:
-          (json['photos'] as List<dynamic>).map((e) => e as String).toList(),
       minPrice: (json['minPrice'] as num).toDouble(),
       maxPrice: (json['maxPrice'] as num).toDouble(),
       rooms: (json['rooms'] as num).toDouble(),
@@ -25,13 +23,12 @@ HouseDto _$HouseDtoFromJson(Map<String, dynamic> json) => HouseDto(
       description: json['description'] as String,
       isApproved: json['isApproved'] as bool,
       id: json['id'] as String?,
-      location: LocationDto.fromJson(json['location'] as Map<String, dynamic>),
+      location: json['location'] as Map<String, dynamic>,
     );
 
 Map<String, dynamic> _$HouseDtoToJson(HouseDto instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'photos': instance.photos,
       'minPrice': instance.minPrice,
       'maxPrice': instance.maxPrice,
       'rooms': instance.rooms,
@@ -44,5 +41,5 @@ Map<String, dynamic> _$HouseDtoToJson(HouseDto instance) => <String, dynamic>{
       'description': instance.description,
       'isApproved': instance.isApproved,
       'category': instance.category,
-      'location': instance.location.toJson(),
+      'location': instance.location,
     };

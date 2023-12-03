@@ -4,14 +4,32 @@ import 'package:dalali_hub/app/core/widgets/input_field.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/broker_home/widgets/broker_service_container.dart';
 import 'package:dalali_hub/app/pages/broker_home/widgets/broker_statics.dart';
+import 'package:dalali_hub/app/pages/create_house/bloc/create_house/create_house_bloc.dart';
 import 'package:dalali_hub/app/pages/cutomer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/app/widgets/multi_image_picker.dart';
+import 'package:dalali_hub/domain/entity/house.dart';
+import 'package:dalali_hub/domain/entity/location.dart';
+import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+class CreateHousePage extends StatelessWidget {
+  String serviceName;
+  CreateHousePage({super.key, required this.serviceName});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt.get<CreateHouseBloc>(),
+      child: CreateHouse(serviceName: serviceName),
+    );
+  }
+}
 
 // ignore: must_be_immutable
 class CreateHouse extends StatefulWidget {
@@ -387,6 +405,27 @@ class _CreateHouseState extends State<CreateHouse> {
                       color: AppColors.white, fontWeight: FontWeight.w600),
                   text: "Post",
                   onPressed: () {
+                    context
+                        .read<CreateHouseBloc>()
+                        .add(CreateHouseEvent.createHouse(
+                          house: House(
+                            title: "title",
+                            category: "House for rent",
+                            photos: selectedImages.map((e) => e.path).toList(),
+                            minPrice: 5,
+                            maxPrice: 15,
+                            rooms: 5,
+                            beds: 2,
+                            baths: 2,
+                            kitchens: 1,
+                            size: 200,
+                            sizeUnit: "m",
+                            otherFeatures: [],
+                            description: "description",
+                            isApproved: false,
+                            location: Location(region: "Oromia", district: "sululta", ward: "mizan"),
+                          ),
+                        ));
                     // if (!_formKey.currentState!.validate()) {
                     //   debugPrint('form is not valid');
                     //   return;

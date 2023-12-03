@@ -95,7 +95,7 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.addHouse,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateHouse(serviceName: "Add house information");
+          return CreateHousePage(serviceName: "Add house information");
         },
       ),
       GoRoute(

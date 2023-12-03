@@ -32,7 +32,7 @@ export class HouseController {
   createHouse = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       console.log(req.body);
-      const houseDto = new HouseDTO(req.body);
+      const houseDto = new HouseDTO(JSON.parse(req.body.house));
 
       console.log(houseDto);
       const ValidationError = await validate(houseDto);
@@ -40,9 +40,12 @@ export class HouseController {
         console.log("validation error", ValidationError.length);
         throw CustomValidationError.Instance(ValidationError);
       }
-      console.log(req.body);
+      console.log(houseDto);
 
       const house = new House(houseDto);
+      console.log("files")
+      console.log(req.files)
+      console.log("files")
       // Upload photos
       if (req.files) {
         //TODO: Add more validations and remove unnecessary files during errors

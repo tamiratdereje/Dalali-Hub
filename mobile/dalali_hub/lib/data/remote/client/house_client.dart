@@ -22,7 +22,7 @@ abstract class HouseClient {
   @POST('houses')
   @MultiPart()
   Future<HttpResponse<JSendResponse<EmptyResponse>>> addHouse(
-    @Part(name: 'house') Map<String, dynamic> house,
+    @Part(name: 'house') HouseDto house,
     @Part(name: 'photos') List<File> photos,
   );
 }
