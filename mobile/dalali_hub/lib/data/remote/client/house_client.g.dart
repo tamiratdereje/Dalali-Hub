@@ -52,76 +52,17 @@ class _HouseClient implements HouseClient {
   }
 
   @override
-  Future<HttpResponse<JSendResponse<EmptyResponse>>> addHouse({
-    required String title,
-    required double minPrice,
-    required double maxPrice,
-    required double rooms,
-    required double beds,
-    required double baths,
-    required double kitchens,
-    required double size,
-    required String sizeUnit,
-    required List<String> otherFeatures,
-    required String description,
-    required bool isApproved,
-    required String category,
-    required List<File?> photos,
-  }) async {
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> addHouse(
+    Map<String, dynamic> house,
+    List<File> photos,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.fields.add(MapEntry(
-      'title',
-      title,
-    ));
-    _data.fields.add(MapEntry(
-      'minPrice',
-      minPrice.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'maxPrice',
-      maxPrice.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'rooms',
-      rooms.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'beds',
-      beds.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'baths',
-      baths.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'kitchens',
-      kitchens.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'size',
-      size.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'sizeUnit',
-      sizeUnit,
-    ));
-    otherFeatures.forEach((i) {
-      _data.fields.add(MapEntry('otherFeatures', i));
-    });
-    _data.fields.add(MapEntry(
-      'description',
-      description,
-    ));
-    _data.fields.add(MapEntry(
-      'isApproved',
-      isApproved.toString(),
-    ));
-    _data.fields.add(MapEntry(
-      'category',
-      category,
+      'house',
+      jsonEncode(house),
     ));
     _data.files.addAll(photos.map((i) => MapEntry(
         'photos',
