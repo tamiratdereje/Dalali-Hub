@@ -45,6 +45,7 @@ class HouseDto {
 
  static HouseDto toHouseDto(House house) {
     return HouseDto(
+      id: house.id,
       title: house.title,
       category: house.category,
       minPrice: house.minPrice,

@@ -29,8 +29,8 @@ class AppRouter {
   late final GoRouter router = GoRouter(
     initialLocation: authCubit.state.map(
       authenticated: (_) => AppRoutes.home,
-      unauthenticated: (_) => AppRoutes.loginOptions ,
-      initial: (_) => AppRoutes.loginOptions ,
+      unauthenticated: (_) => AppRoutes.loginOptions,
+      initial: (_) => AppRoutes.loginOptions,
       firstTime: (_) => AppRoutes.onBoarding,
     ),
     redirect: (context, state) => redirecter(context, state),
@@ -38,10 +38,11 @@ class AppRouter {
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
-          name: 'home',
-          path: AppRoutes.home,
-          builder: (BuildContext context, GoRouterState state) =>
-              const BottomNavigation()),
+        name: 'home',
+        path: AppRoutes.home,
+        builder: (BuildContext context, GoRouterState state) =>
+            const BottomNavigation(),
+      ),
       GoRoute(
         name: 'signup',
         path: AppRoutes.register,
@@ -51,7 +52,8 @@ class AppRouter {
       GoRoute(
         name: 'login',
         path: AppRoutes.login,
-        builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const LoginScreen(),
       ),
       GoRoute(
         path: AppRoutes.customerHome,
@@ -95,7 +97,13 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.addHouse,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateHousePage(serviceName: "Add house information");
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          // CreateHousePage(
+          //   serviceName: args["serviceName"],
+          //   action: args["action"],
+          //   category: args["category"],
+          // )
+          return const CreateHousePage(serviceName: "Add house information", action : "Create", category: "House for rent",);
         },
       ),
       GoRoute(
@@ -141,7 +149,7 @@ class AppRouter {
       firstTime: () => true,
       orElse: () => false,
     );
-    
+
     debugPrint(firstTime.toString());
 
     if (firstTime) {
@@ -150,9 +158,9 @@ class AppRouter {
     }
 
     debugPrint('Matched Location: ${state.matchedLocation}');
-    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions ;
+    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions;
     if (!loggedIn) {
-      return loggingIn ? null : AppRoutes.loginOptions ;
+      return loggingIn ? null : AppRoutes.loginOptions;
     }
 
     return null;

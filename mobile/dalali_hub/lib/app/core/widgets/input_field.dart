@@ -4,24 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AppInputField extends StatefulWidget {
-  const AppInputField(
-      {super.key,
-      this.hint,
-      this.keyboardType,
-      this.controller,
-      this.label,
-      this.obscureText = false,
-      this.validator,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.onChanged,
-      this.height = 72,
-      this.alignment = TextAlign.start,
-      this.labelStyle,
-      this.hintStyle,
-      this.enableSuggestions = true,
-      this.maxLine = 1,
-      this.minLine = 1});
+  const AppInputField({
+    super.key,
+    this.hint,
+    this.keyboardType,
+    this.controller,
+    this.label,
+    this.obscureText = false,
+    this.validator,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.onChanged,
+    this.height = 72,
+    this.alignment = TextAlign.start,
+    this.labelStyle,
+    this.hintStyle,
+    this.enableSuggestions = true,
+    this.maxLine = 1,
+    this.minLine = 1,
+    this.onTap,
+  });
 
   final Widget? prefixIcon;
   final String? hint;
@@ -39,6 +41,7 @@ class AppInputField extends StatefulWidget {
   final bool enableSuggestions;
   final int maxLine;
   final int minLine;
+  final Function? onTap;
 
   @override
   State<AppInputField> createState() => _AppInputFieldState();
