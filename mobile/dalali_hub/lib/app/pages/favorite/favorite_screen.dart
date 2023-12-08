@@ -1,4 +1,4 @@
-import 'package:dalali_hub/app/pages/cutomer_home/widgets/house_card.dart';
+import 'package:dalali_hub/app/pages/customer_home/widgets/house_card.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
 

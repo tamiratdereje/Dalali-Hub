@@ -7,7 +7,7 @@ import 'package:dalali_hub/app/core/widgets/snackbar.dart';
 import 'package:dalali_hub/app/pages/create_house/bloc/create_house/create_house_bloc.dart';
 import 'package:dalali_hub/app/pages/create_house/bloc/update_house/update_house_bloc.dart';
 import 'package:dalali_hub/app/pages/create_house/widgets/build_chips_widget.dart';
-import 'package:dalali_hub/app/pages/cutomer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/app/widgets/multi_image_picker.dart';

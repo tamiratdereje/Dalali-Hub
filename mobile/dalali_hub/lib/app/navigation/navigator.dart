@@ -6,7 +6,7 @@ import 'package:dalali_hub/app/pages/create_hall/add_hall.dart';
 import 'package:dalali_hub/app/pages/create_house/add_house.dart';
 import 'package:dalali_hub/app/pages/create_office/create_office.dart';
 import 'package:dalali_hub/app/pages/create_plot/add_plot.dart';
-import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
+import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/halls/hall_filter.dart';
 import 'package:dalali_hub/app/pages/house_filter/house_filter.dart';
 import 'package:dalali_hub/app/pages/lands/land_filter.dart';

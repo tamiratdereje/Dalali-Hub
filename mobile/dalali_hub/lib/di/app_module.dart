@@ -1,3 +1,4 @@
+import 'package:dalali_hub/data/remote/client/feed_client.dart';
 import 'package:dalali_hub/data/remote/client/house_client.dart';
 import 'package:dalali_hub/data/remote/client/images_client.dart';
 import 'package:dalali_hub/domain/entity/house.dart';
@@ -45,4 +46,8 @@ abstract class AppModule {
 
   @singleton
   ImagesClient imageClient(Dio dio) => ImagesClient(dio);
+
+
+  @singleton
+  FeedClient feedClient(Dio dio) => FeedClient(dio);
 }

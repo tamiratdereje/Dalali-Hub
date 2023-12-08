@@ -4,7 +4,7 @@ import 'package:dalali_hub/app/core/widgets/input_field.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/broker_home/widgets/broker_service_container.dart';
 import 'package:dalali_hub/app/pages/broker_home/widgets/broker_statics.dart';
-import 'package:dalali_hub/app/pages/cutomer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';

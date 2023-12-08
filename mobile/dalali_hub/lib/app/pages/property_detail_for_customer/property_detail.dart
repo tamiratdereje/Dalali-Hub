@@ -1,5 +1,5 @@
 
-import 'package:dalali_hub/app/pages/cutomer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
