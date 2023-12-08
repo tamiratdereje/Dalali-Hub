@@ -7,6 +7,7 @@ import { IHouseRepository } from "@interfaces/repositories/IHouseRepository";
 import { ILandRepository } from "@interfaces/repositories/ILandRepository";
 import { IOfficeRepository } from "@interfaces/repositories/IOfficeRepository";
 import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
+import { id } from "date-fns/locale";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { asyncHandler } from "webapi/middlewares/async.handler.middleware";
@@ -52,7 +53,13 @@ export class FeedController {
         );
         for (let curPhoto of curHouse.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            houseImageDto.push(returnPhoto);
+            houseImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
           });
         }
         feeds.push(houseFeed);
@@ -87,7 +94,13 @@ export class FeedController {
         );
         for (let curPhoto of curHall.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            hallImageDto.push(returnPhoto);
+            hallImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
           });
         }
         feeds.push(hallFeed);
@@ -121,7 +134,13 @@ export class FeedController {
         );
         for (let curPhoto of curLand.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            landImageDto.push(returnPhoto);
+            landImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
           });
         }
         feeds.push(hallFeed);
@@ -155,7 +174,13 @@ export class FeedController {
         );
         for (let curPhoto of curOffices.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            landImageDto.push(returnPhoto);
+            landImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
           });
         }
         feeds.push(officesFeed);

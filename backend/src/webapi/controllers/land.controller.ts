@@ -80,7 +80,7 @@ export class LandController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of land.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultland = new LandResponseDTO(
@@ -161,7 +161,7 @@ export class LandController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of land.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultLand = new LandResponseDTO(
@@ -257,7 +257,7 @@ export class LandController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of land.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       

@@ -85,7 +85,7 @@ export class HouseController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of house.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultHouse = new HouseResponseDTO(
@@ -170,7 +170,7 @@ export class HouseController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of house.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultHouse = new HouseResponseDTO(
@@ -270,7 +270,7 @@ export class HouseController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of house.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       

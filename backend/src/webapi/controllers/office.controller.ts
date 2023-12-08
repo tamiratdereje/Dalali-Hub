@@ -80,7 +80,7 @@ export class OfficeController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of office.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultoffice = new OfficeResponseDTO(
@@ -162,7 +162,7 @@ export class OfficeController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of office.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultoffice = new OfficeResponseDTO(
@@ -259,7 +259,7 @@ export class OfficeController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of office.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       

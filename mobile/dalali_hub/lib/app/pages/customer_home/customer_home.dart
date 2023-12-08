@@ -1,22 +1,38 @@
 import 'package:dalali_hub/app/navigation/routes.dart';
+import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_service_container.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/house_card.dart';
 
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
+import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class CustomerHomePage extends StatefulWidget {
+class CustomerHomePage extends StatelessWidget {
   const CustomerHomePage({super.key});
 
   @override
-  State<CustomerHomePage> createState() => _CustomerHomePageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          getIt.get<FeedsBloc>()..add(const FeedsEvent.feeds()),
+      child: const CustomerHome(),
+    );
+  }
 }
 
-class _CustomerHomePageState extends State<CustomerHomePage> {
+class CustomerHome extends StatefulWidget {
+  const CustomerHome({super.key});
+
+  @override
+  State<CustomerHome> createState() => _CustomerHomePageState();
+}
+
+class _CustomerHomePageState extends State<CustomerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,19 +144,33 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
               SizedBox(
                 height: 2.3.h,
               ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 8,
-                  itemBuilder: (context, index) {
-                    return HouseCard(
-                      onTap: () {
-                        context.push(
-                          AppRoutes.houseDetail,
-                        );
-                      },
-                    );
-                  }),
+              BlocBuilder<FeedsBloc, FeedsState>(
+                builder: (context, state) {
+                  return state.maybeMap(
+                    orElse: () => Container(),
+                    initial: (_) => Container(),
+                    loading: (_) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    success: (data) => ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: data.feeds.length,
+                        itemBuilder: (context, index) {
+                          return HouseCard(
+                            onTap: () {
+                              context.push(
+                                AppRoutes.houseDetail,
+                              );
+                            },
+                          );
+                        }),
+                    error: (error) => Center(
+                      child: Text(error.toString()),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

@@ -7,21 +7,21 @@ part 'photo_response_dto.g.dart';
 @JsonSerializable()
 class PhotoResponseDto {
   final String id;
-  final String publicUrl;
-  final String secoureUrl;
+  final String publicId;
+  final String secureUrl;
 
   PhotoResponseDto({
     required this.id,
-    required this.publicUrl,
-    required this.secoureUrl,
+    required this.publicId,
+    required this.secureUrl,
   });
   factory PhotoResponseDto.fromJson(Map<String, dynamic> json) =>
       _$PhotoResponseDtoFromJson(json);
 
   PhotoResponse toPhotoResponse() => PhotoResponse(
         id: id,
-        publicUrl: publicUrl,
-        secoureUrl: secoureUrl,
+        publicUrl: publicId,
+        secoureUrl: secureUrl,
       );
 
 }

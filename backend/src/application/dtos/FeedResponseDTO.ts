@@ -4,7 +4,7 @@ import { PhotoResponseDTO } from "./photoResponseDTO";
 
 export class FeedResponseDTO {
    constructor(
-        public _id: Types.ObjectId,
+        public id: Types.ObjectId,
         public title: String,
         public minPrice: Number,
         public maxPrice: Number,
@@ -13,7 +13,7 @@ export class FeedResponseDTO {
         public size: Number,
         public sizeUnit: String,
         public location: LocationDTO,
-        public images: PhotoResponseDTO[] ,
+        public photos: PhotoResponseDTO[] ,
         public otherFeatures: String[],
         public description: String,
         public isApproved: Boolean,

@@ -80,7 +80,7 @@ export class HallController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of hall.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resultHall = new HallResponseDTO(
@@ -163,7 +163,7 @@ export class HallController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of hall.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       const resulthall = new HallResponseDTO(
@@ -260,7 +260,7 @@ export class HallController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of hall.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(curPhoto);
+          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
         });
       }
       
