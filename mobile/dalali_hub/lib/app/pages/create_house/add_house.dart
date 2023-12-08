@@ -129,7 +129,8 @@ class _CreateHouseState extends State<CreateHouse> {
     "Waldiya"
   ];
 
-  List<XFile> selectedImages = [];
+  List<String> selectedImages = [];
+  List<String> oldSelectedImages = [];
   List<String> selectedList = ["Shower"];
   void delete(String serviceName) {
     setState(() {
@@ -525,6 +526,8 @@ class _CreateHouseState extends State<CreateHouse> {
                       width: 3.7.h,
                     ),
                     MultiImagePicker(
+                      activity: widget.action,
+                      oldSelectedImages: oldSelectedImages,
                       selectedImages: selectedImages,
                       child: Container(
                         decoration: BoxDecoration(
@@ -664,9 +667,7 @@ class _CreateHouseState extends State<CreateHouse> {
                                   house: House(
                                     title: titleController.text,
                                     category: widget.category,
-                                    photos: selectedImages
-                                        .map((e) => e.path)
-                                        .toList(),
+                                    photos: selectedImages,
                                     minPrice:
                                         double.parse(minPriceController.text),
                                     maxPrice:
@@ -696,9 +697,7 @@ class _CreateHouseState extends State<CreateHouse> {
                                     id: widget.house!.id,
                                     title: titleController.text,
                                     category: widget.category,
-                                    photos: selectedImages
-                                        .map((e) => e.path)
-                                        .toList(),
+                                    photos: selectedImages,
                                     minPrice:
                                         double.parse(minPriceController.text),
                                     maxPrice:

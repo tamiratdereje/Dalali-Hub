@@ -9,9 +9,16 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MultiImagePicker extends StatefulWidget {
   final Widget child;
-  final List<XFile> selectedImages;
-  const MultiImagePicker(
-      {super.key, required this.child, required this.selectedImages});
+  final List<String> selectedImages;
+  final List<String> oldSelectedImages;
+  String? activity;
+
+  MultiImagePicker(
+      {super.key,
+      required this.child,
+      required this.selectedImages,
+      required this.oldSelectedImages,
+      this.activity});
 
   @override
   State<MultiImagePicker> createState() => _MultiImagePickerState();
@@ -20,7 +27,7 @@ class MultiImagePicker extends StatefulWidget {
 class _MultiImagePickerState extends State<MultiImagePicker> {
   final ImagePicker picker = ImagePicker();
   void onSelectImage(XFile photo) {
-    widget.selectedImages.add(photo);
+    widget.selectedImages.add(photo.path);
   }
 
   @override
@@ -43,7 +50,12 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
                     child: AppButtonPrimary(
                       text: "Save",
                       onPressed: () {
+                        if (widget.activity == "Update") {
+                          // TODO: call save images BLOC for update activity
+
+                        } else {
                         Navigator.pop(context);
+                        }
                       },
                     ),
                   ),
@@ -64,7 +76,9 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
         height: 500,
         color: Colors.white,
         child: GridView.builder(
-          itemCount: widget.selectedImages.length + 1,
+          itemCount: widget.selectedImages.length +
+              1 +
+              widget.oldSelectedImages.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3),
           itemBuilder: (context, index) => index < widget.selectedImages.length
@@ -74,14 +88,26 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
                       height: 30.w,
                       width: 30.w,
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.file(File(widget.selectedImages[index].path),
-                          fit: BoxFit.cover),
+                      child: index < widget.oldSelectedImages.length
+                          ? Image.network(widget.oldSelectedImages[index])
+                          : Image.file(
+                              File(widget.selectedImages[
+                                  index - widget.oldSelectedImages.length]),
+                              fit: BoxFit.cover),
                     ),
                     Positioned(
                       top: 0,
                       right: 0,
                       child: GestureDetector(
                         onTap: () {
+                          if (index < widget.oldSelectedImages.length) {
+                            // TODO: call remove from old images BLOC
+                            
+                            widget.oldSelectedImages.removeAt(index);
+                          } else {
+                            widget.selectedImages.removeAt(
+                                index - widget.oldSelectedImages.length);
+                          }
                           setState(
                             () {
                               widget.selectedImages.removeAt(index);
