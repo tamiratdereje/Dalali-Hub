@@ -1,8 +1,11 @@
+import 'package:dalali_hub/app/core/widgets/hall_card.dart';
+import 'package:dalali_hub/app/core/widgets/house_card.dart';
+import 'package:dalali_hub/app/core/widgets/land_card.dart';
+import 'package:dalali_hub/app/core/widgets/office_card.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_service_container.dart';
-import 'package:dalali_hub/app/pages/customer_home/widgets/house_card.dart';
 
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
@@ -157,12 +160,75 @@ class _CustomerHomePageState extends State<CustomerHome> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: data.feeds.length,
                         itemBuilder: (context, index) {
-                          return HouseCard(
-                            onTap: () {
-                              context.push(
-                                AppRoutes.houseDetail,
-                              );
-                            },
+                          if (data.feeds[index].category == "hall") {
+                            return HallCard(
+                              title: data.feeds[index].title,
+                              location: data.feeds[index].location.ward,
+                              price: data.feeds[index].maxPrice.toString(),
+                              sqft: data.feeds[index].size.toString(),
+                              seats: data.feeds[index].seats.toString(),
+                              onTap: () {
+                                context.push(AppRoutes.propertyDetail, extra: {
+                                  "feed": data.feeds[index],
+                                  "category": data.feeds[index].category
+                                });
+                              },
+                            );
+                          }
+                          if (data.feeds[index].category == "office") {
+                            return OfficeCard(
+                              title: data.feeds[index].title,
+                              location: data.feeds[index].location.ward,
+                              price: data.feeds[index].maxPrice.toString(),
+                              sqft: data.feeds[index].size.toString(),
+                              rooms: data.feeds[index].rooms.toString(),
+                              onTap: () {
+                                context.push(AppRoutes.propertyDetail, extra: {
+                                  "feed": data.feeds[index],
+                                  "category": data.feeds[index].category
+                                });
+                              },
+                            );
+                          }
+                          if (data.feeds[index].category == "land") {
+                            return LandCard(
+                              title: data.feeds[index].title,
+                              location: data.feeds[index].location.ward,
+                              price: data.feeds[index].maxPrice.toString(),
+                              sqft: data.feeds[index].size.toString(),
+                              onTap: () {
+                                context.push(AppRoutes.propertyDetail, extra: {
+                                  "feed": data.feeds[index],
+                                  "category": data.feeds[index].category
+                                });
+                              },
+                            );
+                          }
+                          if (data.feeds[index].category == "House for rent" ||
+                              data.feeds[index].category == "House for sell" ||
+                              data.feeds[index].category ==
+                                  "Short stay apartment") {
+                            return HouseCard(
+                              title: data.feeds[index].title,
+                              location: data.feeds[index].location.ward,
+                              beds: data.feeds[index].beds.toString(),
+                              baths: data.feeds[index].baths.toString(),
+                              price: data.feeds[index].maxPrice.toString(),
+                              sqft: data.feeds[index].size.toString(),
+                              onTap: () {
+                                context.push(AppRoutes.propertyDetail, extra: {
+                                  "feed": data.feeds[index],
+                                  "category": data.feeds[index].category
+                                });
+                              },
+                            );
+                          }
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Text("Category doesn't exist"),
                           );
                         }),
                     error: (error) => Center(

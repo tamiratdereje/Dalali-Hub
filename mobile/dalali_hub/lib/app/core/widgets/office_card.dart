@@ -3,11 +3,21 @@ import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class HouseCard extends StatelessWidget {
+class OfficeCard extends StatelessWidget {
   Function onTap;
-  HouseCard({
+  final String title;
+  final String location;
+  final String sqft;
+  final String price;
+  final String rooms;
+  OfficeCard({
     super.key,
+    this.location = "Heidenreich Forks Apt. 141 Kubton",
+    this.title = "Bole, Edna mall 3rd floor",
     required this.onTap,
+    this.sqft= "300",
+    this.price= "27500",
+    this.rooms = "9"
   });
 
   @override
@@ -65,7 +75,7 @@ class HouseCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Sunshine place",
+                    title,
                     style: boldbodyTextStyle,
                   ),
                   Row(
@@ -79,7 +89,7 @@ class HouseCard extends StatelessWidget {
                         width: 1.8.w,
                       ),
                       Text(
-                        "Heidenreich Forks Apt. 141 Kubton",
+                        location,
                         style: inputFieldHintStyle.copyWith(fontSize: 12.sp),
                       ),
                     ],
@@ -98,24 +108,7 @@ class HouseCard extends StatelessWidget {
                             width: 1.3.w,
                           ),
                           Text(
-                            "4 Beds",
-                            style:
-                                inputFieldHintStyle.copyWith(fontSize: 12.sp),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.bathtub_outlined,
-                            size: 12,
-                            color: AppColors.nauticalCreatures,
-                          ),
-                          SizedBox(
-                            width: 1.3.w,
-                          ),
-                          Text(
-                            "2 Baths",
+                            "$rooms Rooms",
                             style:
                                 inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
@@ -132,7 +125,7 @@ class HouseCard extends StatelessWidget {
                             width: 1.3.w,
                           ),
                           Text(
-                            "2400 SQ FT",
+                            "$sqft SQ FT",
                             style:
                                 inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
@@ -143,7 +136,7 @@ class HouseCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "750",
+                        "$price ",
                         style: inputFieldLabelMinStyle.copyWith(
                           color: AppColors.black,
                         ),

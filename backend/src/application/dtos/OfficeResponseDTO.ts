@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { HouseCategory } from "domain/types/types";
+import { RealStateCategory } from "domain/types/types";
 import { LocationDTO } from "./LocationDTO";
 import { PhotoResponseDTO } from "./photoResponseDTO";
 

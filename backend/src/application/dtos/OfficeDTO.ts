@@ -11,7 +11,7 @@ import {
     IsBooleanString,
   } from "class-validator";
   import { Transform, TransformFnParams, Type } from "class-transformer";
-  import { HouseCategory } from "domain/types/types";
+  import { RealStateCategory } from "domain/types/types";
   import { LocationDTO } from "./LocationDTO";
   
   export class OfficeDTO {
@@ -35,7 +35,7 @@ import {
     maxPrice: Number;
   
     @IsNotEmpty({ message: "Category is required" })
-    @IsEnum(HouseCategory, { message: "Invalid house category" })
+    @IsEnum(RealStateCategory, { message: "Invalid house category" })
     category: String;
   
     @IsNotEmpty({ message: "Rooms is required" })

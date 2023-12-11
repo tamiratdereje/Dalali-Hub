@@ -1,19 +1,24 @@
-
+import 'package:dalali_hub/app/pages/create_house/widgets/build_chips_widget.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/other_features_chips.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
+import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PropertyDetailPage extends StatefulWidget {
-  const PropertyDetailPage({super.key});
+  final String category;
+  final Feed feed;
+  const PropertyDetailPage({super.key, required this.category, required this.feed});
 
   @override
   State<PropertyDetailPage> createState() => _PropertyDetailPageState();
 }
 
 class _PropertyDetailPageState extends State<PropertyDetailPage> {
+  List<String> selectedList = ["Shower", "Wifi", "Parking", "Garden"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +52,20 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               SizedBox(
                 height: 2.7.h,
               ),
-              Text("Duplex Apartment", style: appBarTitleStyle),
+              Row(
+                children: [
+                  Text(widget.feed.title, style: appBarTitleStyle),
+                  SizedBox(
+                    width: 2.7.w,
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite_border_outlined,
+                        color: AppColors.nauticalCreatures,
+                      ))
+                ],
+              ),
               SizedBox(
                 height: 3.7.h,
               ),
@@ -59,7 +77,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     style: inputFieldLabelStyle,
                   ),
                   Text(
-                    "NPR 1,00,00,000",
+                    "NPR ${widget.feed.minPrice} - NPR ${widget.feed.maxPrice}",
                     style: inputFieldLabelMinStyle,
                   ),
                 ],
@@ -70,59 +88,160 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.bed_rounded,
-                        size: 20,
-                        color: AppColors.nauticalCreatures,
-                      ),
-                      SizedBox(
-                        width: 3.3.w,
-                      ),
-                      Text(
-                        "4 Beds",
-                        style: inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment" ||
+                          widget.category == "office")
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.room_preferences_outlined,
+                              size: 20,
+                              color: AppColors.nauticalCreatures,
+                            ),
+                            SizedBox(
+                              width: 3.3.w,
+                            ),
+                            Text(
+                              "${widget.feed.rooms} Rooms",
+                              style:
+                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                            ),
+                          ],
+                        ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment" ||
+                          widget.category == "office")
+                        SizedBox(
+                          height: 1.7.h,
+                        ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment")
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.bed_rounded,
+                              size: 20,
+                              color: AppColors.nauticalCreatures,
+                            ),
+                            SizedBox(
+                              width: 3.3.w,
+                            ),
+                            Text(
+                              "${widget.feed.beds}  Beds",
+                              style:
+                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                            ),
+                          ],
+                        ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment")
+                        SizedBox(
+                          height: 1.7.h,
+                        ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.check_box_outline_blank_outlined,
+                            size: 20,
+                            color: AppColors.nauticalCreatures,
+                          ),
+                          SizedBox(
+                            width: 3.3.w,
+                          ),
+                          Text(
+                            "${widget.feed.size}  SQ FT",
+                            style:
+                                inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(
                     height: 1.7.h,
                   ),
-                  Row(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.bathtub_outlined,
-                        size: 20,
-                        color: AppColors.nauticalCreatures,
-                      ),
-                      SizedBox(
-                        width: 3.3.w,
-                      ),
-                      Text(
-                        "2 Baths",
-                        style: inputFieldHintStyle.copyWith(fontSize: 16.sp),
-                      ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment")
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.kitchen_outlined,
+                              size: 20,
+                              color: AppColors.nauticalCreatures,
+                            ),
+                            SizedBox(
+                              width: 3.3.w,
+                            ),
+                            Text(
+                              "${widget.feed.kitchens} Kitchens",
+                              style:
+                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                            ),
+                          ],
+                        ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment")
+                        SizedBox(
+                          height: 1.7.h,
+                        ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment")
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.bathtub_outlined,
+                              size: 20,
+                              color: AppColors.nauticalCreatures,
+                            ),
+                            SizedBox(
+                              width: 3.3.w,
+                            ),
+                            Text(
+                              "${widget.feed.baths} Baths",
+                              style:
+                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                            ),
+                          ],
+                        ),
+                      if (widget.category == "House for rent" ||
+                          widget.category == "House for sale" ||
+                          widget.category == "Short stay apartment")
+                        SizedBox(
+                          height: 1.7.h,
+                        ),
+                      if (widget.category == "Hall")
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.chair_alt_rounded,
+                              size: 20,
+                              color: AppColors.nauticalCreatures,
+                            ),
+                            SizedBox(
+                              width: 3.3.w,
+                            ),
+                            Text(
+                              "${widget.feed.seats} Seats",
+                              style:
+                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                            ),
+                          ],
+                        ),
                     ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 1.7.h,
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.check_box_outline_blank_outlined,
-                    size: 20,
-                    color: AppColors.nauticalCreatures,
-                  ),
-                  SizedBox(
-                    width: 3.3.w,
-                  ),
-                  Text(
-                    "2400 SQ FT",
-                    style: inputFieldHintStyle.copyWith(fontSize: 16.sp),
                   ),
                 ],
               ),
@@ -130,7 +249,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                 height: 3.7.h,
               ),
               Text(
-                "Location of the house",
+                "Location of the property",
                 style: bodyTextStyle.copyWith(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,
@@ -170,7 +289,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                           width: 16.3.w,
                         ),
                         Text(
-                          "Singida",
+                          "${widget.feed.location.region} ",
                           style: inputFieldLabelMinStyle,
                         ),
                       ],
@@ -188,7 +307,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                           width: 16.3.w,
                         ),
                         Text(
-                          "Manyoni",
+                          "${widget.feed.location.district} ",
                           style: inputFieldLabelMinStyle,
                         ),
                       ],
@@ -206,7 +325,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                           width: 16.3.w,
                         ),
                         Text(
-                          "Sungusia",
+                          "${widget.feed.location.ward} ",
                           style: inputFieldLabelMinStyle,
                         ),
                       ],
@@ -218,7 +337,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                 ),
               ),
               Text(
-                "Add other features",
+                "Other features",
                 style: bodyTextStyle.copyWith(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,
@@ -228,90 +347,15 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               SizedBox(
                 height: 1.8.h,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 4.w,
-                  vertical: 3.7.h,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.3.w),
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.07),
-                      // spreadRadius: 13,
-                      blurRadius: 13,
-                      offset: Offset(3, 3), // changes position of shadow
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FacilitiesItemCreate(),
-                        Container(
-                          width: 1,
-                          height: 2.3.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                        FacilitiesItemCreate(),
-                        Container(
-                          width: 1,
-                          height: 2.3.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                        FacilitiesItemCreate()
-                      ],
-                    ),
-                    SizedBox(
-                      height: 1.8.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 5.3.w,
-                          height: .2.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                        Container(
-                          width: 5.3.w,
-                          height: .2.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                        Container(
-                          width: 5.3.w,
-                          height: .2.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 1.8.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FacilitiesItemCreate(),
-                        Container(
-                          width: 1,
-                          height: 2.3.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                        FacilitiesItemCreate(),
-                        Container(
-                          width: 1,
-                          height: 2.3.h,
-                          color: AppColors.dividerLineSemiBoldColor,
-                        ),
-                        FacilitiesItemCreate()
-                      ],
-                    ),
-                  ],
+              Material(
+                child: Wrap(
+                  spacing: 6.0,
+                  runSpacing: 6.0,
+                  children: selectedList
+                      .map((e) => ChipsBuilder(
+                            label: e,
+                          ))
+                      .toList(),
                 ),
               ),
               SizedBox(
@@ -329,7 +373,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                 height: 1.3.h,
               ),
               Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                "${widget.feed.description}  Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
                 "Sed euismod, diam sit amet dictum aliquam, "
                 "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
                 "nunc. Sed euismod, diam sit amet dictum aliquam, "

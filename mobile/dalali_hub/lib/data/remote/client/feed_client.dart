@@ -13,4 +13,5 @@ abstract class FeedClient {
 
   @GET('feed')
   Future<HttpResponse<JSendResponse<List<FeedResponseDto>>>> getFeeds();
+
 }

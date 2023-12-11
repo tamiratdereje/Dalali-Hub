@@ -18,8 +18,8 @@ import { RealStateCategory } from "domain/types/types";
 import { LocationDTO } from "./LocationDTO";
 import { Transform, TransformFnParams, Type } from "class-transformer";
 
-export class HouseDTO {
-  constructor(props: HouseDTO) {
+export class RealStateDTO {
+  constructor(props: RealStateDTO) {
     Object.assign(this, props, { location: new LocationDTO(props.location)});
   }
 
@@ -39,21 +39,23 @@ export class HouseDTO {
   @IsEnum(RealStateCategory, { message: "Invalid category" })
   category: RealStateCategory;
 
-  @IsNotEmpty({ message: "Rooms is required" })
-  @IsNumber({}, { message: "Rooms must be a Number" })
-  rooms: Number;
+  // @IsNotEmpty({ message: "Rooms is required" })
+  // @IsNumber({}, { message: "Rooms must be a Number" })
+  rooms: Number | null;
 
-  @IsNotEmpty({ message: "Beds is required" })
-  @IsNumber({}, { message: "Beds must be a Number" })
-  beds: Number;
+  // @IsNotEmpty({ message: "Beds is required" })
+  // @IsNumber({}, { message: "Beds must be a Number" })
+  beds: Number | null;
 
-  @IsNotEmpty({ message: "Baths is required" })
-  @IsNumber({}, { message: "Baths must be a Number" })
-  baths: Number;
+  // @IsNotEmpty({ message: "Baths is required" })
+  // @IsNumber({}, { message: "Baths must be a Number" })
+  baths: Number | null;
 
-  @IsNotEmpty({ message: "Kitchens is required" })
-  @IsNumber({}, { message: "Kitchens must be a Number" })
-  kitchens: Number;
+  // @IsNotEmpty({ message: "Kitchens is required" })
+  // @IsNumber({}, { message: "Kitchens must be a Number" })
+  kitchens: Number | null;
+
+  seata: Number | null;
 
   @IsNotEmpty({ message: "Size is required" })
   @IsNumber({}, { message: "Size must be a Number" })
@@ -69,7 +71,6 @@ export class HouseDTO {
   @Type(() => LocationDTO)
   location: LocationDTO;
 
-  // @ArrayMinSize(0, { message: "At least zero other feature is required" })
   otherFeatures: String[];
 
   @IsNotEmpty({ message: "Description is required" })

@@ -2,23 +2,29 @@ import { RealStateCategory } from "domain/types/types";
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 
-
-export interface LandEntity extends IBaseEntity {
+export interface RealStateEntity extends IBaseEntity {
   _id: Types.ObjectId;
   title: String;
   photos: mongoose.Types.ObjectId[];
   minPrice: Number;
   maxPrice: Number;
-  category: String;
+  category: RealStateCategory;
+
+  rooms: Number | null;
+  beds: Number | null;
+  baths: Number | null;
+  kitchens: Number | null;
+  seats: Number | null,
+
   size: Number;
   sizeUnit: String;
-  location:  {region: String, district: String, ward: String};
+  location: {region: String, district: String, ward: String};
   otherFeatures: String[];
   description: String;
   isApproved: Boolean;
 }
 
-let landSchema = new Schema<LandEntity>(
+let realStateSchema = new Schema<RealStateEntity>(
   {
     _id: { type: Schema.Types.ObjectId, auto: true },
     title: { type: String, required: [true, "Title is required"] },
@@ -27,8 +33,16 @@ let landSchema = new Schema<LandEntity>(
     maxPrice: { type: Number, required: [true, "Max price is required"] },
     category: {
       type: String,
+      enum: RealStateCategory,
       required: [true, "Category is required"],
     },
+
+    rooms: { type: Number, required: false, default: null },
+    beds: { type: Number, required: false, default: null },
+    baths: { type: Number, required: false, default: null },
+    kitchens: { type: Number, required: false, default: null },
+    seats: { type: Number, required: false, default: null },
+
     size: { type: Number, required: [true, "Size is required"] },
     sizeUnit: { type: String, required: [true, "Size unit is required"] },
     location: {
@@ -43,4 +57,4 @@ let landSchema = new Schema<LandEntity>(
   { timestamps: true }
 );
 
-export const Land = mongoose.model<LandEntity>("Land", landSchema);
+export const RealState = mongoose.model<RealStateEntity>("RealState", realStateSchema);

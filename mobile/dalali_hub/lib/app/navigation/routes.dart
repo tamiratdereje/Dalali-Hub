@@ -15,7 +15,7 @@ class AppRoutes {
   static const String addLand = "/addLand";
   static const String addOffice = "/addOffice";
   static const String addPlot = "/addPlot";
-  static const String houseDetail = "/houseDetail";
+  static const String propertyDetail = "/propertyDetail";
   
   
   static const String otp = '/otp';

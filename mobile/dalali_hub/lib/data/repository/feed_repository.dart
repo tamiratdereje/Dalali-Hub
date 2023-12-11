@@ -26,4 +26,5 @@ class FeedRepository implements IFeedRepository {
     }
     
   }
+ 
 }

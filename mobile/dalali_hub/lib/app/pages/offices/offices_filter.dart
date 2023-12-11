@@ -1,7 +1,7 @@
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/drop_down_button.dart';
+import 'package:dalali_hub/app/core/widgets/office_card.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
-import 'package:dalali_hub/app/pages/offices/widgets/office_card.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
@@ -201,7 +201,7 @@ class _OfficeFilterState extends State<OfficeFilter> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 8,
                   itemBuilder: (context, index) {
-                    return const OfficeCard();
+                    return OfficeCard(onTap: (){},);
                   }),
             ],
           ),

@@ -14,6 +14,8 @@ import 'package:dalali_hub/app/pages/offices/offices_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
+import 'package:dalali_hub/domain/entity/feed.dart';
+import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -28,7 +30,7 @@ class AppRouter {
 
   late final GoRouter router = GoRouter(
     initialLocation: authCubit.state.map(
-      authenticated: (_) => AppRoutes.home,
+      authenticated: (_) => AppRoutes.houseFilter,
       unauthenticated: (_) => AppRoutes.loginOptions,
       initial: (_) => AppRoutes.loginOptions,
       firstTime: (_) => AppRoutes.onBoarding,
@@ -63,8 +65,9 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.houseFilter,
         builder: (BuildContext context, GoRouterState state) {
-          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-          return HouseFilter(serviceName: args["serviceName"]!);
+          // Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+
+          return const HouseFilter(serviceName: "House for rent");
         },
       ),
       GoRoute(
@@ -103,7 +106,11 @@ class AppRouter {
           //   action: args["action"],
           //   category: args["category"],
           // )
-          return const CreateHousePage(serviceName: "Add house information", action : "Create", category: "House for rent",);
+          return const CreateHousePage(
+            serviceName: "Add house information",
+            action: "Create",
+            category: "House for rent",
+          );
         },
       ),
       GoRoute(
@@ -125,9 +132,31 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: AppRoutes.houseDetail,
+        path: AppRoutes.propertyDetail,
         builder: (BuildContext context, GoRouterState state) {
-          return const PropertyDetailPage();
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return PropertyDetailPage(
+            category: args["category"],
+            feed: args["feed"],
+            //  Feed(
+            //   id: "id",
+            //   title: "title",
+            //   category: "category",
+            //   photos: [],
+            //   minPrice: 1,
+            //   maxPrice: 2,
+            //   size: 2,
+            //   sizeUnit: "m",
+            //   otherFeatures: [],
+            //   description: "description",
+            //   isApproved: false,
+            //   location: Location(
+            //     region: "region",
+            //     district: "district",
+            //     ward: "ward",
+            //   ),
+            // ),
+          );
         },
       ),
       GoRoute(

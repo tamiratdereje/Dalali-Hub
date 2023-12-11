@@ -73,7 +73,7 @@ class _CreateHouseState extends State<CreateHouse> {
   TextEditingController titleController = TextEditingController();
   TextEditingController minPriceController = TextEditingController();
   TextEditingController maxPriceController = TextEditingController();
-  String? houseCategory;
+  String? RealStateCategory;
   TextEditingController roomsController = TextEditingController();
   TextEditingController bedsController = TextEditingController();
   TextEditingController bathsController = TextEditingController();
