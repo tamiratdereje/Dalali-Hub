@@ -162,7 +162,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                         itemBuilder: (context, index) {
                           if (data.feeds[index].category == "hall") {
                             return HallCard(
-                              title: data.feeds[index].title,
+                              title: data.feeds[index].title ?? "",
                               location: data.feeds[index].location.ward,
                               price: data.feeds[index].maxPrice.toString(),
                               sqft: data.feeds[index].size.toString(),
@@ -177,7 +177,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                           }
                           if (data.feeds[index].category == "office") {
                             return OfficeCard(
-                              title: data.feeds[index].title,
+                              title: data.feeds[index].title ?? "",
                               location: data.feeds[index].location.ward,
                               price: data.feeds[index].maxPrice.toString(),
                               sqft: data.feeds[index].size.toString(),
@@ -192,7 +192,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                           }
                           if (data.feeds[index].category == "land") {
                             return LandCard(
-                              title: data.feeds[index].title,
+                              title: data.feeds[index].title ?? "",
                               location: data.feeds[index].location.ward,
                               price: data.feeds[index].maxPrice.toString(),
                               sqft: data.feeds[index].size.toString(),
@@ -209,7 +209,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                               data.feeds[index].category ==
                                   "Short stay apartment") {
                             return HouseCard(
-                              title: data.feeds[index].title,
+                              title: data.feeds[index].title ?? "",
                               location: data.feeds[index].location.ward,
                               beds: data.feeds[index].beds.toString(),
                               baths: data.feeds[index].baths.toString(),

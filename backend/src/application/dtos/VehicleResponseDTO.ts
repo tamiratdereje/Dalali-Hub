@@ -13,6 +13,7 @@ export class VehicleResponseDTO {
     public fuelType: String,
     public engineSize: Number,
     public photos: PhotoResponseDTO[],
+    public location: LocationDTO,
     public transmissionType: String,
     public mileage: Number,
     public price: Number,

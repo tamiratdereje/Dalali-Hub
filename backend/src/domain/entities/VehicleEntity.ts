@@ -14,6 +14,7 @@ export interface VehicleEntity extends IBaseEntity {
   transmissionType: String;
   mileage: Number;
   price: Number;
+  location: {region: String, district: String, ward: String};
   condition: String;
 //   insuranceDetails: {
 //     policyNumber: String;
@@ -35,6 +36,11 @@ const vehicleSchema = new Schema<VehicleEntity>(
     transmissionType: { type: String, required: [true, "Transmission type is required"] },
     mileage: { type: Number, required: [true, "Mileage is required"] },
     price: { type: Number, required: [true, "Price is required"] },
+    location: {
+      region: { type: String, required: [true, "Region is required"] },
+      district: { type: String, required: [true, "District is required"] },
+      ward: { type: String, required: [true, "Ward is required"] },
+    },
     condition: { type: String, required: [true, "Condition is required"] },
     // insuranceDetails: {
     //   policyNumber: { type: String, required: [true, "Policy Number is required"] },

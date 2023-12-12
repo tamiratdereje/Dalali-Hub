@@ -24,4 +24,6 @@ class PhotoResponseDto {
         secoureUrl: secureUrl,
       );
 
+  toJson() {}
+
 }

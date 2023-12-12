@@ -7,8 +7,10 @@ import {
   ValidateNested,
   IsObject,
   IsBooleanString,
+  IsNotEmptyObject,
 } from "class-validator";
 import { Transform, TransformFnParams, Type } from "class-transformer";
+import { LocationDTO } from './LocationDTO';
 
 export class VehicleDTO {
   constructor(props: VehicleDTO) {
@@ -54,6 +56,12 @@ export class VehicleDTO {
   @IsNotEmpty({ message: "Price is required" })
   @IsNumber({}, { message: "Price must be a Number" })
   price: Number;
+
+  @IsObject()
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => LocationDTO)
+  location: LocationDTO;
 
   @IsNotEmpty({ message: "Condition is required" })
   @IsString({ message: "Condition must be a String" })

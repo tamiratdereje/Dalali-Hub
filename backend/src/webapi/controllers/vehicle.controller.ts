@@ -96,6 +96,11 @@ export class VehicleController {
         //   vehicle.location.ward
         // ),
         uploadedImages,
+        new LocationResponseDTO(
+          vehicle.location.region,
+          vehicle.location.district,
+          vehicle.location.ward
+        ),
         vehicle.transmissionType,
         vehicle.mileage,
         vehicle.price,
@@ -174,12 +179,12 @@ export class VehicleController {
         updatedVehicle.vin,
         updatedVehicle.fuelType,
         updatedVehicle.engineSize,
-        // new LocationResponseDTO(
-        //   updatedVehicle.location.region,
-        //   updatedVehicle.location.district,
-        //   updatedVehicle.location.ward
-        // ),
         uploadedImages,
+        new LocationResponseDTO(
+          updatedVehicle.location.region,
+          updatedVehicle.location.district,
+          updatedVehicle.location.ward
+        ),
         updatedVehicle.transmissionType,
         updatedVehicle.mileage,
         updatedVehicle.price,
