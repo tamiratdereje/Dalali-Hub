@@ -24,6 +24,7 @@ class VehicleResponseDto {
   final LocationDto location;
   final String condition;
   final List<PhotoResponseDto> photos;
+  final String category;
 
   VehicleResponseDto({
     required this.id,
@@ -40,6 +41,7 @@ class VehicleResponseDto {
     required this.location,
     required this.condition,
     required this.photos,
+    required this.category,
   });
 
   factory VehicleResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -62,5 +64,6 @@ class VehicleResponseDto {
         location: location.toLocation(),
         condition: condition,
         photos: photos.map((e) => e.toPhotoResponse()).toList(),
+        category: category,
       );
 }

@@ -19,6 +19,7 @@ class VehicleResponse {
   final double price;
   final Location location;
   final String condition;
+  final String category;
 
   VehicleResponse({
     required this.id,
@@ -35,5 +36,6 @@ class VehicleResponse {
     required this.price,
     required this.location,
     required this.condition,
+    required this.category,
   });
 }

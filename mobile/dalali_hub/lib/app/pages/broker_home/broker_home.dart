@@ -47,19 +47,21 @@ class _BrokerHomePageState extends State<BrokerHomePage> {
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.addRealstate,
-                          extra: {"serviceName": "House for sell",
-                          "action": "Create",
-                        "category": "House for sell"});
+                      context.push(AppRoutes.addRealstate, extra: {
+                        "serviceName": "House for sell",
+                        "action": "Create",
+                        "category": "House for sell"
+                      });
                     },
                     serviceName: "House for sell",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.addRealstate,
-                          extra: {"serviceName": "Office",
-                          "action": "Create",
-                        "category": "Office"});
+                      context.push(AppRoutes.addRealstate, extra: {
+                        "serviceName": "Office",
+                        "action": "Create",
+                        "category": "Office"
+                      });
                     },
                     serviceName: "Office",
                   ),
@@ -74,28 +76,31 @@ class _BrokerHomePageState extends State<BrokerHomePage> {
                 children: [
                   BrokerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.addRealstate,
-                          extra: {"serviceName": "Hall", 
-                          "action": "Create",
-                        "category": "Hall"});
+                      context.push(AppRoutes.addRealstate, extra: {
+                        "serviceName": "Hall",
+                        "action": "Create",
+                        "category": "Hall"
+                      });
                     },
                     serviceName: "Hall",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.addRealstate,
-                          extra: {"serviceName": "Short stay apartment",
-                            "action": "Create",
-                            "category": "Short stay apartment"});
+                      context.push(AppRoutes.addRealstate, extra: {
+                        "serviceName": "Short stay apartment",
+                        "action": "Create",
+                        "category": "Short stay apartment"
+                      });
                     },
                     serviceName: "Short stay apartment",
                   ),
                   BrokerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.addRealstate,
-                          extra: {"serviceName": "Land",
-                            "action": "Create",
-                            "category": "Land"});
+                      context.push(AppRoutes.addRealstate, extra: {
+                        "serviceName": "Land",
+                        "action": "Create",
+                        "category": "Land"
+                      });
                     },
                     serviceName: "Land",
                   ),
@@ -106,10 +111,11 @@ class _BrokerHomePageState extends State<BrokerHomePage> {
               ),
               BrokerServiceContainer(
                 onTap: () {
-                  // context.push(AppRoutes.addVehicle,
-                  //     extra: {"serviceName": "Vehicle",
-                  //       "action": "Create",
-                  //       "category": "Vehicle"});
+                  context.push(AppRoutes.addVehicle, extra: {
+                    "serviceName": "Vehicle",
+                    "action": "Create",
+                    "category": "Vehicle"
+                  });
                 },
                 serviceName: "Vehicle",
               ),

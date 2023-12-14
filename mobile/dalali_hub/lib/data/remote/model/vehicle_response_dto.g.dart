@@ -24,6 +24,7 @@ VehicleResponseDto _$VehicleResponseDtoFromJson(Map<String, dynamic> json) =>
       photos: (json['photos'] as List<dynamic>)
           .map((e) => PhotoResponseDto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      category: json['category'] as String,
     );
 
 Map<String, dynamic> _$VehicleResponseDtoToJson(VehicleResponseDto instance) =>

@@ -2,11 +2,10 @@ import { FeedResponseDTO } from "@dtos/FeedResponseDTO";
 import { LocationResponseDTO } from "@dtos/LocationResponseDTO";
 import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
 import { JSendResponse } from "@error-custom/JsendResponse";
-import { IHallRepository } from "@interfaces/repositories/IHallRepository";
-import { IHouseRepository } from "@interfaces/repositories/IHouseRepository";
-import { ILandRepository } from "@interfaces/repositories/ILandRepository";
-import { IOfficeRepository } from "@interfaces/repositories/IOfficeRepository";
+
 import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
+import { IRealStateRepository } from "@interfaces/repositories/IRealStateRepository";
+import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
 import { id } from "date-fns/locale";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -14,87 +13,55 @@ import { asyncHandler } from "webapi/middlewares/async.handler.middleware";
 
 export class FeedController {
   constructor(
-    private houseRepository: IHouseRepository,
-    private hallRepostory: IHallRepository,
-    private _photoRepository: IPhotoRepository,
-    private _landRepository: ILandRepository,
-    private _officeRepository: IOfficeRepository
+    private realstateRepository: IRealStateRepository,
+    private vehicleRepository: IVehicleRepository,
+    private _photoRepository: IPhotoRepository
   ) {}
   getAllFeeds = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const feeds: FeedResponseDTO[] = [];
-      const house = await this.houseRepository.GetAll();
+      const realstate = await this.realstateRepository.GetAll();
 
-      for (let curHouse of house) {
-        const houseImageDto: PhotoResponseDTO[] = [];
-        const houseFeed = new FeedResponseDTO(
-          curHouse._id,
-          curHouse.title,
-          curHouse.minPrice,
-          curHouse.maxPrice,
-          curHouse.category,
-          null,
-          curHouse.size,
-          curHouse.sizeUnit,
+      for (let curRealstate of realstate) {
+        const realstateImageDto: PhotoResponseDTO[] = [];
+        const realstateFeed = new FeedResponseDTO(
+          curRealstate._id,
+          curRealstate.title,
+          curRealstate.minPrice,
+          curRealstate.maxPrice,
+          curRealstate.category,
+          curRealstate.seats,
+          curRealstate.size,
+          curRealstate.sizeUnit,
           new LocationResponseDTO(
-            curHouse.location.region,
-            curHouse.location.district,
-            curHouse.location.ward
+            curRealstate.location.region,
+            curRealstate.location.district,
+            curRealstate.location.ward
           ),
-          houseImageDto,
-          curHouse.otherFeatures,
-          curHouse.description,
-          curHouse.isApproved,
+          realstateImageDto,
+          curRealstate.otherFeatures,
+          curRealstate.description,
+          curRealstate.isApproved,
 
-          curHouse.rooms,
-          curHouse.beds,
-          curHouse.baths,
-          curHouse.kitchens
-        );
-        for (let curPhoto of curHouse.photos) {
-          await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            houseImageDto.push(
-              new PhotoResponseDTO(
-                returnPhoto.publicId,
-                returnPhoto.secureUrl,
-                returnPhoto._id
-              )
-            );
-          });
-        }
-        feeds.push(houseFeed);
-      }
-
-      const hall = await this.hallRepostory.GetAll();
-      for (let curHall of hall) {
-        const hallImageDto: PhotoResponseDTO[] = [];
-        const hallFeed = new FeedResponseDTO(
-          curHall._id,
-          curHall.title,
-          curHall.minPrice,
-          curHall.maxPrice,
-          curHall.category,
+          curRealstate.rooms,
+          curRealstate.beds,
+          curRealstate.baths,
+          curRealstate.kitchens,
           null,
-          curHall.size,
-          curHall.sizeUnit,
-          new LocationResponseDTO(
-            curHall.location.region,
-            curHall.location.district,
-            curHall.location.ward
-          ),
-          hallImageDto,
-          curHall.otherFeatures,
-          curHall.description,
-          curHall.isApproved,
-
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
           null
         );
-        for (let curPhoto of curHall.photos) {
+        for (let curPhoto of curRealstate.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            hallImageDto.push(
+            realstateImageDto.push(
               new PhotoResponseDTO(
                 returnPhoto.publicId,
                 returnPhoto.secureUrl,
@@ -103,78 +70,50 @@ export class FeedController {
             );
           });
         }
-        feeds.push(hallFeed);
+        feeds.push(realstateFeed);
       }
-      const lands = await this._landRepository.GetAll();
-      for (let curLand of lands) {
-        const landImageDto: PhotoResponseDTO[] = [];
-        const hallFeed = new FeedResponseDTO(
-          curLand._id,
-          curLand.title,
-          curLand.minPrice,
-          curLand.maxPrice,
-          curLand.category,
-          null,
-          curLand.size,
-          curLand.sizeUnit,
-          new LocationResponseDTO(
-            curLand.location.region,
-            curLand.location.district,
-            curLand.location.ward
-          ),
-          landImageDto,
-          curLand.otherFeatures,
-          curLand.description,
-          curLand.isApproved,
 
+      const vehicle = await this.vehicleRepository.GetAll();
+      for (let curVehicle of vehicle) {
+        const vehicleImageDto: PhotoResponseDTO[] = [];
+        console.log(curVehicle);
+        const vehicleFeed = new FeedResponseDTO(
+          curVehicle._id,
           null,
           null,
           null,
-          null
-        );
-        for (let curPhoto of curLand.photos) {
-          await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            landImageDto.push(
-              new PhotoResponseDTO(
-                returnPhoto.publicId,
-                returnPhoto.secureUrl,
-                returnPhoto._id
-              )
-            );
-          });
-        }
-        feeds.push(hallFeed);
-      }
-      const offices = await this._officeRepository.GetAll();
-      for (let curOffices of offices) {
-        const landImageDto: PhotoResponseDTO[] = [];
-        const officesFeed = new FeedResponseDTO(
-          curOffices._id,
-          curOffices.title,
-          curOffices.minPrice,
-          curOffices.maxPrice,
-          curOffices.category,
+          curVehicle.category,
           null,
-          curOffices.size,
-          curOffices.sizeUnit,
+          null,
+          null,
           new LocationResponseDTO(
-            curOffices.location.region,
-            curOffices.location.district,
-            curOffices.location.ward
+          curVehicle.location.region,
+          curVehicle.location.district,
+          curVehicle.location.ward
           ),
-          landImageDto,
-          curOffices.otherFeatures,
-          curOffices.description,
-          curOffices.isApproved,
-
+          vehicleImageDto,
           null,
           null,
           null,
-          null
+          null,
+          null,
+          null,
+          null,
+          curVehicle.make,
+          curVehicle.model,
+          curVehicle.year,
+          curVehicle.color,
+          curVehicle.vin,
+          curVehicle.fuelType,
+          curVehicle.engineSize,
+          curVehicle.transmissionType,
+          curVehicle.mileage,
+          curVehicle.price,
+          curVehicle.condition
         );
-        for (let curPhoto of curOffices.photos) {
+        for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
-            landImageDto.push(
+            vehicleImageDto.push(
               new PhotoResponseDTO(
                 returnPhoto.publicId,
                 returnPhoto.secureUrl,
@@ -183,8 +122,9 @@ export class FeedController {
             );
           });
         }
-        feeds.push(officesFeed);
+        feeds.push(vehicleFeed);
       }
+
       res.status(StatusCodes.OK).json(new JSendResponse().success(feeds));
     }
   );

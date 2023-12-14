@@ -138,7 +138,6 @@ class _CreateVehicleState extends State<CreateVehicle> {
       vinController.text = widget.vehicle!.vin;
       fuelTypeController.text = widget.vehicle!.fuelType;
       engineSizeController.text = widget.vehicle!.engineSize.toString();
-      
     }
   }
 
@@ -606,6 +605,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                                       ward: selectedWard!,
                                     ),
                                     condition: conditionController.text,
+                                    category: "Vehicle",
                                   ),
                                 ),
                               );
@@ -633,6 +633,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                                       ward: selectedWard!,
                                     ),
                                     condition: conditionController.text,
+                                    category: "Vehicle",
                                   ),
                                 ),
                               );

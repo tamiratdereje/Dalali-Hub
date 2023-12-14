@@ -1,4 +1,3 @@
-import 'package:dalali_hub/app/core/widgets/alert_dialog.dart';
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
@@ -8,7 +7,6 @@ import 'package:dalali_hub/app/pages/forget_password/widgets/take_email_or_phone
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
-import 'package:dalali_hub/data/remote/model/otp.dart';
 import 'package:dalali_hub/domain/entity/verify_otp.dart';
 import 'package:dalali_hub/domain/type/types.dart';
 import 'package:dalali_hub/injection.dart';

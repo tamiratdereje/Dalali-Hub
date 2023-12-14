@@ -22,6 +22,7 @@ class VehicleDto {
   final double price;
   final Map location;
   final String condition;
+  final String category;
 
   VehicleDto({
     this.id,
@@ -37,6 +38,7 @@ class VehicleDto {
     required this.price,
     required this.location,
     required this.condition,
+    required this.category
   });
 
   factory VehicleDto.fromJson(Map<String, dynamic> json) =>
@@ -63,6 +65,7 @@ class VehicleDto {
         "ward": vehicle.location.ward
       },
       condition: vehicle.condition,
+      category: vehicle.category
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:dalali_hub/app/core/widgets/hall_card.dart';
 import 'package:dalali_hub/app/core/widgets/house_card.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,7 @@ class _FavoriteState extends State<Favorite> {
                 itemBuilder: (context, index) {
                   return HouseCard(
                     onTap: () {},
+                    photo: "https://picsum.photos/id/0/5000/3333",
                   );
                 })
           ],

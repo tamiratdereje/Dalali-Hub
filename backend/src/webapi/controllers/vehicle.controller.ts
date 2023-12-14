@@ -105,6 +105,7 @@ export class VehicleController {
         vehicle.mileage,
         vehicle.price,
         vehicle.condition,
+        vehicle.category,
          // vehicle.insuranceDetails.policyNumber,        
       );
       res.status(StatusCodes.OK).json(new JSendResponse().success(resultVehicle));
@@ -189,6 +190,7 @@ export class VehicleController {
         updatedVehicle.mileage,
         updatedVehicle.price,
         updatedVehicle.condition,
+        updatedVehicle.category,
          // updatedVehicle.insuranceDetails.policyNumber,   
       );
 

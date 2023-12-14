@@ -7,6 +7,7 @@ class Vehicle {
   final String? id;
   final String make;
   final double price;
+  
   final String model;
   final int year;
   final String color;
@@ -15,9 +16,13 @@ class Vehicle {
   final String vin;
   final String transmissionType;
   final double mileage;
+
   final Location location;
+
   final String condition;
+  
     final List<String> photos;
+  final String category;
 
 
   Vehicle({
@@ -35,5 +40,6 @@ class Vehicle {
     required this.price,
     required this.location,
     required this.condition,
+    required this.category,
   });
 }

@@ -9,13 +9,15 @@ class LandCard extends StatelessWidget {
   final String location;
   final String sqft;
   final String price;
+  final String photo;
   LandCard({
     super.key,
     this.location = "Heidenreich Forks Apt. 141 Kubton",
     this.title = "East Coast Center",
     required this.onTap,
-    this.sqft= "200",
-    this.price= "2007500",
+    this.sqft = "200",
+    this.price = "2007500",
+    required this.photo,
   });
 
   @override
@@ -45,7 +47,9 @@ class LandCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppColors.nauticalCreatures,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.ultimateGray)),
+                  border: Border.all(color: AppColors.ultimateGray),
+                  image: DecorationImage(
+                      image: NetworkImage(photo), fit: BoxFit.cover)),
               child: Stack(
                 children: [
                   Align(

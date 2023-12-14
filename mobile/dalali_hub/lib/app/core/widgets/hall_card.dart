@@ -10,6 +10,7 @@ class HallCard extends StatelessWidget {
   final String sqft;
   final String price;
   final String seats;
+  final String photo;
 
   HallCard({
     super.key,
@@ -18,7 +19,8 @@ class HallCard extends StatelessWidget {
     this.location = "Heidenreich Forks Apt. 141 Kubton",
     this.sqft = "1200",
     this.price = "750",
-    this.seats = "400"
+    this.seats = "400",
+    required this.photo,
   });
 
   @override
@@ -48,7 +50,9 @@ class HallCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppColors.nauticalCreatures,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.ultimateGray)),
+                  border: Border.all(color: AppColors.ultimateGray),
+                  image: DecorationImage(
+                      image: NetworkImage(photo), fit: BoxFit.cover)),
               child: Stack(
                 children: [
                   Align(
@@ -115,7 +119,6 @@ class HallCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                     
                       Row(
                         children: [
                           const Icon(

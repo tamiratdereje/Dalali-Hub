@@ -10,14 +10,16 @@ class OfficeCard extends StatelessWidget {
   final String sqft;
   final String price;
   final String rooms;
+  final String photo;
   OfficeCard({
     super.key,
     this.location = "Heidenreich Forks Apt. 141 Kubton",
     this.title = "Bole, Edna mall 3rd floor",
     required this.onTap,
-    this.sqft= "300",
-    this.price= "27500",
-    this.rooms = "9"
+    this.sqft = "300",
+    this.price = "27500",
+    this.rooms = "9",
+    required this.photo,
   });
 
   @override
@@ -47,7 +49,9 @@ class OfficeCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppColors.nauticalCreatures,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.ultimateGray)),
+                  border: Border.all(color: AppColors.ultimateGray),
+                  image: DecorationImage(
+                      image: NetworkImage(photo), fit: BoxFit.cover)),
               child: Stack(
                 children: [
                   Align(

@@ -1,4 +1,3 @@
-import 'package:dalali_hub/app/core/widgets/alert_dialog.dart';
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';

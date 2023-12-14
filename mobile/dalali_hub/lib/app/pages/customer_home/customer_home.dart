@@ -2,6 +2,7 @@ import 'package:dalali_hub/app/core/widgets/hall_card.dart';
 import 'package:dalali_hub/app/core/widgets/house_card.dart';
 import 'package:dalali_hub/app/core/widgets/land_card.dart';
 import 'package:dalali_hub/app/core/widgets/office_card.dart';
+import 'package:dalali_hub/app/core/widgets/vehicle_card.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
@@ -160,7 +161,9 @@ class _CustomerHomePageState extends State<CustomerHome> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: data.feeds.length,
                         itemBuilder: (context, index) {
-                          if (data.feeds[index].category == "hall") {
+                          if (data.feeds[index].category == "Hall") {
+                            debugPrint("Hall seats");
+                            debugPrint(data.feeds[index].seats.toString());
                             return HallCard(
                               title: data.feeds[index].title ?? "",
                               location: data.feeds[index].location.ward,
@@ -173,36 +176,55 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                   "category": data.feeds[index].category
                                 });
                               },
+                              photo: data.feeds[index].photos[0].secoureUrl,
                             );
-                          }
-                          if (data.feeds[index].category == "office") {
+                          } else if (data.feeds[index].category == "Office") {
                             return OfficeCard(
-                              title: data.feeds[index].title ?? "",
-                              location: data.feeds[index].location.ward,
-                              price: data.feeds[index].maxPrice.toString(),
-                              sqft: data.feeds[index].size.toString(),
-                              rooms: data.feeds[index].rooms.toString(),
-                              onTap: () {
-                                context.push(AppRoutes.propertyDetail, extra: {
-                                  "feed": data.feeds[index],
-                                  "category": data.feeds[index].category
-                                });
-                              },
-                            );
-                          }
-                          if (data.feeds[index].category == "land") {
+                                title: data.feeds[index].title ?? "",
+                                location: data.feeds[index].location.ward,
+                                price: data.feeds[index].maxPrice.toString(),
+                                sqft: data.feeds[index].size.toString(),
+                                rooms: data.feeds[index].rooms.toString(),
+                                onTap: () {
+                                  context.push(AppRoutes.propertyDetail,
+                                      extra: {
+                                        "feed": data.feeds[index],
+                                        "category": data.feeds[index].category
+                                      });
+                                },
+                                 photo: data.feeds[index].photos[0].secoureUrl);
+                          } else if (data.feeds[index].category == "Land") {
                             return LandCard(
-                              title: data.feeds[index].title ?? "",
-                              location: data.feeds[index].location.ward,
-                              price: data.feeds[index].maxPrice.toString(),
-                              sqft: data.feeds[index].size.toString(),
-                              onTap: () {
-                                context.push(AppRoutes.propertyDetail, extra: {
-                                  "feed": data.feeds[index],
-                                  "category": data.feeds[index].category
-                                });
-                              },
-                            );
+                                title: data.feeds[index].title ?? "",
+                                location: data.feeds[index].location.ward,
+                                price: data.feeds[index].maxPrice.toString(),
+                                sqft: data.feeds[index].size.toString(),
+                                onTap: () {
+                                  context.push(AppRoutes.propertyDetail,
+                                      extra: {
+                                        "feed": data.feeds[index],
+                                        "category": data.feeds[index].category
+                                      });
+                                },
+                                 photo: data.feeds[index].photos[0].secoureUrl);
+                          } else if (data.feeds[index].category == "Vehicle") {
+                            debugPrint("Vehicle ${data.feeds[index].photos[0]}}");
+                            return VehicleCard(
+                                price: data.feeds[index].price.toString(),
+                                make: data.feeds[index].make,
+                                location: data.feeds[index].location.ward,
+                                engineSize:
+                                    data.feeds[index].engineSize.toString(),
+                                color: data.feeds[index].color,
+                                year: data.feeds[index].year.toString(),
+                                onTap: () {
+                                  context.push(AppRoutes.propertyDetail,
+                                      extra: {
+                                        "feed": data.feeds[index],
+                                        "category": data.feeds[index].category
+                                      });
+                                },
+                                photo: data.feeds[index].photos[0].secoureUrl);
                           }
                           if (data.feeds[index].category == "House for rent" ||
                               data.feeds[index].category == "House for sell" ||
@@ -221,6 +243,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                   "category": data.feeds[index].category
                                 });
                               },
+                              photo: data.feeds[index].photos[0].secoureUrl,
                             );
                           }
                           return Container(

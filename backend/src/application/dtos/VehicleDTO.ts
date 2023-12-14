@@ -67,4 +67,8 @@ export class VehicleDTO {
   @IsString({ message: "Condition must be a String" })
   condition: String;
 
+  @IsNotEmpty({ message: "Category is required" })
+  @IsString({ message: "Category must be a String" })
+  category: String;
+
 }

@@ -11,16 +11,17 @@ class HouseCard extends StatelessWidget {
   final String baths;
   final String sqft;
   final String price;
+  final String photo;
   HouseCard({
     super.key,
     required this.onTap,
     this.title = "Sunshine place",
-    this.location= "Heidenreich Forks Apt. 141 Kubton",
-    this.beds= "5",
-    this.baths= "2",
-    this.sqft= "2400",
-    this.price= "7500",
-    
+    this.location = "Heidenreich Forks Apt. 141 Kubton",
+    this.beds = "5",
+    this.baths = "2",
+    this.sqft = "2400",
+    this.price = "7500",
+    required this.photo,
   });
 
   @override
@@ -50,7 +51,9 @@ class HouseCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppColors.nauticalCreatures,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.ultimateGray)),
+                  border: Border.all(color: AppColors.ultimateGray),
+                  image: DecorationImage(
+                      image: NetworkImage(photo), fit: BoxFit.cover)),
               child: Stack(
                 children: [
                   Align(

@@ -98,5 +98,6 @@ class FeedResponseDto {
         mileage: mileage,
         price: price,
         condition: condition,
+        seats: seats
       );
 }

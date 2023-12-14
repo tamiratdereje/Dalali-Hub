@@ -37,10 +37,10 @@ class AppRouter {
         path: AppRoutes.home,
         builder: (BuildContext context, GoRouterState state) =>
             const BottomNavigation(),
-            // CreateVehiclePage(
-            //     serviceName: "add vehicle",
-            //     action: "Create",
-            //     category: "vehicle"),
+        // CreateVehiclePage(
+        //     serviceName: "add vehicle",
+        //     action: "Create",
+        //     category: "vehicle"),
       ),
       GoRoute(
         name: 'signup',
@@ -84,30 +84,23 @@ class AppRouter {
         },
       ),
       GoRoute(
+        path: AppRoutes.addVehicle,
+        builder: (BuildContext context, GoRouterState state) {
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return CreateVehiclePage(
+              serviceName: args["serviceName"],
+              action: args["action"],
+              category: args["category"]);
+        },
+      ),
+      GoRoute(
         path: AppRoutes.propertyDetail,
         builder: (BuildContext context, GoRouterState state) {
           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+
           return PropertyDetailPage(
             category: args["category"],
             feed: args["feed"],
-            //  Feed(
-            //   id: "id",
-            //   title: "title",
-            //   category: "category",
-            //   photos: [],
-            //   minPrice: 1,
-            //   maxPrice: 2,
-            //   size: 2,
-            //   sizeUnit: "m",
-            //   otherFeatures: [],
-            //   description: "description",
-            //   isApproved: false,
-            //   location: Location(
-            //     region: "region",
-            //     district: "district",
-            //     ward: "ward",
-            //   ),
-            // ),
           );
         },
       ),

@@ -5,22 +5,23 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class VehicleCard extends StatelessWidget {
   Function onTap;
-  String title;
-  final String location;
-  final String beds;
-  final String baths;
-  final String sqft;
-  final String price;
+  String? make;
+  final String? location;
+  final String? engineSize;
+  final String? color;
+  final String? year;
+  final String? price;
+  final String photo;
   VehicleCard({
     super.key,
     required this.onTap,
-    this.title = "Sunshine place",
-    this.location= "Heidenreich Forks Apt. 141 Kubton",
-    this.beds= "5",
-    this.baths= "2",
-    this.sqft= "2400",
-    this.price= "7500",
-    
+    this.make = "Toyota",
+    this.location = "Heidenreich Forks Apt. 141 Kubton",
+    this.engineSize = "5",
+    this.color = "Black",
+    this.year = "2001",
+    this.price = "750,000",
+    required this.photo,
   });
 
   @override
@@ -50,7 +51,9 @@ class VehicleCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppColors.nauticalCreatures,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.ultimateGray)),
+                  border: Border.all(color: AppColors.ultimateGray),
+                  image: DecorationImage(
+                      image: NetworkImage(photo), fit: BoxFit.cover)),
               child: Stack(
                 children: [
                   Align(
@@ -78,7 +81,7 @@ class VehicleCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    title,
+                    make!,
                     style: boldbodyTextStyle,
                   ),
                   Row(
@@ -92,7 +95,7 @@ class VehicleCard extends StatelessWidget {
                         width: 1.8.w,
                       ),
                       Text(
-                        location,
+                        location!,
                         style: inputFieldHintStyle.copyWith(fontSize: 12.sp),
                       ),
                     ],
@@ -100,52 +103,55 @@ class VehicleCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
-                            Icons.bed_rounded,
-                            size: 12,
-                            color: AppColors.nauticalCreatures,
+                          Text(
+                            "Engine size",
+                            style:
+                                inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
                           SizedBox(
                             width: 1.3.w,
                           ),
                           Text(
-                            "$beds BEDS",
+                            "$engineSize ",
                             style:
                                 inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
                         ],
                       ),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
-                            Icons.bathtub_outlined,
-                            size: 12,
-                            color: AppColors.nauticalCreatures,
+                          Text(
+                            "Color",
+                            style:
+                                inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
                           SizedBox(
                             width: 1.3.w,
                           ),
                           Text(
-                            "$baths BATHS",
+                            "$color ",
                             style:
                                 inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
                         ],
                       ),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
-                            Icons.check_box_outline_blank_outlined,
-                            size: 12,
-                            color: AppColors.nauticalCreatures,
+                          Text(
+                            "Year",
+                            style:
+                                inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
                           SizedBox(
                             width: 1.3.w,
                           ),
                           Text(
-                            "$sqft SQ FT",
+                            "$year ",
                             style:
                                 inputFieldHintStyle.copyWith(fontSize: 12.sp),
                           ),
@@ -156,13 +162,13 @@ class VehicleCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "750",
+                        price!,
                         style: inputFieldLabelMinStyle.copyWith(
                           color: AppColors.black,
                         ),
                       ),
                       Text(
-                        "/mo",
+                        "Birr",
                         style: inputFieldLabelMinStyle.copyWith(
                             color: AppColors.buttonContainerWatermarkColor,
                             fontSize: 12.sp),

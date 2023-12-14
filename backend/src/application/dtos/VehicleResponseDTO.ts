@@ -17,6 +17,7 @@ export class VehicleResponseDTO {
     public transmissionType: String,
     public mileage: Number,
     public price: Number,
-    public condition: String
+    public condition: String,
+    public category: String
   ) {}
 }

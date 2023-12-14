@@ -323,6 +323,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                   itemBuilder: (context, index) {
                     return HouseCard(
                       onTap: () {},
+                      photo: "https://picsum.photos/id/0/5000/3333",
                     );
                   }),
             ],

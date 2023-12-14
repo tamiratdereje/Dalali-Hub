@@ -10,7 +10,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class PropertyDetailPage extends StatefulWidget {
   final String category;
   final Feed feed;
-  const PropertyDetailPage({super.key, required this.category, required this.feed});
+  const PropertyDetailPage(
+      {super.key, required this.category, required this.feed});
 
   @override
   State<PropertyDetailPage> createState() => _PropertyDetailPageState();
@@ -40,10 +41,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   borderRadius: BorderRadius.circular(
                     20,
                   ),
-                  image: const DecorationImage(
-                    image: AssetImage(
-                      ImageConstants.detailApartmentImage,
-                    ),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.feed.photos[0].secoureUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -51,20 +50,37 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               SizedBox(
                 height: 2.7.h,
               ),
-              Row(
-                children: [
-                  Text(widget.feed.title ?? "", style: appBarTitleStyle),
-                  SizedBox(
-                    width: 2.7.w,
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border_outlined,
-                        color: AppColors.nauticalCreatures,
-                      ))
-                ],
-              ),
+              if (widget.category != "Vehicle")
+                Row(
+                  children: [
+                    Text(widget.feed.title ?? "", style: appBarTitleStyle),
+                    SizedBox(
+                      width: 2.7.w,
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.favorite_border_outlined,
+                          color: AppColors.nauticalCreatures,
+                        ))
+                  ],
+                ),
+              if (widget.category == "Vehicle")
+                Row(
+                  children: [
+                    Text(
+                      "${widget.feed.make} ${widget.feed.model}",
+                      style: inputFieldLabelStyle,
+                    ),
+                    SizedBox(
+                      width: 2.7.w,
+                    ),
+                    Text(
+                      "${widget.feed.year}",
+                      style: inputFieldLabelMinStyle,
+                    ),
+                  ],
+                ),
               SizedBox(
                 height: 3.7.h,
               ),
@@ -75,108 +91,86 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     "Price",
                     style: inputFieldLabelStyle,
                   ),
-                  Text(
-                    "NPR ${widget.feed.minPrice} - NPR ${widget.feed.maxPrice}",
-                    style: inputFieldLabelMinStyle,
-                  ),
+                  if (widget.category == "Vehicle")
+                    Text(
+                      "NPR ${widget.feed.price}",
+                      style: inputFieldLabelMinStyle,
+                    ),
+                  if (widget.category != "Vehicle")
+                    Text(
+                      "NPR ${widget.feed.minPrice} - NPR ${widget.feed.maxPrice}",
+                      style: inputFieldLabelMinStyle,
+                    ),
                 ],
               ),
               SizedBox(
                 height: 1.7.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment" ||
-                          widget.category == "office")
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.room_preferences_outlined,
-                              size: 20,
-                              color: AppColors.nauticalCreatures,
-                            ),
-                            SizedBox(
-                              width: 3.3.w,
-                            ),
-                            Text(
-                              "${widget.feed.rooms} Rooms",
-                              style:
-                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
-                            ),
-                          ],
-                        ),
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment" ||
-                          widget.category == "office")
-                        SizedBox(
-                          height: 1.7.h,
-                        ),
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment")
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.bed_rounded,
-                              size: 20,
-                              color: AppColors.nauticalCreatures,
-                            ),
-                            SizedBox(
-                              width: 3.3.w,
-                            ),
-                            Text(
-                              "${widget.feed.beds}  Beds",
-                              style:
-                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
-                            ),
-                          ],
-                        ),
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment")
-                        SizedBox(
-                          height: 1.7.h,
-                        ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.check_box_outline_blank_outlined,
-                            size: 20,
-                            color: AppColors.nauticalCreatures,
+              if (widget.category != "Vehicle")
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment" ||
+                            widget.category == "office")
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.room_preferences_outlined,
+                                size: 20,
+                                color: AppColors.nauticalCreatures,
+                              ),
+                              SizedBox(
+                                width: 3.3.w,
+                              ),
+                              Text(
+                                "${widget.feed.rooms} Rooms",
+                                style: inputFieldHintStyle.copyWith(
+                                    fontSize: 16.sp),
+                              ),
+                            ],
                           ),
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment" ||
+                            widget.category == "office")
                           SizedBox(
-                            width: 3.3.w,
+                            height: 1.7.h,
                           ),
-                          Text(
-                            "${widget.feed.size}  SQ FT",
-                            style:
-                                inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment")
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.bed_rounded,
+                                size: 20,
+                                color: AppColors.nauticalCreatures,
+                              ),
+                              SizedBox(
+                                width: 3.3.w,
+                              ),
+                              Text(
+                                "${widget.feed.beds}  Beds",
+                                style: inputFieldHintStyle.copyWith(
+                                    fontSize: 16.sp),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 1.7.h,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment")
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment")
+                          SizedBox(
+                            height: 1.7.h,
+                          ),
                         Row(
                           children: [
                             const Icon(
-                              Icons.kitchen_outlined,
+                              Icons.check_box_outline_blank_outlined,
                               size: 20,
                               color: AppColors.nauticalCreatures,
                             ),
@@ -184,66 +178,124 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                               width: 3.3.w,
                             ),
                             Text(
-                              "${widget.feed.kitchens} Kitchens",
+                              "${widget.feed.size}  SQ FT",
                               style:
                                   inputFieldHintStyle.copyWith(fontSize: 16.sp),
                             ),
                           ],
                         ),
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment")
-                        SizedBox(
-                          height: 1.7.h,
-                        ),
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment")
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.bathtub_outlined,
-                              size: 20,
-                              color: AppColors.nauticalCreatures,
-                            ),
-                            SizedBox(
-                              width: 3.3.w,
-                            ),
-                            Text(
-                              "${widget.feed.baths} Baths",
-                              style:
-                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
-                            ),
-                          ],
-                        ),
-                      if (widget.category == "House for rent" ||
-                          widget.category == "House for sale" ||
-                          widget.category == "Short stay apartment")
-                        SizedBox(
-                          height: 1.7.h,
-                        ),
-                      if (widget.category == "Hall")
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.chair_alt_rounded,
-                              size: 20,
-                              color: AppColors.nauticalCreatures,
-                            ),
-                            SizedBox(
-                              width: 3.3.w,
-                            ),
-                            Text(
-                              "${widget.feed.seats} Seats",
-                              style:
-                                  inputFieldHintStyle.copyWith(fontSize: 16.sp),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
-                ],
-              ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 1.7.h,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment")
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.kitchen_outlined,
+                                size: 20,
+                                color: AppColors.nauticalCreatures,
+                              ),
+                              SizedBox(
+                                width: 3.3.w,
+                              ),
+                              Text(
+                                "${widget.feed.kitchens} Kitchens",
+                                style: inputFieldHintStyle.copyWith(
+                                    fontSize: 16.sp),
+                              ),
+                            ],
+                          ),
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment")
+                          SizedBox(
+                            height: 1.7.h,
+                          ),
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment")
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.bathtub_outlined,
+                                size: 20,
+                                color: AppColors.nauticalCreatures,
+                              ),
+                              SizedBox(
+                                width: 3.3.w,
+                              ),
+                              Text(
+                                "${widget.feed.baths} Baths",
+                                style: inputFieldHintStyle.copyWith(
+                                    fontSize: 16.sp),
+                              ),
+                            ],
+                          ),
+                        if (widget.category == "House for rent" ||
+                            widget.category == "House for sale" ||
+                            widget.category == "Short stay apartment")
+                          SizedBox(
+                            height: 1.7.h,
+                          ),
+                        if (widget.category == "Hall")
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.chair_alt_rounded,
+                                size: 20,
+                                color: AppColors.nauticalCreatures,
+                              ),
+                              SizedBox(
+                                width: 3.3.w,
+                              ),
+                              Text(
+                                "${widget.feed.seats} Seats",
+                                style: inputFieldHintStyle.copyWith(
+                                    fontSize: 16.sp),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              if (widget.category == "Vehicle") ...[
+                vehiclePropertyBuilder("Model", "${widget.feed.model}"),
+                SizedBox(
+                  height: 1.7.h,
+                ),
+                vehiclePropertyBuilder("Color", "${widget.feed.color}"),
+                SizedBox(
+                  height: 1.7.h,
+                ),
+                vehiclePropertyBuilder("Fuel Type", "${widget.feed.fuelType}"),
+                SizedBox(
+                  height: 1.7.h,
+                ),
+                vehiclePropertyBuilder(
+                    "Engine Size", "${widget.feed.engineSize}"),
+                SizedBox(
+                  height: 1.7.h,
+                ),
+                vehiclePropertyBuilder("VIN", "${widget.feed.vin}"),
+                SizedBox(
+                  height: 1.7.h,
+                ),
+                vehiclePropertyBuilder(
+                    "Transmission Type", "${widget.feed.transmissionType}"),
+                SizedBox(
+                  height: 1.7.h,
+                ),
+                vehiclePropertyBuilder("Mile Age", "${widget.feed.mileage}"),
+              ],
               SizedBox(
                 height: 3.7.h,
               ),
@@ -335,63 +387,99 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   ],
                 ),
               ),
-              Text(
-                "Other features",
-                style: bodyTextStyle.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.black,
+              if (widget.category != "Vehicle") ...[
+                Text(
+                  "Other features",
+                  style: bodyTextStyle.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 1.8.h,
-              ),
-              Material(
-                child: Wrap(
-                  spacing: 6.0,
-                  runSpacing: 6.0,
-                  children: selectedList
-                      .map((e) => ChipsBuilder(
-                            label: e,
-                          ))
-                      .toList(),
+                SizedBox(
+                  height: 1.8.h,
                 ),
-              ),
-              SizedBox(
-                height: 3.7.h,
-              ),
-              Text(
-                "Description",
-                style: bodyTextStyle.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.black,
+                Material(
+                  child: Wrap(
+                    spacing: 6.0,
+                    runSpacing: 6.0,
+                    children: selectedList
+                        .map((e) => ChipsBuilder(
+                              label: e,
+                            ))
+                        .toList(),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 1.3.h,
-              ),
-              Text(
-                "${widget.feed.description}  Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                "Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. Sed euismod, diam sit amet dictum aliquam, "
-                "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
-                "nunc. ",
-                style: inputFieldHintStyle.copyWith(fontSize: 16.sp),
-              ),
+                SizedBox(
+                  height: 3.7.h,
+                ),
+                Text(
+                  "Description",
+                  style: bodyTextStyle.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 1.3.h,
+                ),
+                Text(
+                  "${widget.feed.description}  Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                  "Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. ",
+                  style: inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                ),
+              ],
+              if (widget.category == "Vehicle") ...[
+                Text(
+                  "Condition",
+                  style: bodyTextStyle.copyWith(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 1.3.h,
+                ),
+                Text(
+                  "${widget.feed.condition}  Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                  "Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. Sed euismod, diam sit amet dictum aliquam, "
+                  "nunc nisl aliquet enim, vitae aliquam nisl nunc vitae "
+                  "nunc. ",
+                  style: inputFieldHintStyle.copyWith(fontSize: 16.sp),
+                ),
+              ],
               SizedBox(
                 height: 1.7.h,
               ),
@@ -530,6 +618,22 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Row vehiclePropertyBuilder(String name, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          name,
+          style: inputFieldLabelStyle,
+        ),
+        Text(
+          value,
+          style: inputFieldLabelMinStyle,
+        ),
+      ],
     );
   }
 
