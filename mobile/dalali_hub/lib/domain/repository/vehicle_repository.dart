@@ -1,6 +1,4 @@
 import 'package:dalali_hub/domain/entity/empty.dart';
-import 'package:dalali_hub/domain/entity/house.dart';
-import 'package:dalali_hub/domain/entity/house_response.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/vehicle.dart';
 import 'package:dalali_hub/domain/entity/vehicle_response.dart';

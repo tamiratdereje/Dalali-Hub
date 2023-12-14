@@ -36,10 +36,11 @@ class AppRouter {
         name: 'home',
         path: AppRoutes.home,
         builder: (BuildContext context, GoRouterState state) =>
-            const CreateVehiclePage(
-                serviceName: "add vehicle",
-                action: "Create",
-                category: "vehicle"),
+            const BottomNavigation(),
+            // CreateVehiclePage(
+            //     serviceName: "add vehicle",
+            //     action: "Create",
+            //     category: "vehicle"),
       ),
       GoRoute(
         name: 'signup',

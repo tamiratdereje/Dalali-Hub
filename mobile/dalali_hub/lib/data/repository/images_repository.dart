@@ -1,16 +1,9 @@
 import 'dart:io';
 
-import 'package:dalali_hub/data/remote/client/house_client.dart';
 import 'package:dalali_hub/data/remote/client/images_client.dart';
-import 'package:dalali_hub/data/remote/model/empty_response.dart';
-import 'package:dalali_hub/data/remote/model/house_dto.dart';
-import 'package:dalali_hub/data/remote/model/house_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
-import 'package:dalali_hub/domain/entity/house.dart';
-import 'package:dalali_hub/domain/entity/house_response.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
-import 'package:dalali_hub/domain/repository/house_repository.dart';
 import 'package:dalali_hub/domain/repository/images_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
 import 'package:injectable/injectable.dart';

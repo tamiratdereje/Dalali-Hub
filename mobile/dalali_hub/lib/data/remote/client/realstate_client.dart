@@ -2,14 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
-import 'package:dalali_hub/data/remote/model/house_dto.dart';
-import 'package:dalali_hub/data/remote/model/house_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/location_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/realstate_dto.dart';
 import 'package:dalali_hub/data/remote/model/realstate_response_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
-import 'package:dalali_hub/domain/entity/house_response.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dio/dio.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
