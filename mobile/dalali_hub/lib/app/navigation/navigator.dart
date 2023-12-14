@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
-import 'package:dalali_hub/app/pages/create_house/add_house.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/realstate_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
-import 'package:dalali_hub/domain/entity/feed.dart';
-import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -24,7 +23,7 @@ class AppRouter {
 
   late final GoRouter router = GoRouter(
     initialLocation: authCubit.state.map(
-      authenticated: (_) => AppRoutes.houseFilter,
+      authenticated: (_) => AppRoutes.home,
       unauthenticated: (_) => AppRoutes.loginOptions,
       initial: (_) => AppRoutes.loginOptions,
       firstTime: (_) => AppRoutes.onBoarding,
@@ -37,7 +36,10 @@ class AppRouter {
         name: 'home',
         path: AppRoutes.home,
         builder: (BuildContext context, GoRouterState state) =>
-            const BottomNavigation(),
+            const CreateVehiclePage(
+                serviceName: "add vehicle",
+                action: "Create",
+                category: "vehicle"),
       ),
       GoRoute(
         name: 'signup',
@@ -64,7 +66,6 @@ class AppRouter {
           return const PropertyFilter(serviceName: "House for rent");
         },
       ),
-     
       GoRoute(
         path: AppRoutes.brokerHome,
         builder: (BuildContext context, GoRouterState state) {
@@ -72,22 +73,15 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: AppRoutes.addHouse,
+        path: AppRoutes.addRealstate,
         builder: (BuildContext context, GoRouterState state) {
           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-          // CreateHousePage(
-          //   serviceName: args["serviceName"],
-          //   action: args["action"],
-          //   category: args["category"],
-          // )
-          return const CreateHousePage(
-            serviceName: "Add house information",
-            action: "Create",
-            category: "House for rent",
-          );
+          return CreateRealstatePage(
+              serviceName: args["serviceName"],
+              action: args["action"],
+              category: args["category"]);
         },
       ),
-      
       GoRoute(
         path: AppRoutes.propertyDetail,
         builder: (BuildContext context, GoRouterState state) {

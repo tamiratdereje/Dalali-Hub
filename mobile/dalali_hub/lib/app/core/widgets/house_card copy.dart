@@ -3,7 +3,7 @@ import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class VehicleCard extends StatelessWidget {
+class HouseCard extends StatelessWidget {
   Function onTap;
   String title;
   final String location;
@@ -11,7 +11,7 @@ class VehicleCard extends StatelessWidget {
   final String baths;
   final String sqft;
   final String price;
-  VehicleCard({
+  HouseCard({
     super.key,
     required this.onTap,
     this.title = "Sunshine place",

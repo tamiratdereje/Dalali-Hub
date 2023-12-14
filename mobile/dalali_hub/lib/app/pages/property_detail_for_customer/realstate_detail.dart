@@ -1,4 +1,3 @@
-import 'package:dalali_hub/app/pages/create_house/widgets/build_chips_widget.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/other_features_chips.dart';
 import 'package:dalali_hub/app/utils/colors.dart';

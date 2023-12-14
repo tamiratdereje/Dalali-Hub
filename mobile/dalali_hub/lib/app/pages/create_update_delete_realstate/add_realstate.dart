@@ -4,78 +4,78 @@ import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/drop_down_button.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
-import 'package:dalali_hub/app/pages/create_house/bloc/create_house/create_house_bloc.dart';
-import 'package:dalali_hub/app/pages/create_house/bloc/update_house/update_house_bloc.dart';
-import 'package:dalali_hub/app/pages/create_house/widgets/build_chips_widget.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/create_realstate/create_realstate_bloc.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/update_realstate/update_realstate_bloc.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/widgets/build_chips_widget.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/app/widgets/multi_image_picker.dart';
-import 'package:dalali_hub/domain/entity/house.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
+import 'package:dalali_hub/domain/entity/realstate.dart';
 import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class CreateHousePage extends StatelessWidget {
+class CreateRealstatePage extends StatelessWidget {
   final String serviceName;
   final String action;
   final String category;
-  final House? house;
+  final Realstate? realstate;
 
-  const CreateHousePage(
+  const CreateRealstatePage(
       {super.key,
       required this.serviceName,
       required this.action,
       required this.category,
-      this.house});
+      this.realstate});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt.get<CreateHouseBloc>(),
-      child: CreateHouse(
+      create: (context) => getIt.get<CreateRealstateBloc>(),
+      child: CreateRealstate(
         serviceName: serviceName,
         action: action,
         category: category,
         firstTime: true,
-        house: house,
+        realstate: realstate,
       ),
     );
   }
 }
 
 // ignore: must_be_immutable
-class CreateHouse extends StatefulWidget {
+class CreateRealstate extends StatefulWidget {
   String serviceName;
   String action;
   String category;
   bool? firstTime;
-  House? house;
-  CreateHouse(
+  Realstate? realstate;
+  CreateRealstate(
       {super.key,
       required this.serviceName,
       required this.action,
       required this.category,
       this.firstTime,
-      this.house});
+      this.realstate});
 
   @override
-  State<CreateHouse> createState() => _CreateHouseState();
+  State<CreateRealstate> createState() => _CreateRealstateState();
 }
 
-class _CreateHouseState extends State<CreateHouse> {
+class _CreateRealstateState extends State<CreateRealstate> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<String> currencies = ['USD', 'EUR', 'LB'];
   String? selectedCurrency;
   TextEditingController titleController = TextEditingController();
   TextEditingController minPriceController = TextEditingController();
   TextEditingController maxPriceController = TextEditingController();
-  String? RealStateCategory;
+  String? realStateCategory;
   TextEditingController roomsController = TextEditingController();
   TextEditingController bedsController = TextEditingController();
+  TextEditingController seatsController = TextEditingController();
   TextEditingController bathsController = TextEditingController();
   TextEditingController kitchensController = TextEditingController();
   TextEditingController sizeWidthController = TextEditingController();
@@ -148,20 +148,20 @@ class _CreateHouseState extends State<CreateHouse> {
     if (widget.firstTime == true && widget.action == "Update") {
       debugPrint('first time');
       widget.firstTime = false;
-      titleController.text = widget.house!.title;
-      minPriceController.text = widget.house!.minPrice.toString();
-      maxPriceController.text = widget.house!.maxPrice.toString();
-      roomsController.text = widget.house!.rooms.toString();
-      bedsController.text = widget.house!.beds.toString();
-      bathsController.text = widget.house!.baths.toString();
-      kitchensController.text = widget.house!.kitchens.toString();
-      sizeWidthController.text = widget.house!.size.toString();
-      sizeHeightController.text = widget.house!.size.toString();
-      selectedRegion = widget.house!.location.region;
-      selectedDistrict = widget.house!.location.district;
-      selectedWard = widget.house!.location.ward;
-      selectedList = widget.house!.otherFeatures;
-      descriptionController.text = widget.house!.description;
+      titleController.text = widget.realstate!.title;
+      minPriceController.text = widget.realstate!.minPrice.toString();
+      maxPriceController.text = widget.realstate!.maxPrice.toString();
+      roomsController.text = widget.realstate!.rooms.toString();
+      bedsController.text = widget.realstate!.beds.toString();
+      bathsController.text = widget.realstate!.baths.toString();
+      kitchensController.text = widget.realstate!.kitchens.toString();
+      sizeWidthController.text = widget.realstate!.size.toString();
+      sizeHeightController.text = widget.realstate!.size.toString();
+      selectedRegion = widget.realstate!.location.region;
+      selectedDistrict = widget.realstate!.location.district;
+      selectedWard = widget.realstate!.location.ward;
+      selectedList = widget.realstate!.otherFeatures;
+      descriptionController.text = widget.realstate!.description;
     }
   }
 
@@ -644,7 +644,7 @@ class _CreateHouseState extends State<CreateHouse> {
                 SizedBox(
                   height: 2.7.h,
                 ),
-                BlocBuilder<CreateHouseBloc, CreateHouseState>(
+                BlocBuilder<CreateRealstateBloc, CreateRealstateState>(
                     builder: (context, state) {
                   return state.maybeMap(
                     loading: (_) => const Center(
@@ -662,9 +662,9 @@ class _CreateHouseState extends State<CreateHouse> {
                           return;
                         }
                         if (widget.action == "Create") {
-                          context.read<CreateHouseBloc>().add(
-                                CreateHouseEvent.createHouse(
-                                  house: House(
+                          context.read<CreateRealstateBloc>().add(
+                                CreateRealstateEvent.realstate(
+                                  realstate: Realstate(
                                     title: titleController.text,
                                     category: widget.category,
                                     photos: selectedImages,
@@ -672,11 +672,11 @@ class _CreateHouseState extends State<CreateHouse> {
                                         double.parse(minPriceController.text),
                                     maxPrice:
                                         double.parse(maxPriceController.text),
-                                    rooms: double.parse(roomsController.text),
-                                    beds: double.parse(bedsController.text),
-                                    baths: double.parse(bathsController.text),
+                                    rooms: double.parse(roomsController.text == "" ? "0" : roomsController.text),
+                                    beds: double.parse(bedsController.text == "" ? "0" : bedsController.text),
+                                    baths: double.parse(bathsController.text == "" ? "0" : bathsController.text),
                                     kitchens:
-                                        double.parse(kitchensController.text),
+                                        double.parse(kitchensController.text == "" ? "0" : kitchensController.text),
                                     size:
                                         double.parse(sizeHeightController.text),
                                     sizeUnit: selectedSizeUnit ?? "M",
@@ -687,37 +687,39 @@ class _CreateHouseState extends State<CreateHouse> {
                                         region: selectedRegion ?? "Oromia",
                                         district: selectedDistrict ?? "sululta",
                                         ward: selectedWard ?? "mizan"),
+                                    seats: int.parse(seatsController.text == "" ? "0" : seatsController.text),
                                   ),
                                 ),
                               );
                         } else {
-                          context.read<UpdateHouseBloc>().add(
-                                UpdateHouseEvent.UpdateHouse(
-                                  house: House(
-                                    id: widget.house!.id,
-                                    title: titleController.text,
-                                    category: widget.category,
-                                    photos: selectedImages,
-                                    minPrice:
-                                        double.parse(minPriceController.text),
-                                    maxPrice:
-                                        double.parse(maxPriceController.text),
-                                    rooms: double.parse(roomsController.text),
-                                    beds: double.parse(bedsController.text),
-                                    baths: double.parse(bathsController.text),
-                                    kitchens:
-                                        double.parse(kitchensController.text),
-                                    size:
-                                        double.parse(sizeHeightController.text),
-                                    sizeUnit: selectedSizeUnit ?? "M",
-                                    otherFeatures: selectedList,
-                                    description: descriptionController.text,
-                                    isApproved: widget.house!.isApproved,
-                                    location: Location(
-                                        region: selectedRegion ?? "Oromia",
-                                        district: selectedDistrict ?? "sululta",
-                                        ward: selectedWard ?? "mizan"),
-                                  ),
+                          context.read<UpdateRealstateBloc>().add(
+                                UpdateRealstateEvent.updateRealstate(
+                                  realstate: Realstate(
+                                      id: widget.realstate!.id,
+                                      title: titleController.text,
+                                      category: widget.category,
+                                      photos: selectedImages,
+                                      minPrice:
+                                          double.parse(minPriceController.text),
+                                      maxPrice:
+                                          double.parse(maxPriceController.text),
+                                      rooms: double.parse(roomsController.text == "" ? "0" : roomsController.text),
+                                      beds: double.parse(bedsController.text == "" ? "0" : bedsController.text),
+                                      baths: double.parse(bathsController.text == "" ? "0" : bathsController.text),
+                                      kitchens:
+                                          double.parse(kitchensController.text == "" ? "0" : kitchensController.text),
+                                      size: double.parse(
+                                          sizeHeightController.text),
+                                      sizeUnit: selectedSizeUnit ?? "M",
+                                      otherFeatures: selectedList,
+                                      description: descriptionController.text,
+                                      isApproved: widget.realstate!.isApproved,
+                                      location: Location(
+                                          region: selectedRegion ?? "Oromia",
+                                          district:
+                                              selectedDistrict ?? "sululta",
+                                          ward: selectedWard ?? "mizan"),
+                                      seats: int.parse(seatsController.text == "" ? "0" : seatsController.text)),
                                 ),
                               );
                         }
@@ -725,7 +727,7 @@ class _CreateHouseState extends State<CreateHouse> {
                     ),
                   );
                 }),
-                BlocConsumer<CreateHouseBloc, CreateHouseState>(
+                BlocConsumer<CreateRealstateBloc, CreateRealstateState>(
                   listener: (context, state) {
                     state.maybeMap(
                       orElse: () {},
@@ -736,7 +738,7 @@ class _CreateHouseState extends State<CreateHouse> {
                         debugPrint('success');
                         WidgetsBinding.instance.addPostFrameCallback((_) =>
                             showSuccessSnackBar(
-                                'House successfully created.', context));
+                                '${widget.category} successfully created.', context));
 
                         // Navigator.pop(context);
                       },

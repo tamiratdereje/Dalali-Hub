@@ -40,7 +40,7 @@ export class ExpressConfig {
       this.app.use("/api/v1/land", landRoute);
       this.app.use("/api/v1/feed", feedRoute);
       this.app.use("/api/v1/vehicle", vehicleRoute);
-      this.app.use("/api/v1/realstate", realStateRoute);
+      this.app.use("/api/v1/realstates", realStateRoute);
       this.app.use("/api/v1/all", (req, res) => {
         res.send("Hello World!");
       });

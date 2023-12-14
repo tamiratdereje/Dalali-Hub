@@ -25,7 +25,7 @@ export class RealStateController {
   createRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       console.log(req.body);
-      const realStateDto = new RealStateDTO(JSON.parse(req.body.realState));
+      const realStateDto = new RealStateDTO(JSON.parse(req.body.realstate));
 
       console.log(realStateDto);
       const ValidationError = await validate(realStateDto);

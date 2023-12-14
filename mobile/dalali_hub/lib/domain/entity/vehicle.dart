@@ -6,20 +6,19 @@ import 'package:dalali_hub/domain/entity/photo_response.dart';
 class Vehicle {
   final String? id;
   final String make;
-  final List<String> photos;
+  final double price;
   final String model;
   final int year;
-
   final String color;
-  final String vin;
   final String fuelType;
   final int engineSize;
+  final String vin;
   final String transmissionType;
   final double mileage;
-  final double price;
   final Location location;
   final String condition;
- 
+    final List<String> photos;
+
 
   Vehicle({
     this.id,
@@ -36,6 +35,5 @@ class Vehicle {
     required this.price,
     required this.location,
     required this.condition,
-
   });
 }
