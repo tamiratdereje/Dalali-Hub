@@ -7,6 +7,7 @@ import 'package:dalali_hub/app/pages/create_house/add_house.dart';
 import 'package:dalali_hub/app/pages/create_office/create_office.dart';
 import 'package:dalali_hub/app/pages/create_plot/add_plot.dart';
 import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
+import 'package:dalali_hub/app/pages/filter/filter_result.dart';
 import 'package:dalali_hub/app/pages/halls/hall_filter.dart';
 import 'package:dalali_hub/app/pages/house_filter/house_filter.dart';
 import 'package:dalali_hub/app/pages/lands/land_filter.dart';
@@ -27,11 +28,10 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: authCubit.state.map(
-      authenticated: (_) => AppRoutes.home,
-      unauthenticated: (_) => AppRoutes.loginOptions ,
-      initial: (_) => AppRoutes.loginOptions ,
-      firstTime: (_) => AppRoutes.onBoarding,
+    initialLocation: authCubit.state.maybeWhen(
+      firstTime: () => AppRoutes.onBoarding,
+      authenticated: () => AppRoutes.home,
+      orElse: () => AppRoutes.loginOptions ,
     ),
     redirect: (context, state) => redirecter(context, state),
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
@@ -127,6 +127,10 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const LogInWithGoogleOrAppleId();
         },
+      ),
+      GoRoute(
+        path: AppRoutes.filterResult,
+        builder:(context, state) => const FilterResultPage(),
       )
     ],
   );

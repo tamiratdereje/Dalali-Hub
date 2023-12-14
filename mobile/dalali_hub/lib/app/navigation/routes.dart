@@ -23,4 +23,6 @@ class AppRoutes {
   static const String createNewPassword = '/createNewPassword';
   static const String onBoarding = '/onBoarding';
   static const String loginOptions = '/loginOptions';
+
+  static const String filterResult = '/filterResult';
 }

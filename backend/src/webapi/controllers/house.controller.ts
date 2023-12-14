@@ -116,9 +116,15 @@ export class HouseController {
 
   getAllHouse = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      const houses = await this.houseRepository.Query(req.queryString, req.populate, req.page, req.limit);
+      const paginatedResult = new JSendResponse().successPaginated(
+        houses,
+        req.page + 1, 
+        houses.length);
+        
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(req.advancedResults));
+        .json(paginatedResult);
     }
   );
 

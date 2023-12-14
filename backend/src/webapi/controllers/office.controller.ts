@@ -1,19 +1,13 @@
 import { OfficeDTO } from "@dtos/OfficeDTO";
 import { OfficeResponseDTO } from "@dtos/OfficeResponseDTO";
-import { LocationDTO } from "@dtos/LocationDTO";
 import { LocationResponseDTO } from "@dtos/LocationResponseDTO";
 import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
-import { uploadedFileDTO } from "@dtos/uploadedFileDTO";
-import { HallEntity } from "@entities/HallEntity";
-import { Office, OfficeEntity } from "@entities/OfficeEntity";
-import { LandEntity } from "@entities/LandEntity";
+import { Office } from "@entities/OfficeEntity";
 import { Photo } from "@entities/PhotoEntity";
 import { BadRequestError } from "@error-custom/BadRequestError";
 import { JSendResponse } from "@error-custom/JsendResponse";
 import { CustomValidationError } from "@error-custom/ValidationError";
-import { IHallRepository } from "@interfaces/repositories/IHallRepository";
 import { IOfficeRepository } from "@interfaces/repositories/IOfficeRepository";
-import { ILandRepository } from "@interfaces/repositories/ILandRepository";
 import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
 import { IFileUploadService } from "@interfaces/services/IFileService";
 import { validate } from "class-validator";
@@ -108,9 +102,15 @@ export class OfficeController {
 
   getAllOffice = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      const offices = await this.officeRepository.Query(req.queryString, req.populate, req.page, req.limit);
+      const paginatedResult = new JSendResponse().successPaginated(
+        offices,
+        req.page + 1, 
+        offices.length);
+        
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(req.advancedResults));
+        .json(paginatedResult);
     }
   );
 
@@ -211,7 +211,6 @@ export class OfficeController {
         console.log("photo end");
         return photo._id.valueOf() !== photoId.valueOf();
       });
-
       console.log(office.photos);
       await this.officeRepository.Update(Object(officeId), office);
       await this._photoRepository.Delete(Object(photoId));

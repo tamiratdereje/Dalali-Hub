@@ -1,12 +1,10 @@
 declare namespace Express {
   interface Request {
     userId?: string;
-    advancedResults: {
-      success: boolean;
-      count: number;
-      pagination: { [key: string]: { page: number; limit: number } };
-      data: any[];
-    };
+    queryString?: string;
+    populate?: string;
+    page?: number;
+    limit?: number;
     customQuery: {};
   }
 }

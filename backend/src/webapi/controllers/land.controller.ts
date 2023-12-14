@@ -107,9 +107,15 @@ export class LandController {
 
   getAllLand = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      const lands = await this.landRepository.Query(req.queryString, req.populate, req.page, req.limit);
+      const paginatedResult = new JSendResponse().successPaginated(
+        lands,
+        req.page + 1, 
+        lands.length);
+        
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(req.advancedResults));
+        .json(paginatedResult);
     }
   );
 

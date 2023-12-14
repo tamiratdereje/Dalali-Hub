@@ -6,4 +6,5 @@ export interface IGenericRepository<T> {
   GetById(id: mongoose.Types.ObjectId): Promise<T>;
   Update(id: mongoose.Types.ObjectId, entity: T): Promise<T>;
   Delete(id: mongoose.Types.ObjectId): Promise<void>;
+  Query(query: string, populate: string, page: number, limit: number): Promise<T[]>;
 }

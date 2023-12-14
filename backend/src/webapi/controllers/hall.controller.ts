@@ -109,9 +109,15 @@ export class HallController {
 
   getAllHall = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      const halls = await this.hallRepository.Query(req.queryString, req.populate, req.page, req.limit);
+      const paginatedResult = new JSendResponse().successPaginated(
+        halls,
+        req.page + 1, 
+        halls.length);
+        
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(req.advancedResults));
+        .json(paginatedResult);
     }
   );
 
