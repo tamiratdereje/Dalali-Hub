@@ -5,10 +5,6 @@ import { Express } from "express";
 import { errorHandler } from "webapi/middlewares/error.handler.middleware";
 import { authRoute } from "webapi/routes/auth.route";
 import morgan = require("morgan");
-import { houseRoute } from "webapi/routes/house.route";
-import { hallRoute } from "webapi/routes/hall.route";
-import { officeRoute } from "webapi/routes/office.route";
-import { landRoute } from "webapi/routes/land.route";
 import { feedRoute } from "webapi/routes/feed.route";
 import { vehicleRoute } from "webapi/routes/vehicle.route";
 import { realStateRoute } from "webapi/routes/realState.route";
@@ -34,10 +30,6 @@ export class ExpressConfig {
       this.app.use(cors({ origin: "*" }));
 
       this.app.use("/api/v1/auth", authRoute);
-      this.app.use("/api/v1/houses", houseRoute);
-      this.app.use("/api/v1/hall", hallRoute);
-      this.app.use("/api/v1/office", officeRoute);
-      this.app.use("/api/v1/land", landRoute);
       this.app.use("/api/v1/feed", feedRoute);
       this.app.use("/api/v1/vehicle", vehicleRoute);
       this.app.use("/api/v1/realstates", realStateRoute);
