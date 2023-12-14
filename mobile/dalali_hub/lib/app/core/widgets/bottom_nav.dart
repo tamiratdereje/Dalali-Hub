@@ -1,7 +1,6 @@
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/chat/contact_screen.dart';
-import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
-import 'package:dalali_hub/app/pages/favorite/favorite_screen.dart';
+import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/settings/settings.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:flutter/material.dart';

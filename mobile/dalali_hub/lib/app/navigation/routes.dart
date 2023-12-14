@@ -10,12 +10,8 @@ class AppRoutes {
   static const String landFilter = '/landFilter';
   static const String officeFilter = '/officeFilter';
   static const String brokerHome = '/brokerHome';
-  static const String addHouse = '/addHouse';
-  static const String addHall = "/addHall";
-  static const String addLand = "/addLand";
-  static const String addOffice = "/addOffice";
   static const String addPlot = "/addPlot";
-  static const String houseDetail = "/houseDetail";
+  static const String propertyDetail = "/propertyDetail";
   
   
   static const String otp = '/otp';
@@ -25,4 +21,6 @@ class AppRoutes {
   static const String loginOptions = '/loginOptions';
 
   static const String filterResult = '/filterResult';
+  static const String addRealstate = '/addRealstate';
+  static const String addVehicle = '/addVehicle';
 }

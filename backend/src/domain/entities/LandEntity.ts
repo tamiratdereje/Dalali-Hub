@@ -1,4 +1,4 @@
-import { HouseCategory } from "domain/types/types";
+import { RealStateCategory } from "domain/types/types";
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 

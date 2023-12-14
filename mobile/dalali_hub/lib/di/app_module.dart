@@ -1,5 +1,7 @@
-import 'package:dalali_hub/data/remote/client/house_client.dart';
-import 'package:dalali_hub/domain/entity/house.dart';
+import 'package:dalali_hub/data/remote/client/feed_client.dart';
+import 'package:dalali_hub/data/remote/client/images_client.dart';
+import 'package:dalali_hub/data/remote/client/realstate_client.dart';
+import 'package:dalali_hub/data/remote/client/vehicle_client.dart';
 import 'package:dio/dio.dart' hide LogInterceptor;
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
 import 'package:dalali_hub/data/remote/client/user_client.dart';
@@ -40,5 +42,15 @@ abstract class AppModule {
   UserClient userClient(Dio dio) => UserClient(dio);
 
   @singleton
-  HouseClient houseClient(Dio dio) => HouseClient(dio);
+  ImagesClient imageClient(Dio dio) => ImagesClient(dio);
+
+
+  @singleton
+  FeedClient feedClient(Dio dio) => FeedClient(dio);
+
+  @singleton
+  RealstateClient realstateClient(Dio dio) => RealstateClient(dio);
+
+  @singleton
+  VehicleClient vehicleClient(Dio dio) => VehicleClient(dio);
 }

@@ -1,4 +1,4 @@
-import { HouseCategory } from "domain/types/types";
+import { RealStateCategory } from "domain/types/types";
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 
@@ -8,7 +8,7 @@ export interface HouseEntity extends IBaseEntity {
   photos: mongoose.Types.ObjectId[];
   minPrice: Number;
   maxPrice: Number;
-  category: HouseCategory;
+  category: RealStateCategory;
   rooms: Number;
   beds: Number;
   baths: Number;
@@ -30,7 +30,7 @@ let houseSchema = new Schema<HouseEntity>(
     maxPrice: { type: Number, required: [true, "Max price is required"] },
     category: {
       type: String,
-      enum: HouseCategory,
+      enum: RealStateCategory,
       required: [true, "Category is required"],
     },
     rooms: { type: Number, required: [true, "Rooms is required"] },

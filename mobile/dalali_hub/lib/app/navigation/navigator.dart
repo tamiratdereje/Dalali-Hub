@@ -2,18 +2,13 @@ import 'dart:async';
 
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
-import 'package:dalali_hub/app/pages/create_hall/add_hall.dart';
-import 'package:dalali_hub/app/pages/create_house/add_house.dart';
-import 'package:dalali_hub/app/pages/create_office/create_office.dart';
-import 'package:dalali_hub/app/pages/create_plot/add_plot.dart';
-import 'package:dalali_hub/app/pages/cutomer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/filter/filter_result.dart';
-import 'package:dalali_hub/app/pages/halls/hall_filter.dart';
-import 'package:dalali_hub/app/pages/house_filter/house_filter.dart';
-import 'package:dalali_hub/app/pages/lands/land_filter.dart';
-import 'package:dalali_hub/app/pages/offices/offices_filter.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
+import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
+import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart'; 
 import 'package:dalali_hub/app/navigation/routes.dart';
-import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
+import 'package:dalali_hub/app/pages/property_detail_for_customer/realstate_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -38,10 +33,15 @@ class AppRouter {
     debugLogDiagnostics: true,
     routes: <GoRoute>[
       GoRoute(
-          name: 'home',
-          path: AppRoutes.home,
-          builder: (BuildContext context, GoRouterState state) =>
-              const BottomNavigation()),
+        name: 'home',
+        path: AppRoutes.home,
+        builder: (BuildContext context, GoRouterState state) =>
+            const BottomNavigation(),
+        // CreateVehiclePage(
+        //     serviceName: "add vehicle",
+        //     action: "Create",
+        //     category: "vehicle"),
+      ),
       GoRoute(
         name: 'signup',
         path: AppRoutes.register,
@@ -51,7 +51,8 @@ class AppRouter {
       GoRoute(
         name: 'login',
         path: AppRoutes.login,
-        builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const LoginScreen(),
       ),
       GoRoute(
         path: AppRoutes.customerHome,
@@ -61,29 +62,9 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.houseFilter,
         builder: (BuildContext context, GoRouterState state) {
-          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-          return HouseFilter(serviceName: args["serviceName"]!);
-        },
-      ),
-      GoRoute(
-        path: AppRoutes.officeFilter,
-        builder: (BuildContext context, GoRouterState state) {
-          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-          return OfficeFilter(serviceName: args["serviceName"]!);
-        },
-      ),
-      GoRoute(
-        path: AppRoutes.hallFilter,
-        builder: (BuildContext context, GoRouterState state) {
-          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-          return HallFilter(serviceName: args["serviceName"]!);
-        },
-      ),
-      GoRoute(
-        path: AppRoutes.landFilter,
-        builder: (BuildContext context, GoRouterState state) {
-          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
-          return LandFilter(serviceName: args["serviceName"]!);
+          // Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+
+          return const PropertyFilter(serviceName: "House for rent");
         },
       ),
       GoRoute(
@@ -93,33 +74,34 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: AppRoutes.addHouse,
+        path: AppRoutes.addRealstate,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateHousePage(serviceName: "Add house information");
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return CreateRealstatePage(
+              serviceName: args["serviceName"],
+              action: args["action"],
+              category: args["category"]);
         },
       ),
       GoRoute(
-        path: AppRoutes.addHall,
+        path: AppRoutes.addVehicle,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateHall(serviceName: "Add hall information");
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return CreateVehiclePage(
+              serviceName: args["serviceName"],
+              action: args["action"],
+              category: args["category"]);
         },
       ),
       GoRoute(
-        path: AppRoutes.addOffice,
+        path: AppRoutes.propertyDetail,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateOffice(serviceName: "Add office information");
-        },
-      ),
-      GoRoute(
-        path: AppRoutes.addPlot,
-        builder: (BuildContext context, GoRouterState state) {
-          return CreatePlot(serviceName: "Add Plot information");
-        },
-      ),
-      GoRoute(
-        path: AppRoutes.houseDetail,
-        builder: (BuildContext context, GoRouterState state) {
-          return const PropertyDetailPage();
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+
+          return PropertyDetailPage(
+            category: args["category"],
+            feed: args["feed"],
+          );
         },
       ),
       GoRoute(
@@ -145,7 +127,7 @@ class AppRouter {
       firstTime: () => true,
       orElse: () => false,
     );
-    
+
     debugPrint(firstTime.toString());
 
     if (firstTime) {
@@ -154,9 +136,9 @@ class AppRouter {
     }
 
     debugPrint('Matched Location: ${state.matchedLocation}');
-    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions ;
+    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions;
     if (!loggedIn) {
-      return loggingIn ? null : AppRoutes.loginOptions ;
+      return loggingIn ? null : AppRoutes.loginOptions;
     }
 
     return null;

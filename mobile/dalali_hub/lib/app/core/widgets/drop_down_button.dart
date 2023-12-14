@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AppDropDown extends StatefulWidget {
+  double? paddingHorizontal = 4.2.w;
+  double? paddingVertical = 1.4.h;
   AppDropDown(
       {super.key,
       this.leadingWidget,
@@ -18,6 +20,8 @@ class AppDropDown extends StatefulWidget {
       this.useItemBuilderForSelectedValue = false,
       this.itemsIcon = const [],
       this.isString = false,
+      this.paddingHorizontal,
+      this.paddingVertical,
       required this.hint});
 
   final Widget? leadingWidget;
@@ -31,6 +35,7 @@ class AppDropDown extends StatefulWidget {
   final List<String> itemsIcon;
   final bool isString;
   final String hint;
+  
   @override
   State<AppDropDown> createState() => _AppDropDownState();
 }
@@ -49,7 +54,7 @@ class _AppDropDownState extends State<AppDropDown> {
           const SizedBox(height: 8)
         ],
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 4.2.w, vertical: 1.4.h),
+          padding: EdgeInsets.symmetric(horizontal: widget.paddingHorizontal == null ? 4.2.w : widget.paddingHorizontal!, vertical: widget.paddingVertical == null ? 1.4.h : widget.paddingVertical!),
           decoration: BoxDecoration(
             color: AppColors.doctor,
             borderRadius: BorderRadius.all(Radius.circular(2.6.w)),
