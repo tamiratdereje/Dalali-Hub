@@ -8,8 +8,8 @@ export class RealStateRepository extends
   constructor(private schema: mongoose.Model<RealStateEntity>) {
     super(schema);
   }
-  async GetByFilter(filter: {}): Promise<RealStateEntity[]> {
-    const realStateEntity = (await this._schema.find(filter));
+  async GetByFilter(filter: {}, populate: string): Promise<RealStateEntity[]> {
+    const realStateEntity = (await this._schema.find(filter).populate(populate));
     return realStateEntity
   }
   async CreateRealState(realState: RealStateEntity): Promise<RealStateEntity> {

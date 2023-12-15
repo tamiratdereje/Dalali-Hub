@@ -43,4 +43,5 @@ Map<String, dynamic> _$VehicleResponseDtoToJson(VehicleResponseDto instance) =>
       'location': instance.location.toJson(),
       'condition': instance.condition,
       'photos': instance.photos.map((e) => e.toJson()).toList(),
+      'category': instance.category,
     };

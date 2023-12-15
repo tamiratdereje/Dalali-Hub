@@ -7,4 +7,7 @@ declare namespace Express {
     limit?: number;
     customQuery: {};
   }
+  interface ReqQuery {
+    filterParameter?: {};
+  }
 }

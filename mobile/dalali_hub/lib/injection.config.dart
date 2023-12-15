@@ -38,6 +38,10 @@ import 'package:dalali_hub/app/pages/forget_password/bloc/reset_password/reset_p
     as _i33;
 import 'package:dalali_hub/app/pages/forget_password/bloc/verify_otp/verify_otp_bloc.dart'
     as _i37;
+import 'package:dalali_hub/app/pages/property_filter/bloc/filter_realstate/filter_realstate_bloc.dart'
+    as _i44;
+import 'package:dalali_hub/app/pages/property_filter/bloc/filter_vehicle/filter_vehicle_bloc.dart'
+    as _i45;
 import 'package:dalali_hub/data/local/pref/pref.dart' as _i9;
 import 'package:dalali_hub/data/remote/client/auth_client.dart' as _i20;
 import 'package:dalali_hub/data/remote/client/feed_client.dart' as _i13;
@@ -51,7 +55,7 @@ import 'package:dalali_hub/data/repository/feed_repository.dart' as _i15;
 import 'package:dalali_hub/data/repository/images_repository.dart' as _i25;
 import 'package:dalali_hub/data/repository/realstate_repository.dart' as _i27;
 import 'package:dalali_hub/data/repository/vehicle_repository.dart' as _i29;
-import 'package:dalali_hub/di/app_module.dart' as _i44;
+import 'package:dalali_hub/di/app_module.dart' as _i46;
 import 'package:dalali_hub/domain/config/network_config.dart' as _i4;
 import 'package:dalali_hub/domain/repository/auth_repository.dart' as _i22;
 import 'package:dalali_hub/domain/repository/feed_repository.dart' as _i14;
@@ -151,8 +155,12 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i42.DeleteRealstateBloc(gh<_i26.IRealstateRepository>()));
     gh.factory<_i43.DeleteVehicleBloc>(
         () => _i43.DeleteVehicleBloc(gh<_i28.IVehicleRepository>()));
+    gh.factory<_i44.FilterRealstateBloc>(
+        () => _i44.FilterRealstateBloc(gh<_i26.IRealstateRepository>()));
+    gh.factory<_i45.FilterVehicleBloc>(
+        () => _i45.FilterVehicleBloc(gh<_i28.IVehicleRepository>()));
     return this;
   }
 }
 
-class _$AppModule extends _i44.AppModule {}
+class _$AppModule extends _i46.AppModule {}

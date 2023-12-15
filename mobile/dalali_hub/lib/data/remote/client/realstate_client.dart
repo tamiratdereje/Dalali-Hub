@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
+import 'package:dalali_hub/data/remote/model/filter_parameter_dto.dart';
 import 'package:dalali_hub/data/remote/model/location_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/realstate_dto.dart';
 import 'package:dalali_hub/data/remote/model/realstate_response_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
+import 'package:dalali_hub/domain/entity/filter_parameter.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dio/dio.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
@@ -18,8 +20,10 @@ part 'realstate_client.g.dart';
 abstract class RealstateClient {
   factory RealstateClient(Dio dio, {String baseUrl}) = _RealstateClient;
 
-  @GET('realstates')
-  Future<HttpResponse<JSendResponse<RealstateResponseDto>>> getRealstates();
+  @GET('realstates/all')
+  Future<HttpResponse<JSendResponse<List<RealstateResponseDto>>>> getRealstates(
+    @Query('filterParameter') Map<String, dynamic> filterParameter,
+  );
 
   @POST('realstates')
   @MultiPart()
@@ -33,6 +37,10 @@ abstract class RealstateClient {
     @Path("id") String id,
     @Body() RealstateDto realstateDto,
   );
+// {
+//   'filterParameter[rooms': { gt: '20', lt: '60' },
+//   filterParameter: { category: 'House for rent' }
+// }
 
   @DELETE('realstates/{id}')
   Future<HttpResponse<JSendResponse<Empty>>> deleteRealstate(

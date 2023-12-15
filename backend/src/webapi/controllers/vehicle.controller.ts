@@ -36,9 +36,9 @@ export class VehicleController {
       console.log(vehicleDto);
 
       const vehicle = new Vehicle(vehicleDto);
-      console.log("files")
-      console.log(req.files)
-      console.log("files")
+      console.log("files");
+      console.log(req.files);
+      console.log("files");
       // Upload photos
       if (req.files) {
         //TODO: Add more validations and remove unnecessary files during errors
@@ -59,7 +59,8 @@ export class VehicleController {
         }
       }
 
-      const createdVehicle = await this.vehicleRepository.CreateVehicle(vehicle);
+      const createdVehicle =
+        await this.vehicleRepository.CreateVehicle(vehicle);
       res
         .status(StatusCodes.OK)
         .json(new JSendResponse().success(createdVehicle));
@@ -71,14 +72,19 @@ export class VehicleController {
 
       const vehicle = await this.vehicleRepository.GetById(Object(vehicleId));
 
-      
       if (!vehicle) {
         throw new BadRequestError("Vehicle not found");
       }
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of vehicle.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
+          uploadedImages.push(
+            new PhotoResponseDTO(
+              curPhoto.publicId,
+              curPhoto.secureUrl,
+              curPhoto._id
+            )
+          );
         });
       }
       const resultVehicle = new VehicleResponseDTO(
@@ -105,25 +111,71 @@ export class VehicleController {
         vehicle.mileage,
         vehicle.price,
         vehicle.condition,
-        vehicle.category,
-         // vehicle.insuranceDetails.policyNumber,        
+        vehicle.category
+        // vehicle.insuranceDetails.policyNumber,
       );
-      res.status(StatusCodes.OK).json(new JSendResponse().success(resultVehicle));
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(resultVehicle));
     }
   );
 
   getAllVehicle = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      res
-        .status(StatusCodes.OK)
-        .json(new JSendResponse().success(req.advancedResults));
+      const vehicle = await this.vehicleRepository.GetByFilter(
+        JSON.parse(req.queryString),
+        req.populate
+      );
+      const vehicles: VehicleResponseDTO[] = [];
+      for (let curVehicle of vehicle) {
+        const vehicleImageDto: PhotoResponseDTO[] = [];
+        console.log(curVehicle);
+        const vehicleDTO = new VehicleResponseDTO(
+          curVehicle._id,
+          curVehicle.make,
+          curVehicle.model,
+          curVehicle.year,
+          curVehicle.color,
+          curVehicle.vin,
+          curVehicle.fuelType,
+          curVehicle.engineSize,
+          vehicleImageDto,
+
+          new LocationResponseDTO(
+            curVehicle.location.region,
+            curVehicle.location.district,
+            curVehicle.location.ward
+          ),
+          curVehicle.transmissionType,
+          curVehicle.mileage,
+          curVehicle.price,
+          curVehicle.condition,
+          curVehicle.category
+        );
+        for (let curPhoto of curVehicle.photos) {
+          await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
+            vehicleImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
+        vehicles.push(vehicleDTO);
+      }
+      res.status(StatusCodes.OK).json(new JSendResponse().success(vehicles));
     }
   );
 
   getVehicleByFilter = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const filter = req.body;
-      const Vehicles = await this.vehicleRepository.GetByFilter(filter);
+      const Vehicles = await this.vehicleRepository.GetByFilter(
+        req.body,
+        req.populate
+      );
       res.status(StatusCodes.OK).json(new JSendResponse().success(Vehicles));
     }
   );
@@ -149,11 +201,12 @@ export class VehicleController {
         console.log("validation error", ValidationError.length);
         throw CustomValidationError.Instance(ValidationError);
       }
-      const oldVehicle = await this.vehicleRepository.GetById(Object(vehicleId));
+      const oldVehicle = await this.vehicleRepository.GetById(
+        Object(vehicleId)
+      );
       if (!oldVehicle) {
         throw new BadRequestError("Vehicle not found");
       }
-
 
       const vehicle = new Vehicle(vehicleDto);
       vehicle.id = oldVehicle._id;
@@ -168,7 +221,13 @@ export class VehicleController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of vehicle.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
+          uploadedImages.push(
+            new PhotoResponseDTO(
+              curPhoto.publicId,
+              curPhoto.secureUrl,
+              curPhoto._id
+            )
+          );
         });
       }
       const resultVehicle = new VehicleResponseDTO(
@@ -190,10 +249,9 @@ export class VehicleController {
         updatedVehicle.mileage,
         updatedVehicle.price,
         updatedVehicle.condition,
-        updatedVehicle.category,
-         // updatedVehicle.insuranceDetails.policyNumber,   
+        updatedVehicle.category
+        // updatedVehicle.insuranceDetails.policyNumber,
       );
-
 
       res
         .status(StatusCodes.OK)
@@ -264,14 +322,20 @@ export class VehicleController {
       if (!vehicle) {
         throw new BadRequestError("Vehicle not found");
       }
-      
+
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of vehicle.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
+          uploadedImages.push(
+            new PhotoResponseDTO(
+              curPhoto.publicId,
+              curPhoto.secureUrl,
+              curPhoto._id
+            )
+          );
         });
       }
-      
+
       res
         .status(StatusCodes.OK)
         .json(new JSendResponse().success(uploadedImages));

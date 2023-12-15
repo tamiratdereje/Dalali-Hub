@@ -21,14 +21,16 @@ class _RealstateClient implements RealstateClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<JSendResponse<RealstateResponseDto>>>
-      getRealstates() async {
+  Future<HttpResponse<JSendResponse<List<RealstateResponseDto>>>> getRealstates(
+      Map<String, dynamic> filterParameter) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'filterParameter': filterParameter
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<JSendResponse<RealstateResponseDto>>>(
+        _setStreamType<HttpResponse<JSendResponse<List<RealstateResponseDto>>>>(
             Options(
       method: 'GET',
       headers: _headers,
@@ -36,7 +38,7 @@ class _RealstateClient implements RealstateClient {
     )
                 .compose(
                   _dio.options,
-                  'realstates',
+                  'realstates/all',
                   queryParameters: queryParameters,
                   data: _data,
                 )
@@ -45,9 +47,14 @@ class _RealstateClient implements RealstateClient {
                   _dio.options.baseUrl,
                   baseUrl,
                 ))));
-    final value = JSendResponse<RealstateResponseDto>.fromJson(
+    final value = JSendResponse<List<RealstateResponseDto>>.fromJson(
       _result.data!,
-      (json) => RealstateResponseDto.fromJson(json as Map<String, dynamic>),
+      (json) => json is List<dynamic>
+          ? json
+              .map<RealstateResponseDto>((i) =>
+                  RealstateResponseDto.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

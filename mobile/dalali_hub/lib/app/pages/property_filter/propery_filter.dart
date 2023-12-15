@@ -1,14 +1,22 @@
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/drop_down_button.dart';
+import 'package:dalali_hub/app/core/widgets/hall_card.dart';
 import 'package:dalali_hub/app/core/widgets/house_card.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';
-import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
+import 'package:dalali_hub/app/core/widgets/land_card.dart';
+import 'package:dalali_hub/app/core/widgets/office_card.dart';
+import 'package:dalali_hub/app/core/widgets/vehicle_card.dart';
+import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/property_filter/bloc/filter_realstate/filter_realstate_bloc.dart';
+import 'package:dalali_hub/app/pages/property_filter/bloc/filter_vehicle/filter_vehicle_bloc.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
+import 'package:dalali_hub/domain/entity/filter_parameter.dart';
 import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:range_slider_flutter/range_slider_flutter.dart';
 
@@ -19,16 +27,21 @@ class PropertyFilterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PropertyFilter(
-      serviceName: serviceName,
-    )
-        //  BlocProvider(
-        //   create: (context) =>
-        //       getIt.get<FeedsBloc>()..add(const FeedsEvent.feeds()),
-        //   child:
-        //    PropertyFilter(serviceName: serviceName,),
-        // )
-        ;
+    if (serviceName == "Vehicle") {
+      return BlocProvider(
+        create: (context) => getIt.get<FilterVehicleBloc>()
+          ..add(FilterVehicleEvent.vehicle(
+              filterParameter: FilterParameter(category: serviceName, ))),
+        child: PropertyFilter(serviceName: serviceName),
+      );
+    } else {
+      return BlocProvider(
+        create: (context) => getIt.get<FilterRealstateBloc>()
+          ..add(FilterRealstateEvent.realstate(
+              filterParameter: FilterParameter(category: serviceName, lowerRooms: 20, upperRooms: 60,))),
+        child: PropertyFilter(serviceName: serviceName),
+      );
+    }
   }
 }
 
@@ -89,6 +102,12 @@ class _PropertyFilterState extends State<PropertyFilter> {
   List<String> currencies = ['USD', 'EUR', 'LB'];
   String? selectedCurrency;
   TextEditingController minPriceController = TextEditingController();
+  TextEditingController makeController = TextEditingController();
+  TextEditingController minYearController = TextEditingController();
+  TextEditingController maxYearController = TextEditingController();
+  TextEditingController minSeatController = TextEditingController();
+  TextEditingController maxSeatController = TextEditingController();
+
   @override
   void dispose() {
     super.dispose();
@@ -204,7 +223,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                           if (value!.isEmpty) {
                             return 'Max price is required';
                           }
-                         
+
                           return null;
                         },
                       ),
@@ -219,7 +238,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                   children: [
                     Expanded(
                       child: AppInputField(
-                        controller: minPriceController,
+                        controller: minSeatController,
                         label: 'Min seats',
                         hint: "30",
                         obscureText: false,
@@ -239,7 +258,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                     ),
                     Expanded(
                       child: AppInputField(
-                        controller: maxPriceController,
+                        controller: maxSeatController,
                         label: 'Max seats',
                         hint: "160",
                         obscureText: false,
@@ -259,7 +278,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
               ],
               if (widget.serviceName == "Vehicle") ...[
                 AppInputField(
-                  controller: maxPriceController,
+                  controller: makeController,
                   label: 'Make',
                   hint: "Toyota",
                   obscureText: false,
@@ -282,7 +301,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                   children: [
                     Expanded(
                       child: AppInputField(
-                        controller: minPriceController,
+                        controller: minYearController,
                         label: 'Min years',
                         hint: "30",
                         obscureText: false,
@@ -302,7 +321,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                     ),
                     Expanded(
                       child: AppInputField(
-                        controller: maxPriceController,
+                        controller: maxYearController,
                         label: 'Max years',
                         hint: "160",
                         obscureText: false,
@@ -477,7 +496,107 @@ class _PropertyFilterState extends State<PropertyFilter> {
                 height: 5.h,
               ),
               AppButtonPrimary(
-                onPressed: () {},
+                onPressed: () {
+                  // context.go(AppRoutes.register,
+                  //     extra: {"category": widget.serviceName, });
+                  BlocProvider.of<FilterRealstateBloc>(context)
+                      .add(FilterRealstateEvent.realstate(
+                    filterParameter: FilterParameter(
+                      category: widget.serviceName,
+                      lowerPrice: (minPriceController.text != "" ||
+                              maxPriceController.text != "")
+                          ? double.parse(minPriceController.text)
+                          : null,
+                      upperPrice: (minPriceController.text != "" ||
+                              maxPriceController.text != "")
+                          ? double.parse(maxPriceController.text)
+                          : null,
+                      minYears: (minYearController.text != "" ||
+                              maxYearController.text != "")
+                          ? int.parse(minYearController.text)
+                          : null,
+                      maxYears: (minYearController.text != "" ||
+                              maxYearController.text != "")
+                          ? int.parse(maxYearController.text)
+                          : null,
+                      make: makeController.text != ""
+                          ? makeController.text
+                          : null,
+                      lowerSeats: (minSeatController.text != "" ||
+                              maxSeatController.text != "")
+                          ? int.parse(minSeatController.text)
+                          : null,
+                      upperSeats: (minSeatController.text != "" ||
+                              maxSeatController.text != "")
+                          ? int.parse(maxSeatController.text)
+                          : null,
+                      // lowerRooms:  _lowerRooms.toInt(),
+                      // upperRooms: _higherRooms.toInt(),
+                      lowerRooms: null,
+                      upperRooms: null,
+                      region: selectedRegion,
+                      district: selectedDistrict,
+                      ward: selectedWard,
+                      widthSize: (widthSizeController.text == "" ||
+                              heightSizeController.text == "")
+                          ? double.parse(widthSizeController.text)
+                          : null,
+                      heightSize: (widthSizeController.text == "" ||
+                              heightSizeController.text == "")
+                          ? double.parse(heightSizeController.text)
+                          : null,
+                      currency: selectedCurrency,
+                    ),
+                  ));
+
+                  BlocProvider.of<FilterVehicleBloc>(context)
+                      .add(FilterVehicleEvent.vehicle(
+                          filterParameter: FilterParameter(
+                    category: widget.serviceName,
+                    lowerPrice: (minPriceController.text != "" ||
+                            maxPriceController.text != "")
+                        ? double.parse(minPriceController.text)
+                        : null,
+                    upperPrice: (minPriceController.text != "" ||
+                            maxPriceController.text != "")
+                        ? double.parse(maxPriceController.text)
+                        : null,
+                    minYears: (minYearController.text != "" ||
+                            maxYearController.text != "")
+                        ? int.parse(minYearController.text)
+                        : null,
+                    maxYears: (minYearController.text != "" ||
+                            maxYearController.text != "")
+                        ? int.parse(maxYearController.text)
+                        : null,
+                    make:
+                        makeController.text != "" ? makeController.text : null,
+                    lowerSeats: (minSeatController.text != "" ||
+                            maxSeatController.text != "")
+                        ? int.parse(minSeatController.text)
+                        : null,
+                    upperSeats: (minSeatController.text != "" ||
+                            maxSeatController.text != "")
+                        ? int.parse(maxSeatController.text)
+                        : null,
+                    // lowerRooms:  _lowerRooms.toInt(),
+                    // upperRooms: _higherRooms.toInt(),
+                    lowerRooms: null,
+                    upperRooms: null,
+                    region: selectedRegion,
+                    district: selectedDistrict,
+                    ward: selectedWard,
+                    widthSize: (widthSizeController.text == "" ||
+                            heightSizeController.text == "")
+                        ? double.parse(widthSizeController.text)
+                        : null,
+                    heightSize: (widthSizeController.text == "" ||
+                            heightSizeController.text == "")
+                        ? double.parse(heightSizeController.text)
+                        : null,
+                    currency: selectedCurrency,
+                  )));
+                },
                 text: "Search",
                 color: AppColors.ultimateGray,
                 textStyle:
@@ -504,16 +623,151 @@ class _PropertyFilterState extends State<PropertyFilter> {
               SizedBox(
                 height: 3.4.h,
               ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 8,
-                  itemBuilder: (context, index) {
-                    return HouseCard(
-                      onTap: () {},
-                      photo: "https://picsum.photos/id/0/5000/3333",
+              if (widget.serviceName != "Vehicle")
+                BlocBuilder<FilterRealstateBloc, FilterRealstateState>(
+                  builder: (context, state) {
+                    return state.maybeMap(
+                      orElse: () => Container(),
+                      initial: (_) => Container(),
+                      loading: (_) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      success: (data) => ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: data.realstates.length,
+                          itemBuilder: (context, index) {
+                            if (widget.serviceName == "Hall") {
+                              debugPrint("Hall seats");
+                              debugPrint(
+                                  data.realstates[index].seats.toString());
+                              return HallCard(
+                                title: data.realstates[index].title ?? "",
+                                location: data.realstates[index].location.ward,
+                                price:
+                                    data.realstates[index].maxPrice.toString(),
+                                sqft: data.realstates[index].size.toString(),
+                                seats: data.realstates[index].seats.toString(),
+                                onTap: () {
+                                  context.push(AppRoutes.propertyDetail,
+                                      extra: {
+                                        "feed": data.realstates[index],
+                                        "category": widget.serviceName
+                                      });
+                                },
+                                photo:
+                                    data.realstates[index].photos[0].secoureUrl,
+                              );
+                            } else if (widget.serviceName == "Office") {
+                              return OfficeCard(
+                                  title: data.realstates[index].title ?? "",
+                                  location:
+                                      data.realstates[index].location.ward,
+                                  price: data.realstates[index].maxPrice
+                                      .toString(),
+                                  sqft: data.realstates[index].size.toString(),
+                                  rooms:
+                                      data.realstates[index].rooms.toString(),
+                                  onTap: () {
+                                    context.push(AppRoutes.propertyDetail,
+                                        extra: {
+                                          "feed": data.realstates[index],
+                                          "category": widget.serviceName
+                                        });
+                                  },
+                                  photo: data
+                                      .realstates[index].photos[0].secoureUrl);
+                            } else if (widget.serviceName == "Land") {
+                              return LandCard(
+                                  title: data.realstates[index].title ?? "",
+                                  location:
+                                      data.realstates[index].location.ward,
+                                  price: data.realstates[index].maxPrice
+                                      .toString(),
+                                  sqft: data.realstates[index].size.toString(),
+                                  onTap: () {
+                                    context.push(AppRoutes.propertyDetail,
+                                        extra: {
+                                          "feed": data.realstates[index],
+                                          "category": widget.serviceName
+                                        });
+                                  },
+                                  photo: data
+                                      .realstates[index].photos[0].secoureUrl);
+                            } else if (widget.serviceName == "House for rent" ||
+                                widget.serviceName == "House for sell" ||
+                                widget.serviceName == "Short stay apartment") {
+                              return HouseCard(
+                                title: data.realstates[index].title ?? "",
+                                location: data.realstates[index].location.ward,
+                                beds: data.realstates[index].beds.toString(),
+                                baths: data.realstates[index].baths.toString(),
+                                price:
+                                    data.realstates[index].maxPrice.toString(),
+                                sqft: data.realstates[index].size.toString(),
+                                onTap: () {
+                                  context.push(AppRoutes.propertyDetail,
+                                      extra: {
+                                        "feed": data.realstates[index],
+                                        "category": widget.serviceName
+                                      });
+                                },
+                                photo:
+                                    data.realstates[index].photos[0].secoureUrl,
+                              );
+                            }
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Text("Category doesn't exist"),
+                            );
+                          }),
+                      error: (error) => Center(
+                        child: Text(error.toString()),
+                      ),
                     );
-                  }),
+                  },
+                ),
+              if (widget.serviceName == "Vehicle")
+                BlocBuilder<FilterVehicleBloc, FilterVehicleState>(
+                  builder: (context, state) {
+                    return state.maybeMap(
+                      orElse: () => Container(),
+                      initial: (_) => Container(),
+                      loading: (_) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      success: (data) => ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: data.vehicles.length,
+                          itemBuilder: (context, index) {
+                            return VehicleCard(
+                                price: data.vehicles[index].price.toString(),
+                                make: data.vehicles[index].make,
+                                location: data.vehicles[index].location.ward,
+                                engineSize:
+                                    data.vehicles[index].engineSize.toString(),
+                                color: data.vehicles[index].color,
+                                year: data.vehicles[index].year.toString(),
+                                onTap: () {
+                                  context.push(AppRoutes.propertyDetail,
+                                      extra: {
+                                        "feed": data.vehicles[index],
+                                        "category": widget.serviceName
+                                      });
+                                },
+                                photo:
+                                    data.vehicles[index].photos[0].secoureUrl);
+                          }),
+                      error: (error) => Center(
+                        child: Text(error.toString()),
+                      ),
+                    );
+                  },
+                ),
             ],
           ),
         ),

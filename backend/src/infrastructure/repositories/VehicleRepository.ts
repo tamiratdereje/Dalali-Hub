@@ -8,8 +8,8 @@ export class VehicleRepository extends
   constructor(private schema: mongoose.Model<VehicleEntity>) {
     super(schema);
   }
-  async GetByFilter(filter: {}): Promise<VehicleEntity[]> {
-    const vehicleEntity = (await this._schema.find(filter));
+  async GetByFilter(filter: {}, populate: string): Promise<VehicleEntity[]> {
+    const vehicleEntity = (await this._schema.find(filter).populate(populate));
     return vehicleEntity
   }
   async CreateVehicle(vehicle: VehicleEntity): Promise<VehicleEntity> {

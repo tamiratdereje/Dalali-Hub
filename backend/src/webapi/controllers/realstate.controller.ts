@@ -36,9 +36,9 @@ export class RealStateController {
       console.log(realStateDto);
 
       const realState = new RealState(realStateDto);
-      console.log("files")
-      console.log(req.files)
-      console.log("files")
+      console.log("files");
+      console.log(req.files);
+      console.log("files");
       // Upload photos
       if (req.files) {
         //TODO: Add more validations and remove unnecessary files during errors
@@ -59,7 +59,8 @@ export class RealStateController {
         }
       }
 
-      const createdRealState = await this.realStateRepository.CreateRealState(realState);
+      const createdRealState =
+        await this.realStateRepository.CreateRealState(realState);
       res
         .status(StatusCodes.OK)
         .json(new JSendResponse().success(createdRealState));
@@ -69,16 +70,23 @@ export class RealStateController {
     async (req: Request, res: Response, next: NextFunction) => {
       const realStateId = req.params.id;
 
-      const realState = await this.realStateRepository.GetById(Object(realStateId));
+      const realState = await this.realStateRepository.GetById(
+        Object(realStateId)
+      );
 
-      
       if (!realState) {
         throw new BadRequestError("realState not found");
       }
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of realState.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
+          uploadedImages.push(
+            new PhotoResponseDTO(
+              curPhoto.publicId,
+              curPhoto.secureUrl,
+              curPhoto._id
+            )
+          );
         });
       }
       const resultRealState = new RealStateResponseDTO(
@@ -102,24 +110,73 @@ export class RealStateController {
         realState.rooms,
         realState.beds,
         realState.baths,
-        realState.kitchens,        
+        realState.kitchens
       );
-      res.status(StatusCodes.OK).json(new JSendResponse().success(resultRealState));
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(resultRealState));
     }
   );
 
   getAllRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      res
-        .status(StatusCodes.OK)
-        .json(new JSendResponse().success(req.advancedResults));
+      const realstate = await this.realStateRepository.GetByFilter(
+        JSON.parse(req.queryString),
+        req.populate
+      );
+
+      const realstates: RealStateResponseDTO[] = [];
+      for (let curRealstate of realstate) {
+        const realstateImageDto: PhotoResponseDTO[] = [];
+        const realstateDTO = new RealStateResponseDTO(
+          curRealstate._id,
+          curRealstate.title,
+          curRealstate.minPrice,
+          curRealstate.maxPrice,
+          curRealstate.category,
+          curRealstate.seats,
+          curRealstate.size,
+          curRealstate.sizeUnit,
+          new LocationResponseDTO(
+            curRealstate.location.region,
+            curRealstate.location.district,
+            curRealstate.location.ward
+          ),
+          realstateImageDto,
+          curRealstate.otherFeatures,
+          curRealstate.description,
+          curRealstate.isApproved,
+
+          curRealstate.rooms,
+          curRealstate.beds,
+          curRealstate.baths,
+          curRealstate.kitchens
+        );
+        for (let curPhoto of curRealstate.photos) {
+          await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
+            realstateImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
+        realstates.push(realstateDTO);
+      }
+
+      res.status(StatusCodes.OK).json(new JSendResponse().success(realstates));
     }
   );
 
   getRealStateByFilter = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const filter = req.body;
-      const realStates = await this.realStateRepository.GetByFilter(filter);
+      const realStates = await this.realStateRepository.GetByFilter(
+        filter,
+        req.populate
+      );
       res.status(StatusCodes.OK).json(new JSendResponse().success(realStates));
     }
   );
@@ -127,7 +184,9 @@ export class RealStateController {
   deleteRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const realStateId = req.params.id;
-      const realState = await this.realStateRepository.GetById(Object(realStateId));
+      const realState = await this.realStateRepository.GetById(
+        Object(realStateId)
+      );
       if (!realState) {
         throw new BadRequestError("RealState not found");
       }
@@ -145,11 +204,12 @@ export class RealStateController {
         console.log("validation error", ValidationError.length);
         throw CustomValidationError.Instance(ValidationError);
       }
-      const oldRealState = await this.realStateRepository.GetById(Object(realStateId));
+      const oldRealState = await this.realStateRepository.GetById(
+        Object(realStateId)
+      );
       if (!oldRealState) {
         throw new BadRequestError("RealState not found");
       }
-
 
       const realState = new RealState(realStateDto);
       realState.id = oldRealState._id;
@@ -164,7 +224,13 @@ export class RealStateController {
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of realState.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
+          uploadedImages.push(
+            new PhotoResponseDTO(
+              curPhoto.publicId,
+              curPhoto.secureUrl,
+              curPhoto._id
+            )
+          );
         });
       }
       const resultRealState = new RealStateResponseDTO(
@@ -188,9 +254,8 @@ export class RealStateController {
         updatedRealState.rooms,
         updatedRealState.beds,
         updatedRealState.baths,
-        updatedRealState.kitchens,   
+        updatedRealState.kitchens
       );
-
 
       res
         .status(StatusCodes.OK)
@@ -202,7 +267,9 @@ export class RealStateController {
     async (req: Request, res: Response, next: NextFunction) => {
       const realStateId = req.params.id;
       const photoId = req.params.photoId;
-      const realState = await this.realStateRepository.GetById(Object(realStateId));
+      const realState = await this.realStateRepository.GetById(
+        Object(realStateId)
+      );
       if (!realState) {
         throw new BadRequestError("RealState not found");
       }
@@ -228,7 +295,9 @@ export class RealStateController {
   addRealStatePhoto = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const realStateId = req.params.id;
-      const realState = await this.realStateRepository.GetById(Object(realStateId));
+      const realState = await this.realStateRepository.GetById(
+        Object(realStateId)
+      );
       if (!realState) {
         throw new BadRequestError("RealState not found");
       }
@@ -257,18 +326,26 @@ export class RealStateController {
   getRealStatePhotos = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const realStateId = req.params.id;
-      const realState = await this.realStateRepository.GetById(Object(realStateId));
+      const realState = await this.realStateRepository.GetById(
+        Object(realStateId)
+      );
       if (!realState) {
         throw new BadRequestError("RealState not found");
       }
-      
+
       const uploadedImages: PhotoResponseDTO[] = [];
       for (let e of realState.photos) {
         await this._photoRepository.GetById(e).then((curPhoto) => {
-          uploadedImages.push(new PhotoResponseDTO(curPhoto.publicId, curPhoto.secureUrl, curPhoto._id));
+          uploadedImages.push(
+            new PhotoResponseDTO(
+              curPhoto.publicId,
+              curPhoto.secureUrl,
+              curPhoto._id
+            )
+          );
         });
       }
-      
+
       res
         .status(StatusCodes.OK)
         .json(new JSendResponse().success(uploadedImages));

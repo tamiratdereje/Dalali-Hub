@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'create_realstate_bloc.dart';
+part of 'filter_realstate_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,59 +15,59 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CreateRealstateEvent {
+mixin _$FilterRealstateEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(Realstate realstate) realstate,
+    required TResult Function(FilterParameter filterParameter) realstate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(Realstate realstate)? realstate,
+    TResult? Function(FilterParameter filterParameter)? realstate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(Realstate realstate)? realstate,
+    TResult Function(FilterParameter filterParameter)? realstate,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_CreateRealstate value) realstate,
+    required TResult Function(_FilterRealstate value) realstate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_CreateRealstate value)? realstate,
+    TResult? Function(_FilterRealstate value)? realstate,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_CreateRealstate value)? realstate,
+    TResult Function(_FilterRealstate value)? realstate,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateRealstateEventCopyWith<$Res> {
-  factory $CreateRealstateEventCopyWith(CreateRealstateEvent value,
-          $Res Function(CreateRealstateEvent) then) =
-      _$CreateRealstateEventCopyWithImpl<$Res, CreateRealstateEvent>;
+abstract class $FilterRealstateEventCopyWith<$Res> {
+  factory $FilterRealstateEventCopyWith(FilterRealstateEvent value,
+          $Res Function(FilterRealstateEvent) then) =
+      _$FilterRealstateEventCopyWithImpl<$Res, FilterRealstateEvent>;
 }
 
 /// @nodoc
-class _$CreateRealstateEventCopyWithImpl<$Res,
-        $Val extends CreateRealstateEvent>
-    implements $CreateRealstateEventCopyWith<$Res> {
-  _$CreateRealstateEventCopyWithImpl(this._value, this._then);
+class _$FilterRealstateEventCopyWithImpl<$Res,
+        $Val extends FilterRealstateEvent>
+    implements $FilterRealstateEventCopyWith<$Res> {
+  _$FilterRealstateEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -84,7 +84,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$CreateRealstateEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$FilterRealstateEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -98,7 +98,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'CreateRealstateEvent.started()';
+    return 'FilterRealstateEvent.started()';
   }
 
   @override
@@ -114,7 +114,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(Realstate realstate) realstate,
+    required TResult Function(FilterParameter filterParameter) realstate,
   }) {
     return started();
   }
@@ -123,7 +123,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(Realstate realstate)? realstate,
+    TResult? Function(FilterParameter filterParameter)? realstate,
   }) {
     return started?.call();
   }
@@ -132,7 +132,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(Realstate realstate)? realstate,
+    TResult Function(FilterParameter filterParameter)? realstate,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -145,7 +145,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_CreateRealstate value) realstate,
+    required TResult Function(_FilterRealstate value) realstate,
   }) {
     return started(this);
   }
@@ -154,7 +154,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_CreateRealstate value)? realstate,
+    TResult? Function(_FilterRealstate value)? realstate,
   }) {
     return started?.call(this);
   }
@@ -163,7 +163,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_CreateRealstate value)? realstate,
+    TResult Function(_FilterRealstate value)? realstate,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -173,100 +173,100 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements CreateRealstateEvent {
+abstract class _Started implements FilterRealstateEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$CreateRealstateImplCopyWith<$Res> {
-  factory _$$CreateRealstateImplCopyWith(_$CreateRealstateImpl value,
-          $Res Function(_$CreateRealstateImpl) then) =
-      __$$CreateRealstateImplCopyWithImpl<$Res>;
+abstract class _$$FilterRealstateImplCopyWith<$Res> {
+  factory _$$FilterRealstateImplCopyWith(_$FilterRealstateImpl value,
+          $Res Function(_$FilterRealstateImpl) then) =
+      __$$FilterRealstateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Realstate realstate});
+  $Res call({FilterParameter filterParameter});
 }
 
 /// @nodoc
-class __$$CreateRealstateImplCopyWithImpl<$Res>
-    extends _$CreateRealstateEventCopyWithImpl<$Res, _$CreateRealstateImpl>
-    implements _$$CreateRealstateImplCopyWith<$Res> {
-  __$$CreateRealstateImplCopyWithImpl(
-      _$CreateRealstateImpl _value, $Res Function(_$CreateRealstateImpl) _then)
+class __$$FilterRealstateImplCopyWithImpl<$Res>
+    extends _$FilterRealstateEventCopyWithImpl<$Res, _$FilterRealstateImpl>
+    implements _$$FilterRealstateImplCopyWith<$Res> {
+  __$$FilterRealstateImplCopyWithImpl(
+      _$FilterRealstateImpl _value, $Res Function(_$FilterRealstateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? realstate = null,
+    Object? filterParameter = null,
   }) {
-    return _then(_$CreateRealstateImpl(
-      realstate: null == realstate
-          ? _value.realstate
-          : realstate // ignore: cast_nullable_to_non_nullable
-              as Realstate,
+    return _then(_$FilterRealstateImpl(
+      filterParameter: null == filterParameter
+          ? _value.filterParameter
+          : filterParameter // ignore: cast_nullable_to_non_nullable
+              as FilterParameter,
     ));
   }
 }
 
 /// @nodoc
 
-class _$CreateRealstateImpl implements _CreateRealstate {
-  const _$CreateRealstateImpl({required this.realstate});
+class _$FilterRealstateImpl implements _FilterRealstate {
+  const _$FilterRealstateImpl({required this.filterParameter});
 
   @override
-  final Realstate realstate;
+  final FilterParameter filterParameter;
 
   @override
   String toString() {
-    return 'CreateRealstateEvent.realstate(realstate: $realstate)';
+    return 'FilterRealstateEvent.realstate(filterParameter: $filterParameter)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CreateRealstateImpl &&
-            (identical(other.realstate, realstate) ||
-                other.realstate == realstate));
+            other is _$FilterRealstateImpl &&
+            (identical(other.filterParameter, filterParameter) ||
+                other.filterParameter == filterParameter));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, realstate);
+  int get hashCode => Object.hash(runtimeType, filterParameter);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CreateRealstateImplCopyWith<_$CreateRealstateImpl> get copyWith =>
-      __$$CreateRealstateImplCopyWithImpl<_$CreateRealstateImpl>(
+  _$$FilterRealstateImplCopyWith<_$FilterRealstateImpl> get copyWith =>
+      __$$FilterRealstateImplCopyWithImpl<_$FilterRealstateImpl>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(Realstate realstate) realstate,
+    required TResult Function(FilterParameter filterParameter) realstate,
   }) {
-    return realstate(this.realstate);
+    return realstate(filterParameter);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(Realstate realstate)? realstate,
+    TResult? Function(FilterParameter filterParameter)? realstate,
   }) {
-    return realstate?.call(this.realstate);
+    return realstate?.call(filterParameter);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(Realstate realstate)? realstate,
+    TResult Function(FilterParameter filterParameter)? realstate,
     required TResult orElse(),
   }) {
     if (realstate != null) {
-      return realstate(this.realstate);
+      return realstate(filterParameter);
     }
     return orElse();
   }
@@ -275,7 +275,7 @@ class _$CreateRealstateImpl implements _CreateRealstate {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_CreateRealstate value) realstate,
+    required TResult Function(_FilterRealstate value) realstate,
   }) {
     return realstate(this);
   }
@@ -284,7 +284,7 @@ class _$CreateRealstateImpl implements _CreateRealstate {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_CreateRealstate value)? realstate,
+    TResult? Function(_FilterRealstate value)? realstate,
   }) {
     return realstate?.call(this);
   }
@@ -293,7 +293,7 @@ class _$CreateRealstateImpl implements _CreateRealstate {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_CreateRealstate value)? realstate,
+    TResult Function(_FilterRealstate value)? realstate,
     required TResult orElse(),
   }) {
     if (realstate != null) {
@@ -303,23 +303,23 @@ class _$CreateRealstateImpl implements _CreateRealstate {
   }
 }
 
-abstract class _CreateRealstate implements CreateRealstateEvent {
-  const factory _CreateRealstate({required final Realstate realstate}) =
-      _$CreateRealstateImpl;
+abstract class _FilterRealstate implements FilterRealstateEvent {
+  const factory _FilterRealstate(
+      {required final FilterParameter filterParameter}) = _$FilterRealstateImpl;
 
-  Realstate get realstate;
+  FilterParameter get filterParameter;
   @JsonKey(ignore: true)
-  _$$CreateRealstateImplCopyWith<_$CreateRealstateImpl> get copyWith =>
+  _$$FilterRealstateImplCopyWith<_$FilterRealstateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$CreateRealstateState {
+mixin _$FilterRealstateState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<RealstateResponse> realstates) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -327,7 +327,7 @@ mixin _$CreateRealstateState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<RealstateResponse> realstates)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -335,7 +335,7 @@ mixin _$CreateRealstateState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<RealstateResponse> realstates)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -368,17 +368,17 @@ mixin _$CreateRealstateState {
 }
 
 /// @nodoc
-abstract class $CreateRealstateStateCopyWith<$Res> {
-  factory $CreateRealstateStateCopyWith(CreateRealstateState value,
-          $Res Function(CreateRealstateState) then) =
-      _$CreateRealstateStateCopyWithImpl<$Res, CreateRealstateState>;
+abstract class $FilterRealstateStateCopyWith<$Res> {
+  factory $FilterRealstateStateCopyWith(FilterRealstateState value,
+          $Res Function(FilterRealstateState) then) =
+      _$FilterRealstateStateCopyWithImpl<$Res, FilterRealstateState>;
 }
 
 /// @nodoc
-class _$CreateRealstateStateCopyWithImpl<$Res,
-        $Val extends CreateRealstateState>
-    implements $CreateRealstateStateCopyWith<$Res> {
-  _$CreateRealstateStateCopyWithImpl(this._value, this._then);
+class _$FilterRealstateStateCopyWithImpl<$Res,
+        $Val extends FilterRealstateState>
+    implements $FilterRealstateStateCopyWith<$Res> {
+  _$FilterRealstateStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -395,7 +395,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$CreateRealstateStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$FilterRealstateStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -409,7 +409,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'CreateRealstateState.initial()';
+    return 'FilterRealstateState.initial()';
   }
 
   @override
@@ -426,7 +426,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<RealstateResponse> realstates) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -437,7 +437,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<RealstateResponse> realstates)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -448,7 +448,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<RealstateResponse> realstates)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -496,7 +496,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements CreateRealstateState {
+abstract class _Initial implements FilterRealstateState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -509,7 +509,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$CreateRealstateStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$FilterRealstateStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -523,7 +523,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'CreateRealstateState.loading()';
+    return 'FilterRealstateState.loading()';
   }
 
   @override
@@ -540,7 +540,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<RealstateResponse> realstates) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -551,7 +551,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<RealstateResponse> realstates)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -562,7 +562,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<RealstateResponse> realstates)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -610,7 +610,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements CreateRealstateState {
+abstract class _Loading implements FilterRealstateState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -619,45 +619,79 @@ abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<RealstateResponse> realstates});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$CreateRealstateStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$FilterRealstateStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? realstates = null,
+  }) {
+    return _then(_$SuccessImpl(
+      null == realstates
+          ? _value._realstates
+          : realstates // ignore: cast_nullable_to_non_nullable
+              as List<RealstateResponse>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl();
+  const _$SuccessImpl(final List<RealstateResponse> realstates)
+      : _realstates = realstates;
+
+  final List<RealstateResponse> _realstates;
+  @override
+  List<RealstateResponse> get realstates {
+    if (_realstates is EqualUnmodifiableListView) return _realstates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_realstates);
+  }
 
   @override
   String toString() {
-    return 'CreateRealstateState.success()';
+    return 'FilterRealstateState.success(realstates: $realstates)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SuccessImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._realstates, _realstates));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_realstates));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<RealstateResponse> realstates) success,
     required TResult Function(String message) error,
   }) {
-    return success();
+    return success(realstates);
   }
 
   @override
@@ -665,10 +699,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<RealstateResponse> realstates)? success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call();
+    return success?.call(realstates);
   }
 
   @override
@@ -676,12 +710,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<RealstateResponse> realstates)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(realstates);
     }
     return orElse();
   }
@@ -724,8 +758,14 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements CreateRealstateState {
-  const factory _Success() = _$SuccessImpl;
+abstract class _Success implements FilterRealstateState {
+  const factory _Success(final List<RealstateResponse> realstates) =
+      _$SuccessImpl;
+
+  List<RealstateResponse> get realstates;
+  @JsonKey(ignore: true)
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -739,7 +779,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$CreateRealstateStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$FilterRealstateStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -769,7 +809,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'CreateRealstateState.error(message: $message)';
+    return 'FilterRealstateState.error(message: $message)';
   }
 
   @override
@@ -794,7 +834,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<RealstateResponse> realstates) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -805,7 +845,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<RealstateResponse> realstates)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -816,7 +856,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<RealstateResponse> realstates)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -864,7 +904,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements CreateRealstateState {
+abstract class _Error implements FilterRealstateState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;

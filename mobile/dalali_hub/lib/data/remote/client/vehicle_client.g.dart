@@ -21,31 +21,40 @@ class _VehicleClient implements VehicleClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<JSendResponse<VehicleResponseDto>>> getvehicles() async {
+  Future<HttpResponse<JSendResponse<List<VehicleResponseDto>>>> getVehicles(
+      Map<String, dynamic> filterParameter) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'filterParameter': filterParameter
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<JSendResponse<VehicleResponseDto>>>(Options(
+        _setStreamType<HttpResponse<JSendResponse<List<VehicleResponseDto>>>>(
+            Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              'vehicles',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = JSendResponse<VehicleResponseDto>.fromJson(
+                .compose(
+                  _dio.options,
+                  'vehicles/all',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    final value = JSendResponse<List<VehicleResponseDto>>.fromJson(
       _result.data!,
-      (json) => VehicleResponseDto.fromJson(json as Map<String, dynamic>),
+      (json) => json is List<dynamic>
+          ? json
+              .map<VehicleResponseDto>(
+                  (i) => VehicleResponseDto.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

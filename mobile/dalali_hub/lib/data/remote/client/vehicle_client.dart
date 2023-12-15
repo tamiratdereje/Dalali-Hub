@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
+import 'package:dalali_hub/data/remote/model/filter_parameter_dto.dart';
 import 'package:dalali_hub/data/remote/model/vehicle_dto.dart';
 import 'package:dalali_hub/data/remote/model/vehicle_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
+import 'package:dalali_hub/domain/entity/filter_parameter.dart';
 import 'package:dio/dio.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -16,8 +18,10 @@ part 'vehicle_client.g.dart';
 abstract class VehicleClient {
   factory VehicleClient(Dio dio, {String baseUrl}) = _VehicleClient;
 
-  @GET('vehicles')
-  Future<HttpResponse<JSendResponse<VehicleResponseDto>>> getvehicles();
+  @GET('vehicles/all')
+  Future<HttpResponse<JSendResponse<List<VehicleResponseDto>>>> getVehicles(
+    @Query('filterParameter') Map<String, dynamic> filterParameter,
+  );
 
   @POST('vehicles')
   @MultiPart()

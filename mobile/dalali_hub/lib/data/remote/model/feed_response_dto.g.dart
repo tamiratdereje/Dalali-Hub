@@ -20,7 +20,7 @@ FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
       beds: (json['beds'] as num?)?.toDouble(),
       baths: (json['baths'] as num?)?.toDouble(),
       kitchens: (json['kitchens'] as num?)?.toDouble(),
-      seats: (json['seats'] as num?)?.toInt(),
+      seats: json['seats'] as int?,
       size: (json['size'] as num?)?.toDouble(),
       sizeUnit: json['sizeUnit'] as String?,
       otherFeatures: (json['otherFeatures'] as List<dynamic>?)

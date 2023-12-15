@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:dalali_hub/data/remote/client/realstate_client.dart';
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
+import 'package:dalali_hub/data/remote/model/filter_parameter_dto.dart';
 import 'package:dalali_hub/data/remote/model/realstate_dto.dart';
 import 'package:dalali_hub/data/remote/model/realstate_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
 import 'package:dalali_hub/domain/entity/empty.dart';
+import 'package:dalali_hub/domain/entity/filter_parameter.dart';
 import 'package:dalali_hub/domain/entity/realstate.dart';
 import 'package:dalali_hub/domain/entity/realstate_response.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/repository/realstate_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: IRealstateRepository)
@@ -33,10 +36,21 @@ class RealstateRepository implements IRealstateRepository {
     }
   }
 
-  @override
-  Future<Resource<RealstateResponse>> getRealstates() {
-    // TODO: implement getRealstates for Abel
-    throw UnimplementedError();
+@override
+  Future<Resource<List<RealstateResponse>>> getRealstates(FilterParameter filterParameter) async {
+    
+    Map<String, dynamic> map =
+        FilterParameterDto.toFilterParameterDto(filterParameter).toJson();
+    map.removeWhere((key, value) => value == null || value == '');
+    debugPrint(map.toString());
+    var response = await handleApiCall<List<RealstateResponseDto>>(
+        _realstateClient.getRealstates(map));
+
+    if (response is Success) {
+      return Success(response.data!.map((e) => e.toRealstateResponse()).toList());
+    } else {
+      return Error(response.error!);
+    }
   }
 
   @override

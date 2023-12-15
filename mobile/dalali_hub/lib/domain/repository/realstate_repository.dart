@@ -1,11 +1,12 @@
 import 'package:dalali_hub/domain/entity/empty.dart';
+import 'package:dalali_hub/domain/entity/filter_parameter.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/realstate.dart';
 import 'package:dalali_hub/domain/entity/realstate_response.dart';
 import 'package:dalali_hub/util/resource.dart';
 
 abstract class IRealstateRepository {
-  Future<Resource<RealstateResponse>> getRealstates();
+  Future<Resource<List<RealstateResponse>>> getRealstates( FilterParameter filterParameter);
   Future<Resource<Empty>> addRealstate(Realstate realstate);
   Future<Resource<RealstateResponse>> getRealstate(String id);
   Future<Resource<RealstateResponse>> updateRealstate(Realstate realstate);

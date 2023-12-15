@@ -1,41 +1,40 @@
 import 'dart:io';
 
+import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
 
-class VehicleResponse {
-  final String id;
-  final String make;
-  final List<PhotoResponse> photos;
-  final String model;
-  final int year;
-
-  final String color;
-  final String vin;
-  final String fuelType;
-  final int engineSize;
-  final String transmissionType;
-  final double mileage;
-  final double price;
-  final Location location;
-  final String condition;
-  final String category;
-
+class VehicleResponse extends Feed {
   VehicleResponse({
-    required this.id,
-    required this.make,
-    required this.model,
-    required this.photos,
-    required this.year,
-    required this.color,
-    required this.vin,
-    required this.fuelType,
-    required this.engineSize,
-    required this.transmissionType,
-    required this.mileage,
-    required this.price,
-    required this.location,
-    required this.condition,
-    required this.category,
-  });
+    required String id,
+    required String make,
+    required String model,
+    required List<PhotoResponse> photos,
+    required int year,
+    required String color,
+    required String vin,
+    required String fuelType,
+    required int engineSize,
+    required String transmissionType,
+    required double mileage,
+    required double price,
+    required Location location,
+    required String condition,
+    required String category,
+  }) : super(
+            id: id,
+            photos: photos,
+            location: location,
+            make: make,
+            model: model,
+            year: year,
+            color: color,
+            vin: vin,
+            fuelType: fuelType,
+            engineSize: engineSize,
+            transmissionType: transmissionType,
+            mileage: mileage,
+            price: price,
+            condition: condition,
+            category: category);
 }
