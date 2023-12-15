@@ -60,14 +60,14 @@ class _CustomerHomePageState extends State<CustomerHome> {
                 children: [
                   CustomerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.houseFilter,
+                      context.push(AppRoutes.propertyFilter,
                           extra: {"serviceName": "House for rent"});
                     },
                     serviceName: "House for rent House",
                   ),
                   CustomerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.houseFilter,
+                      context.push(AppRoutes.propertyFilter,
                           extra: {"serviceName": "House for sell"});
                     },
                     serviceName: "House for sell",
@@ -83,15 +83,15 @@ class _CustomerHomePageState extends State<CustomerHome> {
                 children: [
                   CustomerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.houseFilter,
-                          extra: {"serviceName": "Short stay houses"});
+                      context.push(AppRoutes.propertyFilter,
+                          extra: {"serviceName": "Short stay apartment"});
                     },
                     serviceName: "Short stay houses",
                   ),
                   CustomerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.officeFilter,
-                          extra: {"serviceName": "Office Space for rent"});
+                      context.push(AppRoutes.propertyFilter,
+                          extra: {"serviceName": "Office"});
                     },
                     serviceName: "Office for rent",
                   ),
@@ -106,15 +106,15 @@ class _CustomerHomePageState extends State<CustomerHome> {
                 children: [
                   CustomerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.hallFilter,
-                          extra: {"serviceName": "Function halls"});
+                      context.push(AppRoutes.propertyFilter,
+                          extra: {"serviceName": "Hall"});
                     },
                     serviceName: "Halls for rent",
                   ),
                   CustomerServiceContainer(
                     onTap: () {
-                      context.push(AppRoutes.landFilter,
-                          extra: {"serviceName": "Land for sell"});
+                      context.push(AppRoutes.propertyFilter,
+                          extra: {"serviceName": "Land"});
                     },
                     serviceName: "Plots and land for sell",
                   ),
@@ -124,7 +124,10 @@ class _CustomerHomePageState extends State<CustomerHome> {
                 height: 1.4.h,
               ),
               CustomerServiceContainer(
-                onTap: () {},
+                onTap: () {
+                  context.push(AppRoutes.propertyFilter,
+                      extra: {"serviceName": "Vehicle"});
+                },
                 serviceName: "Purchase/rent a vehicle",
               ),
               SizedBox(

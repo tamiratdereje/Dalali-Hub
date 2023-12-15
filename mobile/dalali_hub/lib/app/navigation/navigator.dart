@@ -60,11 +60,11 @@ class AppRouter {
             const CustomerHomePage(),
       ),
       GoRoute(
-        path: AppRoutes.houseFilter,
+        path: AppRoutes.propertyFilter,
         builder: (BuildContext context, GoRouterState state) {
-          // Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
 
-          return const PropertyFilter(serviceName: "House for rent");
+          return PropertyFilterPage(serviceName: args["serviceName"]);
         },
       ),
       GoRoute(

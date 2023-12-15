@@ -8,6 +8,7 @@ import morgan = require("morgan");
 import { feedRoute } from "webapi/routes/feed.route";
 import { vehicleRoute } from "webapi/routes/vehicle.route";
 import { realStateRoute } from "webapi/routes/realState.route";
+import { favoriteRoute } from "webapi/routes/favorite.route";
 
 export class ExpressConfig {
   private app: Express;
@@ -33,6 +34,7 @@ export class ExpressConfig {
       this.app.use("/api/v1/feed", feedRoute);
       this.app.use("/api/v1/vehicles", vehicleRoute);
       this.app.use("/api/v1/realstates", realStateRoute);
+      this.app.use("/api/v1/favorites", favoriteRoute);
       this.app.use("/api/v1/all", (req, res) => {
         res.send("Hello World!");
       });

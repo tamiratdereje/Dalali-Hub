@@ -21,4 +21,5 @@ class AppRoutes {
   static const String loginOptions = '/loginOptions';
   static const String addRealstate = '/addRealstate';
   static const String addVehicle = '/addVehicle';
+  static const String propertyFilter = '/propertyFiler';
 }

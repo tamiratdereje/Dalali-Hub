@@ -2,12 +2,35 @@ import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/drop_down_button.dart';
 import 'package:dalali_hub/app/core/widgets/house_card.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';
+import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
+import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:range_slider_flutter/range_slider_flutter.dart';
+
+class PropertyFilterPage extends StatelessWidget {
+  final String serviceName;
+
+  const PropertyFilterPage({super.key, required this.serviceName});
+
+  @override
+  Widget build(BuildContext context) {
+    return PropertyFilter(
+      serviceName: serviceName,
+    )
+        //  BlocProvider(
+        //   create: (context) =>
+        //       getIt.get<FeedsBloc>()..add(const FeedsEvent.feeds()),
+        //   child:
+        //    PropertyFilter(serviceName: serviceName,),
+        // )
+        ;
+  }
+}
 
 class PropertyFilter extends StatefulWidget {
   final String serviceName;
@@ -51,8 +74,17 @@ class _PropertyFilterState extends State<PropertyFilter> {
   int sliderValue = 1;
   String? selectedValue;
 
-  double _lowerValue = 2;
-  double _upperValue = 14;
+  // number of rooms
+  double _lowerRooms = 2;
+  double _higherRooms = 14;
+
+  // number of seats
+  double _lowerSeats = 2;
+  double _higherSeats = 14;
+
+  TextEditingController widthSizeController = TextEditingController();
+  TextEditingController heightSizeController = TextEditingController();
+
   TextEditingController maxPriceController = TextEditingController();
   List<String> currencies = ['USD', 'EUR', 'LB'];
   String? selectedCurrency;
@@ -79,59 +111,215 @@ class _PropertyFilterState extends State<PropertyFilter> {
               SizedBox(
                 height: 3.7.h,
               ),
-              Text("Number of rooms", style: inputFieldLabelStyle),
-              SizedBox(
-                height: 1.4.h,
-              ),
-              RangeSliderFlutter(
-                // key: Key('3343'),
-                values: [_lowerValue, _upperValue],
-
-                rangeSlider: true,
-                tooltip: RangeSliderFlutterTooltip(
-                  alwaysShowTooltip: true,
-                  rightSuffix: Text(
-                    " rooms",
-                    style: bodyTextStyle.copyWith(color: AppColors.white),
-                  ),
-                  leftSuffix: Text(" rooms",
-                      style: bodyTextStyle.copyWith(color: AppColors.white)),
+              if (widget.serviceName == "House for rent" ||
+                  widget.serviceName == "House for sell" ||
+                  widget.serviceName == "Short stay apartment" ||
+                  widget.serviceName == "Office") ...[
+                Text("Number of rooms", style: inputFieldLabelStyle),
+                SizedBox(
+                  height: 1.4.h,
                 ),
-                textPositionBottom: -100,
-                max: 20,
-                // textPositionTop: 0,
+                RangeSliderFlutter(
+                  // key: Key('3343'),
+                  values: [_lowerRooms, _higherRooms],
 
-                handlerHeight: 27,
-                textBackgroundColor: AppColors.nauticalCreatures,
+                  rangeSlider: true,
+                  tooltip: RangeSliderFlutterTooltip(
+                    alwaysShowTooltip: true,
+                    rightSuffix: Text(
+                      " rooms",
+                      style: bodyTextStyle.copyWith(color: AppColors.white),
+                    ),
+                    leftSuffix: Text(" rooms",
+                        style: bodyTextStyle.copyWith(color: AppColors.white)),
+                  ),
+                  textPositionBottom: -100,
+                  max: 20,
+                  // textPositionTop: 0,
 
-                trackBar: RangeSliderFlutterTrackBar(
-                  activeTrackBarHeight: 10,
-                  inactiveTrackBarHeight: 10,
-                  activeTrackBar: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.nauticalCreatures,
+                  handlerHeight: 27,
+                  textBackgroundColor: AppColors.nauticalCreatures,
+
+                  trackBar: RangeSliderFlutterTrackBar(
+                    activeTrackBarHeight: 10,
+                    inactiveTrackBarHeight: 10,
+                    activeTrackBar: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.nauticalCreatures,
+                    ),
+                    inactiveTrackBar: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.doctor,
+                    ),
                   ),
-                  inactiveTrackBar: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.doctor,
-                  ),
+                  // handler: RangeSliderFlutterHandler(
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.yellow,
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  // ),
+                  min: 0,
+                  fontSize: 15,
+                  // textColor: ,
+
+                  onDragging: (handlerIndex, lowerValue, upperValue) {
+                    _lowerRooms = lowerValue;
+                    _higherRooms = upperValue;
+                    setState(() {});
+                  },
                 ),
-                // handler: RangeSliderFlutterHandler(
-                //   decoration: BoxDecoration(
-                //     color: Colors.yellow,
-                //     borderRadius: BorderRadius.circular(10),
-                //   ),
-                // ),
-                min: 0,
-                fontSize: 15,
-                // textColor: ,
-
-                onDragging: (handlerIndex, lowerValue, upperValue) {
-                  _lowerValue = lowerValue;
-                  _upperValue = upperValue;
-                  setState(() {});
-                },
-              ),
+              ],
+              if (widget.serviceName == "Land") ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: AppInputField(
+                        controller: minPriceController,
+                        label: 'Min Size',
+                        hint: "25,000",
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Min price is required';
+                          }
+                          // if (value != newPasswordController.text) {
+                          //   return 'Password does not match';
+                          // }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.1.w,
+                    ),
+                    Expanded(
+                      child: AppInputField(
+                        controller: maxPriceController,
+                        label: 'Max SIze',
+                        hint: "850,000",
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Max price is required';
+                          }
+                         
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              if (widget.serviceName == "Hall") ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: AppInputField(
+                        controller: minPriceController,
+                        label: 'Min seats',
+                        hint: "30",
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Min seat is required';
+                          }
+                          // if (value != newPasswordController.text) {
+                          //   return 'Password does not match';
+                          // }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.1.w,
+                    ),
+                    Expanded(
+                      child: AppInputField(
+                        controller: maxPriceController,
+                        label: 'Max seats',
+                        hint: "160",
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Max seat is required';
+                          }
+                          // if (value != newPasswordController.text) {
+                          //   return 'Password does not match';
+                          // }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              if (widget.serviceName == "Vehicle") ...[
+                AppInputField(
+                  controller: maxPriceController,
+                  label: 'Make',
+                  hint: "Toyota",
+                  obscureText: false,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Make is required';
+                    }
+                    // if (value != newPasswordController.text) {
+                    //   return 'Password does not match';
+                    // }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 1.4.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: AppInputField(
+                        controller: minPriceController,
+                        label: 'Min years',
+                        hint: "30",
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Min years is required';
+                          }
+                          // if (value != newPasswordController.text) {
+                          //   return 'Password does not match';
+                          // }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 3.1.w,
+                    ),
+                    Expanded(
+                      child: AppInputField(
+                        controller: maxPriceController,
+                        label: 'Max years',
+                        hint: "160",
+                        obscureText: false,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Max years is required';
+                          }
+                          // if (value != newPasswordController.text) {
+                          //   return 'Password does not match';
+                          // }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
               SizedBox(
                 height: 2.4.h,
               ),
