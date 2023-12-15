@@ -10,7 +10,7 @@ export abstract class GenericRepository<T extends IBaseEntity>
   constructor(schema: mongoose.Model<T>) {
     this._schema = schema;
   }
-
+  
   async Create(entity: T): Promise<T> {
     const entityCreate = this._schema.create(entity);
     return entityCreate;
@@ -35,4 +35,10 @@ export abstract class GenericRepository<T extends IBaseEntity>
   async Delete(id: mongoose.Types.ObjectId): Promise<void> {
     this._schema.findByIdAndDelete(id).exec(); 
   }
+  
+  async Query(query: string, populate: string, page: number, limit: number): Promise<T[]> {
+    const response = this._schema.find(JSON.parse(query)).populate(populate).skip((page - 1) * limit).limit(limit);
+    return response;
+  }
+  
 }

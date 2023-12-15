@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
+import 'package:dalali_hub/app/pages/filter/filter_result.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
-import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
+import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart'; 
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/realstate_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
@@ -22,11 +23,10 @@ class AppRouter {
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: authCubit.state.map(
-      authenticated: (_) => AppRoutes.home,
-      unauthenticated: (_) => AppRoutes.loginOptions,
-      initial: (_) => AppRoutes.loginOptions,
-      firstTime: (_) => AppRoutes.onBoarding,
+    initialLocation: authCubit.state.maybeWhen(
+      firstTime: () => AppRoutes.onBoarding,
+      authenticated: () => AppRoutes.home,
+      orElse: () => AppRoutes.loginOptions ,
     ),
     redirect: (context, state) => redirecter(context, state),
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
@@ -109,6 +109,10 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const LogInWithGoogleOrAppleId();
         },
+      ),
+      GoRoute(
+        path: AppRoutes.filterResult,
+        builder:(context, state) => const FilterResultPage(),
       )
     ],
   );
