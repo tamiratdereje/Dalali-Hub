@@ -44,18 +44,20 @@ class FilterParameterDto {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['region'] = region;
-    data['district'] = district;
-    data['ward'] = ward;
-    data['rooms'] = {'lt': upperRooms, 'gt': lowerRooms};
-    data['seats'] = {'lt': upperSeats, 'gt': lowerSeats};
-    data['widthSize'] = {'lt': widthSize};
-    data['heightSize'] = {'lt': heightSize};
-    data['price'] = {'lt': upperPrice, 'gt': lowerPrice};
+    // data['region'] = region;
+    // data['district'] = district;
+    // data['ward'] = ward;
+    data['rooms'] =  (upperRooms == null || upperRooms == "" || lowerRooms == null || lowerRooms == "" ) ? null :  {'lt': upperRooms, 'gt': lowerRooms};
+    data['seats'] = (upperSeats == null || upperSeats == "" || lowerSeats == null || lowerSeats == "" ) ? null :  {'lt': upperSeats, 'gt': lowerSeats};
+    data['widthSize'] = (widthSize == null || widthSize == "" || heightSize == null || heightSize == "" ) ? null : {'lt':  widthSize};
+    data['heightSize'] = (widthSize == null || widthSize == "" || heightSize == null || heightSize == "" ) ? null :  {'lt': heightSize};
+    data['price'] = (upperPrice == null || upperPrice == "" || lowerPrice == null || lowerPrice == "" ) ? null : {'lt': upperPrice, 'gt': lowerPrice};
     data['currency'] = currency;
     data['make'] = make;
-    data['years'] = {'lt': maxYears, 'gt': minYears};
+    data['years'] = (maxYears == null || maxYears == "" || minYears == null || minYears == "" ) ? null : {'lt': maxYears, 'gt': minYears};
     data['category'] = category;
+    data['location'] = {'region': (region == null || region == "" ) ? null: region, 'district': (district == null || district == "" ) ?  null : district,   'ward': (ward == null || ward == "" ) ?  null :  ward};
+    data["location"].removeWhere((key, value) => value == null);
     return data;
   }
 

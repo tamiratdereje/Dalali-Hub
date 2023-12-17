@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
-import 'package:dalali_hub/app/pages/filter/filter_result.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
-import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart'; 
+import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/realstate_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
+import 'package:dalali_hub/app/pages/property_filter/search_result.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -26,7 +26,7 @@ class AppRouter {
     initialLocation: authCubit.state.maybeWhen(
       firstTime: () => AppRoutes.onBoarding,
       authenticated: () => AppRoutes.home,
-      orElse: () => AppRoutes.loginOptions ,
+      orElse: () => AppRoutes.loginOptions,
     ),
     redirect: (context, state) => redirecter(context, state),
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
@@ -93,6 +93,15 @@ class AppRouter {
               category: args["category"]);
         },
       ),
+       GoRoute(
+        path: AppRoutes.filterResult,
+        builder: (BuildContext context, GoRouterState state) {
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return FilterResultPage(
+              feed: args["propertyList"],
+             );
+        },
+      ),
       GoRoute(
         path: AppRoutes.propertyDetail,
         builder: (BuildContext context, GoRouterState state) {
@@ -110,10 +119,6 @@ class AppRouter {
           return const LogInWithGoogleOrAppleId();
         },
       ),
-      GoRoute(
-        path: AppRoutes.filterResult,
-        builder:(context, state) => const FilterResultPage(),
-      )
     ],
   );
 
