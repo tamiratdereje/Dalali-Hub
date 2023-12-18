@@ -7,7 +7,7 @@ import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.da
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
-import 'package:dalali_hub/app/pages/property_detail_for_customer/realstate_detail.dart';
+import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
 import 'package:dalali_hub/app/pages/property_filter/search_result.dart';
 import 'package:flutter/material.dart';

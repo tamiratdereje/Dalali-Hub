@@ -1,3 +1,4 @@
+import 'package:dalali_hub/data/remote/client/favorite_client.dart';
 import 'package:dalali_hub/data/remote/client/feed_client.dart';
 import 'package:dalali_hub/data/remote/client/images_client.dart';
 import 'package:dalali_hub/data/remote/client/realstate_client.dart';
@@ -44,7 +45,6 @@ abstract class AppModule {
   @singleton
   ImagesClient imageClient(Dio dio) => ImagesClient(dio);
 
-
   @singleton
   FeedClient feedClient(Dio dio) => FeedClient(dio);
 
@@ -53,4 +53,7 @@ abstract class AppModule {
 
   @singleton
   VehicleClient vehicleClient(Dio dio) => VehicleClient(dio);
+
+  @singleton
+  FavoriteClient favoriteClient(Dio dio) => FavoriteClient(dio);
 }

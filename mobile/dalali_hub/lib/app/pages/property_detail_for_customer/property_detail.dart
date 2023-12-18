@@ -1,24 +1,51 @@
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/favorite/bloc/add_to_my_favorite/add_to_my_favorite_bloc.dart';
+import 'package:dalali_hub/app/pages/favorite/bloc/get_my_favorites/get_my_favorites_bloc.dart';
+import 'package:dalali_hub/app/pages/favorite/bloc/remove_from_my_favorite/remove_from_my_favorite_bloc.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/other_features_chips.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
 import 'package:dalali_hub/domain/entity/feed.dart';
+import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class PropertyDetailPage extends StatefulWidget {
+class PropertyDetailPage extends StatelessWidget {
   final String category;
   final Feed feed;
   const PropertyDetailPage(
       {super.key, required this.category, required this.feed});
 
   @override
-  State<PropertyDetailPage> createState() => _PropertyDetailPageState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt.get<RemoveFromMyFavoriteBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<AddToMyFavoriteBloc>(),
+        ),
+      ],
+      child: PropertyDetail(category: category, feed: feed),
+    );
+  }
 }
 
-class _PropertyDetailPageState extends State<PropertyDetailPage> {
+class PropertyDetail extends StatefulWidget {
+  final String category;
+  final Feed feed;
+  const PropertyDetail({super.key, required this.category, required this.feed});
+
+  @override
+  State<PropertyDetail> createState() => _PropertyDetailState();
+}
+
+class _PropertyDetailState extends State<PropertyDetail> {
   List<String> selectedList = ["Shower", "Wifi", "Parking", "Garden"];
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,17 +79,38 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               ),
               if (widget.category != "Vehicle")
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(widget.feed.title ?? "", style: appBarTitleStyle),
                     SizedBox(
                       width: 2.7.w,
                     ),
                     IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border_outlined,
-                          color: AppColors.nauticalCreatures,
-                        ))
+                      onPressed: () {
+                        // TODO: Add to favorite list
+                        if (!isFavorite) {
+                          context.read<AddToMyFavoriteBloc>().add(
+                                AddToMyFavoriteEvent.addToMyFavorite(
+                                    widget.feed.id),
+                              );
+                        } else {
+                          context.read<RemoveFromMyFavoriteBloc>().add(
+                                RemoveFromMyFavoriteEvent.removeFromMyFavorite(
+                                    widget.feed.id),
+                              );
+                        }
+                      },
+                      icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: AppColors.nauticalCreatures),
+                    ),
+                    BlocListener<AddToMyFavoriteBloc, AddToMyFavoriteState>(
+                      listener: (context, state) {},
+                    ),
+                    BlocListener<RemoveFromMyFavoriteBloc,
+                        RemoveFromMyFavoriteState>(
+                      listener: (context, state) {},
+                    ),
                   ],
                 ),
               if (widget.category == "Vehicle")
