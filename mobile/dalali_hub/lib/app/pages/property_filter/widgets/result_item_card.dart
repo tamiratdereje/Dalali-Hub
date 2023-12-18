@@ -75,7 +75,7 @@ class ResultItemCard extends StatelessWidget {
                         ),
                       if (feed.category == "Land")
                         Text(
-                          "Size: ${feed.size} sqm",
+                          "Size: ${(feed.sizeWidth ?? 1) * (feed.sizeHeight ?? 1)} sqm",
                           style: buttonContainerWatermarkStyle.copyWith(
                               fontSize: 12.sp),
                         ),
@@ -114,7 +114,7 @@ class ResultItemCard extends StatelessWidget {
                     style:
                         buttonContainerWatermarkStyle.copyWith(fontSize: 12.sp),
                   ),
-                  Text("${feed.maxPrice ?? feed.price} Tsh",
+                  Text("${feed.price ?? feed.price} Tsh",
                       style: bodyTextStyle.copyWith(
                           color: AppColors.black, fontWeight: FontWeight.w700)),
                 ],

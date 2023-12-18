@@ -17,12 +17,15 @@ import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
 import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
 import { VehicleResponseDTO } from "@dtos/VehicleResponseDTO";
 import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
+import { IUserRepository } from "@interfaces/repositories/IUserRepository";
+import { UserResponseDTO } from "@dtos/userResponseDTO";
 export class FavoriteController {
   constructor(
     private favoriteRepository: IFavoriteRepository,
     private realStateRepository: IRealStateRepository,
     private _photoRepository: IPhotoRepository,
-    private vehicleRepository: IVehicleRepository
+    private vehicleRepository: IVehicleRepository,
+    private _userRepository: IUserRepository
   ) {}
   addToFavorite = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -61,15 +64,17 @@ export class FavoriteController {
           Object(favorite.property)
         );
 
+        const owner: UserResponseDTO = await this._userRepository.GetById(favorite.user);
+
+
         if (realState) {
           curFeed = new FeedResponseDTO(
             realState._id,
             realState.title,
-            realState.minPrice,
-            realState.maxPrice,
             realState.category,
             realState.seats,
-            realState.size,
+            realState.sizeWidth,
+            realState.sizeHeight,
             realState.sizeUnit,
             new LocationResponseDTO(
               realState.location.region,
@@ -95,7 +100,10 @@ export class FavoriteController {
             null,
             null,
             null,
-            null
+            null,
+            owner,
+            realState.numberOfViews
+
           );
           for (let curPhoto of realState.photos) {
             await this._photoRepository
@@ -119,9 +127,8 @@ export class FavoriteController {
           curFeed = new FeedResponseDTO(
             vehicle._id,
             null,
-            null,
-            null,
             vehicle.category,
+            null,
             null,
             null,
             null,
@@ -133,7 +140,7 @@ export class FavoriteController {
             vehicleImageDto,
             null,
             null,
-            null,
+            vehicle.isApproved,
             null,
             null,
             null,
@@ -148,7 +155,9 @@ export class FavoriteController {
             vehicle.transmissionType,
             vehicle.mileage,
             vehicle.price,
-            vehicle.condition
+            vehicle.condition,
+            owner,
+            vehicle.numberOfViews
           );
           for (let curPhoto of vehicle.photos) {
             await this._photoRepository

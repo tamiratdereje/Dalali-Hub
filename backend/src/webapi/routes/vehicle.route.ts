@@ -8,28 +8,50 @@ import { PhotoRepository } from "@repositories/PhotoRepository";
 import { Photo } from "@entities/PhotoEntity";
 import { advancedResults } from "webapi/middlewares/aggregate.filter.middleware";
 import { Model } from "mongoose";
+import { UserRepository } from "@repositories/UserRepository";
+import { User } from "@entities/UserEntity";
 
 const vehicleRoute = Router();
 const fileUploadService = new FileUploadService();
 const vehicleRepository = new VehicleRepository(Vehicle);
 const photoRepository = new PhotoRepository(Photo);
-
+const userRepository = new UserRepository(User);
 
 const vehicleController = new VehicleController(
-    vehicleRepository,
-    fileUploadService,
-    photoRepository
+  vehicleRepository,
+  fileUploadService,
+  photoRepository,
+  userRepository
 );
 
 // Routes for vehicleController
-vehicleRoute.post("/", upload.array("photos", 5), vehicleController.createVehicle);
+vehicleRoute.post(
+  "/",
+  upload.array("photos", 5),
+  vehicleController.createVehicle
+);
 // VRoute.post("/filter", advancedResults<VEntity>(V, ""), VController.getAllV);
-vehicleRoute.get("/all", advancedResults<VehicleEntity>(Vehicle, "photos"), vehicleController.getAllVehicle);
+vehicleRoute.get(
+  "/all",
+  advancedResults<VehicleEntity>(Vehicle, "photos"),
+  vehicleController.getAllVehicle
+);
 vehicleRoute.get("/:id", vehicleController.getVehicleById);
 vehicleRoute.delete("/:id", vehicleController.deleteVehicle);
-vehicleRoute.put("/:id", upload.array("photos", 5), vehicleController.updateVehicle);
-vehicleRoute.delete("/:id/photos/:photoId", vehicleController.deleteVehiclePhoto);
-vehicleRoute.post("/:id/photos", upload.array("photos", 5), vehicleController.addVehiclePhoto);
+vehicleRoute.put(
+  "/:id",
+  upload.array("photos", 5),
+  vehicleController.updateVehicle
+);
+vehicleRoute.delete(
+  "/:id/photos/:photoId",
+  vehicleController.deleteVehiclePhoto
+);
+vehicleRoute.post(
+  "/:id/photos",
+  upload.array("photos", 5),
+  vehicleController.addVehiclePhoto
+);
 vehicleRoute.get("/:id/photos", vehicleController.getVehiclePhotos);
 
 export { vehicleRoute };

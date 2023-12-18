@@ -170,8 +170,8 @@ class _CustomerHomePageState extends State<CustomerHome> {
                             return HallCard(
                               title: data.feeds[index].title ?? "",
                               location: data.feeds[index].location.ward,
-                              price: data.feeds[index].maxPrice.toString(),
-                              sqft: data.feeds[index].size.toString(),
+                              price: data.feeds[index].price.toString(),
+                              sqft: data.feeds[index].sizeWidth.toString(),
                               seats: data.feeds[index].seats.toString(),
                               onTap: () {
                                 context.push(AppRoutes.propertyDetail, extra: {
@@ -185,8 +185,8 @@ class _CustomerHomePageState extends State<CustomerHome> {
                             return OfficeCard(
                                 title: data.feeds[index].title ?? "",
                                 location: data.feeds[index].location.ward,
-                                price: data.feeds[index].maxPrice.toString(),
-                                sqft: data.feeds[index].size.toString(),
+                                price: data.feeds[index].price.toString(),
+                                sqft: data.feeds[index].sizeWidth.toString(),
                                 rooms: data.feeds[index].rooms.toString(),
                                 onTap: () {
                                   context.push(AppRoutes.propertyDetail,
@@ -200,8 +200,8 @@ class _CustomerHomePageState extends State<CustomerHome> {
                             return LandCard(
                                 title: data.feeds[index].title ?? "",
                                 location: data.feeds[index].location.ward,
-                                price: data.feeds[index].maxPrice.toString(),
-                                sqft: data.feeds[index].size.toString(),
+                                price: data.feeds[index].price.toString(),
+                                sqft: data.feeds[index].sizeWidth.toString(),
                                 onTap: () {
                                   context.push(AppRoutes.propertyDetail,
                                       extra: {
@@ -238,8 +238,8 @@ class _CustomerHomePageState extends State<CustomerHome> {
                               location: data.feeds[index].location.ward,
                               beds: data.feeds[index].beds.toString(),
                               baths: data.feeds[index].baths.toString(),
-                              price: data.feeds[index].maxPrice.toString(),
-                              sqft: data.feeds[index].size.toString(),
+                              price: data.feeds[index].price.toString(),
+                              sqft: data.feeds[index].sizeWidth.toString(),
                               onTap: () {
                                 context.push(AppRoutes.propertyDetail, extra: {
                                   "feed": data.feeds[index],

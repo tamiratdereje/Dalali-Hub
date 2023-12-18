@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
+import 'package:dalali_hub/domain/entity/user_response.dart';
 
 class RealstateResponse extends Feed {
 
@@ -11,18 +12,20 @@ class RealstateResponse extends Feed {
     required String title,
     required String category,
     required List<PhotoResponse> photos,
-    required double minPrice,
-    required double maxPrice,
+    required double price,
     double? rooms,
     double? beds,
     double? baths,
     double? kitchens,
-    required double size,
+    required double sizeWidth,
+    required double sizeHeight,
     required String sizeUnit,
     required List<String> otherFeatures,
     required String description,
     required bool isApproved,
     required Location location,
+    required UserResponse owner,
+    required int numberOfViews,
     int? seats,
   }) : super(
           id: id,
@@ -32,16 +35,17 @@ class RealstateResponse extends Feed {
           title: title,
           description: description,
           isApproved: isApproved,
-          minPrice: minPrice,
-          maxPrice: maxPrice,
+          price: price,
           rooms: rooms,
           beds: beds,
           baths: baths,
           kitchens: kitchens,
-          size: size,
+          sizeWidth: sizeWidth,
+          sizeHeight: sizeHeight,
           sizeUnit: sizeUnit,
           otherFeatures: otherFeatures,
           seats: seats,
-          
+          owner: owner,
+          numberOfViews: numberOfViews,
         );
 }

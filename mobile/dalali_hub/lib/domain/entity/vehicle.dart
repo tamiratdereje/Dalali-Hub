@@ -7,7 +7,7 @@ class Vehicle {
   final String? id;
   final String make;
   final double price;
-  
+
   final String model;
   final int year;
   final String color;
@@ -20,26 +20,28 @@ class Vehicle {
   final Location location;
 
   final String condition;
-  
-    final List<String> photos;
+
+  final List<String> photos;
   final String category;
+  final bool isApproved;
+  final int numberOfViews;
 
-
-  Vehicle({
-    this.id,
-    required this.make,
-    required this.model,
-    required this.photos,
-    required this.year,
-    required this.color,
-    required this.vin,
-    required this.fuelType,
-    required this.engineSize,
-    required this.transmissionType,
-    required this.mileage,
-    required this.price,
-    required this.location,
-    required this.condition,
-    required this.category,
-  });
+  Vehicle(
+      {this.id,
+      required this.make,
+      required this.model,
+      required this.photos,
+      required this.year,
+      required this.color,
+      required this.vin,
+      required this.fuelType,
+      required this.engineSize,
+      required this.transmissionType,
+      required this.mileage,
+      required this.price,
+      required this.location,
+      required this.condition,
+      required this.category,
+      required this.isApproved,
+      required this.numberOfViews});
 }

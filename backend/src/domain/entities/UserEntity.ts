@@ -1,8 +1,7 @@
-import { Gender } from "domain/types/types";
+import { Gender, Role } from "domain/types/types";
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 import * as bcrypt from "bcrypt";
-
 
 export interface UserEntity extends IBaseEntity {
   _id: Types.ObjectId;
@@ -16,13 +15,12 @@ export interface UserEntity extends IBaseEntity {
   photos: mongoose.Types.ObjectId[];
   password: string;
   isVerified: boolean;
+  role: Role;
 }
-
-
 
 let userSchema = new Schema<UserEntity>(
   {
-    _id: { type: Schema.Types.ObjectId, auto: true},
+    _id: { type: Schema.Types.ObjectId, auto: true },
     firstName: { type: String, required: [true, "First name is required"] },
     middleName: { type: String, required: [true, "Middle name is required"] },
     sirName: { type: String, required: [true, "Sir name is required"] },
@@ -37,16 +35,17 @@ let userSchema = new Schema<UserEntity>(
       required: [true, "Phone is required"],
       unique: true,
     },
-    email: { 
+    email: {
       type: String,
-      unique: true, 
-      required: [true, "Email is required"] },
+      unique: true,
+      required: [true, "Email is required"],
+    },
+    role: { type: String, enum: Role, default: Role.Customer },
     password: { type: String, required: [true, "Password is required"] },
     region: { type: String, required: [true, "Region is required"] },
     isVerified: { type: Boolean, default: false },
-
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 userSchema.methods.toJSON = function () {
@@ -56,14 +55,12 @@ userSchema.methods.toJSON = function () {
 };
 
 userSchema.pre("save", function (next) {
-
   if (!this.isModified("password")) {
     return next();
   }
   this.password = bcrypt.hashSync(this.password, 10);
-  
+
   next();
 });
-
 
 export const User = mongoose.model<UserEntity>("User", userSchema);

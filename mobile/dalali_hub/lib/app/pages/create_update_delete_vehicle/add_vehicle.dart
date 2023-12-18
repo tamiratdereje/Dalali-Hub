@@ -585,6 +585,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                           context.read<CreateVehicleBloc>().add(
                                 CreateVehicleEvent.vehicle(
                                   vehicle: Vehicle(
+                                    numberOfViews: 0,
                                     make: makeController.text,
                                     model: modelController.text,
                                     photos: selectedImages,
@@ -606,6 +607,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                                     ),
                                     condition: conditionController.text,
                                     category: "Vehicle",
+                                    isApproved: false
                                   ),
                                 ),
                               );
@@ -613,6 +615,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                           context.read<UpdateVehicleBloc>().add(
                                 UpdateVehicleEvent.updateVehicle(
                                   vehicle: Vehicle(
+                                    numberOfViews: widget.vehicle!.numberOfViews ,
                                     make: makeController.text,
                                     model: modelController.text,
                                     photos: selectedImages,
@@ -634,6 +637,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                                     ),
                                     condition: conditionController.text,
                                     category: "Vehicle",
+                                    isApproved: false
                                   ),
                                 ),
                               );

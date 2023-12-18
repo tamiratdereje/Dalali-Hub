@@ -12,18 +12,22 @@ import { FavoriteRepository } from "@repositories/FavoriteRepository";
 import { Favorite } from "@entities/FavoriteEntity";
 import { Vehicle } from "@entities/VehicleEntity";
 import { VehicleRepository } from "@repositories/VehicleRepository";
+import { UserRepository } from "@repositories/UserRepository";
+import { User } from "@entities/UserEntity";
 
 const favoriteRoute = Router();
 const realStateRepository = new RealStateRepository(RealState);
 const photoRepository = new PhotoRepository(Photo);
 const favoriteRepository = new FavoriteRepository(Favorite);
 const vehicleRepository = new VehicleRepository(Vehicle);
+const userRepository = new UserRepository(User);
 
 const favoriteController = new FavoriteController(
   favoriteRepository,
   realStateRepository,
   photoRepository,
-  vehicleRepository
+  vehicleRepository,
+  userRepository
 );
 
 // Routes for favoriteController

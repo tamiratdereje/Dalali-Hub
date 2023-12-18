@@ -8,17 +8,21 @@ import { advancedResults } from "webapi/middlewares/aggregate.filter.middleware"
 import { Model } from "mongoose";
 import { RealStateController } from "webapi/controllers/realstate.controller";
 import { RealStateRepository } from "@repositories/RealStateRepository";
+import { UserRepository } from "@repositories/UserRepository";
+import { User } from "@entities/UserEntity";
 
 const realStateRoute = Router();
 const fileUploadService = new FileUploadService();
 const realStateRepository = new RealStateRepository(RealState);
 const photoRepository = new PhotoRepository(Photo);
+const userRepository = new UserRepository(User);
 
 
 const realStateController = new RealStateController(
     realStateRepository,
     fileUploadService,
-    photoRepository
+    photoRepository,
+    userRepository
 );
 
 // Routes for realStateController

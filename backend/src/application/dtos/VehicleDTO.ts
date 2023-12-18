@@ -71,4 +71,13 @@ export class VehicleDTO {
   @IsString({ message: "Category must be a String" })
   category: String;
 
+  @IsNotEmpty({ message: "Owner id is required" })
+  @IsString({ message: "Owner must be a string" })
+  owner: String;
+
+  
+  @IsNotEmpty({ message: "number of views are required" })
+  @IsNumber({}, { message: "number of views must be a Number" })
+  numberOfViews: Number
+
 }

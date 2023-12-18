@@ -15,12 +15,16 @@ import { StatusCodes } from "http-status-codes";
 import { asyncHandler } from "webapi/middlewares/async.handler.middleware";
 import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
 import { Vehicle } from "@entities/VehicleEntity";
+import { UserRepository } from "@repositories/UserRepository";
+import { UserResponseDTO } from "@dtos/userResponseDTO";
+import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 
 export class VehicleController {
   constructor(
     private vehicleRepository: IVehicleRepository,
     private _fileUploadService: IFileUploadService,
-    private _photoRepository: IPhotoRepository
+    private _photoRepository: IPhotoRepository,
+    private _userRepository: IUserRepository
   ) {}
   createVehicle = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -87,6 +91,10 @@ export class VehicleController {
           );
         });
       }
+      const owner: UserResponseDTO = await this._userRepository.GetById(
+        vehicle.owner
+      );
+
       const resultVehicle = new VehicleResponseDTO(
         vehicle._id,
         vehicle.make,
@@ -96,11 +104,6 @@ export class VehicleController {
         vehicle.vin,
         vehicle.fuelType,
         vehicle.engineSize,
-        // new LocationResponseDTO(
-        //   vehicle.location.region,
-        //   vehicle.location.district,
-        //   vehicle.location.ward
-        // ),
         uploadedImages,
         new LocationResponseDTO(
           vehicle.location.region,
@@ -111,7 +114,10 @@ export class VehicleController {
         vehicle.mileage,
         vehicle.price,
         vehicle.condition,
-        vehicle.category
+        vehicle.category,
+        vehicle.isApproved,
+        owner,
+        vehicle.numberOfViews
         // vehicle.insuranceDetails.policyNumber,
       );
       res
@@ -130,6 +136,10 @@ export class VehicleController {
       for (let curVehicle of vehicle) {
         const vehicleImageDto: PhotoResponseDTO[] = [];
         console.log(curVehicle);
+        const owner: UserResponseDTO = await this._userRepository.GetById(
+          curVehicle.owner
+        );
+
         const vehicleDTO = new VehicleResponseDTO(
           curVehicle._id,
           curVehicle.make,
@@ -150,7 +160,10 @@ export class VehicleController {
           curVehicle.mileage,
           curVehicle.price,
           curVehicle.condition,
-          curVehicle.category
+          curVehicle.category,
+          curVehicle.isApproved,
+          owner,
+          curVehicle.numberOfViews
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -230,6 +243,10 @@ export class VehicleController {
           );
         });
       }
+      const owner: UserResponseDTO = await this._userRepository.GetById(
+        updatedVehicle.owner
+      );
+
       const resultVehicle = new VehicleResponseDTO(
         updatedVehicle._id,
         updatedVehicle.make,
@@ -249,7 +266,10 @@ export class VehicleController {
         updatedVehicle.mileage,
         updatedVehicle.price,
         updatedVehicle.condition,
-        updatedVehicle.category
+        updatedVehicle.category,
+        updatedVehicle.isApproved,
+        owner,
+        updatedVehicle.numberOfViews
         // updatedVehicle.insuranceDetails.policyNumber,
       );
 

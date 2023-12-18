@@ -15,12 +15,16 @@ import { StatusCodes } from "http-status-codes";
 import { asyncHandler } from "webapi/middlewares/async.handler.middleware";
 import { IRealStateRepository } from "@interfaces/repositories/IRealStateRepository";
 import { RealState } from "@entities/RealStateEntity";
+import { UserResponseDTO } from "@dtos/userResponseDTO";
+import { UserRepository } from "@repositories/UserRepository";
+import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 
 export class RealStateController {
   constructor(
     private realStateRepository: IRealStateRepository,
     private _fileUploadService: IFileUploadService,
-    private _photoRepository: IPhotoRepository
+    private _photoRepository: IPhotoRepository,
+    private _userRepository: IUserRepository
   ) {}
   createRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -89,14 +93,18 @@ export class RealStateController {
           );
         });
       }
+      const owner: UserResponseDTO = await this._userRepository.GetById(
+        realState.owner
+      );
+
       const resultRealState = new RealStateResponseDTO(
         realState._id,
         realState.title,
-        realState.minPrice,
-        realState.maxPrice,
+        realState.price,
         realState.category,
         realState.seats,
-        realState.size,
+        realState.sizeWidth,
+        realState.sizeHeight,
         realState.sizeUnit,
         new LocationResponseDTO(
           realState.location.region,
@@ -110,7 +118,9 @@ export class RealStateController {
         realState.rooms,
         realState.beds,
         realState.baths,
-        realState.kitchens
+        realState.kitchens,
+        owner,
+        realState.numberOfViews
       );
       res
         .status(StatusCodes.OK)
@@ -127,15 +137,19 @@ export class RealStateController {
 
       const realstates: RealStateResponseDTO[] = [];
       for (let curRealstate of realstate) {
+        const owner: UserResponseDTO = await this._userRepository.GetById(
+          curRealstate.owner
+        );
+
         const realstateImageDto: PhotoResponseDTO[] = [];
         const realstateDTO = new RealStateResponseDTO(
           curRealstate._id,
           curRealstate.title,
-          curRealstate.minPrice,
-          curRealstate.maxPrice,
+          curRealstate.price,
           curRealstate.category,
           curRealstate.seats,
-          curRealstate.size,
+          curRealstate.sizeWidth,
+          curRealstate.sizeHeight,
           curRealstate.sizeUnit,
           new LocationResponseDTO(
             curRealstate.location.region,
@@ -150,7 +164,9 @@ export class RealStateController {
           curRealstate.rooms,
           curRealstate.beds,
           curRealstate.baths,
-          curRealstate.kitchens
+          curRealstate.kitchens,
+          owner,
+          curRealstate.numberOfViews
         );
         for (let curPhoto of curRealstate.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -232,15 +248,18 @@ export class RealStateController {
             )
           );
         });
-      }
+      }        
+      const owner: UserResponseDTO = await this._userRepository.GetById(updatedRealState.owner);
+
+
       const resultRealState = new RealStateResponseDTO(
         updatedRealState._id,
         updatedRealState.title,
-        updatedRealState.minPrice,
-        updatedRealState.maxPrice,
+        updatedRealState.price,
         updatedRealState.category,
         updatedRealState.seats,
-        updatedRealState.size,
+        updatedRealState.sizeWidth,
+        updatedRealState.sizeHeight,
         updatedRealState.sizeUnit,
         new LocationResponseDTO(
           updatedRealState.location.region,
@@ -254,7 +273,9 @@ export class RealStateController {
         updatedRealState.rooms,
         updatedRealState.beds,
         updatedRealState.baths,
-        updatedRealState.kitchens
+        updatedRealState.kitchens,
+        owner,
+        updatedRealState.numberOfViews
       );
 
       res

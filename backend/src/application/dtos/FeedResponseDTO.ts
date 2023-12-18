@@ -1,22 +1,22 @@
 import { Types } from "mongoose";
 import { LocationDTO } from "./LocationDTO";
 import { PhotoResponseDTO } from "./photoResponseDTO";
+import { UserResponseDTO } from "./userResponseDTO";
 
 export class FeedResponseDTO {
   constructor(
     public id: Types.ObjectId,
     public title: String | null,
-    public minPrice: Number | null,
-    public maxPrice: Number | null,
     public category: String,
     public seats: Number | null,
-    public size: Number | null,
+    public sizeWidth: Number | null,
+    public sizeHeight: Number | null,
     public sizeUnit: String | null,
     public location: LocationDTO,
     public photos: PhotoResponseDTO[],
     public otherFeatures: String[] | null,
     public description: String | null,
-    public isApproved: Boolean | null,
+    public isApproved: Boolean,
     public rooms: Number | null,
     public beds: Number | null,
     public baths: Number | null,
@@ -31,6 +31,8 @@ export class FeedResponseDTO {
     public transmissionType: String | null,
     public mileage: Number | null,
     public price: Number | null,
-    public condition: String | null
+    public condition: String | null,
+    public owner: UserResponseDTO,
+    public numberOfViews: Number
   ) {}
 }

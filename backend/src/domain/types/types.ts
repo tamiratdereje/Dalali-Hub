@@ -2,6 +2,11 @@ export enum Gender {
   Male = "MALE",
   Female = "FEMALE",
 }
+export enum Role {
+  Customer = "Customer",
+  Admin = "Admin",
+  Broker = "Broker",
+}
 
 export enum OtpPurpose {
   Verification = "VERIFICATION",
@@ -16,6 +21,3 @@ export enum RealStateCategory {
   OFFICE = "Office",
   LAND = "Land",
 }
-
-
-

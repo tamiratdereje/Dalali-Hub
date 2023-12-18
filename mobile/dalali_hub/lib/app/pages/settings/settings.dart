@@ -1,9 +1,11 @@
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
+import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart';
 import 'package:dalali_hub/app/pages/settings/widgets/setting_tile.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -36,8 +38,14 @@ class _SettingsState extends State<Settings> {
             const SettingTileList(),
             SizedBox(height: 3.h),
             AppButtonPrimary(
-              icon: const Icon(Icons.logout, color: Colors.white,),
-              onPressed: () => context.go(AppRoutes.login),
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                context.read<LogoutBloc>().add(const LogoutEvent.logout());
+                context.go(AppRoutes.login);
+              },
               text: 'Sign Out',
             )
           ],

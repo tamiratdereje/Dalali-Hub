@@ -15,14 +15,14 @@ RealstateResponseDto _$RealstateResponseDtoFromJson(
       photos: (json['photos'] as List<dynamic>)
           .map((e) => PhotoResponseDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      minPrice: (json['minPrice'] as num).toDouble(),
-      maxPrice: (json['maxPrice'] as num).toDouble(),
+      price: (json['price'] as num).toDouble(),
       rooms: (json['rooms'] as num?)?.toDouble(),
       beds: (json['beds'] as num?)?.toDouble(),
       baths: (json['baths'] as num?)?.toDouble(),
       kitchens: (json['kitchens'] as num?)?.toDouble(),
       seats: json['seats'] as int?,
-      size: (json['size'] as num).toDouble(),
+      sizeWidth: (json['sizeWidth'] as num).toDouble(),
+      sizeHeight: (json['sizeHeight'] as num).toDouble(),
       sizeUnit: json['sizeUnit'] as String,
       otherFeatures: (json['otherFeatures'] as List<dynamic>)
           .map((e) => e as String)
@@ -30,6 +30,8 @@ RealstateResponseDto _$RealstateResponseDtoFromJson(
       description: json['description'] as String,
       isApproved: json['isApproved'] as bool,
       location: LocationDto.fromJson(json['location'] as Map<String, dynamic>),
+      owner: UserResponseDto.fromJson(json['owner'] as Map<String, dynamic>),
+      numberOfViews: json['numberOfViews'] as int,
     );
 
 Map<String, dynamic> _$RealstateResponseDtoToJson(
@@ -38,18 +40,20 @@ Map<String, dynamic> _$RealstateResponseDtoToJson(
       'id': instance.id,
       'title': instance.title,
       'photos': instance.photos,
-      'minPrice': instance.minPrice,
-      'maxPrice': instance.maxPrice,
+      'price': instance.price,
       'rooms': instance.rooms,
       'beds': instance.beds,
       'baths': instance.baths,
       'kitchens': instance.kitchens,
       'seats': instance.seats,
-      'size': instance.size,
+      'sizeWidth': instance.sizeWidth,
+      'sizeHeight': instance.sizeHeight,
       'sizeUnit': instance.sizeUnit,
       'otherFeatures': instance.otherFeatures,
       'description': instance.description,
       'isApproved': instance.isApproved,
       'category': instance.category,
       'location': instance.location,
+      'owner': instance.owner,
+      'numberOfViews': instance.numberOfViews,
     };

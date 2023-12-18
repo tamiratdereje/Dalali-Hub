@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dalali_hub/data/remote/model/location_dto.dart';
+import 'package:dalali_hub/data/remote/model/user_response_dto.dart';
 import 'package:dalali_hub/domain/entity/vehicle.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -23,6 +24,10 @@ class VehicleDto {
   final Map location;
   final String condition;
   final String category;
+  final bool isApproved;
+      final int numberOfViews;
+
+
 
   VehicleDto({
     this.id,
@@ -38,7 +43,10 @@ class VehicleDto {
     required this.price,
     required this.location,
     required this.condition,
-    required this.category
+    required this.category,
+    required this.isApproved,
+        required this.numberOfViews,
+
   });
 
   factory VehicleDto.fromJson(Map<String, dynamic> json) =>
@@ -65,7 +73,10 @@ class VehicleDto {
         "ward": vehicle.location.ward
       },
       condition: vehicle.condition,
-      category: vehicle.category
+      category: vehicle.category,
+      isApproved: vehicle.isApproved,
+      numberOfViews: vehicle.numberOfViews
+
     );
   }
 }

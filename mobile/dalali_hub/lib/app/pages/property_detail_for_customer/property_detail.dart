@@ -104,13 +104,14 @@ class _PropertyDetailState extends State<PropertyDetail> {
                           isFavorite ? Icons.favorite : Icons.favorite_border,
                           color: AppColors.nauticalCreatures),
                     ),
-                    BlocListener<AddToMyFavoriteBloc, AddToMyFavoriteState>(
-                      listener: (context, state) {},
-                    ),
-                    BlocListener<RemoveFromMyFavoriteBloc,
-                        RemoveFromMyFavoriteState>(
-                      listener: (context, state) {},
-                    ),
+
+                    // BlocListener<AddToMyFavoriteBloc, AddToMyFavoriteState>(
+                    //   listener: (context, state) {},
+                    // ),
+                    // BlocListener<RemoveFromMyFavoriteBloc,
+                    //     RemoveFromMyFavoriteState>(
+                    //   listener: (context, state) {},
+                    // ),
                   ],
                 ),
               if (widget.category == "Vehicle")
@@ -146,7 +147,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                     ),
                   if (widget.category != "Vehicle")
                     Text(
-                      "NPR ${widget.feed.minPrice} - NPR ${widget.feed.maxPrice}",
+                      "NPR ${widget.feed.price} - NPR ${widget.feed.price}",
                       style: inputFieldLabelMinStyle,
                     ),
                 ],
@@ -226,7 +227,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                               width: 3.3.w,
                             ),
                             Text(
-                              "${widget.feed.size}  SQ FT",
+                              "${(widget.feed.sizeWidth  ?? 1 )* (widget.feed.sizeHeight ?? 1)}  SQ FT",
                               style:
                                   inputFieldHintStyle.copyWith(fontSize: 16.sp),
                             ),

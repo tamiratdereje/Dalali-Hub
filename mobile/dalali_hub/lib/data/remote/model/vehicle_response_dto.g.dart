@@ -25,6 +25,9 @@ VehicleResponseDto _$VehicleResponseDtoFromJson(Map<String, dynamic> json) =>
           .map((e) => PhotoResponseDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       category: json['category'] as String,
+      isApproved: json['isApproved'] as bool,
+      owner: UserResponseDto.fromJson(json['owner'] as Map<String, dynamic>),
+      numberOfViews: json['numberOfViews'] as int,
     );
 
 Map<String, dynamic> _$VehicleResponseDtoToJson(VehicleResponseDto instance) =>
@@ -44,4 +47,7 @@ Map<String, dynamic> _$VehicleResponseDtoToJson(VehicleResponseDto instance) =>
       'condition': instance.condition,
       'photos': instance.photos.map((e) => e.toJson()).toList(),
       'category': instance.category,
+      'isApproved': instance.isApproved,
+      'owner': instance.owner.toJson(),
+      'numberOfViews': instance.numberOfViews,
     };

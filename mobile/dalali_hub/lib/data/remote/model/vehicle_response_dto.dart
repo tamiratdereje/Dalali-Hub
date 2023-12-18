@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dalali_hub/data/remote/model/location_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
+import 'package:dalali_hub/data/remote/model/user_response_dto.dart';
 import 'package:dalali_hub/domain/entity/vehicle_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,6 +26,10 @@ class VehicleResponseDto {
   final String condition;
   final List<PhotoResponseDto> photos;
   final String category;
+  final bool isApproved;
+  final UserResponseDto owner;
+      final int numberOfViews;
+
 
   VehicleResponseDto({
     required this.id,
@@ -42,6 +47,10 @@ class VehicleResponseDto {
     required this.condition,
     required this.photos,
     required this.category,
+    required this.isApproved,
+    required this.owner,
+        required this.numberOfViews,
+
   });
 
   factory VehicleResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -65,5 +74,9 @@ class VehicleResponseDto {
         condition: condition,
         photos: photos.map((e) => e.toPhotoResponse()).toList(),
         category: category,
+        owner: owner.toUserResponse(),
+        isApproved: isApproved,
+        numberOfViews: numberOfViews
       );
+
 }

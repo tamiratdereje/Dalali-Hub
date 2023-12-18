@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { LocationDTO } from "./LocationDTO";
 import { PhotoResponseDTO } from "./photoResponseDTO";
+import { UserResponseDTO } from "./userResponseDTO";
 
 export class VehicleResponseDTO {
   constructor(
@@ -18,6 +19,9 @@ export class VehicleResponseDTO {
     public mileage: Number,
     public price: Number,
     public condition: String,
-    public category: String
+    public category: String,
+    public isApproved: Boolean,
+    public owner: UserResponseDTO,
+    public numberOfViews: Number
   ) {}
 }

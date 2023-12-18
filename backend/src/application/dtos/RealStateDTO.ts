@@ -27,13 +27,10 @@ export class RealStateDTO {
   @IsString({ message: "Title must be a string" })
   title: String;
 
-  @IsNotEmpty({ message: "Min price is required" })
-  @IsNumber({}, { message: "Min price must be a Number" })
-  minPrice: Number;
+  @IsNotEmpty({ message: "Price is required" })
+  @IsNumber({}, { message: "Price must be a Number" })
+  price: Number;
 
-  @IsNotEmpty({ message: "Max price is required" })
-  @IsNumber({}, { message: "Max price must be a Number" })
-  maxPrice: Number;
 
   @IsNotEmpty({ message: "Category is required" })
   @IsEnum(RealStateCategory, { message: "Invalid category" })
@@ -55,11 +52,15 @@ export class RealStateDTO {
   // @IsNumber({}, { message: "Kitchens must be a Number" })
   kitchens: Number | null;
 
-  seata: Number | null;
+  seats: Number | null;
 
   @IsNotEmpty({ message: "Size is required" })
-  @IsNumber({}, { message: "Size must be a Number" })
-  size: Number;
+  @IsNumber({}, { message: "widthSize must be a Number" })
+  sizeWidth: Number;
+
+  @IsNotEmpty({ message: "Size is required" })
+  @IsNumber({}, { message: "heightSize must be a Number" })
+  sizeHeight: Number;
 
   @IsNotEmpty({ message: "Size unit is required" })
   @IsString({ message: "Size unit must be a string" })
@@ -80,4 +81,12 @@ export class RealStateDTO {
   @Transform(({ value }: TransformFnParams) => value?.trim())
   @IsBoolean({ message: "isApproved must be a boolean"})
   isApproved: Boolean;
+
+  @IsNotEmpty({ message: "Owner id is required" })
+  @IsString({ message: "Owner must be a string" })
+  owner: String;
+
+  @IsNotEmpty({ message: "number of views are required" })
+  @IsNumber({}, { message: "number of views must be a Number" })
+  numberOfViews: Number
 }

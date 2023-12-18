@@ -21,6 +21,8 @@ VehicleDto _$VehicleDtoFromJson(Map<String, dynamic> json) => VehicleDto(
       location: json['location'] as Map<String, dynamic>,
       condition: json['condition'] as String,
       category: json['category'] as String,
+      isApproved: json['isApproved'] as bool,
+      numberOfViews: json['numberOfViews'] as int,
     );
 
 Map<String, dynamic> _$VehicleDtoToJson(VehicleDto instance) =>
@@ -39,4 +41,6 @@ Map<String, dynamic> _$VehicleDtoToJson(VehicleDto instance) =>
       'location': instance.location,
       'condition': instance.condition,
       'category': instance.category,
+      'isApproved': instance.isApproved,
+      'numberOfViews': instance.numberOfViews,
     };

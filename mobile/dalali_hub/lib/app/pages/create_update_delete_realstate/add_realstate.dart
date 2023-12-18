@@ -149,14 +149,14 @@ class _CreateRealstateState extends State<CreateRealstate> {
       debugPrint('first time');
       widget.firstTime = false;
       titleController.text = widget.realstate!.title;
-      minPriceController.text = widget.realstate!.minPrice.toString();
-      maxPriceController.text = widget.realstate!.maxPrice.toString();
+      minPriceController.text = widget.realstate!.price.toString();
+      maxPriceController.text = widget.realstate!.price.toString();
       roomsController.text = widget.realstate!.rooms.toString();
       bedsController.text = widget.realstate!.beds.toString();
       bathsController.text = widget.realstate!.baths.toString();
       kitchensController.text = widget.realstate!.kitchens.toString();
-      sizeWidthController.text = widget.realstate!.size.toString();
-      sizeHeightController.text = widget.realstate!.size.toString();
+      sizeWidthController.text = widget.realstate!.sizeWidth.toString();
+      sizeHeightController.text = widget.realstate!.sizeHeight.toString();
       selectedRegion = widget.realstate!.location.region;
       selectedDistrict = widget.realstate!.location.district;
       selectedWard = widget.realstate!.location.ward;
@@ -668,17 +668,27 @@ class _CreateRealstateState extends State<CreateRealstate> {
                                     title: titleController.text,
                                     category: widget.category,
                                     photos: selectedImages,
-                                    minPrice:
+                                    price:
                                         double.parse(minPriceController.text),
-                                    maxPrice:
-                                        double.parse(maxPriceController.text),
-                                    rooms: double.parse(roomsController.text == "" ? "0" : roomsController.text),
-                                    beds: double.parse(bedsController.text == "" ? "0" : bedsController.text),
-                                    baths: double.parse(bathsController.text == "" ? "0" : bathsController.text),
-                                    kitchens:
-                                        double.parse(kitchensController.text == "" ? "0" : kitchensController.text),
-                                    size:
-                                        double.parse(sizeHeightController.text),
+                                    rooms: double.parse(
+                                        roomsController.text == ""
+                                            ? "0"
+                                            : roomsController.text),
+                                    beds: double.parse(bedsController.text == ""
+                                        ? "0"
+                                        : bedsController.text),
+                                    baths: double.parse(
+                                        bathsController.text == ""
+                                            ? "0"
+                                            : bathsController.text),
+                                    kitchens: double.parse(
+                                        kitchensController.text == ""
+                                            ? "0"
+                                            : kitchensController.text),
+                                    sizeWidth:
+                                        double.parse(sizeWidthController.text),
+                                    sizeHeight:
+                                        double.parse(sizeWidthController.text),
                                     sizeUnit: selectedSizeUnit ?? "M",
                                     otherFeatures: selectedList,
                                     description: descriptionController.text,
@@ -687,7 +697,10 @@ class _CreateRealstateState extends State<CreateRealstate> {
                                         region: selectedRegion ?? "Oromia",
                                         district: selectedDistrict ?? "sululta",
                                         ward: selectedWard ?? "mizan"),
-                                    seats: int.parse(seatsController.text == "" ? "0" : seatsController.text),
+                                    seats: int.parse(seatsController.text == ""
+                                        ? "0"
+                                        : seatsController.text),
+                                      numberOfViews: 0
                                   ),
                                 ),
                               );
@@ -695,20 +708,31 @@ class _CreateRealstateState extends State<CreateRealstate> {
                           context.read<UpdateRealstateBloc>().add(
                                 UpdateRealstateEvent.updateRealstate(
                                   realstate: Realstate(
+                                    numberOfViews: widget.realstate!.numberOfViews,
                                       id: widget.realstate!.id,
                                       title: titleController.text,
                                       category: widget.category,
                                       photos: selectedImages,
-                                      minPrice:
+                                      price:
                                           double.parse(minPriceController.text),
-                                      maxPrice:
-                                          double.parse(maxPriceController.text),
-                                      rooms: double.parse(roomsController.text == "" ? "0" : roomsController.text),
-                                      beds: double.parse(bedsController.text == "" ? "0" : bedsController.text),
-                                      baths: double.parse(bathsController.text == "" ? "0" : bathsController.text),
-                                      kitchens:
-                                          double.parse(kitchensController.text == "" ? "0" : kitchensController.text),
-                                      size: double.parse(
+                                    
+                                      rooms: double.parse(roomsController.text == ""
+                                          ? "0"
+                                          : roomsController.text),
+                                      beds: double.parse(bedsController.text == ""
+                                          ? "0"
+                                          : bedsController.text),
+                                      baths: double.parse(
+                                          bathsController.text == ""
+                                              ? "0"
+                                              : bathsController.text),
+                                      kitchens: double.parse(
+                                          kitchensController.text == ""
+                                              ? "0"
+                                              : kitchensController.text),
+                                      sizeWidth: double.parse(
+                                          sizeWidthController.text),
+                                      sizeHeight: double.parse(
                                           sizeHeightController.text),
                                       sizeUnit: selectedSizeUnit ?? "M",
                                       otherFeatures: selectedList,
@@ -716,8 +740,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
                                       isApproved: widget.realstate!.isApproved,
                                       location: Location(
                                           region: selectedRegion ?? "Oromia",
-                                          district:
-                                              selectedDistrict ?? "sululta",
+                                          district: selectedDistrict ?? "sululta",
                                           ward: selectedWard ?? "mizan"),
                                       seats: int.parse(seatsController.text == "" ? "0" : seatsController.text)),
                                 ),
@@ -738,7 +761,8 @@ class _CreateRealstateState extends State<CreateRealstate> {
                         debugPrint('success');
                         WidgetsBinding.instance.addPostFrameCallback((_) =>
                             showSuccessSnackBar(
-                                '${widget.category} successfully created.', context));
+                                '${widget.category} successfully created.',
+                                context));
 
                         // Navigator.pop(context);
                       },

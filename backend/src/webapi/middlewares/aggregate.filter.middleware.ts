@@ -1,6 +1,5 @@
 import { Document, Model, Query } from "mongoose";
 import { Request, Response, NextFunction } from "express";
-import { HouseEntity } from "@entities/HouseEntity";
 import { asyncHandler } from "./async.handler.middleware";
 import { raw } from "body-parser";
 

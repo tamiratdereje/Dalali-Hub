@@ -10,13 +10,13 @@ part 'realstate_dto.g.dart';
 class RealstateDto {
  final String? id;
   final String title;
-  final double minPrice;
-  final double maxPrice;
+  final double price;
   final double? rooms;
   final double? beds;
   final double? baths;
   final double? kitchens;
-  final double size;
+  final double sizeWidth;
+  final double sizeHeight;
   final String sizeUnit;
   final List<String> otherFeatures;
   final String description;
@@ -24,17 +24,18 @@ class RealstateDto {
   final String category;
   final Map location;
   final int? seats;
+  
 
   RealstateDto({
     required this.title,
     required this.category,
-    required this.minPrice,
-    required this.maxPrice,
+    required this.price,
     this.rooms,
     this.beds,
     this.baths,
     this.kitchens,
-    required this.size,
+    required this.sizeWidth,
+    required this.sizeHeight,
     required this.sizeUnit,
     required this.otherFeatures,
     required this.description,
@@ -50,13 +51,13 @@ class RealstateDto {
       id: realstate.id,
       title: realstate.title,
       category: realstate.category,
-      minPrice: realstate.minPrice,
-      maxPrice: realstate.maxPrice,
+      price: realstate.price,
       rooms: realstate.rooms,
       beds: realstate.beds,
       baths: realstate.baths,
       kitchens: realstate.kitchens,
-      size: realstate.size,
+      sizeWidth: realstate.sizeWidth,
+      sizeHeight: realstate.sizeHeight,
       sizeUnit: realstate.sizeUnit,
       otherFeatures: realstate.otherFeatures,
       description: realstate.description,
@@ -66,6 +67,7 @@ class RealstateDto {
         "district": realstate.location.district,
         "ward": realstate.location.ward
       },
+      
     );
   }
 }

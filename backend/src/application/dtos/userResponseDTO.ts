@@ -2,11 +2,11 @@ import { PhotoEntity } from "@entities/PhotoEntity";
 import { UserEntity } from "@entities/UserEntity";
 import { differenceInYears } from "date-fns";
 import { Gender } from "domain/types/types";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 export class UserResponseDTO {
   constructor(
-    public id: string,
+    public _id: Types.ObjectId,
     public  firstName: string,
     public  middleName: string,
     public  sirName: string,

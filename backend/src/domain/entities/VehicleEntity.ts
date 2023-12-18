@@ -14,13 +14,16 @@ export interface VehicleEntity extends IBaseEntity {
   transmissionType: String;
   mileage: Number;
   price: Number;
-  location: {region: String, district: String, ward: String};
+  location: { region: String; district: String; ward: String };
   condition: String;
   category: String;
-//   insuranceDetails: {
-//     policyNumber: String;
-//     expirationDate: Date;
-//   };
+  owner: mongoose.Types.ObjectId;
+  isApproved: Boolean;
+  numberOfViews: Number;
+  //   insuranceDetails: {
+  //     policyNumber: String;
+  //     expirationDate: Date;
+  //   };
 }
 
 const vehicleSchema = new Schema<VehicleEntity>(
@@ -34,7 +37,10 @@ const vehicleSchema = new Schema<VehicleEntity>(
     vin: { type: String, required: [true, "VIN is required"] },
     fuelType: { type: String, required: [true, "Fuel type is required"] },
     engineSize: { type: Number, required: [true, "Engine size is required"] },
-    transmissionType: { type: String, required: [true, "Transmission type is required"] },
+    transmissionType: {
+      type: String,
+      required: [true, "Transmission type is required"],
+    },
     mileage: { type: Number, required: [true, "Mileage is required"] },
     price: { type: Number, required: [true, "Price is required"] },
     location: {
@@ -43,7 +49,11 @@ const vehicleSchema = new Schema<VehicleEntity>(
       ward: { type: String, required: [true, "Ward is required"] },
     },
     condition: { type: String, required: [true, "Condition is required"] },
-    category: { type: String,  default: "Vehicle"},
+    category: { type: String, default: "Vehicle" },
+    owner: { type: Schema.Types.ObjectId, ref: "User" },
+    isApproved: { type: Boolean, default: true },
+    numberOfViews : { type: Number, required: false, default: 0 },
+
     // insuranceDetails: {
     //   policyNumber: { type: String, required: [true, "Policy Number is required"] },
     //   expirationDate: { type: Date, required: [true, "Expiration date is required"] },

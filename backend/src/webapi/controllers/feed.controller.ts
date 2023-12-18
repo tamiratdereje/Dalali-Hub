@@ -1,11 +1,14 @@
 import { FeedResponseDTO } from "@dtos/FeedResponseDTO";
 import { LocationResponseDTO } from "@dtos/LocationResponseDTO";
 import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
+import { UserResponseDTO } from "@dtos/userResponseDTO";
 import { JSendResponse } from "@error-custom/JsendResponse";
 
 import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
 import { IRealStateRepository } from "@interfaces/repositories/IRealStateRepository";
+import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
+import { UserRepository } from "@repositories/UserRepository";
 import { id } from "date-fns/locale";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -15,23 +18,29 @@ export class FeedController {
   constructor(
     private realstateRepository: IRealStateRepository,
     private vehicleRepository: IVehicleRepository,
-    private _photoRepository: IPhotoRepository
+    private _photoRepository: IPhotoRepository,
+    private _userRepository: IUserRepository
   ) {}
   getAllFeeds = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      console.log(req.userId);
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
       const feeds: FeedResponseDTO[] = [];
       const realstate = await this.realstateRepository.GetAll();
 
       for (let curRealstate of realstate) {
         const realstateImageDto: PhotoResponseDTO[] = [];
+        const owner: UserResponseDTO = await this._userRepository.GetById(
+          curRealstate.owner
+        );
         const realstateFeed = new FeedResponseDTO(
           curRealstate._id,
           curRealstate.title,
-          curRealstate.minPrice,
-          curRealstate.maxPrice,
           curRealstate.category,
           curRealstate.seats,
-          curRealstate.size,
+          curRealstate.sizeWidth,
+          curRealstate.sizeHeight,
           curRealstate.sizeUnit,
           new LocationResponseDTO(
             curRealstate.location.region,
@@ -42,7 +51,6 @@ export class FeedController {
           curRealstate.otherFeatures,
           curRealstate.description,
           curRealstate.isApproved,
-
           curRealstate.rooms,
           curRealstate.beds,
           curRealstate.baths,
@@ -57,8 +65,11 @@ export class FeedController {
           null,
           null,
           null,
-          null
+          null,
+          owner,
+          curRealstate.numberOfViews
         );
+
         for (let curPhoto of curRealstate.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
             realstateImageDto.push(
@@ -77,24 +88,27 @@ export class FeedController {
       for (let curVehicle of vehicle) {
         const vehicleImageDto: PhotoResponseDTO[] = [];
         console.log(curVehicle);
+        const owner: UserResponseDTO = await this._userRepository.GetById(
+          curVehicle.owner
+        );
+
         const vehicleFeed = new FeedResponseDTO(
           curVehicle._id,
-          null,
-          null,
           null,
           curVehicle.category,
           null,
           null,
           null,
+          null,
           new LocationResponseDTO(
-          curVehicle.location.region,
-          curVehicle.location.district,
-          curVehicle.location.ward
+            curVehicle.location.region,
+            curVehicle.location.district,
+            curVehicle.location.ward
           ),
           vehicleImageDto,
           null,
           null,
-          null,
+          curVehicle.isApproved,
           null,
           null,
           null,
@@ -109,7 +123,9 @@ export class FeedController {
           curVehicle.transmissionType,
           curVehicle.mileage,
           curVehicle.price,
-          curVehicle.condition
+          curVehicle.condition,
+          owner,
+          curVehicle.numberOfViews
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {

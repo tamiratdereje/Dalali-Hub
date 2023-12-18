@@ -14,14 +14,13 @@ FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
       photos: (json['photos'] as List<dynamic>)
           .map((e) => PhotoResponseDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      minPrice: (json['minPrice'] as num?)?.toDouble(),
-      maxPrice: (json['maxPrice'] as num?)?.toDouble(),
       rooms: (json['rooms'] as num?)?.toDouble(),
       beds: (json['beds'] as num?)?.toDouble(),
       baths: (json['baths'] as num?)?.toDouble(),
       kitchens: (json['kitchens'] as num?)?.toDouble(),
       seats: json['seats'] as int?,
-      size: (json['size'] as num?)?.toDouble(),
+      sizeWidth: (json['sizeWidth'] as num?)?.toDouble(),
+      sizeHeight: (json['sizeHeight'] as num?)?.toDouble(),
       sizeUnit: json['sizeUnit'] as String?,
       otherFeatures: (json['otherFeatures'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -40,6 +39,8 @@ FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
       mileage: (json['mileage'] as num?)?.toDouble(),
       price: (json['price'] as num?)?.toDouble(),
       condition: json['condition'] as String?,
+      owner: UserResponseDto.fromJson(json['owner'] as Map<String, dynamic>),
+      numberOfViews: json['numberOfViews'] as int,
     );
 
 Map<String, dynamic> _$FeedResponseDtoToJson(FeedResponseDto instance) =>
@@ -47,14 +48,13 @@ Map<String, dynamic> _$FeedResponseDtoToJson(FeedResponseDto instance) =>
       'id': instance.id,
       'title': instance.title,
       'photos': instance.photos,
-      'minPrice': instance.minPrice,
-      'maxPrice': instance.maxPrice,
       'rooms': instance.rooms,
       'beds': instance.beds,
       'baths': instance.baths,
       'kitchens': instance.kitchens,
       'seats': instance.seats,
-      'size': instance.size,
+      'sizeWidth': instance.sizeWidth,
+      'sizeHeight': instance.sizeHeight,
       'sizeUnit': instance.sizeUnit,
       'otherFeatures': instance.otherFeatures,
       'description': instance.description,
@@ -72,4 +72,6 @@ Map<String, dynamic> _$FeedResponseDtoToJson(FeedResponseDto instance) =>
       'mileage': instance.mileage,
       'price': instance.price,
       'condition': instance.condition,
+      'owner': instance.owner,
+      'numberOfViews': instance.numberOfViews,
     };

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
+import 'package:dalali_hub/domain/entity/user_response.dart';
 
 class VehicleResponse extends Feed {
   VehicleResponse({
@@ -21,6 +22,9 @@ class VehicleResponse extends Feed {
     required Location location,
     required String condition,
     required String category,
+    required UserResponse owner,
+    required bool isApproved,
+    required int numberOfViews,
   }) : super(
             id: id,
             photos: photos,
@@ -36,5 +40,9 @@ class VehicleResponse extends Feed {
             mileage: mileage,
             price: price,
             condition: condition,
-            category: category);
+            category: category,
+            owner: owner,
+            isApproved: isApproved,
+            numberOfViews: numberOfViews
+            );
 }

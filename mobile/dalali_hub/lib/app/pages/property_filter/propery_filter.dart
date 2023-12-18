@@ -660,9 +660,9 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                   title: data.realstates[index].title ?? "",
                                   location:
                                       data.realstates[index].location.ward,
-                                  price: data.realstates[index].maxPrice
+                                  price: data.realstates[index].price
                                       .toString(),
-                                  sqft: data.realstates[index].size.toString(),
+                                  sqft: data.realstates[index].sizeWidth.toString(),
                                   seats:
                                       data.realstates[index].seats.toString(),
                                   onTap: () {
@@ -680,10 +680,10 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                     title: data.realstates[index].title ?? "",
                                     location:
                                         data.realstates[index].location.ward,
-                                    price: data.realstates[index].maxPrice
+                                    price: data.realstates[index].price
                                         .toString(),
                                     sqft:
-                                        data.realstates[index].size.toString(),
+                                        data.realstates[index].sizeWidth.toString(),
                                     rooms:
                                         data.realstates[index].rooms.toString(),
                                     onTap: () {
@@ -700,10 +700,10 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                     title: data.realstates[index].title ?? "",
                                     location:
                                         data.realstates[index].location.ward,
-                                    price: data.realstates[index].maxPrice
+                                    price: data.realstates[index].price
                                         .toString(),
                                     sqft:
-                                        data.realstates[index].size.toString(),
+                                        data.realstates[index].sizeWidth.toString(),
                                     onTap: () {
                                       context.push(AppRoutes.propertyDetail,
                                           extra: {
@@ -725,9 +725,9 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                   beds: data.realstates[index].beds.toString(),
                                   baths:
                                       data.realstates[index].baths.toString(),
-                                  price: data.realstates[index].maxPrice
+                                  price: data.realstates[index].price
                                       .toString(),
-                                  sqft: data.realstates[index].size.toString(),
+                                  sqft: data.realstates[index].sizeWidth.toString(),
                                   onTap: () {
                                     context.push(AppRoutes.propertyDetail,
                                         extra: {

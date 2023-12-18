@@ -1,7 +1,6 @@
 import 'package:dalali_hub/constants/string_constants.dart';
 import 'package:dalali_hub/data/local/pref/pref.dart';
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
-import 'package:dalali_hub/data/remote/model/article.dart';
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
 import 'package:dalali_hub/data/remote/model/login_dto.dart';
 import 'package:dalali_hub/data/remote/model/login_response_dto.dart';

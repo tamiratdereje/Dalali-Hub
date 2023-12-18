@@ -1,16 +1,17 @@
 import { Types } from "mongoose";
 import { LocationDTO } from "./LocationDTO";
 import { PhotoResponseDTO } from "./photoResponseDTO";
+import { UserResponseDTO } from "./userResponseDTO";
 
 export class RealStateResponseDTO {
    constructor(
         public id: Types.ObjectId,
         public title: String,
-        public minPrice: Number,
-        public maxPrice: Number,
+        public price: Number,
         public category: String,
         public seats: Number | null,
-        public size: Number,
+        public sizeWidth: Number,
+        public sizeheight: Number,
         public sizeUnit: String,
         public location: LocationDTO,
         public photos: PhotoResponseDTO[] ,
@@ -21,6 +22,8 @@ export class RealStateResponseDTO {
         public beds: Number | null,
         public baths: Number | null,
         public kitchens: Number | null,
+        public owner: UserResponseDTO,
+        public numberOfViews: Number
 
      ) {}
 }

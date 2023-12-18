@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
+import 'package:dalali_hub/domain/entity/user_response.dart';
 
 class Feed {
   final String id;
   final String? title;
   final List<PhotoResponse> photos;
-  final double? minPrice;
-  final double? maxPrice;
 
   final double? rooms;
   final double? beds;
@@ -16,7 +15,8 @@ class Feed {
   final double? kitchens;
   final int? seats;
 
-  final double? size;
+  final double? sizeWidth;
+  final double? sizeHeight;
   final String? sizeUnit;
   final List<String>? otherFeatures;
   final String? description;
@@ -36,20 +36,21 @@ class Feed {
   final double? mileage;
   final double? price;
   final String? condition;
+  final UserResponse owner;
+  final int numberOfViews;
 
   Feed({
     required this.id,
     this.title,
     this.category,
     required this.photos,
-    this.minPrice,
-    this.maxPrice,
     this.rooms,
     this.beds,
     this.baths,
     this.kitchens,
     this.seats,
-    this.size,
+    this.sizeWidth,
+    this.sizeHeight,
     this.sizeUnit,
     this.otherFeatures,
     this.description,
@@ -66,5 +67,7 @@ class Feed {
     this.mileage,
     this.price,
     this.condition,
+    required this.owner,
+    required this.numberOfViews
   });
 }

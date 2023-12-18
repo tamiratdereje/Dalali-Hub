@@ -9,13 +9,13 @@ part of 'realstate_dto.dart';
 RealstateDto _$RealstateDtoFromJson(Map<String, dynamic> json) => RealstateDto(
       title: json['title'] as String,
       category: json['category'] as String,
-      minPrice: (json['minPrice'] as num).toDouble(),
-      maxPrice: (json['maxPrice'] as num).toDouble(),
+      price: (json['price'] as num).toDouble(),
       rooms: (json['rooms'] as num?)?.toDouble(),
       beds: (json['beds'] as num?)?.toDouble(),
       baths: (json['baths'] as num?)?.toDouble(),
       kitchens: (json['kitchens'] as num?)?.toDouble(),
-      size: (json['size'] as num).toDouble(),
+      sizeWidth: (json['sizeWidth'] as num).toDouble(),
+      sizeHeight: (json['sizeHeight'] as num).toDouble(),
       sizeUnit: json['sizeUnit'] as String,
       otherFeatures: (json['otherFeatures'] as List<dynamic>)
           .map((e) => e as String)
@@ -31,13 +31,13 @@ Map<String, dynamic> _$RealstateDtoToJson(RealstateDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'minPrice': instance.minPrice,
-      'maxPrice': instance.maxPrice,
+      'price': instance.price,
       'rooms': instance.rooms,
       'beds': instance.beds,
       'baths': instance.baths,
       'kitchens': instance.kitchens,
-      'size': instance.size,
+      'sizeWidth': instance.sizeWidth,
+      'sizeHeight': instance.sizeHeight,
       'sizeUnit': instance.sizeUnit,
       'otherFeatures': instance.otherFeatures,
       'description': instance.description,

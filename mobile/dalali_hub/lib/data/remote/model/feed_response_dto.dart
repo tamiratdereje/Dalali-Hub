@@ -1,5 +1,6 @@
 import 'package:dalali_hub/data/remote/model/location_dto.dart';
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
+import 'package:dalali_hub/data/remote/model/user_response_dto.dart';
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,14 +11,13 @@ class FeedResponseDto {
   final String id;
   final String? title;
   final List<PhotoResponseDto> photos;
-  final double? minPrice;
-  final double? maxPrice;
   final double? rooms;
   final double? beds;
   final double? baths;
   final double? kitchens;
   final int? seats;
-  final double? size;
+  final double? sizeWidth;
+  final double? sizeHeight;
   final String? sizeUnit;
   final List<String>? otherFeatures;
   final String? description;
@@ -35,20 +35,21 @@ class FeedResponseDto {
   final double? mileage;
   final double? price;
   final String? condition;
+  final UserResponseDto owner;
+  final int numberOfViews;
 
   FeedResponseDto({
     required this.id,
     this.title,
     this.category,
     required this.photos,
-    this.minPrice,
-    this.maxPrice,
     this.rooms,
     this.beds,
     this.baths,
     this.kitchens,
     this.seats,
-    this.size,
+    this.sizeWidth,
+    this.sizeHeight,
     this.sizeUnit,
     this.otherFeatures,
     this.description,
@@ -65,6 +66,8 @@ class FeedResponseDto {
     this.mileage,
     this.price,
     this.condition,
+    required this.owner,
+    required this.numberOfViews,
   });
 
   factory FeedResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -75,13 +78,12 @@ class FeedResponseDto {
         title: title,
         category: category,
         photos: photos.map((e) => e.toPhotoResponse()).toList(),
-        minPrice: minPrice,
-        maxPrice: maxPrice,
         rooms: rooms,
         beds: beds,
         baths: baths,
         kitchens: kitchens,
-        size: size,
+        sizeWidth: sizeWidth,
+        sizeHeight: sizeHeight,
         sizeUnit: sizeUnit,
         otherFeatures: otherFeatures,
         description: description,
@@ -98,6 +100,8 @@ class FeedResponseDto {
         mileage: mileage,
         price: price,
         condition: condition,
-        seats: seats
+        seats: seats,
+        owner: owner.toUserResponse(),
+        numberOfViews: numberOfViews
       );
 }
