@@ -25,6 +25,7 @@ RealstateDto _$RealstateDtoFromJson(Map<String, dynamic> json) => RealstateDto(
       id: json['id'] as String?,
       location: json['location'] as Map<String, dynamic>,
       seats: json['seats'] as int?,
+      numberOfViews: json['numberOfViews'] as int,
     );
 
 Map<String, dynamic> _$RealstateDtoToJson(RealstateDto instance) =>
@@ -45,4 +46,5 @@ Map<String, dynamic> _$RealstateDtoToJson(RealstateDto instance) =>
       'category': instance.category,
       'location': instance.location,
       'seats': instance.seats,
+      'numberOfViews': instance.numberOfViews,
     };

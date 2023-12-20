@@ -28,6 +28,7 @@ VehicleResponseDto _$VehicleResponseDtoFromJson(Map<String, dynamic> json) =>
       isApproved: json['isApproved'] as bool,
       owner: UserResponseDto.fromJson(json['owner'] as Map<String, dynamic>),
       numberOfViews: json['numberOfViews'] as int,
+      isFavorite: json['isFavorite'] as bool?,
     );
 
 Map<String, dynamic> _$VehicleResponseDtoToJson(VehicleResponseDto instance) =>
@@ -50,4 +51,5 @@ Map<String, dynamic> _$VehicleResponseDtoToJson(VehicleResponseDto instance) =>
       'isApproved': instance.isApproved,
       'owner': instance.owner.toJson(),
       'numberOfViews': instance.numberOfViews,
+      'isFavorite': instance.isFavorite,
     };

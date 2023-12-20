@@ -10,6 +10,10 @@ export class FavoriteRepository
   constructor(private schema: mongoose.Model<FavoriteEntity>) {
     super(schema);
   }
+ async GetMyFavorite(user: mongoose.Types.ObjectId, property: mongoose.Types.ObjectId): Promise<FavoriteEntity> {
+    const favorite = await this._schema.findOne({ user: user, property: property });
+    return favorite;
+  }
   async GetMyFavorites(
     userId: mongoose.Types.ObjectId
   ): Promise<FavoriteEntity[]> {

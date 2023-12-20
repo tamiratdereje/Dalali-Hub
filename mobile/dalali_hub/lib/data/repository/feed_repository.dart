@@ -7,7 +7,6 @@ import 'package:dalali_hub/util/resource.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/dio.dart';
 
-
 @LazySingleton(as: IFeedRepository)
 class FeedRepository implements IFeedRepository {
   final FeedClient _feedClient;
@@ -24,7 +23,5 @@ class FeedRepository implements IFeedRepository {
     } else {
       return Error(response.error!);
     }
-    
   }
- 
 }

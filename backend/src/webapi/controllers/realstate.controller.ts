@@ -18,18 +18,23 @@ import { RealState } from "@entities/RealStateEntity";
 import { UserResponseDTO } from "@dtos/userResponseDTO";
 import { UserRepository } from "@repositories/UserRepository";
 import { IUserRepository } from "@interfaces/repositories/IUserRepository";
+import { IFavoriteRepository } from "@interfaces/repositories/IFavoriteRepository";
 
 export class RealStateController {
   constructor(
     private realStateRepository: IRealStateRepository,
     private _fileUploadService: IFileUploadService,
     private _photoRepository: IPhotoRepository,
-    private _userRepository: IUserRepository
+    private _userRepository: IUserRepository,
+    private _favoriteRepository: IFavoriteRepository
   ) {}
   createRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      console.log(req.body);
-      const realStateDto = new RealStateDTO(JSON.parse(req.body.realstate));
+      console.log(req.body.realstate);
+
+      let tempRealState = JSON.parse(req.body.realstate);
+      tempRealState.owner = req.userId;
+      const realStateDto = new RealStateDTO(tempRealState);
 
       console.log(realStateDto);
       const ValidationError = await validate(realStateDto);
@@ -97,6 +102,22 @@ export class RealStateController {
         realState.owner
       );
 
+      const favorite = await this._favoriteRepository.GetMyFavorite(
+        Object(req.userId),
+        Object(realState._id)
+      );
+      const curOwner = new UserResponseDTO(
+        owner._id,
+        owner.firstName,
+        owner.middleName,
+        owner.sirName,
+        owner.email,
+        owner.phoneNumber,
+        owner.gender,
+        owner.region,
+        owner.photos
+      );
+
       const resultRealState = new RealStateResponseDTO(
         realState._id,
         realState.title,
@@ -120,7 +141,8 @@ export class RealStateController {
         realState.baths,
         realState.kitchens,
         owner,
-        realState.numberOfViews
+        realState.numberOfViews,
+        favorite ? true : false
       );
       res
         .status(StatusCodes.OK)
@@ -139,6 +161,11 @@ export class RealStateController {
       for (let curRealstate of realstate) {
         const owner: UserResponseDTO = await this._userRepository.GetById(
           curRealstate.owner
+        );
+
+        const favorite = await this._favoriteRepository.GetMyFavorite(
+          Object(req.userId),
+          Object(curRealstate._id)
         );
 
         const realstateImageDto: PhotoResponseDTO[] = [];
@@ -166,7 +193,8 @@ export class RealStateController {
           curRealstate.baths,
           curRealstate.kitchens,
           owner,
-          curRealstate.numberOfViews
+          curRealstate.numberOfViews,
+          favorite ? true : false
         );
         for (let curPhoto of curRealstate.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -248,9 +276,15 @@ export class RealStateController {
             )
           );
         });
-      }        
-      const owner: UserResponseDTO = await this._userRepository.GetById(updatedRealState.owner);
+      }
+      const owner: UserResponseDTO = await this._userRepository.GetById(
+        updatedRealState.owner
+      );
 
+      const favorite = await this._favoriteRepository.GetMyFavorite(
+        Object(req.userId),
+        Object(updatedRealState._id)
+      );
 
       const resultRealState = new RealStateResponseDTO(
         updatedRealState._id,
@@ -275,7 +309,8 @@ export class RealStateController {
         updatedRealState.baths,
         updatedRealState.kitchens,
         owner,
-        updatedRealState.numberOfViews
+        updatedRealState.numberOfViews,
+        favorite ? true : false
       );
 
       res

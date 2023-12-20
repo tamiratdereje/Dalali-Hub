@@ -6,7 +6,6 @@ import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/user_response.dart';
 
 class RealstateResponse extends Feed {
-
   RealstateResponse({
     required String id,
     required String title,
@@ -27,6 +26,7 @@ class RealstateResponse extends Feed {
     required UserResponse owner,
     required int numberOfViews,
     int? seats,
+    bool? isFavorite,
   }) : super(
           id: id,
           photos: photos,
@@ -47,5 +47,6 @@ class RealstateResponse extends Feed {
           seats: seats,
           owner: owner,
           numberOfViews: numberOfViews,
+          isFavorite: isFavorite,
         );
 }

@@ -27,6 +27,7 @@ class RealstateResponseDto {
   final LocationDto location;
   final UserResponseDto owner;
   final int numberOfViews;
+  bool? isFavorite;
 
   RealstateResponseDto({
     required this.title,
@@ -47,7 +48,8 @@ class RealstateResponseDto {
     required this.isApproved,
     required this.location,
     required this.owner,
-    required this.numberOfViews
+    required this.numberOfViews,
+    this.isFavorite,
   });
 
   factory RealstateResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -72,6 +74,7 @@ class RealstateResponseDto {
         isApproved: isApproved,
         location: location.toLocation(),
         owner: owner.toUserResponse(),
-        numberOfViews: numberOfViews
+        numberOfViews: numberOfViews,
+        isFavorite: isFavorite,
       );
 }

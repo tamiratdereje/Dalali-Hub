@@ -20,18 +20,21 @@ mixin _$FeedsEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() feeds,
+    required TResult Function(String propertyId) updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? feeds,
+    TResult? Function(String propertyId)? updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? feeds,
+    TResult Function(String propertyId)? updateFavorite,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$FeedsEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_Feeds value) feeds,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_Feeds value)? feeds,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_Feeds value)? feeds,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +120,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() feeds,
+    required TResult Function(String propertyId) updateFavorite,
   }) {
     return started();
   }
@@ -123,6 +130,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? feeds,
+    TResult? Function(String propertyId)? updateFavorite,
   }) {
     return started?.call();
   }
@@ -132,6 +140,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? feeds,
+    TResult Function(String propertyId)? updateFavorite,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -145,6 +154,7 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_Feeds value) feeds,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
   }) {
     return started(this);
   }
@@ -154,6 +164,7 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_Feeds value)? feeds,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
   }) {
     return started?.call(this);
   }
@@ -163,6 +174,7 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_Feeds value)? feeds,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -216,6 +228,7 @@ class _$FeedsImpl implements _Feeds {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() feeds,
+    required TResult Function(String propertyId) updateFavorite,
   }) {
     return feeds();
   }
@@ -225,6 +238,7 @@ class _$FeedsImpl implements _Feeds {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? feeds,
+    TResult? Function(String propertyId)? updateFavorite,
   }) {
     return feeds?.call();
   }
@@ -234,6 +248,7 @@ class _$FeedsImpl implements _Feeds {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? feeds,
+    TResult Function(String propertyId)? updateFavorite,
     required TResult orElse(),
   }) {
     if (feeds != null) {
@@ -247,6 +262,7 @@ class _$FeedsImpl implements _Feeds {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_Feeds value) feeds,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
   }) {
     return feeds(this);
   }
@@ -256,6 +272,7 @@ class _$FeedsImpl implements _Feeds {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_Feeds value)? feeds,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
   }) {
     return feeds?.call(this);
   }
@@ -265,6 +282,7 @@ class _$FeedsImpl implements _Feeds {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_Feeds value)? feeds,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
     required TResult orElse(),
   }) {
     if (feeds != null) {
@@ -276,6 +294,147 @@ class _$FeedsImpl implements _Feeds {
 
 abstract class _Feeds implements FeedsEvent {
   const factory _Feeds() = _$FeedsImpl;
+}
+
+/// @nodoc
+abstract class _$$UpdateFavoriteImplCopyWith<$Res> {
+  factory _$$UpdateFavoriteImplCopyWith(_$UpdateFavoriteImpl value,
+          $Res Function(_$UpdateFavoriteImpl) then) =
+      __$$UpdateFavoriteImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String propertyId});
+}
+
+/// @nodoc
+class __$$UpdateFavoriteImplCopyWithImpl<$Res>
+    extends _$FeedsEventCopyWithImpl<$Res, _$UpdateFavoriteImpl>
+    implements _$$UpdateFavoriteImplCopyWith<$Res> {
+  __$$UpdateFavoriteImplCopyWithImpl(
+      _$UpdateFavoriteImpl _value, $Res Function(_$UpdateFavoriteImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? propertyId = null,
+  }) {
+    return _then(_$UpdateFavoriteImpl(
+      null == propertyId
+          ? _value.propertyId
+          : propertyId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateFavoriteImpl implements _UpdateFavorite {
+  const _$UpdateFavoriteImpl(this.propertyId);
+
+  @override
+  final String propertyId;
+
+  @override
+  String toString() {
+    return 'FeedsEvent.updateFavorite(propertyId: $propertyId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateFavoriteImpl &&
+            (identical(other.propertyId, propertyId) ||
+                other.propertyId == propertyId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, propertyId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateFavoriteImplCopyWith<_$UpdateFavoriteImpl> get copyWith =>
+      __$$UpdateFavoriteImplCopyWithImpl<_$UpdateFavoriteImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() feeds,
+    required TResult Function(String propertyId) updateFavorite,
+  }) {
+    return updateFavorite(propertyId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? feeds,
+    TResult? Function(String propertyId)? updateFavorite,
+  }) {
+    return updateFavorite?.call(propertyId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? feeds,
+    TResult Function(String propertyId)? updateFavorite,
+    required TResult orElse(),
+  }) {
+    if (updateFavorite != null) {
+      return updateFavorite(propertyId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Feeds value) feeds,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
+  }) {
+    return updateFavorite(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Feeds value)? feeds,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
+  }) {
+    return updateFavorite?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Feeds value)? feeds,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
+    required TResult orElse(),
+  }) {
+    if (updateFavorite != null) {
+      return updateFavorite(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateFavorite implements FeedsEvent {
+  const factory _UpdateFavorite(final String propertyId) = _$UpdateFavoriteImpl;
+
+  String get propertyId;
+  @JsonKey(ignore: true)
+  _$$UpdateFavoriteImplCopyWith<_$UpdateFavoriteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

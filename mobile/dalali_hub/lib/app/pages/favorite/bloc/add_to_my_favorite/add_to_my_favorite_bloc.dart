@@ -18,7 +18,7 @@ class AddToMyFavoriteBloc extends Bloc<AddToMyFavoriteEvent, AddToMyFavoriteStat
       emit(const _Loading());
       var response = await _favoriteRepository.addToMyFavorite(event.propertyId);
       response.fold(onSuccess: (data) {
-        emit(_Success(data));
+        emit(const _Success());
         
       }, onError: (error) {
           emit(_Error(error.message));

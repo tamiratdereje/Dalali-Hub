@@ -29,6 +29,7 @@ class VehicleResponseDto {
   final bool isApproved;
   final UserResponseDto owner;
       final int numberOfViews;
+      bool? isFavorite;
 
 
   VehicleResponseDto({
@@ -50,6 +51,7 @@ class VehicleResponseDto {
     required this.isApproved,
     required this.owner,
         required this.numberOfViews,
+        this.isFavorite,
 
   });
 
@@ -76,7 +78,8 @@ class VehicleResponseDto {
         category: category,
         owner: owner.toUserResponse(),
         isApproved: isApproved,
-        numberOfViews: numberOfViews
+        numberOfViews: numberOfViews,
+        isFavorite: isFavorite
       );
 
 }

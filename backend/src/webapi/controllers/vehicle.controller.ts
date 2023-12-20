@@ -18,18 +18,24 @@ import { Vehicle } from "@entities/VehicleEntity";
 import { UserRepository } from "@repositories/UserRepository";
 import { UserResponseDTO } from "@dtos/userResponseDTO";
 import { IUserRepository } from "@interfaces/repositories/IUserRepository";
+import { IFavoriteRepository } from "@interfaces/repositories/IFavoriteRepository";
 
 export class VehicleController {
   constructor(
     private vehicleRepository: IVehicleRepository,
     private _fileUploadService: IFileUploadService,
     private _photoRepository: IPhotoRepository,
-    private _userRepository: IUserRepository
+    private _userRepository: IUserRepository,
+    private _favoriteRepository: IFavoriteRepository
   ) {}
   createVehicle = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       console.log(req.body);
-      const vehicleDto = new VehicleDTO(JSON.parse(req.body.vehicle));
+      req.body.userId = req.userId;
+      let tempVehicle = JSON.parse(req.body.vehicle);
+      tempVehicle.owner = req.userId;
+
+      const vehicleDto = new VehicleDTO(tempVehicle);
 
       console.log(vehicleDto);
       const ValidationError = await validate(vehicleDto);
@@ -94,6 +100,11 @@ export class VehicleController {
       const owner: UserResponseDTO = await this._userRepository.GetById(
         vehicle.owner
       );
+      
+      const favorite = await this._favoriteRepository.GetMyFavorite(
+        Object(req.userId),
+         Object(vehicle._id)
+       );
 
       const resultVehicle = new VehicleResponseDTO(
         vehicle._id,
@@ -117,7 +128,8 @@ export class VehicleController {
         vehicle.category,
         vehicle.isApproved,
         owner,
-        vehicle.numberOfViews
+        vehicle.numberOfViews,
+        favorite ? true : false
         // vehicle.insuranceDetails.policyNumber,
       );
       res
@@ -139,6 +151,11 @@ export class VehicleController {
         const owner: UserResponseDTO = await this._userRepository.GetById(
           curVehicle.owner
         );
+        
+        const favorite = await this._favoriteRepository.GetMyFavorite(
+          Object(req.userId),
+           Object(curVehicle._id)
+         );
 
         const vehicleDTO = new VehicleResponseDTO(
           curVehicle._id,
@@ -163,7 +180,8 @@ export class VehicleController {
           curVehicle.category,
           curVehicle.isApproved,
           owner,
-          curVehicle.numberOfViews
+          curVehicle.numberOfViews,
+          favorite ? true : false
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -247,6 +265,12 @@ export class VehicleController {
         updatedVehicle.owner
       );
 
+      
+      const favorite = await this._favoriteRepository.GetMyFavorite(
+        Object(req.userId),
+         Object(updatedVehicle._id)
+       );
+
       const resultVehicle = new VehicleResponseDTO(
         updatedVehicle._id,
         updatedVehicle.make,
@@ -269,7 +293,8 @@ export class VehicleController {
         updatedVehicle.category,
         updatedVehicle.isApproved,
         owner,
-        updatedVehicle.numberOfViews
+        updatedVehicle.numberOfViews,
+        favorite ? true : false
         // updatedVehicle.insuranceDetails.policyNumber,
       );
 

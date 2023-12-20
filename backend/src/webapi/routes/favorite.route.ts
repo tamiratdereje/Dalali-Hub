@@ -14,6 +14,7 @@ import { Vehicle } from "@entities/VehicleEntity";
 import { VehicleRepository } from "@repositories/VehicleRepository";
 import { UserRepository } from "@repositories/UserRepository";
 import { User } from "@entities/UserEntity";
+import { protectRoute } from "webapi/middlewares/auth.handler.middleware";
 
 const favoriteRoute = Router();
 const realStateRepository = new RealStateRepository(RealState);
@@ -31,8 +32,8 @@ const favoriteController = new FavoriteController(
 );
 
 // Routes for favoriteController
-favoriteRoute.post("/", favoriteController.addToFavorite);
-favoriteRoute.delete("/:id", favoriteController.removeFromFavorite);
-favoriteRoute.get("/", favoriteController.getMyFavorite);
+favoriteRoute.post("/", protectRoute, favoriteController.addToFavorite);
+favoriteRoute.delete("/:propertyId",protectRoute, favoriteController.removeFromFavorite);
+favoriteRoute.get("/",protectRoute, favoriteController.getMyFavorite);
 
 export { favoriteRoute };

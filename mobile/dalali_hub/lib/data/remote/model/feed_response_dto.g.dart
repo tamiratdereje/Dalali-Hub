@@ -41,6 +41,7 @@ FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
       condition: json['condition'] as String?,
       owner: UserResponseDto.fromJson(json['owner'] as Map<String, dynamic>),
       numberOfViews: json['numberOfViews'] as int,
+      isFavorite: json['isFavorite'] as bool?,
     );
 
 Map<String, dynamic> _$FeedResponseDtoToJson(FeedResponseDto instance) =>
@@ -74,4 +75,5 @@ Map<String, dynamic> _$FeedResponseDtoToJson(FeedResponseDto instance) =>
       'condition': instance.condition,
       'owner': instance.owner,
       'numberOfViews': instance.numberOfViews,
+      'isFavorite': instance.isFavorite,
     };

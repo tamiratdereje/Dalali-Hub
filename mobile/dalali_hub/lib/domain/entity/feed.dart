@@ -38,6 +38,7 @@ class Feed {
   final String? condition;
   final UserResponse owner;
   final int numberOfViews;
+  bool? isFavorite;
 
   Feed({
     required this.id,
@@ -68,6 +69,7 @@ class Feed {
     this.price,
     this.condition,
     required this.owner,
-    required this.numberOfViews
+    required this.numberOfViews,
+    this.isFavorite,
   });
 }

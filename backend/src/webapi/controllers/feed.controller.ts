@@ -3,6 +3,7 @@ import { LocationResponseDTO } from "@dtos/LocationResponseDTO";
 import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
 import { UserResponseDTO } from "@dtos/userResponseDTO";
 import { JSendResponse } from "@error-custom/JsendResponse";
+import { IFavoriteRepository } from "@interfaces/repositories/IFavoriteRepository";
 
 import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
 import { IRealStateRepository } from "@interfaces/repositories/IRealStateRepository";
@@ -19,7 +20,8 @@ export class FeedController {
     private realstateRepository: IRealStateRepository,
     private vehicleRepository: IVehicleRepository,
     private _photoRepository: IPhotoRepository,
-    private _userRepository: IUserRepository
+    private _userRepository: IUserRepository,
+    private _favoriteRepository: IFavoriteRepository
   ) {}
   getAllFeeds = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -34,6 +36,11 @@ export class FeedController {
         const owner: UserResponseDTO = await this._userRepository.GetById(
           curRealstate.owner
         );
+        
+        const favorite = await this._favoriteRepository.GetMyFavorite(
+          Object(req.userId),
+           Object(curRealstate._id)
+         );
         const realstateFeed = new FeedResponseDTO(
           curRealstate._id,
           curRealstate.title,
@@ -67,7 +74,8 @@ export class FeedController {
           null,
           null,
           owner,
-          curRealstate.numberOfViews
+          curRealstate.numberOfViews,
+          favorite ? true : false
         );
 
         for (let curPhoto of curRealstate.photos) {
@@ -91,6 +99,10 @@ export class FeedController {
         const owner: UserResponseDTO = await this._userRepository.GetById(
           curVehicle.owner
         );
+        const favorite = await this._favoriteRepository.GetMyFavorite(
+          Object(req.userId),
+           Object(curVehicle._id)
+         );
 
         const vehicleFeed = new FeedResponseDTO(
           curVehicle._id,
@@ -125,7 +137,8 @@ export class FeedController {
           curVehicle.price,
           curVehicle.condition,
           owner,
-          curVehicle.numberOfViews
+          curVehicle.numberOfViews,
+          favorite ? true : false
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {

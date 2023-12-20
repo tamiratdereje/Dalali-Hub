@@ -32,6 +32,7 @@ RealstateResponseDto _$RealstateResponseDtoFromJson(
       location: LocationDto.fromJson(json['location'] as Map<String, dynamic>),
       owner: UserResponseDto.fromJson(json['owner'] as Map<String, dynamic>),
       numberOfViews: json['numberOfViews'] as int,
+      isFavorite: json['isFavorite'] as bool?,
     );
 
 Map<String, dynamic> _$RealstateResponseDtoToJson(
@@ -56,4 +57,5 @@ Map<String, dynamic> _$RealstateResponseDtoToJson(
       'location': instance.location,
       'owner': instance.owner,
       'numberOfViews': instance.numberOfViews,
+      'isFavorite': instance.isFavorite,
     };

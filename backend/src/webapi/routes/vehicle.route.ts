@@ -10,48 +10,62 @@ import { advancedResults } from "webapi/middlewares/aggregate.filter.middleware"
 import { Model } from "mongoose";
 import { UserRepository } from "@repositories/UserRepository";
 import { User } from "@entities/UserEntity";
+import { protectRoute } from "webapi/middlewares/auth.handler.middleware";
+import { FavoriteRepository } from "@repositories/FavoriteRepository";
+import { Favorite } from "@entities/FavoriteEntity";
 
 const vehicleRoute = Router();
 const fileUploadService = new FileUploadService();
 const vehicleRepository = new VehicleRepository(Vehicle);
 const photoRepository = new PhotoRepository(Photo);
 const userRepository = new UserRepository(User);
+const favoriteRepository = new FavoriteRepository(Favorite);
 
 const vehicleController = new VehicleController(
   vehicleRepository,
   fileUploadService,
   photoRepository,
-  userRepository
+  userRepository,
+  favoriteRepository
 );
 
 // Routes for vehicleController
 vehicleRoute.post(
   "/",
+  protectRoute,
   upload.array("photos", 5),
   vehicleController.createVehicle
 );
 // VRoute.post("/filter", advancedResults<VEntity>(V, ""), VController.getAllV);
 vehicleRoute.get(
   "/all",
+  protectRoute,
   advancedResults<VehicleEntity>(Vehicle, "photos"),
   vehicleController.getAllVehicle
 );
-vehicleRoute.get("/:id", vehicleController.getVehicleById);
-vehicleRoute.delete("/:id", vehicleController.deleteVehicle);
+vehicleRoute.get("/:id", protectRoute, vehicleController.getVehicleById);
+vehicleRoute.delete("/:id", protectRoute, vehicleController.deleteVehicle);
 vehicleRoute.put(
   "/:id",
+  protectRoute,
   upload.array("photos", 5),
   vehicleController.updateVehicle
 );
 vehicleRoute.delete(
   "/:id/photos/:photoId",
+  protectRoute,
   vehicleController.deleteVehiclePhoto
 );
 vehicleRoute.post(
   "/:id/photos",
+  protectRoute,
   upload.array("photos", 5),
   vehicleController.addVehiclePhoto
 );
-vehicleRoute.get("/:id/photos", vehicleController.getVehiclePhotos);
+vehicleRoute.get(
+  "/:id/photos",
+  protectRoute,
+  vehicleController.getVehiclePhotos
+);
 
 export { vehicleRoute };

@@ -10,5 +10,5 @@ export class FavoriteDTO {
 
   @IsNotEmpty({ message: "Property is required" })
   @IsString({ message: "Property must be a String" })
-  realState: String;
+  property: String;
 }

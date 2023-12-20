@@ -19,6 +19,7 @@ import { VehicleResponseDTO } from "@dtos/VehicleResponseDTO";
 import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
 import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 import { UserResponseDTO } from "@dtos/userResponseDTO";
+import { type } from "os";
 export class FavoriteController {
   constructor(
     private favoriteRepository: IFavoriteRepository,
@@ -30,7 +31,11 @@ export class FavoriteController {
   addToFavorite = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       console.log(req.body);
-      const favoriteDto = new FavoriteDTO(JSON.parse(req.body.favorite));
+      let tempFavorite = req.body;
+      console.log(typeof tempFavorite);
+      tempFavorite.user = req.userId;
+      console.log(tempFavorite);
+      const favoriteDto = new FavoriteDTO(tempFavorite);
 
       console.log(favoriteDto);
       const ValidationError = await validate(favoriteDto);
@@ -43,15 +48,20 @@ export class FavoriteController {
       const favorite = new Favorite(favoriteDto);
 
       const createdFavorite = await this.favoriteRepository.Create(favorite);
+
+      if (!createdFavorite) {
+        throw new BadRequestError("Favorite not created");
+      }
+
       res
         .status(StatusCodes.OK)
-        .json(new JSendResponse().success(createdFavorite));
+        .json(new JSendResponse().success(favorite));
     }
   );
 
   getMyFavorite = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const userId: string = "";
+      const userId: string = req.userId;
       const favorites = await this.favoriteRepository.GetMyFavorites(
         new Types.ObjectId(userId)
       );
@@ -64,8 +74,9 @@ export class FavoriteController {
           Object(favorite.property)
         );
 
-        const owner: UserResponseDTO = await this._userRepository.GetById(favorite.user);
-
+        const owner: UserResponseDTO = await this._userRepository.GetById(
+          favorite.user
+        );
 
         if (realState) {
           curFeed = new FeedResponseDTO(
@@ -102,8 +113,8 @@ export class FavoriteController {
             null,
             null,
             owner,
-            realState.numberOfViews
-
+            realState.numberOfViews,
+            true
           );
           for (let curPhoto of realState.photos) {
             await this._photoRepository
@@ -157,7 +168,8 @@ export class FavoriteController {
             vehicle.price,
             vehicle.condition,
             owner,
-            vehicle.numberOfViews
+            vehicle.numberOfViews,
+            true
           );
           for (let curPhoto of vehicle.photos) {
             await this._photoRepository
@@ -189,15 +201,20 @@ export class FavoriteController {
 
   removeFromFavorite = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-      const favoriteId = req.params.id;
-      const favorite = await this.favoriteRepository.GetById(
-        Object(favoriteId)
-      );
+      console.log(req.params);
+      const propertyId = req.params.propertyId;
+      const favorite = await this.favoriteRepository.GetMyFavorite(
+        Object(req.userId),
+         Object(propertyId)
+       );
+      
+      console.log(favorite);
+    
       if (!favorite) {
         throw new BadRequestError("Favorite not found");
       }
       await this.favoriteRepository.Delete(favorite._id);
-      res.status(StatusCodes.OK).json(new JSendResponse().success({}));
+      res.status(StatusCodes.OK).json(new JSendResponse().success(favorite));
     }
   );
 }

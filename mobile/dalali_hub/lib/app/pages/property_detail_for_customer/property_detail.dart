@@ -1,3 +1,4 @@
+import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/add_to_my_favorite/add_to_my_favorite_bloc.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/get_my_favorites/get_my_favorites_bloc.dart';
@@ -46,8 +47,14 @@ class PropertyDetail extends StatefulWidget {
 class _PropertyDetailState extends State<PropertyDetail> {
   List<String> selectedList = ["Shower", "Wifi", "Parking", "Garden"];
   bool isFavorite = false;
+  bool isFirstTime = true;
   @override
   Widget build(BuildContext context) {
+    if (isFirstTime) {
+      isFirstTime = false;
+      isFavorite = widget.feed.isFavorite ?? false;
+    }
+
     return Scaffold(
       appBar: CustomerAppBar(
         title: "Property Detail",
@@ -104,14 +111,43 @@ class _PropertyDetailState extends State<PropertyDetail> {
                           isFavorite ? Icons.favorite : Icons.favorite_border,
                           color: AppColors.nauticalCreatures),
                     ),
-
-                    // BlocListener<AddToMyFavoriteBloc, AddToMyFavoriteState>(
-                    //   listener: (context, state) {},
-                    // ),
-                    // BlocListener<RemoveFromMyFavoriteBloc,
-                    //     RemoveFromMyFavoriteState>(
-                    //   listener: (context, state) {},
-                    // ),
+                    BlocConsumer<AddToMyFavoriteBloc, AddToMyFavoriteState>(
+                      listener: (context, state) async {
+                        state.maybeMap(
+                          orElse: () => Container(),
+                          success: (value) {
+                            setState(() {
+                              isFavorite = true;
+                              BlocProvider.of<FeedsBloc>(context).add(
+                                  FeedsEvent.updateFavorite(widget.feed.id));
+                            });
+                            debugPrint("what the success is working ");
+                          },
+                        );
+                      },
+                      builder: ((context, state) {
+                        return Container();
+                      }),
+                    ),
+                    BlocConsumer<RemoveFromMyFavoriteBloc,
+                        RemoveFromMyFavoriteState>(
+                      listener: (context, state) async {
+                        state.maybeMap(
+                          orElse: () => Container(),
+                          success: (value) {
+                            setState(() {
+                              isFavorite = false;
+                              BlocProvider.of<FeedsBloc>(context).add(
+                                  FeedsEvent.updateFavorite(widget.feed.id));
+                            });
+                            debugPrint("Removing favorite is working fine ");
+                          },
+                        );
+                      },
+                      builder: ((context, state) {
+                        return Container();
+                      }),
+                    ),
                   ],
                 ),
               if (widget.category == "Vehicle")
@@ -227,7 +263,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                               width: 3.3.w,
                             ),
                             Text(
-                              "${(widget.feed.sizeWidth  ?? 1 )* (widget.feed.sizeHeight ?? 1)}  SQ FT",
+                              "${(widget.feed.sizeWidth ?? 1) * (widget.feed.sizeHeight ?? 1)}  SQ FT",
                               style:
                                   inputFieldHintStyle.copyWith(fontSize: 16.sp),
                             ),

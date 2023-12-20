@@ -25,6 +25,7 @@ class VehicleResponse extends Feed {
     required UserResponse owner,
     required bool isApproved,
     required int numberOfViews,
+    bool? isFavorite,
   }) : super(
             id: id,
             photos: photos,
@@ -43,6 +44,7 @@ class VehicleResponse extends Feed {
             category: category,
             owner: owner,
             isApproved: isApproved,
-            numberOfViews: numberOfViews
+            numberOfViews: numberOfViews,
+            isFavorite: isFavorite
             );
 }

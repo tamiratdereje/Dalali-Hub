@@ -24,6 +24,7 @@ class RealstateDto {
   final String category;
   final Map location;
   final int? seats;
+  final int numberOfViews;
   
 
   RealstateDto({
@@ -43,6 +44,7 @@ class RealstateDto {
     this.id,
     required this.location,
     this.seats,
+    required this.numberOfViews
   });
   Map<String, dynamic> toJson() => _$RealstateDtoToJson(this);
 
@@ -67,6 +69,8 @@ class RealstateDto {
         "district": realstate.location.district,
         "ward": realstate.location.ward
       },
+      numberOfViews: realstate.numberOfViews,
+      
       
     );
   }

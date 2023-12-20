@@ -11,7 +11,7 @@ export class RealStateResponseDTO {
         public category: String,
         public seats: Number | null,
         public sizeWidth: Number,
-        public sizeheight: Number,
+        public sizeHeight: Number,
         public sizeUnit: String,
         public location: LocationDTO,
         public photos: PhotoResponseDTO[] ,
@@ -23,7 +23,8 @@ export class RealStateResponseDTO {
         public baths: Number | null,
         public kitchens: Number | null,
         public owner: UserResponseDTO,
-        public numberOfViews: Number
+        public numberOfViews: Number,
+        public isFavorite: Boolean |null
 
      ) {}
 }

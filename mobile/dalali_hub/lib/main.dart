@@ -1,6 +1,7 @@
 import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/core/widgets/dismiss_widgets.dart';
 import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart';
+import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dalali_hub/app/navigation/navigator.dart';
@@ -30,7 +31,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LogoutBloc>(
           create: (context) => getIt<LogoutBloc>(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<FeedsBloc>()..add(const FeedsEvent.feeds()),
+        ),
       ],
       child: Builder(
         builder: (context) => MaterialApp(

@@ -21,11 +21,7 @@ class CustomerHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          getIt.get<FeedsBloc>()..add(const FeedsEvent.feeds()),
-      child: const CustomerHome(),
-    );
+    return const CustomerHome();
   }
 }
 
@@ -195,7 +191,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                         "category": data.feeds[index].category
                                       });
                                 },
-                                 photo: data.feeds[index].photos[0].secoureUrl);
+                                photo: data.feeds[index].photos[0].secoureUrl);
                           } else if (data.feeds[index].category == "Land") {
                             return LandCard(
                                 title: data.feeds[index].title ?? "",
@@ -209,9 +205,10 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                         "category": data.feeds[index].category
                                       });
                                 },
-                                 photo: data.feeds[index].photos[0].secoureUrl);
+                                photo: data.feeds[index].photos[0].secoureUrl);
                           } else if (data.feeds[index].category == "Vehicle") {
-                            debugPrint("Vehicle ${data.feeds[index].photos[0]}}");
+                            debugPrint(
+                                "Vehicle ${data.feeds[index].photos[0]}}");
                             return VehicleCard(
                                 price: data.feeds[index].price.toString(),
                                 make: data.feeds[index].make,

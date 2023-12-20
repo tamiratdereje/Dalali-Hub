@@ -37,6 +37,7 @@ class FeedResponseDto {
   final String? condition;
   final UserResponseDto owner;
   final int numberOfViews;
+  bool? isFavorite;
 
   FeedResponseDto({
     required this.id,
@@ -68,6 +69,8 @@ class FeedResponseDto {
     this.condition,
     required this.owner,
     required this.numberOfViews,
+    this.isFavorite,
+
   });
 
   factory FeedResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -102,6 +105,7 @@ class FeedResponseDto {
         condition: condition,
         seats: seats,
         owner: owner.toUserResponse(),
-        numberOfViews: numberOfViews
+        numberOfViews: numberOfViews,
+        isFavorite: isFavorite,
       );
 }
