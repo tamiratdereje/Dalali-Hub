@@ -1,5 +1,7 @@
+import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SettingTile extends StatelessWidget {
@@ -36,7 +38,9 @@ class SettingTile extends StatelessWidget {
             ],
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              onTap();
+            },
             icon: const Icon(Icons.arrow_forward_ios),
           )
         ],
@@ -56,7 +60,9 @@ class SettingTileList extends StatelessWidget {
         SettingTile(
           icon: Icon(Icons.person),
           title: 'Profile',
-          onTap: () {},
+          onTap: () {
+            context.push(AppRoutes.profile);
+          },
         ),
         SizedBox(height: 2.h),
         SettingTile(
@@ -83,7 +89,6 @@ class SettingTileList extends StatelessWidget {
           onTap: () {},
         ),
         SizedBox(height: 4.h),
-        
       ],
     );
   }

@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
 import 'package:dalali_hub/data/remote/model/otp.dart';
 import 'package:dalali_hub/data/remote/model/otp_verification_response_dto.dart';
+import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/reset_password.dart';
 import 'package:dalali_hub/data/remote/model/signup_form_dto.dart';
+import 'package:dalali_hub/data/remote/model/user_dto.dart';
+import 'package:dalali_hub/data/remote/model/user_response_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
 import 'package:dalali_hub/data/remote/model/login_dto.dart';
@@ -34,4 +39,19 @@ abstract class AuthClient {
   @POST('auth/reset-password')
   Future<HttpResponse<JSendResponse<EmptyResponse>>> resetPassword(
       @Body() ResetPasswordDto resetPasswordDto);
+
+
+  @GET('auth/me')
+  Future<HttpResponse<JSendResponse<UserResponseDto>>> getMyProfile();
+
+  @GET('auth/others-profile/{id}')
+  Future<HttpResponse<JSendResponse<UserResponseDto>>> getOtherProfile(@Path('id') String id);
+
+  @PUT('auth')
+  Future<HttpResponse<JSendResponse<UserResponseDto>>> updateProfile(@Body() UserDto userDto);
+
+  @POST('auth/edit-profile-picture')
+  @MultiPart()
+  Future<HttpResponse<JSendResponse<List<PhotoResponseDto>>>> updateProfilePicture( @Part(name: 'photos') List<File> photos );
+
 }

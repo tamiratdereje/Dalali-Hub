@@ -12,8 +12,7 @@ class AppRoutes {
   static const String brokerHome = '/brokerHome';
   static const String addPlot = "/addPlot";
   static const String propertyDetail = "/propertyDetail";
-  
-  
+
   static const String otp = '/otp';
   static const String forgotPassword = '/forgotPassword';
   static const String createNewPassword = '/createNewPassword';
@@ -24,4 +23,6 @@ class AppRoutes {
   static const String addRealstate = '/addRealstate';
   static const String addVehicle = '/addVehicle';
   static const String propertyFilter = '/propertyFiler';
+
+  static const String profileEdit = '/profileEdit';
 }

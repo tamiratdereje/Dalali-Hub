@@ -74,9 +74,33 @@ export class FavoriteController {
           Object(favorite.property)
         );
 
-        const owner: UserResponseDTO = await this._userRepository.GetById(
+        const owner = await this._userRepository.GetById(
           favorite.user
         );
+
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
 
         if (realState) {
           curFeed = new FeedResponseDTO(
@@ -112,7 +136,7 @@ export class FavoriteController {
             null,
             null,
             null,
-            owner,
+            user,
             realState.numberOfViews,
             true
           );
@@ -133,6 +157,8 @@ export class FavoriteController {
         const vehicle = await this.vehicleRepository.GetById(
           Object(favorite.property)
         );
+
+        
         if (vehicle) {
           console.log(vehicle);
           curFeed = new FeedResponseDTO(
@@ -167,7 +193,7 @@ export class FavoriteController {
             vehicle.mileage,
             vehicle.price,
             vehicle.condition,
-            owner,
+            user,
             vehicle.numberOfViews,
             true
           );

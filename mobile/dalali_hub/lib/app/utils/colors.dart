@@ -18,5 +18,6 @@ class AppColors {
   static const Color welcomeOrTextColor = Color(0XFF10277A);
   static const Color semiBoldContainerColor = Color(0XFF888888);
   static const Color dividerLineSemiBoldColor = Color(0XFFEEEEEE);
+  static const Color profileNameColor =Color(0XFF073456);
   
 }

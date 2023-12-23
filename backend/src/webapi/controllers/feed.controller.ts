@@ -33,9 +33,33 @@ export class FeedController {
 
       for (let curRealstate of realstate) {
         const realstateImageDto: PhotoResponseDTO[] = [];
-        const owner: UserResponseDTO = await this._userRepository.GetById(
+        const owner = await this._userRepository.GetById(
           curRealstate.owner
         );
+
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
         
         const favorite = await this._favoriteRepository.GetMyFavorite(
           Object(req.userId),
@@ -73,7 +97,7 @@ export class FeedController {
           null,
           null,
           null,
-          owner,
+          user,
           curRealstate.numberOfViews,
           favorite ? true : false
         );
@@ -96,9 +120,32 @@ export class FeedController {
       for (let curVehicle of vehicle) {
         const vehicleImageDto: PhotoResponseDTO[] = [];
         console.log(curVehicle);
-        const owner: UserResponseDTO = await this._userRepository.GetById(
+        const owner = await this._userRepository.GetById(
           curVehicle.owner
         );
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
         const favorite = await this._favoriteRepository.GetMyFavorite(
           Object(req.userId),
            Object(curVehicle._id)
@@ -136,7 +183,7 @@ export class FeedController {
           curVehicle.mileage,
           curVehicle.price,
           curVehicle.condition,
-          owner,
+          user,
           curVehicle.numberOfViews,
           favorite ? true : false
         );

@@ -5,6 +5,7 @@ import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
+import 'package:dalali_hub/app/pages/profile/profile.dart';
 import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
@@ -43,10 +44,18 @@ class AppRouter {
         //     category: "vehicle"),
       ),
       GoRoute(
-        name: 'signup',
-        path: AppRoutes.register,
-        builder: (BuildContext context, GoRouterState state) =>
-            const Signup(isEditingProfile: false),
+          name: 'signup',
+          path: AppRoutes.register,
+          builder: (BuildContext context, GoRouterState state) {
+            Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+            return Signup(
+              isEditingProfile: args["isEditingProfile"],
+            );
+          }),
+      GoRoute(
+        name: 'profile',
+        path: AppRoutes.profile,
+        builder: (BuildContext context, GoRouterState state) => const Profile(),
       ),
       GoRoute(
         name: 'login',
@@ -93,13 +102,13 @@ class AppRouter {
               category: args["category"]);
         },
       ),
-       GoRoute(
+      GoRoute(
         path: AppRoutes.filterResult,
         builder: (BuildContext context, GoRouterState state) {
           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return FilterResultPage(
-              feed: args["propertyList"],
-             );
+            feed: args["propertyList"],
+          );
         },
       ),
       GoRoute(

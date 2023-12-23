@@ -97,9 +97,32 @@ export class VehicleController {
           );
         });
       }
-      const owner: UserResponseDTO = await this._userRepository.GetById(
+      const owner = await this._userRepository.GetById(
         vehicle.owner
       );
+      const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
       
       const favorite = await this._favoriteRepository.GetMyFavorite(
         Object(req.userId),
@@ -127,7 +150,7 @@ export class VehicleController {
         vehicle.condition,
         vehicle.category,
         vehicle.isApproved,
-        owner,
+        user,
         vehicle.numberOfViews,
         favorite ? true : false
         // vehicle.insuranceDetails.policyNumber,
@@ -148,9 +171,33 @@ export class VehicleController {
       for (let curVehicle of vehicle) {
         const vehicleImageDto: PhotoResponseDTO[] = [];
         console.log(curVehicle);
-        const owner: UserResponseDTO = await this._userRepository.GetById(
+        const owner = await this._userRepository.GetById(
           curVehicle.owner
         );
+
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
         
         const favorite = await this._favoriteRepository.GetMyFavorite(
           Object(req.userId),
@@ -179,7 +226,7 @@ export class VehicleController {
           curVehicle.condition,
           curVehicle.category,
           curVehicle.isApproved,
-          owner,
+          user,
           curVehicle.numberOfViews,
           favorite ? true : false
         );
@@ -261,9 +308,32 @@ export class VehicleController {
           );
         });
       }
-      const owner: UserResponseDTO = await this._userRepository.GetById(
+      const owner = await this._userRepository.GetById(
         updatedVehicle.owner
       );
+      const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
 
       
       const favorite = await this._favoriteRepository.GetMyFavorite(
@@ -292,7 +362,7 @@ export class VehicleController {
         updatedVehicle.condition,
         updatedVehicle.category,
         updatedVehicle.isApproved,
-        owner,
+        user,
         updatedVehicle.numberOfViews,
         favorite ? true : false
         // updatedVehicle.insuranceDetails.policyNumber,

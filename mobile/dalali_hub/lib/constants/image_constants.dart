@@ -10,6 +10,7 @@ class ImageConstants {
   static const String detailApartmentImage = 'assets/images/displays/apartment_image.png';
   static const String googleLogo = 'assets/images/displays/google_logo.png';
   static const String appleLogo = 'assets/images/displays/apple_logo.png';
+  static const String profileImageEditor = 'assets/images/displays/profile_image_editor.svg';
 }
 
 // illustrations

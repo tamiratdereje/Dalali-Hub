@@ -187,6 +187,147 @@ class _AuthClient implements AuthClient {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse<JSendResponse<UserResponseDto>>> getMyProfile() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<UserResponseDto>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'auth/me',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = JSendResponse<UserResponseDto>.fromJson(
+      _result.data!,
+      (json) => UserResponseDto.fromJson(json as Map<String, dynamic>),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<JSendResponse<UserResponseDto>>> getOtherProfile(
+      String id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<UserResponseDto>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'auth/others-profile/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = JSendResponse<UserResponseDto>.fromJson(
+      _result.data!,
+      (json) => UserResponseDto.fromJson(json as Map<String, dynamic>),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<JSendResponse<UserResponseDto>>> updateProfile(
+      UserDto userDto) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(userDto.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<UserResponseDto>>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'auth',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = JSendResponse<UserResponseDto>.fromJson(
+      _result.data!,
+      (json) => UserResponseDto.fromJson(json as Map<String, dynamic>),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<JSendResponse<List<PhotoResponseDto>>>>
+      updateProfilePicture(List<File> photos) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.addAll(photos.map((i) => MapEntry(
+        'photos',
+        MultipartFile.fromFileSync(
+          i.path,
+          filename: i.path.split(Platform.pathSeparator).last,
+        ))));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<JSendResponse<List<PhotoResponseDto>>>>(
+            Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+                .compose(
+                  _dio.options,
+                  'auth/edit-profile-picture',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    final value = JSendResponse<List<PhotoResponseDto>>.fromJson(
+      _result.data!,
+      (json) => json is List<dynamic>
+          ? json
+              .map<PhotoResponseDto>(
+                  (i) => PhotoResponseDto.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
+    );
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -98,15 +98,14 @@ export class RealStateController {
           );
         });
       }
-      const owner: UserResponseDTO = await this._userRepository.GetById(
-        realState.owner
-      );
+      const owner = await this._userRepository.GetById(realState.owner);
 
       const favorite = await this._favoriteRepository.GetMyFavorite(
         Object(req.userId),
         Object(realState._id)
       );
-      const curOwner = new UserResponseDTO(
+      const ownerPhotos: PhotoResponseDTO[] = [];
+      const user = new UserResponseDTO(
         owner._id,
         owner.firstName,
         owner.middleName,
@@ -115,8 +114,19 @@ export class RealStateController {
         owner.phoneNumber,
         owner.gender,
         owner.region,
-        owner.photos
+        ownerPhotos
       );
+      for (let ownerPhoto of owner.photos) {
+        await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+          ownerPhotos.push(
+            new PhotoResponseDTO(
+              returnPhoto.publicId,
+              returnPhoto.secureUrl,
+              returnPhoto._id
+            )
+          );
+        });
+      }
 
       const resultRealState = new RealStateResponseDTO(
         realState._id,
@@ -140,7 +150,7 @@ export class RealStateController {
         realState.beds,
         realState.baths,
         realState.kitchens,
-        owner,
+        user,
         realState.numberOfViews,
         favorite ? true : false
       );
@@ -159,9 +169,32 @@ export class RealStateController {
 
       const realstates: RealStateResponseDTO[] = [];
       for (let curRealstate of realstate) {
-        const owner: UserResponseDTO = await this._userRepository.GetById(
-          curRealstate.owner
+        const owner = await this._userRepository.GetById(curRealstate.owner);
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
         );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository
+            .GetById(ownerPhoto)
+            .then((returnPhoto) => {
+              ownerPhotos.push(
+                new PhotoResponseDTO(
+                  returnPhoto.publicId,
+                  returnPhoto.secureUrl,
+                  returnPhoto._id
+                )
+              );
+            });
+        }
 
         const favorite = await this._favoriteRepository.GetMyFavorite(
           Object(req.userId),
@@ -192,7 +225,7 @@ export class RealStateController {
           curRealstate.beds,
           curRealstate.baths,
           curRealstate.kitchens,
-          owner,
+          user,
           curRealstate.numberOfViews,
           favorite ? true : false
         );
@@ -207,6 +240,7 @@ export class RealStateController {
             );
           });
         }
+
         realstates.push(realstateDTO);
       }
 
@@ -277,9 +311,32 @@ export class RealStateController {
           );
         });
       }
-      const owner: UserResponseDTO = await this._userRepository.GetById(
+      const owner = await this._userRepository.GetById(
         updatedRealState.owner
       );
+      const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+            ownerPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
 
       const favorite = await this._favoriteRepository.GetMyFavorite(
         Object(req.userId),
@@ -308,7 +365,7 @@ export class RealStateController {
         updatedRealState.beds,
         updatedRealState.baths,
         updatedRealState.kitchens,
-        owner,
+        user,
         updatedRealState.numberOfViews,
         favorite ? true : false
       );

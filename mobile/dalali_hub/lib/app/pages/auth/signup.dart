@@ -62,6 +62,13 @@ class _SignupState extends State<Signup> {
   void initState() {
     super.initState();
     isEditingProfile = widget.isEditingProfile;
+    if (isEditingProfile) {
+      firstNameController.text = 'Tamirat';
+      lastNameController.text = 'Dereje';
+      middleNameController.text = 'M.';
+      emailController.text = "tamiratdereje167@gmail.com";
+      phoneController.text = "0947408989";
+    }
   }
 
   @override
@@ -74,7 +81,7 @@ class _SignupState extends State<Signup> {
               child: DalaliAppBar(
                 leadingButtonAction: () => context.pop(),
                 titleWidget: Text(
-                  'Create an account',
+                 isEditingProfile ? "Edit your profile" : 'Create an account',
                   style: titleFont,
                 ),
               )),
@@ -176,64 +183,75 @@ class _SignupState extends State<Signup> {
         SizedBox(
           height: 3.h,
         ),
-        AppInputField(
-          controller: passwordController,
-          label: 'Password',
-          hint: '••••••••••',
-          obscureText: true,
-          validator: (value) => validatePassword(value),
-        ),
+        if (!isEditingProfile)
+          AppInputField(
+            controller: passwordController,
+            label: 'Password',
+            hint: '••••••••••',
+            obscureText: true,
+            validator: (value) => validatePassword(value),
+          ),
+        if (!isEditingProfile)
+          SizedBox(
+            height: 3.h,
+          ),
+        if (!isEditingProfile)
+          AppInputField(
+            controller: confirmPasswordController,
+            label: 'Repeat password',
+            hint: '••••••••••',
+            obscureText: true,
+            validator: (value) =>
+                validateConfirmPassword(passwordController.text, value),
+          ),
         SizedBox(
           height: 3.h,
         ),
-        AppInputField(
-          controller: confirmPasswordController,
-          label: 'Repeat password',
-          hint: '••••••••••',
-          obscureText: true,
-          validator: (value) =>
-              validateConfirmPassword(passwordController.text, value),
-        ),
-        SizedBox(
-          height: 3.h,
-        ),
-        BlocBuilder<SignupBloc, SignupState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-                loading: () => const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(
-                          color: AppColors.nauticalCreatures,
-                        ),
-                      ],
-                    ),
-                orElse: () => AppButtonPrimary(
-                    onPressed: () {
-                      submitForm(context);
-                    },
-                    text: 'Sign up'));
-          },
-        ),
-        SizedBox(
-          height: 2.h,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Already have an account?',
-              style: bodyTextStyle,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Text(
-                ' Sign in',
-                style: linkTextStylePrimary,
+        if (isEditingProfile)
+          AppButtonPrimary(
+              onPressed: () {
+                submitForm(context);
+              },
+              text: 'Update'),
+        if (!isEditingProfile) ...[
+          BlocBuilder<SignupBloc, SignupState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                  loading: () => const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            color: AppColors.nauticalCreatures,
+                          ),
+                        ],
+                      ),
+                  orElse: () => AppButtonPrimary(
+                      onPressed: () {
+                        submitForm(context);
+                      },
+                      text: 'Sign up'));
+            },
+          ),
+          SizedBox(
+            height: 2.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Already have an account?',
+                style: bodyTextStyle,
               ),
-            ),
-          ],
-        ),
+              GestureDetector(
+                onTap: () {},
+                child: Text(
+                  ' Sign in',
+                  style: linkTextStylePrimary,
+                ),
+              ),
+            ],
+          ),
+        ],
         SizedBox(
           height: 3.h,
         ),
@@ -252,21 +270,25 @@ class _SignupState extends State<Signup> {
 
   void submitForm(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      debugPrint('Signup Screen: Submit Form ===> Form is valid');
-      context.read<SignupBloc>().add(
-            SignupEvent.signup(
-              SignupForm(
-                firstName: firstNameController.text,
-                middleName: middleNameController.text,
-                sirName: lastNameController.text,
-                email: emailController.text,
-                phoneNumber: phoneController.text,
-                gender: gender,
-                region: region,
-                password: passwordController.text,
+      if (!isEditingProfile) {
+        debugPrint('Signup Screen: Submit Form ===> Form is valid');
+        context.read<SignupBloc>().add(
+              SignupEvent.signup(
+                SignupForm(
+                  firstName: firstNameController.text,
+                  middleName: middleNameController.text,
+                  sirName: lastNameController.text,
+                  email: emailController.text,
+                  phoneNumber: phoneController.text,
+                  gender: gender,
+                  region: region,
+                  password: passwordController.text,
+                ),
               ),
-            ),
-          );
+            );
+      } else {
+        // TODO: implement update profile
+      }
     } else {
       debugPrint('Form is invalid');
     }

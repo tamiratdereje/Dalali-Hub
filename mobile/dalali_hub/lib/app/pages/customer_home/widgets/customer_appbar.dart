@@ -4,18 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 // ignore: must_be_immutable
-class CustomerAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
+  Icon? icon;
   bool isCenter;
-  Color? color= AppColors.doctor.withOpacity(0.0);
-  CustomerAppBar({super.key, required this.title, this.isCenter = false, this.color});
+  Color? color = AppColors.doctor.withOpacity(0.0);
+  CustomerAppBar(
+      {super.key,
+      required this.title,
+      this.isCenter = false,
+      this.color,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 3.7.h, left: 8.8.w),
-      
       child: Row(
         children: [
           Container(
@@ -39,7 +43,11 @@ class CustomerAppBar extends StatelessWidget
             title,
             style: appBarTitleStyle,
           ),
-          
+          if (icon != null)
+            IconButton(
+              onPressed: () {},
+              icon: icon!,
+            ),
         ],
       ),
     );

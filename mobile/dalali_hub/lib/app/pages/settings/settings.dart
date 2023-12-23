@@ -28,7 +28,6 @@ class _SettingsState extends State<Settings> {
             'Settings',
             style: titleFont,
           ),
-          trailingWidget: AppMenuButton(onTap: () {}),
         ),
       ),
       body: Padding(
