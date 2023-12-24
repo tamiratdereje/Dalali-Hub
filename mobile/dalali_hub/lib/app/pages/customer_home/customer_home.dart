@@ -170,10 +170,8 @@ class _CustomerHomePageState extends State<CustomerHome> {
                               sqft: data.feeds[index].sizeWidth.toString(),
                               seats: data.feeds[index].seats.toString(),
                               onTap: () {
-                                context.push(AppRoutes.propertyDetail, extra: {
-                                  "feed": data.feeds[index],
-                                  "category": data.feeds[index].category
-                                });
+                                context.push(AppRoutes.propertyDetail,
+                                    extra: {"feedId": data.feeds[index].id});
                               },
                               photo: data.feeds[index].photos[0].secoureUrl,
                             );
@@ -186,10 +184,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                 rooms: data.feeds[index].rooms.toString(),
                                 onTap: () {
                                   context.push(AppRoutes.propertyDetail,
-                                      extra: {
-                                        "feed": data.feeds[index],
-                                        "category": data.feeds[index].category
-                                      });
+                                      extra: {"feedId": data.feeds[index].id});
                                 },
                                 photo: data.feeds[index].photos[0].secoureUrl);
                           } else if (data.feeds[index].category == "Land") {
@@ -200,10 +195,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                 sqft: data.feeds[index].sizeWidth.toString(),
                                 onTap: () {
                                   context.push(AppRoutes.propertyDetail,
-                                      extra: {
-                                        "feed": data.feeds[index],
-                                        "category": data.feeds[index].category
-                                      });
+                                      extra: {"feedId": data.feeds[index].id});
                                 },
                                 photo: data.feeds[index].photos[0].secoureUrl);
                           } else if (data.feeds[index].category == "Vehicle") {
@@ -219,10 +211,7 @@ class _CustomerHomePageState extends State<CustomerHome> {
                                 year: data.feeds[index].year.toString(),
                                 onTap: () {
                                   context.push(AppRoutes.propertyDetail,
-                                      extra: {
-                                        "feed": data.feeds[index],
-                                        "category": data.feeds[index].category
-                                      });
+                                      extra: {"feedId": data.feeds[index].id});
                                 },
                                 photo: data.feeds[index].photos[0].secoureUrl);
                           }
@@ -238,10 +227,8 @@ class _CustomerHomePageState extends State<CustomerHome> {
                               price: data.feeds[index].price.toString(),
                               sqft: data.feeds[index].sizeWidth.toString(),
                               onTap: () {
-                                context.push(AppRoutes.propertyDetail, extra: {
-                                  "feed": data.feeds[index],
-                                  "category": data.feeds[index].category
-                                });
+                                context.push(AppRoutes.propertyDetail,
+                                    extra: {"feedId": data.feeds[index].id});
                               },
                               photo: data.feeds[index].photos[0].secoureUrl,
                             );

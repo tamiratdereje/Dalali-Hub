@@ -29,5 +29,6 @@ const feedController = new FeedController(
 );
 
 feedRoute.get("/", protectRoute, feedController.getAllFeeds);
+feedRoute.get("/:id", protectRoute, feedController.getProperty);
 
 export { feedRoute };

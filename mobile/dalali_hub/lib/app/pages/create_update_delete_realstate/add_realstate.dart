@@ -70,7 +70,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
   List<String> currencies = ['USD', 'EUR', 'LB'];
   String? selectedCurrency;
   TextEditingController titleController = TextEditingController();
-  TextEditingController minPriceController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
   TextEditingController maxPriceController = TextEditingController();
   String? realStateCategory;
   TextEditingController roomsController = TextEditingController();
@@ -149,7 +149,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
       debugPrint('first time');
       widget.firstTime = false;
       titleController.text = widget.realstate!.title;
-      minPriceController.text = widget.realstate!.price.toString();
+      priceController.text = widget.realstate!.price.toString();
       maxPriceController.text = widget.realstate!.price.toString();
       roomsController.text = widget.realstate!.rooms.toString();
       bedsController.text = widget.realstate!.beds.toString();
@@ -206,13 +206,14 @@ class _CreateRealstateState extends State<CreateRealstate> {
                   children: [
                     Expanded(
                       child: AppInputField(
-                        controller: minPriceController,
-                        label: 'Min Price',
+                        controller: priceController,
+                        label: 'Price',
+                        keyboardType: TextInputType.number,
                         hint: "550",
                         obscureText: false,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Password is required';
+                            return 'Price is required';
                           }
                           // if (value != newPasswordController.text) {
                           //   return 'Password does not match';
@@ -221,26 +222,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      width: 3.1.w,
-                    ),
-                    Expanded(
-                      child: AppInputField(
-                        controller: maxPriceController,
-                        label: 'Max Price',
-                        hint: "750",
-                        obscureText: false,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Password is required';
-                          }
-                          // if (value != newPasswordController.text) {
-                          //   return 'Password does not match';
-                          // }
-                          return null;
-                        },
-                      ),
-                    ),
+                   
                     SizedBox(
                       width: 3.1.w,
                     ),
@@ -669,7 +651,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
                                     category: widget.category,
                                     photos: selectedImages,
                                     price:
-                                        double.parse(minPriceController.text),
+                                        double.parse(priceController.text),
                                     rooms: double.parse(
                                         roomsController.text == ""
                                             ? "0"
@@ -714,7 +696,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
                                       category: widget.category,
                                       photos: selectedImages,
                                       price:
-                                          double.parse(minPriceController.text),
+                                          double.parse(priceController.text),
                                     
                                       rooms: double.parse(roomsController.text == ""
                                           ? "0"

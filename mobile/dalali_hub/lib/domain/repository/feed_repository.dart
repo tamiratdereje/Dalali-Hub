@@ -6,4 +6,5 @@ import 'package:dalali_hub/util/resource.dart';
 
 abstract class IFeedRepository {
   Future<Resource<List<Feed>>> getAllFeeds();
+  Future<Resource<Feed>> getProperty(String id);
 }

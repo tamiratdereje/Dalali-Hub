@@ -24,4 +24,16 @@ class FeedRepository implements IFeedRepository {
       return Error(response.error!);
     }
   }
+  
+  @override
+  Future<Resource<Feed>> getProperty(String id) async {
+   var response =
+        await handleApiCall<FeedResponseDto>(_feedClient.getProperty(id));
+
+    if (response is Success) {
+      return Success(response.data!.toFeed());
+    } else {
+      return Error(response.error!);
+    }
+  }
 }

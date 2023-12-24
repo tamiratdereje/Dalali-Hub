@@ -50,10 +50,8 @@ class _FilterResultState extends State<FilterResult> {
             title: "Title",
             color: AppColors.doctor,
             onTap: () {
-              context.push(AppRoutes.propertyDetail, extra: {
-                "feed": widget.searchResults[index],
-                "category": widget.searchResults[index].category,
-              });
+              context.push(AppRoutes.propertyDetail,
+                  extra: {"feedId": widget.searchResults[index].id});
             },
             feed: widget.searchResults[index],
           ),

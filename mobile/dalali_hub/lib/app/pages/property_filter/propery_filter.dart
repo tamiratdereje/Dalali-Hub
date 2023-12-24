@@ -623,19 +623,19 @@ class _PropertyFilterState extends State<PropertyFilter> {
               SizedBox(
                 height: 3.4.h,
               ),
-
               if (widget.serviceName != "Vehicle")
                 BlocConsumer<FilterRealstateBloc, FilterRealstateState>(
                   listener: (context, state) {
-                    state.maybeMap(orElse: (){},
-                    success: (value) {
-                      if (isFiltered) {
+                    state.maybeMap(
+                      orElse: () {},
+                      success: (value) {
+                        if (isFiltered) {
                           context.push(AppRoutes.filterResult, extra: {
                             "propertyList": value.realstates,
                           });
                         }
-                      
-                    },);
+                      },
+                    );
                   },
                   builder: (context, state) {
                     return state.maybeMap(
@@ -645,8 +645,6 @@ class _PropertyFilterState extends State<PropertyFilter> {
                         child: CircularProgressIndicator(),
                       ),
                       success: (data) {
-                        
-
                         return ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -660,16 +658,16 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                   title: data.realstates[index].title ?? "",
                                   location:
                                       data.realstates[index].location.ward,
-                                  price: data.realstates[index].price
+                                  price:
+                                      data.realstates[index].price.toString(),
+                                  sqft: data.realstates[index].sizeWidth
                                       .toString(),
-                                  sqft: data.realstates[index].sizeWidth.toString(),
                                   seats:
                                       data.realstates[index].seats.toString(),
                                   onTap: () {
                                     context.push(AppRoutes.propertyDetail,
                                         extra: {
-                                          "feed": data.realstates[index],
-                                          "category": widget.serviceName
+                                          "feedId": data.realstates[index].id
                                         });
                                   },
                                   photo: data
@@ -680,17 +678,16 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                     title: data.realstates[index].title ?? "",
                                     location:
                                         data.realstates[index].location.ward,
-                                    price: data.realstates[index].price
+                                    price:
+                                        data.realstates[index].price.toString(),
+                                    sqft: data.realstates[index].sizeWidth
                                         .toString(),
-                                    sqft:
-                                        data.realstates[index].sizeWidth.toString(),
                                     rooms:
                                         data.realstates[index].rooms.toString(),
                                     onTap: () {
                                       context.push(AppRoutes.propertyDetail,
                                           extra: {
-                                            "feed": data.realstates[index],
-                                            "category": widget.serviceName
+                                            "feedId": data.realstates[index].id
                                           });
                                     },
                                     photo: data.realstates[index].photos[0]
@@ -700,15 +697,14 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                     title: data.realstates[index].title ?? "",
                                     location:
                                         data.realstates[index].location.ward,
-                                    price: data.realstates[index].price
+                                    price:
+                                        data.realstates[index].price.toString(),
+                                    sqft: data.realstates[index].sizeWidth
                                         .toString(),
-                                    sqft:
-                                        data.realstates[index].sizeWidth.toString(),
                                     onTap: () {
                                       context.push(AppRoutes.propertyDetail,
                                           extra: {
-                                            "feed": data.realstates[index],
-                                            "category": widget.serviceName
+                                            "feedId": data.realstates[index].id
                                           });
                                     },
                                     photo: data.realstates[index].photos[0]
@@ -725,14 +721,14 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                   beds: data.realstates[index].beds.toString(),
                                   baths:
                                       data.realstates[index].baths.toString(),
-                                  price: data.realstates[index].price
+                                  price:
+                                      data.realstates[index].price.toString(),
+                                  sqft: data.realstates[index].sizeWidth
                                       .toString(),
-                                  sqft: data.realstates[index].sizeWidth.toString(),
                                   onTap: () {
                                     context.push(AppRoutes.propertyDetail,
                                         extra: {
-                                          "feed": data.realstates[index],
-                                          "category": widget.serviceName
+                                          "feedId": data.realstates[index].id
                                         });
                                   },
                                   photo: data
@@ -756,16 +752,17 @@ class _PropertyFilterState extends State<PropertyFilter> {
                 ),
               if (widget.serviceName == "Vehicle")
                 BlocConsumer<FilterVehicleBloc, FilterVehicleState>(
-                   listener: (context, state) {
-                    state.maybeMap(orElse: (){},
-                    success: (value) {
-                      if (isFiltered) {
+                  listener: (context, state) {
+                    state.maybeMap(
+                      orElse: () {},
+                      success: (value) {
+                        if (isFiltered) {
                           context.push(AppRoutes.filterResult, extra: {
                             "propertyList": value.vehicles,
                           });
                         }
-                      
-                    },);
+                      },
+                    );
                   },
                   builder: (context, state) {
                     return state.maybeMap(
@@ -775,7 +772,6 @@ class _PropertyFilterState extends State<PropertyFilter> {
                         child: CircularProgressIndicator(),
                       ),
                       success: (data) {
-                        
                         return ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -792,8 +788,7 @@ class _PropertyFilterState extends State<PropertyFilter> {
                                   onTap: () {
                                     context.push(AppRoutes.propertyDetail,
                                         extra: {
-                                          "feed": data.vehicles[index],
-                                          "category": widget.serviceName
+                                          "feedId": data.vehicles[index].id
                                         });
                                   },
                                   photo: data

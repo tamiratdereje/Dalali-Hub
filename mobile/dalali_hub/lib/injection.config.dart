@@ -11,25 +11,25 @@
 import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart' as _i10;
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart' as _i3;
 import 'package:dalali_hub/app/navigation/navigator.dart' as _i8;
-import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart' as _i36;
-import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart' as _i37;
-import 'package:dalali_hub/app/pages/auth/bloc/signup/signup_bloc.dart' as _i41;
+import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart' as _i37;
+import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart' as _i38;
+import 'package:dalali_hub/app/pages/auth/bloc/signup/signup_bloc.dart' as _i42;
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/add_images/add_images_bloc.dart'
-    as _i46;
-import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/create_realstate/create_realstate_bloc.dart'
     as _i47;
-import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_image/delete_image_bloc.dart'
-    as _i49;
-import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_realstate/delete_realstate_bloc.dart'
-    as _i50;
-import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/update_realstate/update_realstate_bloc.dart'
-    as _i43;
-import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/create_vehicle/create_vehicle_bloc.dart'
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/create_realstate/create_realstate_bloc.dart'
     as _i48;
-import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/delete_vehicle/delete_vehicle_bloc.dart'
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_image/delete_image_bloc.dart'
+    as _i50;
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_realstate/delete_realstate_bloc.dart'
     as _i51;
-import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/update_vehicle/update_vehicle_bloc.dart'
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/update_realstate/update_realstate_bloc.dart'
     as _i44;
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/create_vehicle/create_vehicle_bloc.dart'
+    as _i49;
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/delete_vehicle/delete_vehicle_bloc.dart'
+    as _i52;
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/update_vehicle/update_vehicle_bloc.dart'
+    as _i45;
 import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart'
     as _i26;
 import 'package:dalali_hub/app/pages/favorite/bloc/add_to_my_favorite/add_to_my_favorite_bloc.dart'
@@ -39,19 +39,21 @@ import 'package:dalali_hub/app/pages/favorite/bloc/get_my_favorites/get_my_favor
 import 'package:dalali_hub/app/pages/favorite/bloc/remove_from_my_favorite/remove_from_my_favorite_bloc.dart'
     as _i21;
 import 'package:dalali_hub/app/pages/forget_password/bloc/request_bloc/request_otp_bloc.dart'
-    as _i39;
-import 'package:dalali_hub/app/pages/forget_password/bloc/reset_password/reset_password_bloc_bloc.dart'
     as _i40;
+import 'package:dalali_hub/app/pages/forget_password/bloc/reset_password/reset_password_bloc_bloc.dart'
+    as _i41;
 import 'package:dalali_hub/app/pages/forget_password/bloc/verify_otp/verify_otp_bloc.dart'
-    as _i45;
+    as _i46;
 import 'package:dalali_hub/app/pages/profile/bloc/profile/profile_bloc.dart'
-    as _i38;
+    as _i39;
 import 'package:dalali_hub/app/pages/profile/bloc/update_profile_photo/update_profile_photo_bloc.dart'
-    as _i42;
+    as _i43;
+import 'package:dalali_hub/app/pages/property_detail_for_customer/bloc/get_property/get_property_bloc.dart'
+    as _i28;
 import 'package:dalali_hub/app/pages/property_filter/bloc/filter_realstate/filter_realstate_bloc.dart'
-    as _i52;
-import 'package:dalali_hub/app/pages/property_filter/bloc/filter_vehicle/filter_vehicle_bloc.dart'
     as _i53;
+import 'package:dalali_hub/app/pages/property_filter/bloc/filter_vehicle/filter_vehicle_bloc.dart'
+    as _i54;
 import 'package:dalali_hub/data/local/pref/pref.dart' as _i9;
 import 'package:dalali_hub/data/remote/client/auth_client.dart' as _i25;
 import 'package:dalali_hub/data/remote/client/favorite_client.dart' as _i13;
@@ -61,20 +63,20 @@ import 'package:dalali_hub/data/remote/client/realstate_client.dart' as _i20;
 import 'package:dalali_hub/data/remote/client/user_client.dart' as _i22;
 import 'package:dalali_hub/data/remote/client/vehicle_client.dart' as _i23;
 import 'package:dalali_hub/data/remote/config/network_config.dart' as _i5;
-import 'package:dalali_hub/data/repository/auth_repository.dart' as _i29;
+import 'package:dalali_hub/data/repository/auth_repository.dart' as _i30;
 import 'package:dalali_hub/data/repository/favorite_repository.dart' as _i16;
 import 'package:dalali_hub/data/repository/feed_repository.dart' as _i18;
-import 'package:dalali_hub/data/repository/images_repository.dart' as _i31;
-import 'package:dalali_hub/data/repository/realstate_repository.dart' as _i33;
-import 'package:dalali_hub/data/repository/vehicle_repository.dart' as _i35;
-import 'package:dalali_hub/di/app_module.dart' as _i54;
+import 'package:dalali_hub/data/repository/images_repository.dart' as _i32;
+import 'package:dalali_hub/data/repository/realstate_repository.dart' as _i34;
+import 'package:dalali_hub/data/repository/vehicle_repository.dart' as _i36;
+import 'package:dalali_hub/di/app_module.dart' as _i55;
 import 'package:dalali_hub/domain/config/network_config.dart' as _i4;
-import 'package:dalali_hub/domain/repository/auth_repository.dart' as _i28;
+import 'package:dalali_hub/domain/repository/auth_repository.dart' as _i29;
 import 'package:dalali_hub/domain/repository/favorite_repository.dart' as _i15;
 import 'package:dalali_hub/domain/repository/feed_repository.dart' as _i17;
-import 'package:dalali_hub/domain/repository/images_repository.dart' as _i30;
-import 'package:dalali_hub/domain/repository/realstate_repository.dart' as _i32;
-import 'package:dalali_hub/domain/repository/vehicle_repository.dart' as _i34;
+import 'package:dalali_hub/domain/repository/images_repository.dart' as _i31;
+import 'package:dalali_hub/domain/repository/realstate_repository.dart' as _i33;
+import 'package:dalali_hub/domain/repository/vehicle_repository.dart' as _i35;
 import 'package:dalali_hub/util/jwt_interceptor.dart' as _i11;
 import 'package:dalali_hub/util/log_interceptor.dart' as _i6;
 import 'package:dio/dio.dart' as _i12;
@@ -135,58 +137,60 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i26.FeedsBloc(gh<_i17.IFeedRepository>()));
     gh.factory<_i27.GetMyFavoritesBloc>(
         () => _i27.GetMyFavoritesBloc(gh<_i15.IFavoriteRepository>()));
-    gh.lazySingleton<_i28.IAuthRepository>(() => _i29.AuthRepository(
+    gh.factory<_i28.GetPropertyBloc>(
+        () => _i28.GetPropertyBloc(gh<_i17.IFeedRepository>()));
+    gh.lazySingleton<_i29.IAuthRepository>(() => _i30.AuthRepository(
           gh<_i25.AuthClient>(),
           gh<_i9.SharedPreference>(),
         ));
-    gh.lazySingleton<_i30.IImagesRepository>(
-        () => _i31.ImagesRepository(gh<_i19.ImagesClient>()));
-    gh.lazySingleton<_i32.IRealstateRepository>(
-        () => _i33.RealstateRepository(gh<_i20.RealstateClient>()));
-    gh.lazySingleton<_i34.IVehicleRepository>(
-        () => _i35.VehicleRepository(gh<_i23.VehicleClient>()));
-    gh.factory<_i36.LoginBloc>(() => _i36.LoginBloc(
-          gh<_i28.IAuthRepository>(),
+    gh.lazySingleton<_i31.IImagesRepository>(
+        () => _i32.ImagesRepository(gh<_i19.ImagesClient>()));
+    gh.lazySingleton<_i33.IRealstateRepository>(
+        () => _i34.RealstateRepository(gh<_i20.RealstateClient>()));
+    gh.lazySingleton<_i35.IVehicleRepository>(
+        () => _i36.VehicleRepository(gh<_i23.VehicleClient>()));
+    gh.factory<_i37.LoginBloc>(() => _i37.LoginBloc(
+          gh<_i29.IAuthRepository>(),
           gh<_i3.AuthCubit>(),
         ));
-    gh.factory<_i37.LogoutBloc>(() => _i37.LogoutBloc(
+    gh.factory<_i38.LogoutBloc>(() => _i38.LogoutBloc(
           gh<_i3.AuthCubit>(),
-          gh<_i28.IAuthRepository>(),
+          gh<_i29.IAuthRepository>(),
         ));
-    gh.factory<_i38.ProfileBloc>(
-        () => _i38.ProfileBloc(gh<_i28.IAuthRepository>()));
-    gh.factory<_i39.RequestOtpBloc>(
-        () => _i39.RequestOtpBloc(gh<_i28.IAuthRepository>()));
-    gh.factory<_i40.ResetPasswordBloc>(
-        () => _i40.ResetPasswordBloc(gh<_i28.IAuthRepository>()));
-    gh.factory<_i41.SignupBloc>(
-        () => _i41.SignupBloc(gh<_i28.IAuthRepository>()));
-    gh.factory<_i42.UpdateProfilePhotoBloc>(
-        () => _i42.UpdateProfilePhotoBloc(gh<_i28.IAuthRepository>()));
-    gh.factory<_i43.UpdateRealstateBloc>(
-        () => _i43.UpdateRealstateBloc(gh<_i32.IRealstateRepository>()));
-    gh.factory<_i44.UpdateVehicleBloc>(
-        () => _i44.UpdateVehicleBloc(gh<_i34.IVehicleRepository>()));
-    gh.factory<_i45.VerifyOtpBloc>(
-        () => _i45.VerifyOtpBloc(gh<_i28.IAuthRepository>()));
-    gh.factory<_i46.AddImagesBloc>(
-        () => _i46.AddImagesBloc(gh<_i30.IImagesRepository>()));
-    gh.factory<_i47.CreateRealstateBloc>(
-        () => _i47.CreateRealstateBloc(gh<_i32.IRealstateRepository>()));
-    gh.factory<_i48.CreateVehicleBloc>(
-        () => _i48.CreateVehicleBloc(gh<_i34.IVehicleRepository>()));
-    gh.factory<_i49.DeleteImageBloc>(
-        () => _i49.DeleteImageBloc(gh<_i30.IImagesRepository>()));
-    gh.factory<_i50.DeleteRealstateBloc>(
-        () => _i50.DeleteRealstateBloc(gh<_i32.IRealstateRepository>()));
-    gh.factory<_i51.DeleteVehicleBloc>(
-        () => _i51.DeleteVehicleBloc(gh<_i34.IVehicleRepository>()));
-    gh.factory<_i52.FilterRealstateBloc>(
-        () => _i52.FilterRealstateBloc(gh<_i32.IRealstateRepository>()));
-    gh.factory<_i53.FilterVehicleBloc>(
-        () => _i53.FilterVehicleBloc(gh<_i34.IVehicleRepository>()));
+    gh.factory<_i39.ProfileBloc>(
+        () => _i39.ProfileBloc(gh<_i29.IAuthRepository>()));
+    gh.factory<_i40.RequestOtpBloc>(
+        () => _i40.RequestOtpBloc(gh<_i29.IAuthRepository>()));
+    gh.factory<_i41.ResetPasswordBloc>(
+        () => _i41.ResetPasswordBloc(gh<_i29.IAuthRepository>()));
+    gh.factory<_i42.SignupBloc>(
+        () => _i42.SignupBloc(gh<_i29.IAuthRepository>()));
+    gh.factory<_i43.UpdateProfilePhotoBloc>(
+        () => _i43.UpdateProfilePhotoBloc(gh<_i29.IAuthRepository>()));
+    gh.factory<_i44.UpdateRealstateBloc>(
+        () => _i44.UpdateRealstateBloc(gh<_i33.IRealstateRepository>()));
+    gh.factory<_i45.UpdateVehicleBloc>(
+        () => _i45.UpdateVehicleBloc(gh<_i35.IVehicleRepository>()));
+    gh.factory<_i46.VerifyOtpBloc>(
+        () => _i46.VerifyOtpBloc(gh<_i29.IAuthRepository>()));
+    gh.factory<_i47.AddImagesBloc>(
+        () => _i47.AddImagesBloc(gh<_i31.IImagesRepository>()));
+    gh.factory<_i48.CreateRealstateBloc>(
+        () => _i48.CreateRealstateBloc(gh<_i33.IRealstateRepository>()));
+    gh.factory<_i49.CreateVehicleBloc>(
+        () => _i49.CreateVehicleBloc(gh<_i35.IVehicleRepository>()));
+    gh.factory<_i50.DeleteImageBloc>(
+        () => _i50.DeleteImageBloc(gh<_i31.IImagesRepository>()));
+    gh.factory<_i51.DeleteRealstateBloc>(
+        () => _i51.DeleteRealstateBloc(gh<_i33.IRealstateRepository>()));
+    gh.factory<_i52.DeleteVehicleBloc>(
+        () => _i52.DeleteVehicleBloc(gh<_i35.IVehicleRepository>()));
+    gh.factory<_i53.FilterRealstateBloc>(
+        () => _i53.FilterRealstateBloc(gh<_i33.IRealstateRepository>()));
+    gh.factory<_i54.FilterVehicleBloc>(
+        () => _i54.FilterVehicleBloc(gh<_i35.IVehicleRepository>()));
     return this;
   }
 }
 
-class _$AppModule extends _i54.AppModule {}
+class _$AppModule extends _i55.AppModule {}

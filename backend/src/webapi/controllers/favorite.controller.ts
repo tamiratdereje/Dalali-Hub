@@ -53,9 +53,7 @@ export class FavoriteController {
         throw new BadRequestError("Favorite not created");
       }
 
-      res
-        .status(StatusCodes.OK)
-        .json(new JSendResponse().success(favorite));
+      res.status(StatusCodes.OK).json(new JSendResponse().success(favorite));
     }
   );
 
@@ -66,17 +64,18 @@ export class FavoriteController {
         new Types.ObjectId(userId)
       );
 
-      const favoriteResponse = favorites.map((favorite) => async () => {
+      const favoriteResponse: FeedResponseDTO[] = [];
+      for (let favorite of favorites) {
+        console.log(favorite);
         const realstateImageDto: PhotoResponseDTO[] = [];
         const vehicleImageDto: PhotoResponseDTO[] = [];
         let curFeed: FeedResponseDTO;
         const realState = await this.realStateRepository.GetById(
           Object(favorite.property)
         );
+        const owner = await this._userRepository.GetById(favorite.user);
 
-        const owner = await this._userRepository.GetById(
-          favorite.user
-        );
+        console.log(realState);
 
         const ownerPhotos: PhotoResponseDTO[] = [];
         const user = new UserResponseDTO(
@@ -91,15 +90,17 @@ export class FavoriteController {
           ownerPhotos
         );
         for (let ownerPhoto of owner.photos) {
-          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
-            ownerPhotos.push(
-              new PhotoResponseDTO(
-                returnPhoto.publicId,
-                returnPhoto.secureUrl,
-                returnPhoto._id
-              )
-            );
-          });
+          await this._photoRepository
+            .GetById(ownerPhoto)
+            .then((returnPhoto) => {
+              ownerPhotos.push(
+                new PhotoResponseDTO(
+                  returnPhoto.publicId,
+                  returnPhoto.secureUrl,
+                  returnPhoto._id
+                )
+              );
+            });
         }
 
         if (realState) {
@@ -153,12 +154,13 @@ export class FavoriteController {
                 );
               });
           }
+
+          favoriteResponse.push(curFeed);
         }
         const vehicle = await this.vehicleRepository.GetById(
           Object(favorite.property)
         );
 
-        
         if (vehicle) {
           console.log(vehicle);
           curFeed = new FeedResponseDTO(
@@ -210,14 +212,14 @@ export class FavoriteController {
                 );
               });
           }
+          favoriteResponse.push(curFeed);
         }
+        
 
         if (!realState && !vehicle) {
           throw new BadRequestError("Property not found");
         }
-
-        return new FavoriteResponseDTO(favorite._id, curFeed);
-      });
+      }
 
       res
         .status(StatusCodes.OK)
@@ -231,11 +233,11 @@ export class FavoriteController {
       const propertyId = req.params.propertyId;
       const favorite = await this.favoriteRepository.GetMyFavorite(
         Object(req.userId),
-         Object(propertyId)
-       );
-      
+        Object(propertyId)
+      );
+
       console.log(favorite);
-    
+
       if (!favorite) {
         throw new BadRequestError("Favorite not found");
       }

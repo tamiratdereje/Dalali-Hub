@@ -117,8 +117,7 @@ class AppRouter {
           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
 
           return PropertyDetailPage(
-            category: args["category"],
-            feed: args["feed"],
+            feedId: args["feedId"],
           );
         },
       ),
