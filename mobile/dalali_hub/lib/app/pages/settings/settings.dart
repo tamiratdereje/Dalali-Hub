@@ -3,7 +3,9 @@ import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart';
 import 'package:dalali_hub/app/pages/settings/widgets/setting_tile.dart';
+import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
+import 'package:dalali_hub/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -46,6 +48,8 @@ class _SettingsState extends State<Settings> {
                 context.go(AppRoutes.login);
               },
               text: 'Sign Out',
+
+              textStyle: onPrimaryButtonTextStyle.copyWith(color: AppColors.white),
             )
           ],
         ),

@@ -22,6 +22,7 @@ mixin _$ProfileEvent {
     required TResult Function() profile,
     required TResult Function(User user) updateProfile,
     required TResult Function(String id) getOtherProfile,
+    required TResult Function(List<PhotoResponse> photos) updateProfilePicture,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$ProfileEvent {
     TResult? Function()? profile,
     TResult? Function(User user)? updateProfile,
     TResult? Function(String id)? getOtherProfile,
+    TResult? Function(List<PhotoResponse> photos)? updateProfilePicture,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$ProfileEvent {
     TResult Function()? profile,
     TResult Function(User user)? updateProfile,
     TResult Function(String id)? getOtherProfile,
+    TResult Function(List<PhotoResponse> photos)? updateProfilePicture,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$ProfileEvent {
     required TResult Function(_Profile value) profile,
     required TResult Function(_UpdateProfile value) updateProfile,
     required TResult Function(_GetOtherProfile value) getOtherProfile,
+    required TResult Function(_UpdateProfilePicture value) updateProfilePicture,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$ProfileEvent {
     TResult? Function(_Profile value)? profile,
     TResult? Function(_UpdateProfile value)? updateProfile,
     TResult? Function(_GetOtherProfile value)? getOtherProfile,
+    TResult? Function(_UpdateProfilePicture value)? updateProfilePicture,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$ProfileEvent {
     TResult Function(_Profile value)? profile,
     TResult Function(_UpdateProfile value)? updateProfile,
     TResult Function(_GetOtherProfile value)? getOtherProfile,
+    TResult Function(_UpdateProfilePicture value)? updateProfilePicture,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -134,6 +140,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     required TResult Function() profile,
     required TResult Function(User user) updateProfile,
     required TResult Function(String id) getOtherProfile,
+    required TResult Function(List<PhotoResponse> photos) updateProfilePicture,
   }) {
     return started();
   }
@@ -145,6 +152,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function()? profile,
     TResult? Function(User user)? updateProfile,
     TResult? Function(String id)? getOtherProfile,
+    TResult? Function(List<PhotoResponse> photos)? updateProfilePicture,
   }) {
     return started?.call();
   }
@@ -156,6 +164,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult Function()? profile,
     TResult Function(User user)? updateProfile,
     TResult Function(String id)? getOtherProfile,
+    TResult Function(List<PhotoResponse> photos)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -171,6 +180,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     required TResult Function(_Profile value) profile,
     required TResult Function(_UpdateProfile value) updateProfile,
     required TResult Function(_GetOtherProfile value) getOtherProfile,
+    required TResult Function(_UpdateProfilePicture value) updateProfilePicture,
   }) {
     return started(this);
   }
@@ -182,6 +192,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult? Function(_Profile value)? profile,
     TResult? Function(_UpdateProfile value)? updateProfile,
     TResult? Function(_GetOtherProfile value)? getOtherProfile,
+    TResult? Function(_UpdateProfilePicture value)? updateProfilePicture,
   }) {
     return started?.call(this);
   }
@@ -193,6 +204,7 @@ class _$StartedImpl with DiagnosticableTreeMixin implements _Started {
     TResult Function(_Profile value)? profile,
     TResult Function(_UpdateProfile value)? updateProfile,
     TResult Function(_GetOtherProfile value)? getOtherProfile,
+    TResult Function(_UpdateProfilePicture value)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -254,6 +266,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     required TResult Function() profile,
     required TResult Function(User user) updateProfile,
     required TResult Function(String id) getOtherProfile,
+    required TResult Function(List<PhotoResponse> photos) updateProfilePicture,
   }) {
     return profile();
   }
@@ -265,6 +278,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     TResult? Function()? profile,
     TResult? Function(User user)? updateProfile,
     TResult? Function(String id)? getOtherProfile,
+    TResult? Function(List<PhotoResponse> photos)? updateProfilePicture,
   }) {
     return profile?.call();
   }
@@ -276,6 +290,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     TResult Function()? profile,
     TResult Function(User user)? updateProfile,
     TResult Function(String id)? getOtherProfile,
+    TResult Function(List<PhotoResponse> photos)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (profile != null) {
@@ -291,6 +306,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     required TResult Function(_Profile value) profile,
     required TResult Function(_UpdateProfile value) updateProfile,
     required TResult Function(_GetOtherProfile value) getOtherProfile,
+    required TResult Function(_UpdateProfilePicture value) updateProfilePicture,
   }) {
     return profile(this);
   }
@@ -302,6 +318,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     TResult? Function(_Profile value)? profile,
     TResult? Function(_UpdateProfile value)? updateProfile,
     TResult? Function(_GetOtherProfile value)? getOtherProfile,
+    TResult? Function(_UpdateProfilePicture value)? updateProfilePicture,
   }) {
     return profile?.call(this);
   }
@@ -313,6 +330,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     TResult Function(_Profile value)? profile,
     TResult Function(_UpdateProfile value)? updateProfile,
     TResult Function(_GetOtherProfile value)? getOtherProfile,
+    TResult Function(_UpdateProfilePicture value)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (profile != null) {
@@ -404,6 +422,7 @@ class _$UpdateProfileImpl
     required TResult Function() profile,
     required TResult Function(User user) updateProfile,
     required TResult Function(String id) getOtherProfile,
+    required TResult Function(List<PhotoResponse> photos) updateProfilePicture,
   }) {
     return updateProfile(user);
   }
@@ -415,6 +434,7 @@ class _$UpdateProfileImpl
     TResult? Function()? profile,
     TResult? Function(User user)? updateProfile,
     TResult? Function(String id)? getOtherProfile,
+    TResult? Function(List<PhotoResponse> photos)? updateProfilePicture,
   }) {
     return updateProfile?.call(user);
   }
@@ -426,6 +446,7 @@ class _$UpdateProfileImpl
     TResult Function()? profile,
     TResult Function(User user)? updateProfile,
     TResult Function(String id)? getOtherProfile,
+    TResult Function(List<PhotoResponse> photos)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (updateProfile != null) {
@@ -441,6 +462,7 @@ class _$UpdateProfileImpl
     required TResult Function(_Profile value) profile,
     required TResult Function(_UpdateProfile value) updateProfile,
     required TResult Function(_GetOtherProfile value) getOtherProfile,
+    required TResult Function(_UpdateProfilePicture value) updateProfilePicture,
   }) {
     return updateProfile(this);
   }
@@ -452,6 +474,7 @@ class _$UpdateProfileImpl
     TResult? Function(_Profile value)? profile,
     TResult? Function(_UpdateProfile value)? updateProfile,
     TResult? Function(_GetOtherProfile value)? getOtherProfile,
+    TResult? Function(_UpdateProfilePicture value)? updateProfilePicture,
   }) {
     return updateProfile?.call(this);
   }
@@ -463,6 +486,7 @@ class _$UpdateProfileImpl
     TResult Function(_Profile value)? profile,
     TResult Function(_UpdateProfile value)? updateProfile,
     TResult Function(_GetOtherProfile value)? getOtherProfile,
+    TResult Function(_UpdateProfilePicture value)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (updateProfile != null) {
@@ -560,6 +584,7 @@ class _$GetOtherProfileImpl
     required TResult Function() profile,
     required TResult Function(User user) updateProfile,
     required TResult Function(String id) getOtherProfile,
+    required TResult Function(List<PhotoResponse> photos) updateProfilePicture,
   }) {
     return getOtherProfile(id);
   }
@@ -571,6 +596,7 @@ class _$GetOtherProfileImpl
     TResult? Function()? profile,
     TResult? Function(User user)? updateProfile,
     TResult? Function(String id)? getOtherProfile,
+    TResult? Function(List<PhotoResponse> photos)? updateProfilePicture,
   }) {
     return getOtherProfile?.call(id);
   }
@@ -582,6 +608,7 @@ class _$GetOtherProfileImpl
     TResult Function()? profile,
     TResult Function(User user)? updateProfile,
     TResult Function(String id)? getOtherProfile,
+    TResult Function(List<PhotoResponse> photos)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (getOtherProfile != null) {
@@ -597,6 +624,7 @@ class _$GetOtherProfileImpl
     required TResult Function(_Profile value) profile,
     required TResult Function(_UpdateProfile value) updateProfile,
     required TResult Function(_GetOtherProfile value) getOtherProfile,
+    required TResult Function(_UpdateProfilePicture value) updateProfilePicture,
   }) {
     return getOtherProfile(this);
   }
@@ -608,6 +636,7 @@ class _$GetOtherProfileImpl
     TResult? Function(_Profile value)? profile,
     TResult? Function(_UpdateProfile value)? updateProfile,
     TResult? Function(_GetOtherProfile value)? getOtherProfile,
+    TResult? Function(_UpdateProfilePicture value)? updateProfilePicture,
   }) {
     return getOtherProfile?.call(this);
   }
@@ -619,6 +648,7 @@ class _$GetOtherProfileImpl
     TResult Function(_Profile value)? profile,
     TResult Function(_UpdateProfile value)? updateProfile,
     TResult Function(_GetOtherProfile value)? getOtherProfile,
+    TResult Function(_UpdateProfilePicture value)? updateProfilePicture,
     required TResult orElse(),
   }) {
     if (getOtherProfile != null) {
@@ -635,6 +665,177 @@ abstract class _GetOtherProfile implements ProfileEvent {
   @JsonKey(ignore: true)
   _$$GetOtherProfileImplCopyWith<_$GetOtherProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UpdateProfilePictureImplCopyWith<$Res> {
+  factory _$$UpdateProfilePictureImplCopyWith(_$UpdateProfilePictureImpl value,
+          $Res Function(_$UpdateProfilePictureImpl) then) =
+      __$$UpdateProfilePictureImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<PhotoResponse> photos});
+}
+
+/// @nodoc
+class __$$UpdateProfilePictureImplCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res, _$UpdateProfilePictureImpl>
+    implements _$$UpdateProfilePictureImplCopyWith<$Res> {
+  __$$UpdateProfilePictureImplCopyWithImpl(_$UpdateProfilePictureImpl _value,
+      $Res Function(_$UpdateProfilePictureImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photos = null,
+  }) {
+    return _then(_$UpdateProfilePictureImpl(
+      null == photos
+          ? _value._photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<PhotoResponse>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateProfilePictureImpl
+    with DiagnosticableTreeMixin
+    implements _UpdateProfilePicture {
+  const _$UpdateProfilePictureImpl(final List<PhotoResponse> photos)
+      : _photos = photos;
+
+  final List<PhotoResponse> _photos;
+  @override
+  List<PhotoResponse> get photos {
+    if (_photos is EqualUnmodifiableListView) return _photos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_photos);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ProfileEvent.updateProfilePicture(photos: $photos)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProfileEvent.updateProfilePicture'))
+      ..add(DiagnosticsProperty('photos', photos));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateProfilePictureImpl &&
+            const DeepCollectionEquality().equals(other._photos, _photos));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_photos));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateProfilePictureImplCopyWith<_$UpdateProfilePictureImpl>
+      get copyWith =>
+          __$$UpdateProfilePictureImplCopyWithImpl<_$UpdateProfilePictureImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() profile,
+    required TResult Function(User user) updateProfile,
+    required TResult Function(String id) getOtherProfile,
+    required TResult Function(List<PhotoResponse> photos) updateProfilePicture,
+  }) {
+    return updateProfilePicture(photos);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? profile,
+    TResult? Function(User user)? updateProfile,
+    TResult? Function(String id)? getOtherProfile,
+    TResult? Function(List<PhotoResponse> photos)? updateProfilePicture,
+  }) {
+    return updateProfilePicture?.call(photos);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? profile,
+    TResult Function(User user)? updateProfile,
+    TResult Function(String id)? getOtherProfile,
+    TResult Function(List<PhotoResponse> photos)? updateProfilePicture,
+    required TResult orElse(),
+  }) {
+    if (updateProfilePicture != null) {
+      return updateProfilePicture(photos);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Profile value) profile,
+    required TResult Function(_UpdateProfile value) updateProfile,
+    required TResult Function(_GetOtherProfile value) getOtherProfile,
+    required TResult Function(_UpdateProfilePicture value) updateProfilePicture,
+  }) {
+    return updateProfilePicture(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Profile value)? profile,
+    TResult? Function(_UpdateProfile value)? updateProfile,
+    TResult? Function(_GetOtherProfile value)? getOtherProfile,
+    TResult? Function(_UpdateProfilePicture value)? updateProfilePicture,
+  }) {
+    return updateProfilePicture?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Profile value)? profile,
+    TResult Function(_UpdateProfile value)? updateProfile,
+    TResult Function(_GetOtherProfile value)? getOtherProfile,
+    TResult Function(_UpdateProfilePicture value)? updateProfilePicture,
+    required TResult orElse(),
+  }) {
+    if (updateProfilePicture != null) {
+      return updateProfilePicture(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateProfilePicture implements ProfileEvent {
+  const factory _UpdateProfilePicture(final List<PhotoResponse> photos) =
+      _$UpdateProfilePictureImpl;
+
+  List<PhotoResponse> get photos;
+  @JsonKey(ignore: true)
+  _$$UpdateProfilePictureImplCopyWith<_$UpdateProfilePictureImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

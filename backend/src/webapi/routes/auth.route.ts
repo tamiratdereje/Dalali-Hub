@@ -37,16 +37,17 @@ authRoute.post("/login", authController.login);
 authRoute.post("/verify-otp", authController.verifyOtp);
 authRoute.post("/reset-password", authController.resetPassword);
 authRoute.put("/", protectRoute, authController.updateProfile);
-authRoute.put(
+authRoute.post(
   "/edit-profile-picture",
   protectRoute,
   upload.array("photos", 5),
   authController.updateProfilePicture
 );
 authRoute.get("/me", protectRoute, authController.getMyProfile);
-authRoute.get("/others-profile/:id", protectRoute, authController.getOtherUserProfile);
+authRoute.get(
+  "/others-profile/:id",
+  protectRoute,
+  authController.getOtherUserProfile
+);
 
 export { authRoute };
-
-
- 

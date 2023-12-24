@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: INetworkConfig)
 class NetworkConfig implements INetworkConfig {
   @override
-  String get baseUrl => 'https://1f5c-196-191-61-250.ngrok-free.app/';
+  String get baseUrl => 'https://7311-197-156-107-11.ngrok-free.app/';
 
   @override
   Duration get timeout => const Duration(seconds: 10);

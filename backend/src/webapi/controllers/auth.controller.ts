@@ -237,6 +237,7 @@ export class AuthController {
 
   updateProfile = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log(req.body);
       // Validate request
       const userDto = new UpdateUserDTO(req.body);
       const ValidationError = await validate(userDto);

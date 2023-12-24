@@ -11,9 +11,10 @@ class SingelImagePicker extends StatefulWidget {
   final Widget child;
   String? activity;
   String? selectedImage;
+  Function onSelectImage;
 
   SingelImagePicker(
-      {super.key, required this.child, this.selectedImage, this.activity});
+      {super.key, required this.child, this.selectedImage, this.activity, required this.onSelectImage});
 
   @override
   State<SingelImagePicker> createState() => _SingelImagePickerState();
@@ -23,13 +24,14 @@ class _SingelImagePickerState extends State<SingelImagePicker> {
   final ImagePicker picker = ImagePicker();
   void onSelectImage(XFile photo) {
     widget.selectedImage = photo.path;
+    widget.onSelectImage(photo);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        pickMultiImages(picker, onSelectImage);
+        pickSingleImages(picker, onSelectImage);
       },
       child: widget.child,
     );

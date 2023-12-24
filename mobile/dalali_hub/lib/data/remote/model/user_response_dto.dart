@@ -34,7 +34,7 @@ class UserResponseDto {
       middleName: middleName,
       sirName: sirName,
       phoneNumber: phoneNumber,
-      photos: photos,
+      photos: photos.map((e) => e.toPhotoResponse()).toList(),
       email: email,
       gender: gender);
 

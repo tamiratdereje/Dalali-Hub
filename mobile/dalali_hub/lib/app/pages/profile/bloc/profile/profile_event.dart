@@ -6,4 +6,6 @@ class ProfileEvent with _$ProfileEvent {
   const factory ProfileEvent.profile() = _Profile;
   const factory ProfileEvent.updateProfile(User user) = _UpdateProfile;
   const factory ProfileEvent.getOtherProfile(String id) = _GetOtherProfile;
+  const factory ProfileEvent.updateProfilePicture(List<PhotoResponse> photos) =
+      _UpdateProfilePicture;
 }

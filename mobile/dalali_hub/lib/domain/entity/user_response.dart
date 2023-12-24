@@ -1,11 +1,12 @@
 import 'package:dalali_hub/data/remote/model/photo_response_dto.dart';
+import 'package:dalali_hub/domain/entity/photo_response.dart';
 
 class UserResponse {
   final String id;
   final String firstName;
   final String middleName;
   final String sirName;
-  final List<PhotoResponseDto> photos;
+  List<PhotoResponse> photos;
   final String email;
   final String phoneNumber;
   final String gender;

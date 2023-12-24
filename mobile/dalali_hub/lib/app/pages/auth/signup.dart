@@ -8,9 +8,12 @@ import 'package:dalali_hub/app/core/widgets/input_field.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/auth/bloc/signup/signup_bloc.dart';
+import 'package:dalali_hub/app/pages/profile/bloc/profile/profile_bloc.dart';
+import 'package:dalali_hub/app/pages/profile/profile.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/domain/entity/signup.dart';
+import 'package:dalali_hub/domain/entity/user.dart';
 import 'package:dalali_hub/domain/type/types.dart';
 import 'package:dalali_hub/domain/validators/validators.dart';
 import 'package:dalali_hub/injection.dart';
@@ -20,14 +23,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class Signup extends StatefulWidget {
+class Signup extends StatelessWidget {
   final bool isEditingProfile;
+
   const Signup({super.key, required this.isEditingProfile});
+
   @override
-  State<Signup> createState() => _SignupState();
+  Widget build(BuildContext context) {
+    if (isEditingProfile) {
+      return BlocProvider<ProfileBloc>(
+        create: (context) =>
+            getIt.get<ProfileBloc>()..add(const ProfileEvent.profile()),
+        child: SignupPage(
+          isEditingProfile: isEditingProfile,
+        ), // Replace this with the actual child widget
+      );
+    } else {
+      return SignupPage(isEditingProfile: isEditingProfile);
+    }
+  }
 }
 
-class _SignupState extends State<Signup> {
+class SignupPage extends StatefulWidget {
+  final bool isEditingProfile;
+  const SignupPage({super.key, required this.isEditingProfile});
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   late bool isEditingProfile;
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -62,13 +86,6 @@ class _SignupState extends State<Signup> {
   void initState() {
     super.initState();
     isEditingProfile = widget.isEditingProfile;
-    if (isEditingProfile) {
-      firstNameController.text = 'Tamirat';
-      lastNameController.text = 'Dereje';
-      middleNameController.text = 'M.';
-      emailController.text = "tamiratdereje167@gmail.com";
-      phoneController.text = "0947408989";
-    }
   }
 
   @override
@@ -81,7 +98,7 @@ class _SignupState extends State<Signup> {
               child: DalaliAppBar(
                 leadingButtonAction: () => context.pop(),
                 titleWidget: Text(
-                 isEditingProfile ? "Edit your profile" : 'Create an account',
+                  isEditingProfile ? "Edit your profile" : 'Create an account',
                   style: titleFont,
                 ),
               )),
@@ -114,6 +131,22 @@ class _SignupState extends State<Signup> {
     return Form(
       key: _formKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        if (isEditingProfile) ...[
+          BlocConsumer<ProfileBloc, ProfileState>(builder: (context, state) {
+            return Container();
+          }, listener: (context, state) {
+            state.maybeMap(
+                orElse: () {},
+                success: (data) {
+                  firstNameController.text = data.userResponse.firstName;
+                  lastNameController.text = data.userResponse.sirName;
+                  middleNameController.text = data.userResponse.middleName;
+                  emailController.text = data.userResponse.email;
+                  phoneController.text = data.userResponse.phoneNumber.substring(4);
+                  gender = data.userResponse.gender;
+                });
+          }),
+        ],
         SizedBox(
           height: 2.h,
         ),
@@ -209,10 +242,21 @@ class _SignupState extends State<Signup> {
         ),
         if (isEditingProfile)
           AppButtonPrimary(
-              onPressed: () {
-                submitForm(context);
-              },
-              text: 'Update'),
+            onPressed: () {
+              User userData = User(
+                  firstName: firstNameController.text,
+                  middleName: middleNameController.text,
+                  sirName: lastNameController.text,
+                  email: emailController.text,
+                  phoneNumber: phoneController.text,
+                  gender: gender,
+                  region: region);
+              context.pop(userData);
+            },
+            text: 'Update',
+            textStyle:
+                onPrimaryButtonTextStyle.copyWith(color: AppColors.white),
+          ),
         if (!isEditingProfile) ...[
           BlocBuilder<SignupBloc, SignupState>(
             builder: (context, state) {

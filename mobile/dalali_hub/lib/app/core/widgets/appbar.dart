@@ -48,8 +48,9 @@ class _DalaliAppBarState extends State<DalaliAppBar> {
                   // Callback that sets the selected popup menu item.
                   onSelected: (value) {
                   
-                      debugPrint("selected menu ${value.toString()}");
+                      debugPrint("selected menu $value");
                       if (value == 1){
+                        debugPrint("Then what man ");
                         widget.onTapTrailingButton!('Edit');
                       } else if(value == 2){
                         widget.onTapTrailingButton!('Delete');

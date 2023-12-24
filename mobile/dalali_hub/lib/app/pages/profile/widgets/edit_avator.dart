@@ -50,8 +50,8 @@ class EditAvatar extends StatelessWidget {
                           width: 18.w,
                           height: 9.8.h,
                         )
-                      : SvgPicture.asset(
-                          ImageConstants.profileImageEditor,
+                      : Image.network(
+                          "https://fastly.picsum.photos/id/815/536/354.jpg?hmac=dbfZclkubuXvBDya7n__oMge7ICuKGU12WSiBbggijI",
                           fit: BoxFit.cover,
                           width: 18.w,
                           height: 9.8.h,
@@ -63,13 +63,16 @@ class EditAvatar extends StatelessWidget {
           bottom: 0.5.h,
           right: 0,
           child: SingelImagePicker(
-            selectedImage: "",
+            selectedImage: image != null ?  image!.path : null,
             child: Center(
               child: SvgPicture.asset(
                 ImageConstants.profileImageEditor,
                 width: 35,
               ),
             ),
+            onSelectImage: (XFile? image) {
+              onImageChanged(image);
+            },
           ),
         )
       ],

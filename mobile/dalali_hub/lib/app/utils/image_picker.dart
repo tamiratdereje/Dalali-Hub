@@ -10,3 +10,14 @@ Future<void> pickMultiImages(
     onSelectImages(image);
   }
 }
+
+Future<void> pickSingleImages(
+    ImagePicker picker, Function onSelectImages) async {
+  final pickedFiles = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 75,
+      maxHeight: 1000,
+      maxWidth: 1000);
+  debugPrint("Image Picker: ${pickedFiles!.path}");
+  onSelectImages(pickedFiles);
+}
