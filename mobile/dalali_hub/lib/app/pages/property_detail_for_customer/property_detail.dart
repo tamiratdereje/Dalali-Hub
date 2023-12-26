@@ -167,12 +167,13 @@ class _PropertyDetailState extends State<PropertyDetail> {
                             success: (data) {
                               setState(() {
                                 // isFavorite = true;
-                                BlocProvider.of<GetPropertyBloc>(context).add(
-                                    GetPropertyEvent.updateFavorite(
-                                        value.feed.id));
-                                BlocProvider.of<GetMyFavoritesBloc>(context)
-                                    .add(GetMyFavoritesEvent.updateFavorite(
-                                        value.feed));
+                                // BlocProvider.of<GetPropertyBloc>(context).add(
+                                //     GetPropertyEvent.updateFavorite(
+                                //         value.feed.id));
+
+                                // BlocProvider.of<GetMyFavoritesBloc>(context)
+                                //     .add(GetMyFavoritesEvent.updateFavorite(
+                                //         value.feed));
 
                                 // BlocProvider.of<FeedsBloc>(context).add(
                                 //     FeedsEvent.updateFavorite(value.feed.id));
@@ -201,12 +202,13 @@ class _PropertyDetailState extends State<PropertyDetail> {
                             success: (data) {
                               setState(() {
                                 // isFavorite = false;
-                                BlocProvider.of<GetPropertyBloc>(context).add(
-                                    GetPropertyEvent.updateFavorite(
-                                        value.feed.id));
-                                BlocProvider.of<GetMyFavoritesBloc>(context)
-                                    .add(GetMyFavoritesEvent.updateFavorite(
-                                        value.feed));
+                                // BlocProvider.of<GetPropertyBloc>(context).add(
+                                //     GetPropertyEvent.updateFavorite(
+                                //         value.feed.id));
+
+                                // BlocProvider.of<GetMyFavoritesBloc>(context)
+                                //     .add(GetMyFavoritesEvent.updateFavorite(
+                                //         value.feed));
 
                                 // BlocProvider.of<FeedsBloc>(context).add(
                                 //     FeedsEvent.updateFavorite(value.feed.id));

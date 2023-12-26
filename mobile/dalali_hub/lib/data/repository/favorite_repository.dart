@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dalali_hub/data/remote/client/favorite_client.dart';
 import 'package:dalali_hub/data/remote/model/empty_response.dart';
 import 'package:dalali_hub/data/remote/model/feed_response_dto.dart';
@@ -11,14 +13,20 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: IFavoriteRepository)
 class FavoriteRepository extends IFavoriteRepository {
   final FavoriteClient _favoriteClient;
+  final _streamController = StreamController<Feed>.broadcast();
 
   FavoriteRepository(this._favoriteClient);
+
+  @override
+  Stream<Feed?> get favorite => _streamController.stream;
+
   @override
   Future<Resource<Empty>> addToMyFavorite(String propertyId) async {
-    var response = await handleApiCall<EmptyResponse>(
+    var response = await handleApiCall<FeedResponseDto>(
         _favoriteClient.addToMyFavorite({"property": propertyId}));
 
     if (response is Success) {
+      _streamController.add(response.data!.toFeed());
       return const Success(Empty());
     } else {
       return Error(response.error!);
@@ -40,10 +48,11 @@ class FavoriteRepository extends IFavoriteRepository {
   @override
   Future<Resource<Empty>> removeFromMyFavorite(String propertyId) async {
     debugPrint("propertyId: $propertyId");
-    var response = await handleApiCall<EmptyResponse>(
+    var response = await handleApiCall<FeedResponseDto>(
         _favoriteClient.removeFromMyFavorite(propertyId));
 
     if (response is Success) {
+      _streamController.add(response.data!.toFeed());
       return const Success(Empty());
     } else {
       return Error(response.error!);

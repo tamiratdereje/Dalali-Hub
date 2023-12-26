@@ -59,7 +59,7 @@ class _FavoriteClient implements FavoriteClient {
   }
 
   @override
-  Future<HttpResponse<JSendResponse<EmptyResponse>>> addToMyFavorite(
+  Future<HttpResponse<JSendResponse<FeedResponseDto>>> addToMyFavorite(
       Map<String, dynamic> propertyId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -67,7 +67,7 @@ class _FavoriteClient implements FavoriteClient {
     final _data = <String, dynamic>{};
     _data.addAll(propertyId);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<JSendResponse<EmptyResponse>>>(Options(
+        _setStreamType<HttpResponse<JSendResponse<FeedResponseDto>>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -83,23 +83,23 @@ class _FavoriteClient implements FavoriteClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = JSendResponse<EmptyResponse>.fromJson(
+    final value = JSendResponse<FeedResponseDto>.fromJson(
       _result.data!,
-      (json) => EmptyResponse.fromJson(json as Map<String, dynamic>),
+      (json) => FeedResponseDto.fromJson(json as Map<String, dynamic>),
     );
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<JSendResponse<EmptyResponse>>> removeFromMyFavorite(
+  Future<HttpResponse<JSendResponse<FeedResponseDto>>> removeFromMyFavorite(
       String propertyId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<JSendResponse<EmptyResponse>>>(Options(
+        _setStreamType<HttpResponse<JSendResponse<FeedResponseDto>>>(Options(
       method: 'DELETE',
       headers: _headers,
       extra: _extra,
@@ -115,9 +115,9 @@ class _FavoriteClient implements FavoriteClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = JSendResponse<EmptyResponse>.fromJson(
+    final value = JSendResponse<FeedResponseDto>.fromJson(
       _result.data!,
-      (json) => EmptyResponse.fromJson(json as Map<String, dynamic>),
+      (json) => FeedResponseDto.fromJson(json as Map<String, dynamic>),
     );
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

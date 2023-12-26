@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dalali_hub/data/remote/client/feed_client.dart';
 import 'package:dalali_hub/data/remote/model/feed_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
@@ -10,7 +12,6 @@ import 'package:retrofit/dio.dart';
 @LazySingleton(as: IFeedRepository)
 class FeedRepository implements IFeedRepository {
   final FeedClient _feedClient;
-
   FeedRepository(this._feedClient);
 
   @override
@@ -24,10 +25,10 @@ class FeedRepository implements IFeedRepository {
       return Error(response.error!);
     }
   }
-  
+
   @override
   Future<Resource<Feed>> getProperty(String id) async {
-   var response =
+    var response =
         await handleApiCall<FeedResponseDto>(_feedClient.getProperty(id));
 
     if (response is Success) {

@@ -19,9 +19,9 @@ abstract class FavoriteClient {
   Future<HttpResponse<JSendResponse<List<FeedResponseDto>>>>  getMyFavorites();
 
   @POST('favorites')
-  Future<HttpResponse<JSendResponse<EmptyResponse>>> addToMyFavorite(@Body() Map<String, dynamic> propertyId);
+  Future<HttpResponse<JSendResponse<FeedResponseDto>>> addToMyFavorite(@Body() Map<String, dynamic> propertyId);
 
   @DELETE("favorites/{propertyId}")
-  Future<HttpResponse<JSendResponse<EmptyResponse>>> removeFromMyFavorite(@Path("propertyId") String propertyId);
+  Future<HttpResponse<JSendResponse<FeedResponseDto>>> removeFromMyFavorite(@Path("propertyId") String propertyId);
   
 }

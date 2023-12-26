@@ -137,8 +137,10 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i26.FeedsBloc(gh<_i17.IFeedRepository>()));
     gh.factory<_i27.GetMyFavoritesBloc>(
         () => _i27.GetMyFavoritesBloc(gh<_i15.IFavoriteRepository>()));
-    gh.factory<_i28.GetPropertyBloc>(
-        () => _i28.GetPropertyBloc(gh<_i17.IFeedRepository>()));
+    gh.factory<_i28.GetPropertyBloc>(() => _i28.GetPropertyBloc(
+          gh<_i17.IFeedRepository>(),
+          gh<_i15.IFavoriteRepository>(),
+        ));
     gh.lazySingleton<_i29.IAuthRepository>(() => _i30.AuthRepository(
           gh<_i25.AuthClient>(),
           gh<_i9.SharedPreference>(),
