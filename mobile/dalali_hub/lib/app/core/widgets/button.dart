@@ -11,7 +11,12 @@ class AppButtonPrimary extends StatefulWidget {
   TextStyle? textStyle = onPrimaryButtonTextStyle;
   final Widget? icon;
   AppButtonPrimary(
-      {super.key, required this.onPressed, required this.text, this.color = AppColors.nauticalCreatures, this.textStyle, this.icon});
+      {super.key,
+      required this.onPressed,
+      required this.text,
+      this.color = AppColors.nauticalCreatures,
+      this.textStyle,
+      this.icon});
 
   @override
   State<AppButtonPrimary> createState() => _AppButtonPrimaryState();
@@ -24,10 +29,8 @@ class _AppButtonPrimaryState extends State<AppButtonPrimary> {
       child: Container(
           padding: EdgeInsets.all(2.h),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: widget.color),
-          child: Center(
-              child: Text(widget.text, style: widget.textStyle))),
+              borderRadius: BorderRadius.circular(10), color: widget.color),
+          child: Center(child: Text(widget.text, style: widget.textStyle))),
       onTap: () => widget.onPressed(),
     );
   }
@@ -72,20 +75,20 @@ class AppBackButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
-            width: 8.6.w,
-            height: 4.6.h,
-            decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.ultimateGray)),
-            child: const Center(
-              child: Icon(
-                Icons.arrow_back_ios_sharp,
-                color: AppColors.black,
-                size: 15,
-              ),
-            ),
+        width: 5.6.w,
+        height: 4.6.h,
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.ultimateGray)),
+        child: const Center(
+          child: Icon(
+            Icons.arrow_back_ios_sharp,
+            color: AppColors.black,
+            size: 15,
           ),
+        ),
+      ),
     );
   }
 }
@@ -98,13 +101,13 @@ class AppMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-       width: 10.6.w,
-          height: 4.6.h,
+        width: 10.6.w,
+        height: 4.6.h,
         // padding: EdgeInsets.all(3.w),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: AppColors.ultimateGray, width: .3.w)),
-        child: const Center(
-            child: Icon(Icons.more_vert, color: AppColors.black)));
+        child:
+            const Center(child: Icon(Icons.more_vert, color: AppColors.black)));
   }
 }

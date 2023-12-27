@@ -97,28 +97,3 @@ Future<String?> showYesOrNoDialog({
     },
   );
 }
-
-class DialogIcon extends StatelessWidget {
-  final bool isError;
-  const DialogIcon({super.key, this.isError = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 10.h,
-      width: 10.h,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            isError ? Colors.red.shade200 : Colors.green.shade200,
-            isError ? Colors.red : Colors.green,
-          ]),
-          borderRadius: BorderRadius.circular(50)),
-      child: Center(
-          child: Icon(
-        isError ? Icons.close : Icons.check_sharp,
-        size: 5.h,
-        color: Colors.white,
-      )),
-    );
-  }
-}

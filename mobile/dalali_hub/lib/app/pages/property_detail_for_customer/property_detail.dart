@@ -1,14 +1,26 @@
+import 'dart:ui';
+
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
+import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/add_to_my_favorite/add_to_my_favorite_bloc.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/get_my_favorites/get_my_favorites_bloc.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/remove_from_my_favorite/remove_from_my_favorite_bloc.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/bloc/get_property/get_property_bloc.dart';
+import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/image_slider.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/other_features_chips.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
+import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
@@ -51,12 +63,74 @@ class PropertyDetail extends StatefulWidget {
 class _PropertyDetailState extends State<PropertyDetail> {
   List<String> selectedList = ["Shower", "Wifi", "Parking", "Garden"];
   bool isFavorite = false;
+
+  bool _hasCallSupport = false;
+  Future<void>? _launched;
+  String _phone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Check for phone call support.
+    canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {
+      setState(() {
+        _hasCallSupport = result;
+      });
+    });
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+  List<Widget> imageSliders = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(
-        title: "Property Detail",
-        color: AppColors.doctor.withOpacity(0.5),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(8.h),
+        child: Padding(
+          padding: EdgeInsets.only(left: 3.6.w, right: 3.6.w),
+          child: DalaliAppBar(
+            leadingButtonAction: () => {},
+            titleWidget: Text(
+              'Property Detail',
+              style: titleFont,
+            ),
+            onTapTrailingButton: (value) async {
+              debugPrint("popup menu item $value");
+              if (value.trim() == "Edit") {
+                debugPrint("popup again  $value");
+                // User userData = await context.push(AppRoutes.register, extra: {
+                //   "isEditingProfile": true,
+                // }) as User;
+                // debugPrint(
+                //     "user datahhhhhhhhhhhhhhhhhhhhhhhhhhhh from editing ${userData.firstName} ");
+
+                // // ignore: use_build_context_synchronously
+                // context
+                //     .read<ProfileBloc>()
+                //     .add(ProfileEvent.updateProfile(userData));
+              }
+            },
+            trailingWidget: Container(
+              width: 10.6.w,
+              height: 4.6.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.ultimateGray, width: .3.w),
+              ),
+              child: const Center(
+                child: Icon(Icons.more_vert, color: AppColors.black),
+              ),
+            ),
+          ),
+        ),
       ),
       extendBodyBehindAppBar: true,
       body: BlocConsumer<GetPropertyBloc, GetPropertyState>(
@@ -166,15 +240,6 @@ class _PropertyDetailState extends State<PropertyDetail> {
                             orElse: () => Container(),
                             success: (data) {
                               setState(() {
-                                // isFavorite = true;
-                                // BlocProvider.of<GetPropertyBloc>(context).add(
-                                //     GetPropertyEvent.updateFavorite(
-                                //         value.feed.id));
-
-                                // BlocProvider.of<GetMyFavoritesBloc>(context)
-                                //     .add(GetMyFavoritesEvent.updateFavorite(
-                                //         value.feed));
-
                                 // BlocProvider.of<FeedsBloc>(context).add(
                                 //     FeedsEvent.updateFavorite(value.feed.id));
                               });
@@ -201,15 +266,6 @@ class _PropertyDetailState extends State<PropertyDetail> {
                             orElse: () => Container(),
                             success: (data) {
                               setState(() {
-                                // isFavorite = false;
-                                // BlocProvider.of<GetPropertyBloc>(context).add(
-                                //     GetPropertyEvent.updateFavorite(
-                                //         value.feed.id));
-
-                                // BlocProvider.of<GetMyFavoritesBloc>(context)
-                                //     .add(GetMyFavoritesEvent.updateFavorite(
-                                //         value.feed));
-
                                 // BlocProvider.of<FeedsBloc>(context).add(
                                 //     FeedsEvent.updateFavorite(value.feed.id));
                               });
@@ -683,10 +739,12 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   height: 10.6.w,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    image: const DecorationImage(
-                                      image: AssetImage(
-                                        ImageConstants.detailApartmentImage,
-                                      ),
+                                    image: DecorationImage(
+                                      image: NetworkImage(value
+                                              .feed.owner.photos.isNotEmpty
+                                          ? value
+                                              .feed.owner.photos[0].secoureUrl
+                                          : "https://fastly.picsum.photos/id/815/536/354.jpg?hmac=dbfZclkubuXvBDya7n__oMge7ICuKGU12WSiBbggijI"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -695,22 +753,30 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   width: 3.7.w,
                                 ),
                                 Text(
-                                  "Manuel Collins",
+                                  " ${value.feed.owner.firstName} ${value.feed.owner.middleName[0]}. ${value.feed.owner.sirName}",
                                   style: inputFieldLabelStyle,
                                 ),
                               ],
                             ),
                             Row(
                               children: [
-                                Container(
-                                  width: 9.3.w,
-                                  height: 3.9.h,
-                                  decoration: const BoxDecoration(
-                                      color: AppColors.nauticalCreatures,
-                                      shape: BoxShape.circle),
-                                  child: const Icon(
-                                    Icons.phone,
-                                    color: AppColors.white,
+                                GestureDetector(
+                                  onTap: _hasCallSupport
+                                      ? () => setState(() {
+                                            _launched = _makePhoneCall(
+                                                value.feed.owner.phoneNumber);
+                                          })
+                                      : null,
+                                  child: Container(
+                                    width: 9.3.w,
+                                    height: 3.9.h,
+                                    decoration: const BoxDecoration(
+                                        color: AppColors.nauticalCreatures,
+                                        shape: BoxShape.circle),
+                                    child: const Icon(
+                                      Icons.phone,
+                                      color: AppColors.white,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -759,22 +825,40 @@ class _PropertyDetailState extends State<PropertyDetail> {
                       SizedBox(
                         height: 8.4.h,
                         child: ListView.builder(
-                            shrinkWrap: false,
-                            scrollDirection: Axis.horizontal,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: 16,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(right: 2.6.w),
-                                width: 19.7.w,
-                                height: 8.4.h,
-                                decoration: BoxDecoration(
-                                    color:
-                                        AppColors.buttonContainerWatermarkColor,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(3.5.w))),
-                              );
-                            }),
+                          shrinkWrap: false,
+                          scrollDirection: Axis.horizontal,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: value.feed.photos.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                                child: Container(
+                                  margin: EdgeInsets.only(right: 2.6.w),
+                                  width: 19.7.w,
+                                  height: 8.4.h,
+                                  decoration: BoxDecoration(
+                                      color: AppColors
+                                          .buttonContainerWatermarkColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(3.5.w)),
+                                      image: DecorationImage(
+                                          image: NetworkImage(value
+                                              .feed.photos[index].secoureUrl),
+                                          fit: BoxFit.cover)),
+                                ),
+                                onTap: () {
+                                  showCupertinoModalPopup(
+                                      barrierDismissible: true,
+                                      context: context,
+                                      builder: (context) =>
+                                          CarouselSliderWithDots(
+                                            curIndex: index,
+                                            items: value.feed.photos
+                                                .map((e) => e.secoureUrl)
+                                                .toList(),
+                                          ));
+                                });
+                          },
+                        ),
                       )
                     ],
                   ),

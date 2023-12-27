@@ -259,7 +259,6 @@ export class AuthController {
 
       const updatedUser = await this._userRepository.Update(user._id, user);
 
-      
       const updatedUserPhotos: PhotoResponseDTO[] = [];
       const userResponseDto = new UserResponseDTO(
         updatedUser._id,
@@ -273,17 +272,18 @@ export class AuthController {
         updatedUserPhotos
       );
       for (let updatedUserPhoto of updatedUser.photos) {
-        await this._photoRepository.GetById(updatedUserPhoto).then((returnPhoto) => {
-          updatedUserPhotos.push(
-            new PhotoResponseDTO(
-              returnPhoto.publicId,
-              returnPhoto.secureUrl,
-              returnPhoto._id
-            )
-          );
-        });
+        await this._photoRepository
+          .GetById(updatedUserPhoto)
+          .then((returnPhoto) => {
+            updatedUserPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
       }
-
 
       res
         .status(StatusCodes.CREATED)
@@ -337,7 +337,6 @@ export class AuthController {
 
       const updatedUser = await this._userRepository.Update(user._id, user);
 
-      
       const updatedUserPhotos: PhotoResponseDTO[] = [];
       const userDto = new UserResponseDTO(
         updatedUser._id,
@@ -351,24 +350,23 @@ export class AuthController {
         updatedUserPhotos
       );
       for (let updatedUserPhoto of updatedUser.photos) {
-        await this._photoRepository.GetById(updatedUserPhoto).then((returnPhoto) => {
-          updatedUserPhotos.push(
-            new PhotoResponseDTO(
-              returnPhoto.publicId,
-              returnPhoto.secureUrl,
-              returnPhoto._id
-            )
-          );
-        });
+        await this._photoRepository
+          .GetById(updatedUserPhoto)
+          .then((returnPhoto) => {
+            updatedUserPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
       }
 
       res
         .status(StatusCodes.CREATED)
         .json(
-          new JSendResponse().success(
-            userDto,
-            "Profile updated successfully"
-          )
+          new JSendResponse().success(userDto, "Profile updated successfully")
         );
     }
   );
@@ -377,8 +375,8 @@ export class AuthController {
       const user = await this._userRepository.GetById(Object(req.userId));
       if (!user) {
         throw new Error("User not found");
-      } 
-      
+      }
+
       const userPhotos: PhotoResponseDTO[] = [];
       const userDto = new UserResponseDTO(
         user._id,
@@ -415,7 +413,6 @@ export class AuthController {
         throw new Error("User not found");
       }
 
-      
       const userPhotos: PhotoResponseDTO[] = [];
       const userDto = new UserResponseDTO(
         user._id,
