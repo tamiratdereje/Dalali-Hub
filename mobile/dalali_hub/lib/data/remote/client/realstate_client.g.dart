@@ -142,13 +142,14 @@ class _RealstateClient implements RealstateClient {
   }
 
   @override
-  Future<HttpResponse<JSendResponse<Empty>>> deleteRealstate(String id) async {
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> deleteRealstate(
+      String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<JSendResponse<Empty>>>(Options(
+        _setStreamType<HttpResponse<JSendResponse<EmptyResponse>>>(Options(
       method: 'DELETE',
       headers: _headers,
       extra: _extra,
@@ -164,9 +165,9 @@ class _RealstateClient implements RealstateClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = JSendResponse<Empty>.fromJson(
+    final value = JSendResponse<EmptyResponse>.fromJson(
       _result.data!,
-      (json) => Empty.fromJson(json as Map<String, dynamic>),
+      (json) => EmptyResponse.fromJson(json as Map<String, dynamic>),
     );
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

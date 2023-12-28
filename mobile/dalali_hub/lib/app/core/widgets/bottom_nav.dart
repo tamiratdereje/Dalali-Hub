@@ -18,7 +18,7 @@ class _BottomNavigationState extends State {
 
   final List _pages = [
     const CustomerHomePage(),
-    const FavoritePage(),
+    const BrokerHomePage(),
     const ContactScreem(),
     const Settings(),
   ];

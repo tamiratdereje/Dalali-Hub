@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/image_picker.dart';
+import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -10,15 +11,19 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class MultiImagePicker extends StatefulWidget {
   final Widget child;
   final List<String> selectedImages;
-  final List<String> oldSelectedImages;
+  final List<PhotoResponse> oldSelectedImages;
   String? activity;
+  final Function onOldSelectedImagesRemove;
+  final Function? onNewSelectedImagesAdd;
 
   MultiImagePicker(
       {super.key,
       required this.child,
       required this.selectedImages,
       required this.oldSelectedImages,
-      this.activity});
+      this.activity,
+      required this.onOldSelectedImagesRemove,
+      this.onNewSelectedImagesAdd});
 
   @override
   State<MultiImagePicker> createState() => _MultiImagePickerState();
@@ -48,13 +53,14 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: AppButtonPrimary(
-                      text: "Save",
+                      text: widget.activity == "Update"
+                          ? "Add new images"
+                          : "Save",
                       onPressed: () {
                         if (widget.activity == "Update") {
-                          // TODO: call save images BLOC for update activity
-
+                          widget.onNewSelectedImagesAdd!();
                         } else {
-                        Navigator.pop(context);
+                          Navigator.pop(context);
                         }
                       },
                     ),
@@ -81,7 +87,8 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
               widget.oldSelectedImages.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3),
-          itemBuilder: (context, index) => index < widget.selectedImages.length
+          itemBuilder: (context, index) => index <
+                  widget.selectedImages.length + widget.oldSelectedImages.length
               ? Stack(
                   children: [
                     Container(
@@ -89,7 +96,9 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
                       width: 30.w,
                       padding: const EdgeInsets.all(8.0),
                       child: index < widget.oldSelectedImages.length
-                          ? Image.network(widget.oldSelectedImages[index])
+                          ? Image.network(
+                              widget.oldSelectedImages[index].secoureUrl,
+                              fit: BoxFit.cover)
                           : Image.file(
                               File(widget.selectedImages[
                                   index - widget.oldSelectedImages.length]),
@@ -102,17 +111,12 @@ class _MultiImagePickerState extends State<MultiImagePicker> {
                         onTap: () {
                           if (index < widget.oldSelectedImages.length) {
                             // TODO: call remove from old images BLOC
-                            
-                            widget.oldSelectedImages.removeAt(index);
+                            widget.onOldSelectedImagesRemove(
+                                widget.oldSelectedImages[index]);
                           } else {
                             widget.selectedImages.removeAt(
                                 index - widget.oldSelectedImages.length);
                           }
-                          setState(
-                            () {
-                              widget.selectedImages.removeAt(index);
-                            },
-                          );
                         },
                         child: Container(
                           width: 8.w,

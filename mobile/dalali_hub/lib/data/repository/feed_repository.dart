@@ -6,6 +6,7 @@ import 'package:dalali_hub/data/remote/model/jsend_response.dart';
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/domain/repository/feed_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/dio.dart';
 
@@ -32,6 +33,7 @@ class FeedRepository implements IFeedRepository {
         await handleApiCall<FeedResponseDto>(_feedClient.getProperty(id));
 
     if (response is Success) {
+      debugPrint(response.data!.price.toString());
       return Success(response.data!.toFeed());
     } else {
       return Error(response.error!);

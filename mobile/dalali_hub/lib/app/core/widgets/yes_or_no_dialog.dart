@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 Future<String?> showYesOrNoDialog({
+  bool isUrl = false,
   required BuildContext context,
   bool errorAlert = false,
   required String title,
@@ -36,13 +37,22 @@ Future<String?> showYesOrNoDialog({
                   SizedBox(
                     height: 2.h,
                   ),
+                  if(image != null)
                   Container(
                     height: 10.h,
                     width: 10.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    child: Image.file(File(image!), fit: BoxFit.cover,),
+                    child: !isUrl
+                        ? Image.file(
+                            File(image!),
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            image!,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   SizedBox(
                     height: 6.h,
@@ -70,7 +80,6 @@ Future<String?> showYesOrNoDialog({
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AppButtonPrimary(
-                        
                         onPressed: () {
                           Navigator.of(context).pop("No");
                         },

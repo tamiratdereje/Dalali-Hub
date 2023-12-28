@@ -55,7 +55,7 @@ class RealstateRepository implements IRealstateRepository {
 
   @override
   Future<Resource<Empty>> deleteRealstate(String id) async {
-    var response = await handleApiCall<Empty>(_realstateClient.deleteRealstate(id));
+    var response = await handleApiCall<EmptyResponse>(_realstateClient.deleteRealstate(id));
 
     if (response is Success) {
       return const Success(Empty());

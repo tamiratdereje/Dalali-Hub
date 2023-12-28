@@ -4,9 +4,6 @@ import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'package:dalali_hub/app/core/widgets/button.dart';
-import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DalaliAppBar extends StatefulWidget {
   final Function leadingButtonAction;

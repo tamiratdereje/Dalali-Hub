@@ -43,7 +43,7 @@ abstract class RealstateClient {
 // }
 
   @DELETE('realstates/{id}')
-  Future<HttpResponse<JSendResponse<Empty>>> deleteRealstate(
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> deleteRealstate(
     @Path("id") String id,
   );
 
@@ -59,7 +59,8 @@ abstract class RealstateClient {
   @POST('realstates/{realstateId}/photos')
   @MultiPart()
   Future<HttpResponse<JSendResponse<PhotoResponseDto>>> addRealstatePhotos(
-      @Path("realstateId") String realstateId, @Part(name: 'photos') List<File> photos);
+      @Path("realstateId") String realstateId,
+      @Part(name: 'photos') List<File> photos);
 
   @GET("realstates/{RealstateId}/photos")
   Future<HttpResponse<JSendResponse<PhotoResponseDto>>> getRealstatePhotos(

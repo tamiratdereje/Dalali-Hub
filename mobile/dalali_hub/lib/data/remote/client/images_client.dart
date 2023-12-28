@@ -13,16 +13,16 @@ part 'images_client.g.dart';
 abstract class ImagesClient {
   factory ImagesClient(Dio dio, {String baseUrl}) = _ImagesClient;
 
-  @DELETE('property/{propertyId}/photos/{photoId}')
-  Future<HttpResponse<JSendResponse<Empty>>> deletePropertyPhoto(
-      @Path("propertyId") String propertyId, @Path("photoId") String photoId);
+  @DELETE('{propertyName}/{propertyId}/photos/{photoId}')
+  Future<HttpResponse<JSendResponse<PhotoResponseDto>>> deletePropertyPhoto(
+      @Path("propertyId") String propertyId, @Path("photoId") String photoId, @Path("propertyName") String propertyName);
 
-  @POST('property/{propertyId}/photos')
+  @POST('{propertyName}/{propertyId}/photos')
   @MultiPart()
-  Future<HttpResponse<JSendResponse<PhotoResponseDto>>> addPropertyPhotos(
-      @Path("propertyId") String propertyId, @Part(name: 'photos') List<File> photos);
+  Future<HttpResponse<JSendResponse<List<PhotoResponseDto>>>> addPropertyPhotos(
+      @Path("propertyId") String propertyId, @Part(name: 'photos') List<File> photos, @Path("propertyName") String propertyName);
 
-  @GET("property/{propertyId}/photos")
+  @GET("{propertyName}/{propertyId}/photos")
   Future<HttpResponse<JSendResponse<PhotoResponseDto>>> getPropertyPhotos(
-      @Path("propertyId") String propertyId);
+      @Path("propertyId") String propertyId, @Path("propertyName") String propertyName);
 }

@@ -19,19 +19,23 @@ mixin _$DeleteImageEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String imageId, String propertyId) deleteImage,
+    required TResult Function(
+            String imageId, String propertyId, String propertyName)
+        deleteImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String imageId, String propertyId)? deleteImage,
+    TResult? Function(String imageId, String propertyId, String propertyName)?
+        deleteImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String imageId, String propertyId)? deleteImage,
+    TResult Function(String imageId, String propertyId, String propertyName)?
+        deleteImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +117,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String imageId, String propertyId) deleteImage,
+    required TResult Function(
+            String imageId, String propertyId, String propertyName)
+        deleteImage,
   }) {
     return started();
   }
@@ -122,7 +128,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String imageId, String propertyId)? deleteImage,
+    TResult? Function(String imageId, String propertyId, String propertyName)?
+        deleteImage,
   }) {
     return started?.call();
   }
@@ -131,7 +138,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String imageId, String propertyId)? deleteImage,
+    TResult Function(String imageId, String propertyId, String propertyName)?
+        deleteImage,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -182,7 +190,7 @@ abstract class _$$DeleteImageImplCopyWith<$Res> {
           _$DeleteImageImpl value, $Res Function(_$DeleteImageImpl) then) =
       __$$DeleteImageImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String imageId, String propertyId});
+  $Res call({String imageId, String propertyId, String propertyName});
 }
 
 /// @nodoc
@@ -198,6 +206,7 @@ class __$$DeleteImageImplCopyWithImpl<$Res>
   $Res call({
     Object? imageId = null,
     Object? propertyId = null,
+    Object? propertyName = null,
   }) {
     return _then(_$DeleteImageImpl(
       imageId: null == imageId
@@ -208,6 +217,10 @@ class __$$DeleteImageImplCopyWithImpl<$Res>
           ? _value.propertyId
           : propertyId // ignore: cast_nullable_to_non_nullable
               as String,
+      propertyName: null == propertyName
+          ? _value.propertyName
+          : propertyName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -215,16 +228,21 @@ class __$$DeleteImageImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DeleteImageImpl implements _DeleteImage {
-  const _$DeleteImageImpl({required this.imageId, required this.propertyId});
+  const _$DeleteImageImpl(
+      {required this.imageId,
+      required this.propertyId,
+      required this.propertyName});
 
   @override
   final String imageId;
   @override
   final String propertyId;
+  @override
+  final String propertyName;
 
   @override
   String toString() {
-    return 'DeleteImageEvent.deleteImage(imageId: $imageId, propertyId: $propertyId)';
+    return 'DeleteImageEvent.deleteImage(imageId: $imageId, propertyId: $propertyId, propertyName: $propertyName)';
   }
 
   @override
@@ -234,11 +252,14 @@ class _$DeleteImageImpl implements _DeleteImage {
             other is _$DeleteImageImpl &&
             (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.propertyId, propertyId) ||
-                other.propertyId == propertyId));
+                other.propertyId == propertyId) &&
+            (identical(other.propertyName, propertyName) ||
+                other.propertyName == propertyName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, imageId, propertyId);
+  int get hashCode =>
+      Object.hash(runtimeType, imageId, propertyId, propertyName);
 
   @JsonKey(ignore: true)
   @override
@@ -250,29 +271,33 @@ class _$DeleteImageImpl implements _DeleteImage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String imageId, String propertyId) deleteImage,
+    required TResult Function(
+            String imageId, String propertyId, String propertyName)
+        deleteImage,
   }) {
-    return deleteImage(imageId, propertyId);
+    return deleteImage(imageId, propertyId, propertyName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String imageId, String propertyId)? deleteImage,
+    TResult? Function(String imageId, String propertyId, String propertyName)?
+        deleteImage,
   }) {
-    return deleteImage?.call(imageId, propertyId);
+    return deleteImage?.call(imageId, propertyId, propertyName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String imageId, String propertyId)? deleteImage,
+    TResult Function(String imageId, String propertyId, String propertyName)?
+        deleteImage,
     required TResult orElse(),
   }) {
     if (deleteImage != null) {
-      return deleteImage(imageId, propertyId);
+      return deleteImage(imageId, propertyId, propertyName);
     }
     return orElse();
   }
@@ -312,10 +337,12 @@ class _$DeleteImageImpl implements _DeleteImage {
 abstract class _DeleteImage implements DeleteImageEvent {
   const factory _DeleteImage(
       {required final String imageId,
-      required final String propertyId}) = _$DeleteImageImpl;
+      required final String propertyId,
+      required final String propertyName}) = _$DeleteImageImpl;
 
   String get imageId;
   String get propertyId;
+  String get propertyName;
   @JsonKey(ignore: true)
   _$$DeleteImageImplCopyWith<_$DeleteImageImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -327,7 +354,7 @@ mixin _$DeleteImageState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(PhotoResponse photoResponse) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -335,7 +362,7 @@ mixin _$DeleteImageState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(PhotoResponse photoResponse)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -343,7 +370,7 @@ mixin _$DeleteImageState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(PhotoResponse photoResponse)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -433,7 +460,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(PhotoResponse photoResponse) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -444,7 +471,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(PhotoResponse photoResponse)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -455,7 +482,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(PhotoResponse photoResponse)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -547,7 +574,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(PhotoResponse photoResponse) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -558,7 +585,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(PhotoResponse photoResponse)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -569,7 +596,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(PhotoResponse photoResponse)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -626,6 +653,8 @@ abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PhotoResponse photoResponse});
 }
 
 /// @nodoc
@@ -635,36 +664,61 @@ class __$$SuccessImplCopyWithImpl<$Res>
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photoResponse = null,
+  }) {
+    return _then(_$SuccessImpl(
+      null == photoResponse
+          ? _value.photoResponse
+          : photoResponse // ignore: cast_nullable_to_non_nullable
+              as PhotoResponse,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl();
+  const _$SuccessImpl(this.photoResponse);
+
+  @override
+  final PhotoResponse photoResponse;
 
   @override
   String toString() {
-    return 'DeleteImageState.success()';
+    return 'DeleteImageState.success(photoResponse: $photoResponse)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SuccessImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            (identical(other.photoResponse, photoResponse) ||
+                other.photoResponse == photoResponse));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, photoResponse);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(PhotoResponse photoResponse) success,
     required TResult Function(String message) error,
   }) {
-    return success();
+    return success(photoResponse);
   }
 
   @override
@@ -672,10 +726,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(PhotoResponse photoResponse)? success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call();
+    return success?.call(photoResponse);
   }
 
   @override
@@ -683,12 +737,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(PhotoResponse photoResponse)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(photoResponse);
     }
     return orElse();
   }
@@ -732,7 +786,12 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements DeleteImageState {
-  const factory _Success() = _$SuccessImpl;
+  const factory _Success(final PhotoResponse photoResponse) = _$SuccessImpl;
+
+  PhotoResponse get photoResponse;
+  @JsonKey(ignore: true)
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -801,7 +860,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(PhotoResponse photoResponse) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -812,7 +871,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(PhotoResponse photoResponse)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -823,7 +882,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(PhotoResponse photoResponse)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

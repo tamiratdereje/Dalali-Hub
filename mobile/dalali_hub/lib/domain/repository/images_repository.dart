@@ -4,8 +4,8 @@ import 'package:dalali_hub/util/resource.dart';
 
 abstract class IImagesRepository {
  
-  Future<Resource<Empty>> deletePhoto(String propertyId, String photoId);
-  Future<Resource<PhotoResponse>> addPhotos(
-      String propertyId, List<String> photos);
-  Future<Resource<PhotoResponse>> getPhotos(String propertyId);
+  Future<Resource<PhotoResponse>> deletePhoto(String propertyId, String photoId, String propertyName);
+  Future<Resource<List<PhotoResponse>>> addPhotos(
+      String propertyId, List<String> photos,  String propertyName);
+  Future<Resource<PhotoResponse>> getPhotos(String propertyId, String propertyName);
 }

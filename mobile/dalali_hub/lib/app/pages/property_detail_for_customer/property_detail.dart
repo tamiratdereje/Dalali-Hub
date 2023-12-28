@@ -1,22 +1,19 @@
 import 'dart:ui';
 
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
+import 'package:dalali_hub/app/core/widgets/yes_or_no_dialog.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
-import 'package:dalali_hub/app/pages/customer_home/bloc/feeds/feeds_bloc.dart';
-import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_realstate/delete_realstate_bloc.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/delete_vehicle/delete_vehicle_bloc.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/add_to_my_favorite/add_to_my_favorite_bloc.dart';
-import 'package:dalali_hub/app/pages/favorite/bloc/get_my_favorites/get_my_favorites_bloc.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/remove_from_my_favorite/remove_from_my_favorite_bloc.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/bloc/get_property/get_property_bloc.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/image_slider.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/other_features_chips.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
-import 'package:dalali_hub/constants/image_constants.dart';
-import 'package:dots_indicator/dots_indicator.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -44,6 +41,12 @@ class PropertyDetailPage extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt.get<GetPropertyBloc>()
             ..add(GetPropertyEvent.getProperty(feedId)),
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<DeleteRealstateBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<DeleteVehicleBloc>(),
         )
       ],
       child: const PropertyDetail(),
@@ -88,6 +91,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
   }
 
   List<Widget> imageSliders = [];
+  late Feed propertyDetailData;
 
   @override
   Widget build(BuildContext context) {
@@ -105,17 +109,56 @@ class _PropertyDetailState extends State<PropertyDetail> {
             onTapTrailingButton: (value) async {
               debugPrint("popup menu item $value");
               if (value.trim() == "Edit") {
-                debugPrint("popup again  $value");
-                // User userData = await context.push(AppRoutes.register, extra: {
-                //   "isEditingProfile": true,
-                // }) as User;
-                // debugPrint(
-                //     "user datahhhhhhhhhhhhhhhhhhhhhhhhhhhh from editing ${userData.firstName} ");
+                if (propertyDetailData.category != "Vehicle") {
+                  debugPrint("popup again for vehicle  $value");
+                  context.push(AppRoutes.addRealstate, extra: {
+                    "realstate": propertyDetailData.toRealstate(),
+                    "category": propertyDetailData.category,
+                    "action": "Update",
+                    "serviceName": "Update ${propertyDetailData.category}"
+                  });
+                } else {
+                  debugPrint("popup again for vehicle  $value");
+                  context.push(AppRoutes.addVehicle, extra: {
+                    "vehicle": propertyDetailData,
+                    "category": propertyDetailData.category,
+                    "action": "Update",
+                    "serviceName": "Update ${propertyDetailData.category}"
+                  });
+                }
+              } else {
+                debugPrint("popup again for vehicle  $value");
+                if (propertyDetailData.category == "Vehicle") {
+                  String? decision = await showYesOrNoDialog(
+                      context: context,
+                      title: 'Remove Vehicle!',
+                      isUrl: true,
+                      description:
+                          'Are you sure you want to delete this vehicle?',
+                      onButtonPressed: () {});
 
-                // // ignore: use_build_context_synchronously
-                // context
-                //     .read<ProfileBloc>()
-                //     .add(ProfileEvent.updateProfile(userData));
+                  if (decision == "Yes") {
+                    context.read<DeleteVehicleBloc>().add(
+                          DeleteVehicleEvent.deleteVehicle(
+                              vehicleId: propertyDetailData.id),
+                        );
+                  }
+                } else if (propertyDetailData.category != "Vehicle") {
+                  String? decision = await showYesOrNoDialog(
+                      context: context,
+                      title: 'Remove Vehicle!',
+                      isUrl: true,
+                      description:
+                          'Are you sure you want to delete this realstate?',
+                      onButtonPressed: () {});
+
+                  if (decision == "Yes") {
+                    context.read<DeleteRealstateBloc>().add(
+                          DeleteRealstateEvent.deleteRealstate(
+                              realstateId: propertyDetailData.id),
+                        );
+                  }
+                }
               }
             },
             trailingWidget: Container(
@@ -140,6 +183,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
             success: (value) {
               setState(() {
                 isFavorite = value.feed.isFavorite ?? false;
+                propertyDetailData = value.feed;
               });
               debugPrint("what the success is working ");
             },
@@ -171,6 +215,50 @@ class _PropertyDetailState extends State<PropertyDetail> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (value.feed.category != "Vehicle") ...[
+                        BlocConsumer<DeleteRealstateBloc, DeleteRealstateState>(
+                          listener: (context, state) async {
+                            state.maybeMap(
+                              orElse: () => Container(),
+                              success: (data) {
+                                debugPrint("Realstate successfully deleted.");
+                                showSuccessSnackBar(
+                                    "Property successfully deleted.", context);
+                                context.pop();
+                              },
+                              error: (value) {
+                                showErrorSnackBar(
+                                    "Unable to delete realState.", context);
+                              },
+                            );
+                          },
+                          builder: ((context, state) {
+                            return Container();
+                          }),
+                        ),
+                      ],
+                      if (value.feed.category == "Vehicle") ...[
+                        BlocConsumer<DeleteVehicleBloc, DeleteVehicleState>(
+                          listener: (context, state) async {
+                            state.maybeMap(
+                              orElse: () => Container(),
+                              success: (data) {
+                                debugPrint("Vehicle successfully deleted.");
+                                showSuccessSnackBar(
+                                    "Vehicle successfully deleted.", context);
+                                context.pop();
+                              },
+                              error: (value) {
+                                showErrorSnackBar(
+                                    "Unable to delete vehilce.", context);
+                              },
+                            );
+                          },
+                          builder: ((context, state) {
+                            return Container();
+                          }),
+                        ),
+                      ],
                       Container(
                         height: 42.5.h,
                         width: 100.w,
@@ -831,32 +919,33 @@ class _PropertyDetailState extends State<PropertyDetail> {
                           itemCount: value.feed.photos.length,
                           itemBuilder: (context, index) {
                             return GestureDetector(
-                                child: Container(
-                                  margin: EdgeInsets.only(right: 2.6.w),
-                                  width: 19.7.w,
-                                  height: 8.4.h,
-                                  decoration: BoxDecoration(
-                                      color: AppColors
-                                          .buttonContainerWatermarkColor,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(3.5.w)),
-                                      image: DecorationImage(
-                                          image: NetworkImage(value
-                                              .feed.photos[index].secoureUrl),
-                                          fit: BoxFit.cover)),
-                                ),
-                                onTap: () {
-                                  showCupertinoModalPopup(
-                                      barrierDismissible: true,
-                                      context: context,
-                                      builder: (context) =>
-                                          CarouselSliderWithDots(
-                                            curIndex: index,
-                                            items: value.feed.photos
-                                                .map((e) => e.secoureUrl)
-                                                .toList(),
-                                          ));
-                                });
+                              child: Container(
+                                margin: EdgeInsets.only(right: 2.6.w),
+                                width: 19.7.w,
+                                height: 8.4.h,
+                                decoration: BoxDecoration(
+                                    color:
+                                        AppColors.buttonContainerWatermarkColor,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(3.5.w)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(value
+                                            .feed.photos[index].secoureUrl),
+                                        fit: BoxFit.cover)),
+                              ),
+                              onTap: () {
+                                showCupertinoModalPopup(
+                                    barrierDismissible: true,
+                                    context: context,
+                                    builder: (context) =>
+                                        CarouselSliderWithDots(
+                                          curIndex: index,
+                                          items: value.feed.photos
+                                              .map((e) => e.secoureUrl)
+                                              .toList(),
+                                        ));
+                              },
+                            );
                           },
                         ),
                       )

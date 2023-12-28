@@ -19,19 +19,25 @@ mixin _$AddImagesEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(List<String> images, String propertyId) addImages,
+    required TResult Function(
+            List<String> images, String propertyId, String propertyName)
+        addImages,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<String> images, String propertyId)? addImages,
+    TResult? Function(
+            List<String> images, String propertyId, String propertyName)?
+        addImages,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<String> images, String propertyId)? addImages,
+    TResult Function(
+            List<String> images, String propertyId, String propertyName)?
+        addImages,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +119,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(List<String> images, String propertyId) addImages,
+    required TResult Function(
+            List<String> images, String propertyId, String propertyName)
+        addImages,
   }) {
     return started();
   }
@@ -122,7 +130,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<String> images, String propertyId)? addImages,
+    TResult? Function(
+            List<String> images, String propertyId, String propertyName)?
+        addImages,
   }) {
     return started?.call();
   }
@@ -131,7 +141,9 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<String> images, String propertyId)? addImages,
+    TResult Function(
+            List<String> images, String propertyId, String propertyName)?
+        addImages,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -182,7 +194,7 @@ abstract class _$$AddImagesImplCopyWith<$Res> {
           _$AddImagesImpl value, $Res Function(_$AddImagesImpl) then) =
       __$$AddImagesImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<String> images, String propertyId});
+  $Res call({List<String> images, String propertyId, String propertyName});
 }
 
 /// @nodoc
@@ -198,6 +210,7 @@ class __$$AddImagesImplCopyWithImpl<$Res>
   $Res call({
     Object? images = null,
     Object? propertyId = null,
+    Object? propertyName = null,
   }) {
     return _then(_$AddImagesImpl(
       images: null == images
@@ -208,6 +221,10 @@ class __$$AddImagesImplCopyWithImpl<$Res>
           ? _value.propertyId
           : propertyId // ignore: cast_nullable_to_non_nullable
               as String,
+      propertyName: null == propertyName
+          ? _value.propertyName
+          : propertyName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -216,7 +233,9 @@ class __$$AddImagesImplCopyWithImpl<$Res>
 
 class _$AddImagesImpl implements _AddImages {
   const _$AddImagesImpl(
-      {required final List<String> images, required this.propertyId})
+      {required final List<String> images,
+      required this.propertyId,
+      required this.propertyName})
       : _images = images;
 
   final List<String> _images;
@@ -229,10 +248,12 @@ class _$AddImagesImpl implements _AddImages {
 
   @override
   final String propertyId;
+  @override
+  final String propertyName;
 
   @override
   String toString() {
-    return 'AddImagesEvent.addImages(images: $images, propertyId: $propertyId)';
+    return 'AddImagesEvent.addImages(images: $images, propertyId: $propertyId, propertyName: $propertyName)';
   }
 
   @override
@@ -242,12 +263,14 @@ class _$AddImagesImpl implements _AddImages {
             other is _$AddImagesImpl &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.propertyId, propertyId) ||
-                other.propertyId == propertyId));
+                other.propertyId == propertyId) &&
+            (identical(other.propertyName, propertyName) ||
+                other.propertyName == propertyName));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_images), propertyId);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_images), propertyId, propertyName);
 
   @JsonKey(ignore: true)
   @override
@@ -259,29 +282,35 @@ class _$AddImagesImpl implements _AddImages {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(List<String> images, String propertyId) addImages,
+    required TResult Function(
+            List<String> images, String propertyId, String propertyName)
+        addImages,
   }) {
-    return addImages(images, propertyId);
+    return addImages(images, propertyId, propertyName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<String> images, String propertyId)? addImages,
+    TResult? Function(
+            List<String> images, String propertyId, String propertyName)?
+        addImages,
   }) {
-    return addImages?.call(images, propertyId);
+    return addImages?.call(images, propertyId, propertyName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<String> images, String propertyId)? addImages,
+    TResult Function(
+            List<String> images, String propertyId, String propertyName)?
+        addImages,
     required TResult orElse(),
   }) {
     if (addImages != null) {
-      return addImages(images, propertyId);
+      return addImages(images, propertyId, propertyName);
     }
     return orElse();
   }
@@ -321,10 +350,12 @@ class _$AddImagesImpl implements _AddImages {
 abstract class _AddImages implements AddImagesEvent {
   const factory _AddImages(
       {required final List<String> images,
-      required final String propertyId}) = _$AddImagesImpl;
+      required final String propertyId,
+      required final String propertyName}) = _$AddImagesImpl;
 
   List<String> get images;
   String get propertyId;
+  String get propertyName;
   @JsonKey(ignore: true)
   _$$AddImagesImplCopyWith<_$AddImagesImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -336,7 +367,7 @@ mixin _$AddImagesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<PhotoResponse> photoResponses) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -344,7 +375,7 @@ mixin _$AddImagesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<PhotoResponse> photoResponses)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -352,7 +383,7 @@ mixin _$AddImagesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<PhotoResponse> photoResponses)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -442,7 +473,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<PhotoResponse> photoResponses) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -453,7 +484,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<PhotoResponse> photoResponses)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -464,7 +495,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<PhotoResponse> photoResponses)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -556,7 +587,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<PhotoResponse> photoResponses) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -567,7 +598,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<PhotoResponse> photoResponses)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -578,7 +609,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<PhotoResponse> photoResponses)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -635,6 +666,8 @@ abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<PhotoResponse> photoResponses});
 }
 
 /// @nodoc
@@ -644,36 +677,68 @@ class __$$SuccessImplCopyWithImpl<$Res>
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? photoResponses = null,
+  }) {
+    return _then(_$SuccessImpl(
+      null == photoResponses
+          ? _value._photoResponses
+          : photoResponses // ignore: cast_nullable_to_non_nullable
+              as List<PhotoResponse>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl();
+  const _$SuccessImpl(final List<PhotoResponse> photoResponses)
+      : _photoResponses = photoResponses;
+
+  final List<PhotoResponse> _photoResponses;
+  @override
+  List<PhotoResponse> get photoResponses {
+    if (_photoResponses is EqualUnmodifiableListView) return _photoResponses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_photoResponses);
+  }
 
   @override
   String toString() {
-    return 'AddImagesState.success()';
+    return 'AddImagesState.success(photoResponses: $photoResponses)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SuccessImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._photoResponses, _photoResponses));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_photoResponses));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<PhotoResponse> photoResponses) success,
     required TResult Function(String message) error,
   }) {
-    return success();
+    return success(photoResponses);
   }
 
   @override
@@ -681,10 +746,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<PhotoResponse> photoResponses)? success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call();
+    return success?.call(photoResponses);
   }
 
   @override
@@ -692,12 +757,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<PhotoResponse> photoResponses)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(photoResponses);
     }
     return orElse();
   }
@@ -741,7 +806,13 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements AddImagesState {
-  const factory _Success() = _$SuccessImpl;
+  const factory _Success(final List<PhotoResponse> photoResponses) =
+      _$SuccessImpl;
+
+  List<PhotoResponse> get photoResponses;
+  @JsonKey(ignore: true)
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -810,7 +881,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(List<PhotoResponse> photoResponses) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -821,7 +892,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? success,
+    TResult? Function(List<PhotoResponse> photoResponses)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -832,7 +903,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(List<PhotoResponse> photoResponses)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

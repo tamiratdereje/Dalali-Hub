@@ -1,28 +1,33 @@
-import 'dart:ffi';
-
+import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/drop_down_button.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
+import 'package:dalali_hub/app/core/widgets/yes_or_no_dialog.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/add_images/add_images_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/create_realstate/create_realstate_bloc.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_image/delete_image_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/update_realstate/update_realstate_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/widgets/build_chips_widget.dart';
-import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/update_vehicle/update_vehicle_bloc.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/app/widgets/multi_image_picker.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
+import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/realstate.dart';
+import 'package:dalali_hub/domain/entity/realstate_response.dart';
 import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CreateRealstatePage extends StatelessWidget {
   final String serviceName;
   final String action;
   final String category;
-  final Realstate? realstate;
+  final RealstateResponse? realstate;
 
   const CreateRealstatePage(
       {super.key,
@@ -33,8 +38,26 @@ class CreateRealstatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt.get<CreateRealstateBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        // if (action == "Create") ...[
+        BlocProvider(
+          create: (context) => getIt.get<CreateRealstateBloc>(),
+        ),
+        // ],
+
+        if (action == "Update") ...[
+          BlocProvider(
+            create: (context) => getIt.get<UpdateVehicleBloc>(),
+          ),
+        ],
+        BlocProvider(
+          create: (context) => getIt.get<DeleteImageBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<AddImagesBloc>(),
+        ),
+      ],
       child: CreateRealstate(
         serviceName: serviceName,
         action: action,
@@ -52,7 +75,7 @@ class CreateRealstate extends StatefulWidget {
   String action;
   String category;
   bool? firstTime;
-  Realstate? realstate;
+  RealstateResponse? realstate;
   CreateRealstate(
       {super.key,
       required this.serviceName,
@@ -130,7 +153,8 @@ class _CreateRealstateState extends State<CreateRealstate> {
   ];
 
   List<String> selectedImages = [];
-  List<String> oldSelectedImages = [];
+  List<PhotoResponse> oldSelectedImages = [];
+  List<String> oldSelectedImagesId = [];
   List<String> selectedList = ["Shower"];
   void delete(String serviceName) {
     setState(() {
@@ -148,7 +172,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
     if (widget.firstTime == true && widget.action == "Update") {
       debugPrint('first time');
       widget.firstTime = false;
-      titleController.text = widget.realstate!.title;
+      titleController.text = widget.realstate!.title ?? " ";
       priceController.text = widget.realstate!.price.toString();
       maxPriceController.text = widget.realstate!.price.toString();
       roomsController.text = widget.realstate!.rooms.toString();
@@ -160,8 +184,12 @@ class _CreateRealstateState extends State<CreateRealstate> {
       selectedRegion = widget.realstate!.location.region;
       selectedDistrict = widget.realstate!.location.district;
       selectedWard = widget.realstate!.location.ward;
-      selectedList = widget.realstate!.otherFeatures;
-      descriptionController.text = widget.realstate!.description;
+      selectedList = widget.realstate!.otherFeatures ?? [];
+      descriptionController.text = widget.realstate!.description ?? " ";
+      selectedSizeUnit = widget.realstate!.sizeUnit;
+      oldSelectedImages = widget.realstate!.photos;
+      priceController.text = widget.realstate!.price.toString();
+      // selectedCurrency = widget.realstate!.
     }
   }
 
@@ -169,7 +197,19 @@ class _CreateRealstateState extends State<CreateRealstate> {
   Widget build(BuildContext context) {
     isFirstTime();
     return Scaffold(
-      appBar: CustomerAppBar(title: widget.serviceName),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(8.h),
+        child: Padding(
+          padding: EdgeInsets.only(left: 3.6.w, right: 3.6.w),
+          child: DalaliAppBar(
+            leadingButtonAction: () => {},
+            titleWidget: Text(
+              widget.serviceName,
+              style: titleFont,
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.only(
           left: 6.6.w,
@@ -222,7 +262,6 @@ class _CreateRealstateState extends State<CreateRealstate> {
                         },
                       ),
                     ),
-                   
                     SizedBox(
                       width: 3.1.w,
                     ),
@@ -508,6 +547,40 @@ class _CreateRealstateState extends State<CreateRealstate> {
                       width: 3.7.h,
                     ),
                     MultiImagePicker(
+                      onNewSelectedImagesAdd: () {
+                        if (selectedImages.isNotEmpty) {
+                          debugPrint("Add new images");
+                          BlocProvider.of<AddImagesBloc>(context).add(
+                            AddImagesEvent.addImages(
+                                images: selectedImages,
+                                propertyId: widget.realstate!.id,
+                                propertyName: "realstates"),
+                          );
+                        }
+                      },
+                      onOldSelectedImagesRemove:
+                          (PhotoResponse photoResponse) async {
+                        String? decision = await showYesOrNoDialog(
+                            context: context,
+                            title: 'Remove photo!',
+                            isUrl: true,
+                            description: 'Do you want to remove this photo?',
+                            image: photoResponse.secoureUrl,
+                            onButtonPressed: () {});
+
+                        if (decision == "Yes") {
+                          debugPrint(decision);
+                          // ignore: use_build_context_synchronously
+
+                          // ignore: use_build_context_synchronously
+                          BlocProvider.of<DeleteImageBloc>(context).add(
+                            DeleteImageEvent.deleteImage(
+                                imageId: photoResponse.id,
+                                propertyId: widget.realstate!.id,
+                                propertyName: "realstates"),
+                          );
+                        }
+                      },
                       activity: widget.action,
                       oldSelectedImages: oldSelectedImages,
                       selectedImages: selectedImages,
@@ -548,7 +621,66 @@ class _CreateRealstateState extends State<CreateRealstate> {
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    BlocConsumer<DeleteImageBloc, DeleteImageState>(
+                      builder: (context, state) {
+                        return Container();
+                      },
+                      listener: ((context, state) => state.maybeMap(
+                          orElse: () => {},
+                          loading: (value) {},
+                          success: (value) {
+                            Navigator.pop(context);
+                            debugPrint("Success updating the picture");
+                            // Todo: Add event to stream the update of image
+
+                            setState(() {
+                              oldSelectedImages.removeWhere((element) =>
+                                  element.id == value.photoResponse.id);
+                            });
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showSuccessSnackBar(
+                                    'The picture is successfully updated.',
+                                    context));
+                          },
+                          error: (value) {
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showErrorSnackBar(
+                                    'Can not remove pickture due to network.',
+                                    context));
+                          })),
+                    ),
+                    BlocConsumer<AddImagesBloc, AddImagesState>(
+                      builder: (context, state) {
+                        return Container();
+                      },
+                      listener: ((context, state) => state.maybeMap(
+                          orElse: () => {},
+                          loading: (value) {},
+                          success: (value) {
+                            Navigator.pop(context);
+                            debugPrint("Success updating the picture");
+                            // Todo: Add event to stream the update of image
+
+                            setState(() {
+                              oldSelectedImages.addAll(value.photoResponses);
+                              selectedImages = [];
+                            });
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showSuccessSnackBar(
+                                    'The picture is successfully added.',
+                                    context));
+                          },
+                          error: (value) {
+                            setState(() {
+                              selectedImages = [];
+                            });
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showErrorSnackBar(
+                                    'Can not remove pickture due to network.',
+                                    context));
+                          })),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -562,7 +694,7 @@ class _CreateRealstateState extends State<CreateRealstate> {
                   obscureText: false,
                   validator: (value) {
                     // if (value!.isEmpty) {
-                    //   return 'Description is required';
+                    //   return Description is required';
                     // }
                     // if (value != newPasswordController.text) {
                     //   return 'Password does not match';
@@ -626,114 +758,9 @@ class _CreateRealstateState extends State<CreateRealstate> {
                 SizedBox(
                   height: 2.7.h,
                 ),
-                BlocBuilder<CreateRealstateBloc, CreateRealstateState>(
-                    builder: (context, state) {
-                  return state.maybeMap(
-                    loading: (_) => const Center(
-                        child: CircularProgressIndicator(
-                      color: AppColors.nauticalCreatures,
-                    )),
-                    orElse: () => AppButtonPrimary(
-                      color: AppColors.ultimateGray,
-                      textStyle: bodyTextStyle.copyWith(
-                          color: AppColors.white, fontWeight: FontWeight.w600),
-                      text: "Post",
-                      onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
-                          debugPrint('form is not valid');
-                          return;
-                        }
-                        if (widget.action == "Create") {
-                          context.read<CreateRealstateBloc>().add(
-                                CreateRealstateEvent.realstate(
-                                  realstate: Realstate(
-                                    title: titleController.text,
-                                    category: widget.category,
-                                    photos: selectedImages,
-                                    price:
-                                        double.parse(priceController.text),
-                                    rooms: double.parse(
-                                        roomsController.text == ""
-                                            ? "0"
-                                            : roomsController.text),
-                                    beds: double.parse(bedsController.text == ""
-                                        ? "0"
-                                        : bedsController.text),
-                                    baths: double.parse(
-                                        bathsController.text == ""
-                                            ? "0"
-                                            : bathsController.text),
-                                    kitchens: double.parse(
-                                        kitchensController.text == ""
-                                            ? "0"
-                                            : kitchensController.text),
-                                    sizeWidth:
-                                        double.parse(sizeWidthController.text),
-                                    sizeHeight:
-                                        double.parse(sizeWidthController.text),
-                                    sizeUnit: selectedSizeUnit ?? "M",
-                                    otherFeatures: selectedList,
-                                    description: descriptionController.text,
-                                    isApproved: false,
-                                    location: Location(
-                                        region: selectedRegion ?? "Oromia",
-                                        district: selectedDistrict ?? "sululta",
-                                        ward: selectedWard ?? "mizan"),
-                                    seats: int.parse(seatsController.text == ""
-                                        ? "0"
-                                        : seatsController.text),
-                                      numberOfViews: 0
-                                  ),
-                                ),
-                              );
-                        } else {
-                          context.read<UpdateRealstateBloc>().add(
-                                UpdateRealstateEvent.updateRealstate(
-                                  realstate: Realstate(
-                                    numberOfViews: widget.realstate!.numberOfViews,
-                                      id: widget.realstate!.id,
-                                      title: titleController.text,
-                                      category: widget.category,
-                                      photos: selectedImages,
-                                      price:
-                                          double.parse(priceController.text),
-                                    
-                                      rooms: double.parse(roomsController.text == ""
-                                          ? "0"
-                                          : roomsController.text),
-                                      beds: double.parse(bedsController.text == ""
-                                          ? "0"
-                                          : bedsController.text),
-                                      baths: double.parse(
-                                          bathsController.text == ""
-                                              ? "0"
-                                              : bathsController.text),
-                                      kitchens: double.parse(
-                                          kitchensController.text == ""
-                                              ? "0"
-                                              : kitchensController.text),
-                                      sizeWidth: double.parse(
-                                          sizeWidthController.text),
-                                      sizeHeight: double.parse(
-                                          sizeHeightController.text),
-                                      sizeUnit: selectedSizeUnit ?? "M",
-                                      otherFeatures: selectedList,
-                                      description: descriptionController.text,
-                                      isApproved: widget.realstate!.isApproved,
-                                      location: Location(
-                                          region: selectedRegion ?? "Oromia",
-                                          district: selectedDistrict ?? "sululta",
-                                          ward: selectedWard ?? "mizan"),
-                                      seats: int.parse(seatsController.text == "" ? "0" : seatsController.text)),
-                                ),
-                              );
-                        }
-                      },
-                    ),
-                  );
-                }),
-                BlocConsumer<CreateRealstateBloc, CreateRealstateState>(
-                  listener: (context, state) {
+                if (widget.action == "Create")
+                  BlocConsumer<CreateRealstateBloc, CreateRealstateState>(
+                      listener: (context, state) {
                     state.maybeMap(
                       orElse: () {},
                       loading: (e) {
@@ -755,11 +782,149 @@ class _CreateRealstateState extends State<CreateRealstate> {
                                 'Error while adding house.', context));
                       },
                     );
-                  },
-                  builder: (context, state) {
-                    return Container();
-                  },
-                ),
+                  }, builder: (context, state) {
+                    return state.maybeMap(
+                      loading: (_) => const Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.nauticalCreatures,
+                      )),
+                      orElse: () => AppButtonPrimary(
+                        color: AppColors.ultimateGray,
+                        textStyle: bodyTextStyle.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w600),
+                        text: "Post",
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            debugPrint('form is not valid');
+                            return;
+                          }
+                          if (widget.action == "Create") {
+                            context.read<CreateRealstateBloc>().add(
+                                  CreateRealstateEvent.realstate(
+                                    realstate: Realstate(
+                                        title: titleController.text,
+                                        category: widget.category,
+                                        photos: selectedImages,
+                                        price:
+                                            double.parse(priceController.text),
+                                        rooms: double.parse(
+                                            roomsController.text == ""
+                                                ? "0"
+                                                : roomsController.text),
+                                        beds: double.parse(bedsController.text == ""
+                                            ? "0"
+                                            : bedsController.text),
+                                        baths: double.parse(
+                                            bathsController.text == ""
+                                                ? "0"
+                                                : bathsController.text),
+                                        kitchens: double.parse(
+                                            kitchensController.text == ""
+                                                ? "0"
+                                                : kitchensController.text),
+                                        sizeWidth: double.parse(
+                                            sizeWidthController.text),
+                                        sizeHeight:
+                                            double.parse(sizeWidthController.text),
+                                        sizeUnit: selectedSizeUnit ?? "M",
+                                        otherFeatures: selectedList,
+                                        description: descriptionController.text,
+                                        isApproved: false,
+                                        location: Location(region: selectedRegion ?? "Oromia", district: selectedDistrict ?? "sululta", ward: selectedWard ?? "mizan"),
+                                        seats: int.parse(seatsController.text == "" ? "0" : seatsController.text),
+                                        numberOfViews: 0),
+                                  ),
+                                );
+                          }
+                        },
+                      ),
+                    );
+                  }),
+                if (widget.action == "Update") ...[
+                  BlocConsumer<UpdateRealstateBloc, UpdateRealstateState>(
+                      listener: (context, state) {
+                    state.maybeMap(
+                      orElse: () {},
+                      loading: (e) {
+                        debugPrint('loading');
+                      },
+                      success: (e) {
+                        debugPrint('success');
+                        WidgetsBinding.instance.addPostFrameCallback((_) =>
+                            showSuccessSnackBar(
+                                '${widget.category} successfully updated.',
+                                context));
+
+                        Navigator.pop(context);
+                      },
+                      error: (e) {
+                        debugPrint('error');
+                        WidgetsBinding.instance.addPostFrameCallback((_) =>
+                            showErrorSnackBar(
+                                'Error while updating.', context));
+                      },
+                    );
+                  }, builder: (context, state) {
+                    return state.maybeMap(
+                      loading: (_) => const Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.nauticalCreatures,
+                      )),
+                      orElse: () => AppButtonPrimary(
+                        color: AppColors.ultimateGray,
+                        textStyle: bodyTextStyle.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w600),
+                        text: "Update",
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            debugPrint('form is not valid');
+                            return;
+                          }
+                          context.read<UpdateRealstateBloc>().add(
+                                UpdateRealstateEvent.updateRealstate(
+                                  realstate: Realstate(
+                                      numberOfViews:
+                                          widget.realstate!.numberOfViews,
+                                      id: widget.realstate!.id,
+                                      title: titleController.text,
+                                      category: widget.category,
+                                      photos: selectedImages,
+                                      price: double.parse(priceController.text),
+                                      rooms: double.parse(
+                                          roomsController.text == ""
+                                              ? "0"
+                                              : roomsController.text),
+                                      beds: double.parse(bedsController.text == ""
+                                          ? "0"
+                                          : bedsController.text),
+                                      baths: double.parse(
+                                          bathsController.text == ""
+                                              ? "0"
+                                              : bathsController.text),
+                                      kitchens: double.parse(
+                                          kitchensController.text == ""
+                                              ? "0"
+                                              : kitchensController.text),
+                                      sizeWidth: double.parse(
+                                          sizeWidthController.text),
+                                      sizeHeight: double.parse(
+                                          sizeHeightController.text),
+                                      sizeUnit: selectedSizeUnit ?? "M",
+                                      otherFeatures: selectedList,
+                                      description: descriptionController.text,
+                                      isApproved:
+                                          widget.realstate!.isApproved ?? false,
+                                      location: Location(region: selectedRegion ?? "Oromia", district: selectedDistrict ?? "sululta", ward: selectedWard ?? "mizan"),
+                                      seats: int.parse(seatsController.text == "" ? "0" : seatsController.text)),
+                                ),
+                              );
+                        },
+                      ),
+                    );
+                  }),
+                ],
               ],
             ),
           ),

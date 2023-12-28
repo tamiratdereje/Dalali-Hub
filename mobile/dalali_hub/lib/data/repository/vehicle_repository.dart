@@ -56,7 +56,7 @@ class VehicleRepository implements IVehicleRepository {
 
   @override
   Future<Resource<Empty>> deleteVehicle(String id) async {
-    var response = await handleApiCall<Empty>(_vehicleClient.deleteVehicle(id));
+    var response = await handleApiCall<EmptyResponse>(_vehicleClient.deleteVehicle(id));
 
     if (response is Success) {
       return const Success(Empty());

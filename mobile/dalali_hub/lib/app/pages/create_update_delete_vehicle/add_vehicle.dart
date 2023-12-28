@@ -1,7 +1,11 @@
+import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/core/widgets/drop_down_button.dart';
 import 'package:dalali_hub/app/core/widgets/input_field.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
+import 'package:dalali_hub/app/core/widgets/yes_or_no_dialog.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/add_images/add_images_bloc.dart';
+import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_image/delete_image_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/create_vehicle/create_vehicle_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/update_vehicle/update_vehicle_bloc.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
@@ -9,7 +13,9 @@ import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/app/widgets/multi_image_picker.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
+import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/vehicle.dart';
+import 'package:dalali_hub/domain/entity/vehicle_response.dart';
 import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +25,7 @@ class CreateVehiclePage extends StatelessWidget {
   final String serviceName;
   final String action;
   final String category;
-  final Vehicle? vehicle;
+  final VehicleResponse? vehicle;
 
   const CreateVehiclePage(
       {super.key,
@@ -30,8 +36,23 @@ class CreateVehiclePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt.get<CreateVehicleBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt.get<CreateVehicleBloc>(),
+        ),
+        if (action == "Update") ...[
+          BlocProvider(
+            create: (context) => getIt.get<UpdateVehicleBloc>(),
+          ),
+        ],
+        BlocProvider(
+          create: (context) => getIt.get<DeleteImageBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<AddImagesBloc>(),
+        ),
+      ],
       child: CreateVehicle(
         serviceName: serviceName,
         action: action,
@@ -49,7 +70,7 @@ class CreateVehicle extends StatefulWidget {
   String action;
   String category;
   bool? firstTime;
-  Vehicle? vehicle;
+  VehicleResponse? vehicle;
   CreateVehicle(
       {super.key,
       required this.serviceName,
@@ -112,7 +133,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
   ];
 
   List<String> selectedImages = [];
-  List<String> oldSelectedImages = [];
+  List<PhotoResponse> oldSelectedImages = [];
   List<String> selectedList = ["Shower"];
   void delete(String serviceName) {
     setState(() {
@@ -130,14 +151,19 @@ class _CreateVehicleState extends State<CreateVehicle> {
     if (widget.firstTime == true && widget.action == "Update") {
       debugPrint('first time');
       widget.firstTime = false;
-      makeController.text = widget.vehicle!.make;
-      modelController.text = widget.vehicle!.model;
+      makeController.text = widget.vehicle!.make ?? "";
+      modelController.text = widget.vehicle!.model ?? "";
       priceController.text = widget.vehicle!.price.toString();
       yearController.text = widget.vehicle!.year.toString();
-      colorController.text = widget.vehicle!.color;
-      vinController.text = widget.vehicle!.vin;
-      fuelTypeController.text = widget.vehicle!.fuelType;
+      colorController.text = widget.vehicle!.color ?? "";
+      vinController.text = widget.vehicle!.vin ?? "";
+      fuelTypeController.text = widget.vehicle!.fuelType ?? "";
+      selectedRegion = widget.vehicle!.location.region;
+      selectedDistrict = widget.vehicle!.location.district;
+      selectedWard = widget.vehicle!.location.ward;
       engineSizeController.text = widget.vehicle!.engineSize.toString();
+      oldSelectedImages = widget.vehicle!.photos;
+      conditionController.text = widget.vehicle!.condition ?? "";
     }
   }
 
@@ -145,7 +171,19 @@ class _CreateVehicleState extends State<CreateVehicle> {
   Widget build(BuildContext context) {
     isFirstTime();
     return Scaffold(
-      appBar: CustomerAppBar(title: widget.serviceName),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(8.h),
+        child: Padding(
+          padding: EdgeInsets.only(left: 3.6.w, right: 3.6.w),
+          child: DalaliAppBar(
+            leadingButtonAction: () => {},
+            titleWidget: Text(
+              widget.serviceName,
+              style: titleFont,
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.only(
           left: 6.6.w,
@@ -518,6 +556,40 @@ class _CreateVehicleState extends State<CreateVehicle> {
                       width: 3.7.h,
                     ),
                     MultiImagePicker(
+                      onNewSelectedImagesAdd: () {
+                        if (selectedImages.isNotEmpty) {
+                          debugPrint("Add new images");
+                          BlocProvider.of<AddImagesBloc>(context).add(
+                            AddImagesEvent.addImages(
+                                images: selectedImages,
+                                propertyId: widget.vehicle!.id,
+                                propertyName: "vehicles"),
+                          );
+                        }
+                      },
+                      onOldSelectedImagesRemove:
+                          (PhotoResponse photoResponse) async {
+                        String? decision = await showYesOrNoDialog(
+                            context: context,
+                            title: 'Remove photo!',
+                            isUrl: true,
+                            description: 'Do you want to remove this photo?',
+                            image: photoResponse.secoureUrl,
+                            onButtonPressed: () {});
+
+                        if (decision == "Yes") {
+                          debugPrint(decision);
+                          // ignore: use_build_context_synchronously
+
+                          // ignore: use_build_context_synchronously
+                          BlocProvider.of<DeleteImageBloc>(context).add(
+                            DeleteImageEvent.deleteImage(
+                                imageId: photoResponse.id,
+                                propertyId: widget.vehicle!.id,
+                                propertyName: "vehicles"),
+                          );
+                        }
+                      },
                       activity: widget.action,
                       oldSelectedImages: oldSelectedImages,
                       selectedImages: selectedImages,
@@ -558,96 +630,74 @@ class _CreateVehicleState extends State<CreateVehicle> {
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    BlocConsumer<DeleteImageBloc, DeleteImageState>(
+                      builder: (context, state) {
+                        return Container();
+                      },
+                      listener: ((context, state) => state.maybeMap(
+                          orElse: () => {},
+                          loading: (value) {},
+                          success: (value) {
+                            Navigator.pop(context);
+                            debugPrint("Success updating the picture");
+                            // Todo: Add event to stream the update of image
+
+                            setState(() {
+                              oldSelectedImages.removeWhere((element) =>
+                                  element.id == value.photoResponse.id);
+                            });
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showSuccessSnackBar(
+                                    'The picture is successfully updated.',
+                                    context));
+                          },
+                          error: (value) {
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showErrorSnackBar(
+                                    'Can not remove pickture due to network.',
+                                    context));
+                          })),
+                    ),
+                    BlocConsumer<AddImagesBloc, AddImagesState>(
+                      builder: (context, state) {
+                        return Container();
+                      },
+                      listener: ((context, state) => state.maybeMap(
+                          orElse: () => {},
+                          loading: (value) {},
+                          success: (value) {
+                            Navigator.pop(context);
+                            debugPrint("Success updating the picture");
+                            // Todo: Add event to stream the update of image
+
+                            setState(() {
+                              oldSelectedImages.addAll(value.photoResponses);
+                              selectedImages = [];
+                            });
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showSuccessSnackBar(
+                                    'The picture is successfully added.',
+                                    context));
+                          },
+                          error: (value) {
+                            setState(() {
+                              selectedImages = [];
+                            });
+                            return WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => showErrorSnackBar(
+                                    'Can not remove pickture due to network.',
+                                    context));
+                          })),
+                    ),
                   ],
                 ),
                 SizedBox(
                   height: 2.7.h,
                 ),
-                BlocBuilder<CreateVehicleBloc, CreateVehicleState>(
-                    builder: (context, state) {
-                  return state.maybeMap(
-                    loading: (_) => const Center(
-                        child: CircularProgressIndicator(
-                      color: AppColors.nauticalCreatures,
-                    )),
-                    orElse: () => AppButtonPrimary(
-                      color: AppColors.ultimateGray,
-                      textStyle: bodyTextStyle.copyWith(
-                          color: AppColors.white, fontWeight: FontWeight.w600),
-                      text: "Post",
-                      onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
-                          debugPrint('form is not valid');
-                          return;
-                        }
-                        if (widget.action == "Create") {
-                          context.read<CreateVehicleBloc>().add(
-                                CreateVehicleEvent.vehicle(
-                                  vehicle: Vehicle(
-                                    numberOfViews: 0,
-                                    make: makeController.text,
-                                    model: modelController.text,
-                                    photos: selectedImages,
-                                    year: int.parse(yearController.text),
-                                    color: colorController.text,
-                                    vin: vinController.text,
-                                    fuelType: fuelTypeController.text,
-                                    engineSize:
-                                        int.parse(engineSizeController.text),
-                                    transmissionType:
-                                        transmissionTypeController.text,
-                                    mileage:
-                                        double.parse(mileageController.text),
-                                    price: double.parse(priceController.text),
-                                    location: Location(
-                                      region: selectedRegion!,
-                                      district: selectedDistrict!,
-                                      ward: selectedWard!,
-                                    ),
-                                    condition: conditionController.text,
-                                    category: "Vehicle",
-                                    isApproved: false
-                                  ),
-                                ),
-                              );
-                        } else {
-                          context.read<UpdateVehicleBloc>().add(
-                                UpdateVehicleEvent.updateVehicle(
-                                  vehicle: Vehicle(
-                                    numberOfViews: widget.vehicle!.numberOfViews ,
-                                    make: makeController.text,
-                                    model: modelController.text,
-                                    photos: selectedImages,
-                                    year: int.parse(yearController.text),
-                                    color: colorController.text,
-                                    vin: vinController.text,
-                                    fuelType: fuelTypeController.text,
-                                    engineSize:
-                                        int.parse(engineSizeController.text),
-                                    transmissionType:
-                                        transmissionTypeController.text,
-                                    mileage:
-                                        double.parse(mileageController.text),
-                                    price: double.parse(priceController.text),
-                                    location: Location(
-                                      region: selectedRegion!,
-                                      district: selectedDistrict!,
-                                      ward: selectedWard!,
-                                    ),
-                                    condition: conditionController.text,
-                                    category: "Vehicle",
-                                    isApproved: false
-                                  ),
-                                ),
-                              );
-                        }
-                      },
-                    ),
-                  );
-                }),
-                BlocConsumer<CreateVehicleBloc, CreateVehicleState>(
-                  listener: (context, state) {
+                if (widget.action == "Create")
+                  BlocConsumer<CreateVehicleBloc, CreateVehicleState>(
+                      listener: (context, state) {
                     state.maybeMap(
                       orElse: () {},
                       loading: (e) {
@@ -657,7 +707,8 @@ class _CreateVehicleState extends State<CreateVehicle> {
                         debugPrint('success');
                         WidgetsBinding.instance.addPostFrameCallback((_) =>
                             showSuccessSnackBar(
-                                'Vehicle successfully created.', context));
+                                '${widget.category} successfully created.',
+                                context));
 
                         // Navigator.pop(context);
                       },
@@ -665,14 +716,136 @@ class _CreateVehicleState extends State<CreateVehicle> {
                         debugPrint('error');
                         WidgetsBinding.instance.addPostFrameCallback((_) =>
                             showErrorSnackBar(
-                                'Error while adding vehicle.', context));
+                                'Error while adding house.', context));
                       },
                     );
-                  },
-                  builder: (context, state) {
-                    return Container();
-                  },
-                ),
+                  }, builder: (context, state) {
+                    return state.maybeMap(
+                      loading: (_) => const Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.nauticalCreatures,
+                      )),
+                      orElse: () => AppButtonPrimary(
+                        color: AppColors.ultimateGray,
+                        textStyle: bodyTextStyle.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w600),
+                        text: "Post",
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            debugPrint('form is not valid');
+                            return;
+                          }
+                          if (widget.action == "Create") {
+                            context.read<CreateVehicleBloc>().add(
+                                  CreateVehicleEvent.vehicle(
+                                    vehicle: Vehicle(
+                                        numberOfViews: 0,
+                                        make: makeController.text,
+                                        model: modelController.text,
+                                        photos: selectedImages,
+                                        year: int.parse(yearController.text),
+                                        color: colorController.text,
+                                        vin: vinController.text,
+                                        fuelType: fuelTypeController.text,
+                                        engineSize: int.parse(
+                                            engineSizeController.text),
+                                        transmissionType:
+                                            transmissionTypeController.text,
+                                        mileage: double.parse(
+                                            mileageController.text),
+                                        price:
+                                            double.parse(priceController.text),
+                                        location: Location(
+                                          region: selectedRegion!,
+                                          district: selectedDistrict!,
+                                          ward: selectedWard!,
+                                        ),
+                                        condition: conditionController.text,
+                                        category: "Vehicle",
+                                        isApproved: false),
+                                  ),
+                                );
+                          }
+                        },
+                      ),
+                    );
+                  }),
+                if (widget.action == "Update")
+                  BlocConsumer<UpdateVehicleBloc, UpdateVehicleState>(
+                      listener: (context, state) {
+                    state.maybeMap(
+                      orElse: () {},
+                      loading: (e) {
+                        debugPrint('loading');
+                      },
+                      success: (e) {
+                        debugPrint('success');
+                        WidgetsBinding.instance.addPostFrameCallback((_) =>
+                            showSuccessSnackBar(
+                                '${widget.category} successfully updated.',
+                                context));
+
+                        Navigator.pop(context);
+                      },
+                      error: (e) {
+                        debugPrint('error');
+                        WidgetsBinding.instance.addPostFrameCallback((_) =>
+                            showErrorSnackBar(
+                                'Error while updating.', context));
+                      },
+                    );
+                  }, builder: (context, state) {
+                    return state.maybeMap(
+                      loading: (_) => const Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.nauticalCreatures,
+                      )),
+                      orElse: () => AppButtonPrimary(
+                        color: AppColors.ultimateGray,
+                        textStyle: bodyTextStyle.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w600),
+                        text: "Update",
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) {
+                            debugPrint('form is not valid');
+                            return;
+                          }
+
+                          context.read<UpdateVehicleBloc>().add(
+                                UpdateVehicleEvent.updateVehicle(
+                                  vehicle: Vehicle(
+                                      numberOfViews:
+                                          widget.vehicle!.numberOfViews,
+                                      make: makeController.text,
+                                      model: modelController.text,
+                                      photos: selectedImages,
+                                      year: int.parse(yearController.text),
+                                      color: colorController.text,
+                                      vin: vinController.text,
+                                      fuelType: fuelTypeController.text,
+                                      engineSize:
+                                          int.parse(engineSizeController.text),
+                                      transmissionType:
+                                          transmissionTypeController.text,
+                                      mileage:
+                                          double.parse(mileageController.text),
+                                      price: double.parse(priceController.text),
+                                      location: Location(
+                                        region: selectedRegion!,
+                                        district: selectedDistrict!,
+                                        ward: selectedWard!,
+                                      ),
+                                      condition: conditionController.text,
+                                      category: widget.vehicle!.category!,
+                                      isApproved: widget.vehicle!.isApproved!),
+                                ),
+                              );
+                        },
+                      ),
+                    );
+                  }),
               ],
             ),
           ),

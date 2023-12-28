@@ -55,7 +55,7 @@ class _CarouselSliderWithDotsState extends State<CarouselSliderWithDots> {
           child: Stack(
             alignment: AlignmentDirectional.topCenter,
             children: [
-              CarouselSlider( 
+              CarouselSlider(
                 carouselController: controller,
                 items: widget.items
                     .map(

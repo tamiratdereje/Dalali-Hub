@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
+import 'package:dalali_hub/domain/entity/realstate.dart';
+import 'package:dalali_hub/domain/entity/realstate_response.dart';
 import 'package:dalali_hub/domain/entity/user_response.dart';
 
 class Feed {
@@ -72,4 +74,29 @@ class Feed {
     required this.numberOfViews,
     this.isFavorite,
   });
+
+  RealstateResponse toRealstate() {
+    return RealstateResponse(
+      id: id,
+      title: title ?? "",
+      category: category ?? "",
+      photos: photos,
+      price: price ?? 0.0,
+      sizeWidth: sizeWidth ?? 0.0,
+      sizeHeight: sizeHeight ?? 0.0,
+      sizeUnit: sizeUnit ?? "",
+      otherFeatures: otherFeatures ?? [],
+      description: description ?? "",
+      isApproved: isApproved ?? false,
+      location: location,
+      numberOfViews: numberOfViews,
+      rooms: rooms,
+      beds: beds,
+      baths: baths,
+      kitchens: kitchens,
+      seats: seats,
+      owner: owner
+      
+    );
+  }
 }

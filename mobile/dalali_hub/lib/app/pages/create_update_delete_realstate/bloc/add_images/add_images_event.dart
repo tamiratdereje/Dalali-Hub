@@ -6,5 +6,6 @@ class AddImagesEvent with _$AddImagesEvent {
   const factory AddImagesEvent.addImages({
     required List<String> images,
     required String propertyId,
+    required String propertyName
   }) = _AddImages;
 }

@@ -151,41 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             image: selectedImage,
                           ),
-                          BlocConsumer<UpdateProfilePhotoBloc,
-                              UpdateProfilePhotoState>(
-                            builder: (context, state) {
-                              return Container();
-                            },
-                            listener: ((context, state) => state.maybeMap(
-                                orElse: () => {},
-                                loading: (value) {},
-                                success: (value) {
-                                  debugPrint(
-                                      "success updating the profile picture");
-                                  context.read<ProfileBloc>().add(
-                                      ProfileEvent.updateProfilePicture(
-                                          value.photos));
-                                  setState(() {
-                                    selectedImage = null;
-                                  });
-                                  return WidgetsBinding.instance
-                                      .addPostFrameCallback((_) =>
-                                          showSuccessSnackBar(
-                                              'Profile picture successfully updated.',
-                                              context));
-                                },
-                                error: (value) {
-                                  setState(() {
-                                    selectedImage = null;
-                                  });
-                                  return WidgetsBinding.instance
-                                      .addPostFrameCallback((_) =>
-                                          showErrorSnackBar(
-                                              'Can not updated profile pickture due to network.',
-                                              context));
-                                  ;
-                                })),
-                          ),
+                          
                           SizedBox(
                             height: 3.h,
                           ),

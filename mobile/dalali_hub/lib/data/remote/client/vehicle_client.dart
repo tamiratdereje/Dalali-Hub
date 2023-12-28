@@ -37,7 +37,7 @@ abstract class VehicleClient {
   );
 
   @DELETE('vehicles/{id}')
-  Future<HttpResponse<JSendResponse<Empty>>> deleteVehicle(
+  Future<HttpResponse<JSendResponse<EmptyResponse>>> deleteVehicle(
     @Path("id") String id,
   );
 

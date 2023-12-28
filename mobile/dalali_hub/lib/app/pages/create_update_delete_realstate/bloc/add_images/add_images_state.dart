@@ -4,6 +4,6 @@ part of 'add_images_bloc.dart';
 class AddImagesState with _$AddImagesState {
   const factory AddImagesState.initial() = _Initial;
   const factory AddImagesState.loading() = _Loading;
-  const factory AddImagesState.success() = _Success;
+  const factory AddImagesState.success(List<PhotoResponse> photoResponses) = _Success;
   const factory AddImagesState.error(String message) = _Error;
 }

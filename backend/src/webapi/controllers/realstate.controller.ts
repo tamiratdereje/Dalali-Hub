@@ -276,7 +276,16 @@ export class RealStateController {
   updateRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const realStateId = req.params.id;
-      const realStateDto = new RealStateDTO(req.body);
+      console.log(req.body);
+      console.log(typeof req.body);
+
+      let tempRealState = req.body;
+
+      console.log(tempRealState);
+      tempRealState.owner = req.userId;
+
+      const realStateDto = new RealStateDTO(tempRealState);
+      console.log(realStateDto);
       const ValidationError = await validate(realStateDto);
       if (ValidationError.length > 0) {
         console.log("validation error", ValidationError.length);
@@ -292,7 +301,6 @@ export class RealStateController {
       const realState = new RealState(realStateDto);
       realState.id = oldRealState._id;
       realState.photos = oldRealState.photos;
-      console.log(realState);
 
       const updatedRealState = await this.realStateRepository.Update(
         Object(realStateId),
@@ -311,32 +319,30 @@ export class RealStateController {
           );
         });
       }
-      const owner = await this._userRepository.GetById(
-        updatedRealState.owner
-      );
+      const owner = await this._userRepository.GetById(updatedRealState.owner);
       const ownerPhotos: PhotoResponseDTO[] = [];
-        const user = new UserResponseDTO(
-          owner._id,
-          owner.firstName,
-          owner.middleName,
-          owner.sirName,
-          owner.email,
-          owner.phoneNumber,
-          owner.gender,
-          owner.region,
-          ownerPhotos
-        );
-        for (let ownerPhoto of owner.photos) {
-          await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
-            ownerPhotos.push(
-              new PhotoResponseDTO(
-                returnPhoto.publicId,
-                returnPhoto.secureUrl,
-                returnPhoto._id
-              )
-            );
-          });
-        }
+      const user = new UserResponseDTO(
+        owner._id,
+        owner.firstName,
+        owner.middleName,
+        owner.sirName,
+        owner.email,
+        owner.phoneNumber,
+        owner.gender,
+        owner.region,
+        ownerPhotos
+      );
+      for (let ownerPhoto of owner.photos) {
+        await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
+          ownerPhotos.push(
+            new PhotoResponseDTO(
+              returnPhoto.publicId,
+              returnPhoto.secureUrl,
+              returnPhoto._id
+            )
+          );
+        });
+      }
 
       const favorite = await this._favoriteRepository.GetMyFavorite(
         Object(req.userId),
@@ -401,7 +407,15 @@ export class RealStateController {
       console.log(realState.photos);
       await this.realStateRepository.Update(Object(realStateId), realState);
       await this._photoRepository.Delete(Object(photoId));
-      res.status(StatusCodes.OK).json(new JSendResponse().success({}));
+      const deletedPhoto = new PhotoResponseDTO(
+        photo.publicId,
+        photo.secureUrl,
+        photo._id
+      );
+
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(deletedPhoto));
     }
   );
 
@@ -414,6 +428,8 @@ export class RealStateController {
       if (!realState) {
         throw new BadRequestError("RealState not found");
       }
+
+      const photoResponseDTOs: PhotoResponseDTO[] = [];
       if (req.files) {
         const realStateImages = req.files as Express.Multer.File[];
         const uploadedImages = realStateImages.map(async (image, _) => {
@@ -422,17 +438,21 @@ export class RealStateController {
 
         await Promise.all(uploadedImages);
 
+
         for (let uploadedImage of uploadedImages) {
           await uploadedImage.then(async (image) => {
             const photo = new Photo(image);
             await this._photoRepository.Create(photo).then((_) => {
               realState.photos.push(photo.id);
+              photoResponseDTOs.push(
+                new PhotoResponseDTO(photo.publicId, photo.secureUrl, photo._id)
+              );
             });
           });
         }
       }
       await this.realStateRepository.Update(Object(realStateId), realState);
-      res.status(StatusCodes.OK).json(new JSendResponse().success({}));
+      res.status(StatusCodes.OK).json(new JSendResponse().success(photoResponseDTOs));
     }
   );
 

@@ -89,7 +89,9 @@ class AppRouter {
           return CreateRealstatePage(
               serviceName: args["serviceName"],
               action: args["action"],
-              category: args["category"]);
+              category: args["category"],
+              realstate: args["realstate"] != null ? args["realstate"]!: null,
+              );
         },
       ),
       GoRoute(
@@ -99,7 +101,9 @@ class AppRouter {
           return CreateVehiclePage(
               serviceName: args["serviceName"],
               action: args["action"],
-              category: args["category"]);
+              category: args["category"],
+              vehicle: args["vehicle"] != null ? args["vehicle"]!: null,
+              );
         },
       ),
       GoRoute(
