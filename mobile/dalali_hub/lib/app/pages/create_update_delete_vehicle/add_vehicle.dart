@@ -164,6 +164,8 @@ class _CreateVehicleState extends State<CreateVehicle> {
       engineSizeController.text = widget.vehicle!.engineSize.toString();
       oldSelectedImages = widget.vehicle!.photos;
       conditionController.text = widget.vehicle!.condition ?? "";
+      transmissionTypeController.text = widget.vehicle!.transmissionType ?? "";
+      mileageController.text = widget.vehicle!.mileage.toString();
     }
   }
 
@@ -816,6 +818,7 @@ class _CreateVehicleState extends State<CreateVehicle> {
                           context.read<UpdateVehicleBloc>().add(
                                 UpdateVehicleEvent.updateVehicle(
                                   vehicle: Vehicle(
+                                      id: widget.vehicle!.id,
                                       numberOfViews:
                                           widget.vehicle!.numberOfViews,
                                       make: makeController.text,

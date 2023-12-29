@@ -273,7 +273,15 @@ export class VehicleController {
   updateVehicle = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       const vehicleId = req.params.id;
-      const vehicleDto = new VehicleDTO(req.body);
+      console.log(req.body);
+      console.log(typeof req.body);
+
+      let tempVehicle = req.body;
+
+      console.log(tempVehicle);
+      tempVehicle.owner = req.userId;
+
+      const vehicleDto = new VehicleDTO(tempVehicle);
       const ValidationError = await validate(vehicleDto);
       if (ValidationError.length > 0) {
         console.log("validation error", ValidationError.length);
@@ -382,6 +390,7 @@ export class VehicleController {
       if (!vehicle) {
         throw new BadRequestError("Vehicle not found");
       }
+      
       const photo = await this._photoRepository.GetById(Object(photoId));
       if (!photo) {
         throw new BadRequestError("Photo not found");
@@ -397,7 +406,12 @@ export class VehicleController {
       console.log(vehicle.photos);
       await this.vehicleRepository.Update(Object(vehicleId), vehicle);
       await this._photoRepository.Delete(Object(photoId));
-      res.status(StatusCodes.OK).json(new JSendResponse().success({}));
+      const deletedPhoto = new PhotoResponseDTO(
+        photo.publicId,
+        photo.secureUrl,
+        photo._id
+      );
+      res.status(StatusCodes.OK).json(new JSendResponse().success(deletedPhoto));
     }
   );
 
@@ -408,6 +422,7 @@ export class VehicleController {
       if (!vehicle) {
         throw new BadRequestError("Vehicle not found");
       }
+      const photoResponseDTOs: PhotoResponseDTO[] = [];
       if (req.files) {
         const vehicleImages = req.files as Express.Multer.File[];
         const uploadedImages = vehicleImages.map(async (image, _) => {
@@ -421,12 +436,15 @@ export class VehicleController {
             const photo = new Photo(image);
             await this._photoRepository.Create(photo).then((_) => {
               vehicle.photos.push(photo.id);
+              photoResponseDTOs.push(
+                new PhotoResponseDTO(photo.publicId, photo.secureUrl, photo._id)
+              );
             });
           });
         }
       }
       await this.vehicleRepository.Update(Object(vehicleId), vehicle);
-      res.status(StatusCodes.OK).json(new JSendResponse().success({}));
+      res.status(StatusCodes.OK).json(new JSendResponse().success(photoResponseDTOs));
     }
   );
 

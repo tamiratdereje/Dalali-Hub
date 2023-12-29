@@ -5,6 +5,7 @@ import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/realstate.dart';
 import 'package:dalali_hub/domain/entity/realstate_response.dart';
 import 'package:dalali_hub/domain/entity/user_response.dart';
+import 'package:dalali_hub/domain/entity/vehicle_response.dart';
 
 class Feed {
   final String id;
@@ -77,26 +78,45 @@ class Feed {
 
   RealstateResponse toRealstate() {
     return RealstateResponse(
-      id: id,
-      title: title ?? "",
-      category: category ?? "",
-      photos: photos,
-      price: price ?? 0.0,
-      sizeWidth: sizeWidth ?? 0.0,
-      sizeHeight: sizeHeight ?? 0.0,
-      sizeUnit: sizeUnit ?? "",
-      otherFeatures: otherFeatures ?? [],
-      description: description ?? "",
-      isApproved: isApproved ?? false,
-      location: location,
-      numberOfViews: numberOfViews,
-      rooms: rooms,
-      beds: beds,
-      baths: baths,
-      kitchens: kitchens,
-      seats: seats,
-      owner: owner
-      
-    );
+        id: id,
+        title: title ?? "",
+        category: category ?? "",
+        photos: photos,
+        price: price ?? 0.0,
+        sizeWidth: sizeWidth ?? 0.0,
+        sizeHeight: sizeHeight ?? 0.0,
+        sizeUnit: sizeUnit ?? "",
+        otherFeatures: otherFeatures ?? [],
+        description: description ?? "",
+        isApproved: isApproved ?? false,
+        location: location,
+        numberOfViews: numberOfViews,
+        rooms: rooms,
+        beds: beds,
+        baths: baths,
+        kitchens: kitchens,
+        seats: seats,
+        owner: owner);
   }
+
+  VehicleResponse toVehicleResponse() => VehicleResponse(
+      id: id,
+      make: make ?? "",
+      model: model ?? "",
+      year: year ?? 0,
+      color: color ?? "",
+      vin: vin ?? "",
+      fuelType: fuelType ?? "",
+      engineSize: engineSize ?? 0,
+      transmissionType: transmissionType ?? "",
+      mileage: mileage ?? 2,
+      price: price ?? 0,
+      location: location,
+      condition: condition ?? "",
+      photos: photos,
+      category: category ?? "",
+      owner: owner,
+      isApproved: isApproved!,
+      numberOfViews: numberOfViews,
+      isFavorite: isFavorite);
 }

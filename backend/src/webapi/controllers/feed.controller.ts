@@ -386,9 +386,196 @@ export class FeedController {
           });
         }
         res
-        .status(StatusCodes.OK)
-        .json(new JSendResponse().success(vehicleDto));
+          .status(StatusCodes.OK)
+          .json(new JSendResponse().success(vehicleDto));
       }
+    }
+  );
+
+  getAllMyListing = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const realstates = await this.realstateRepository.GetByFilter(
+        JSON.parse(req.queryString),
+        req.populate
+      );
+
+      const vehicles = await this.vehicleRepository.GetByFilter(
+        JSON.parse(req.queryString),
+        req.populate
+      );
+
+      const feeds: FeedResponseDTO[] = [];
+
+      for (let curRealstate of realstates) {
+        const realstateImageDto: PhotoResponseDTO[] = [];
+        const owner = await this._userRepository.GetById(curRealstate.owner);
+
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository
+            .GetById(ownerPhoto)
+            .then((returnPhoto) => {
+              ownerPhotos.push(
+                new PhotoResponseDTO(
+                  returnPhoto.publicId,
+                  returnPhoto.secureUrl,
+                  returnPhoto._id
+                )
+              );
+            });
+        }
+
+        const favorite = await this._favoriteRepository.GetMyFavorite(
+          Object(req.userId),
+          Object(curRealstate._id)
+        );
+        const realstateFeed = new FeedResponseDTO(
+          curRealstate._id,
+          curRealstate.title,
+          curRealstate.category,
+          curRealstate.seats,
+          curRealstate.sizeWidth,
+          curRealstate.sizeHeight,
+          curRealstate.sizeUnit,
+          new LocationResponseDTO(
+            curRealstate.location.region,
+            curRealstate.location.district,
+            curRealstate.location.ward
+          ),
+          realstateImageDto,
+          curRealstate.otherFeatures,
+          curRealstate.description,
+          curRealstate.isApproved,
+          curRealstate.rooms,
+          curRealstate.beds,
+          curRealstate.baths,
+          curRealstate.kitchens,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          curRealstate.price,
+          null,
+          user,
+          curRealstate.numberOfViews,
+          favorite ? true : false
+        );
+
+        for (let curPhoto of curRealstate.photos) {
+          await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
+            realstateImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
+        feeds.push(realstateFeed);
+      }
+
+      for (let curVehicle of vehicles) {
+        const vehicleImageDto: PhotoResponseDTO[] = [];
+        console.log(curVehicle);
+        const owner = await this._userRepository.GetById(curVehicle.owner);
+        const ownerPhotos: PhotoResponseDTO[] = [];
+        const user = new UserResponseDTO(
+          owner._id,
+          owner.firstName,
+          owner.middleName,
+          owner.sirName,
+          owner.email,
+          owner.phoneNumber,
+          owner.gender,
+          owner.region,
+          ownerPhotos
+        );
+        for (let ownerPhoto of owner.photos) {
+          await this._photoRepository
+            .GetById(ownerPhoto)
+            .then((returnPhoto) => {
+              ownerPhotos.push(
+                new PhotoResponseDTO(
+                  returnPhoto.publicId,
+                  returnPhoto.secureUrl,
+                  returnPhoto._id
+                )
+              );
+            });
+        }
+        const favorite = await this._favoriteRepository.GetMyFavorite(
+          Object(req.userId),
+          Object(curVehicle._id)
+        );
+
+        const vehicleFeed = new FeedResponseDTO(
+          curVehicle._id,
+          null,
+          curVehicle.category,
+          null,
+          null,
+          null,
+          null,
+          new LocationResponseDTO(
+            curVehicle.location.region,
+            curVehicle.location.district,
+            curVehicle.location.ward
+          ),
+          vehicleImageDto,
+          null,
+          null,
+          curVehicle.isApproved,
+          null,
+          null,
+          null,
+          null,
+          curVehicle.make,
+          curVehicle.model,
+          curVehicle.year,
+          curVehicle.color,
+          curVehicle.vin,
+          curVehicle.fuelType,
+          curVehicle.engineSize,
+          curVehicle.transmissionType,
+          curVehicle.mileage,
+          curVehicle.price,
+          curVehicle.condition,
+          user,
+          curVehicle.numberOfViews,
+          favorite ? true : false
+        );
+        for (let curPhoto of curVehicle.photos) {
+          await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
+            vehicleImageDto.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
+        feeds.push(vehicleFeed);
+      }
+
+      res.status(StatusCodes.OK).json(new JSendResponse().success(feeds));
     }
   );
 }

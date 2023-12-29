@@ -120,7 +120,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                 } else {
                   debugPrint("popup again for vehicle  $value");
                   context.push(AppRoutes.addVehicle, extra: {
-                    "vehicle": propertyDetailData,
+                    "vehicle": propertyDetailData.toVehicleResponse(),
                     "category": propertyDetailData.category,
                     "action": "Update",
                     "serviceName": "Update ${propertyDetailData.category}"
@@ -322,6 +322,54 @@ class _PropertyDetailState extends State<PropertyDetail> {
                             ),
                           ],
                         ),
+                      if (value.feed.category == "Vehicle")
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${value.feed.make} ",
+                              style: inputFieldLabelStyle,
+                            ),
+                            SizedBox(
+                              width: 2.7.w,
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                if (!isFavorite) {
+                                  setState(() {
+                                    isFavorite = true;
+                                  });
+                                  showSuccessSnackBar(
+                                      "Property successfully added to favorite.",
+                                      context);
+
+                                  context.read<AddToMyFavoriteBloc>().add(
+                                        AddToMyFavoriteEvent.addToMyFavorite(
+                                            value.feed.id),
+                                      );
+                                } else {
+                                  setState(() {
+                                    isFavorite = false;
+                                  });
+                                  showSuccessSnackBar(
+                                      "Property successfully removed from favorite.",
+                                      context);
+
+                                  context.read<RemoveFromMyFavoriteBloc>().add(
+                                        RemoveFromMyFavoriteEvent
+                                            .removeFromMyFavorite(
+                                                value.feed.id),
+                                      );
+                                }
+                              },
+                              icon: Icon(
+                                  isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: AppColors.nauticalCreatures),
+                            ),
+                          ],
+                        ),
                       BlocConsumer<AddToMyFavoriteBloc, AddToMyFavoriteState>(
                         listener: (context, state) async {
                           state.maybeMap(
@@ -373,41 +421,6 @@ class _PropertyDetailState extends State<PropertyDetail> {
                           return Container();
                         }),
                       ),
-                      if (value.feed.category == "Vehicle")
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${value.feed.make} ",
-                              style: inputFieldLabelStyle,
-                            ),
-                            SizedBox(
-                              width: 2.7.w,
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                // TODO: Add to favorite list
-                                if (!isFavorite) {
-                                  context.read<AddToMyFavoriteBloc>().add(
-                                        AddToMyFavoriteEvent.addToMyFavorite(
-                                            value.feed.id),
-                                      );
-                                } else {
-                                  context.read<RemoveFromMyFavoriteBloc>().add(
-                                        RemoveFromMyFavoriteEvent
-                                            .removeFromMyFavorite(
-                                                value.feed.id),
-                                      );
-                                }
-                              },
-                              icon: Icon(
-                                  isFavorite
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: AppColors.nauticalCreatures),
-                            )
-                          ],
-                        ),
                       SizedBox(
                         height: 3.7.h,
                       ),
