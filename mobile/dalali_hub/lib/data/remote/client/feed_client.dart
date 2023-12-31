@@ -1,5 +1,4 @@
-
-
+import 'package:dalali_hub/data/remote/model/broker_stat_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/feed_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
 import 'package:dio/dio.dart';
@@ -18,4 +17,6 @@ abstract class FeedClient {
   Future<HttpResponse<JSendResponse<FeedResponseDto>>> getProperty(
       @Path('id') String id);
 
+  @GET('feed/stat')
+  Future<HttpResponse<JSendResponse<BrokerStatResponseDto>>> getMyStat();
 }

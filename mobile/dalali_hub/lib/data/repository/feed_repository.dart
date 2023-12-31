@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:dalali_hub/data/remote/client/feed_client.dart';
+import 'package:dalali_hub/data/remote/model/broker_stat_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/feed_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/jsend_response.dart';
+import 'package:dalali_hub/domain/entity/broker_stats.dart';
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/domain/repository/feed_repository.dart';
 import 'package:dalali_hub/util/resource.dart';
@@ -35,6 +37,17 @@ class FeedRepository implements IFeedRepository {
     if (response is Success) {
       debugPrint(response.data!.price.toString());
       return Success(response.data!.toFeed());
+    } else {
+      return Error(response.error!);
+    }
+  }
+
+  @override
+  Future<Resource<BrokerStat>> getMyStat() async {
+    var response =
+        await handleApiCall<BrokerStatResponseDto>(_feedClient.getMyStat());
+    if (response is Success) {
+      return Success(response.data!.toBrokerStat());
     } else {
       return Error(response.error!);
     }

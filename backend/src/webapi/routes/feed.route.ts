@@ -3,12 +3,14 @@ import { Photo } from "@entities/PhotoEntity";
 import { RealState } from "@entities/RealStateEntity";
 import { User } from "@entities/UserEntity";
 import { Vehicle } from "@entities/VehicleEntity";
+import { View } from "@entities/ViewEntity";
 import { FavoriteRepository } from "@repositories/FavoriteRepository";
 
 import { PhotoRepository } from "@repositories/PhotoRepository";
 import { RealStateRepository } from "@repositories/RealStateRepository";
 import { UserRepository } from "@repositories/UserRepository";
 import { VehicleRepository } from "@repositories/VehicleRepository";
+import { ViewRepository } from "@repositories/ViewRepository";
 import { Router } from "express";
 import { FeedController } from "webapi/controllers/feed.controller";
 import { protectRoute } from "webapi/middlewares/auth.handler.middleware";
@@ -18,6 +20,7 @@ const realstateRepository = new RealStateRepository(RealState);
 const vehicleRepository = new VehicleRepository(Vehicle);
 const userRepository = new UserRepository(User);
 const favoriteRepository = new FavoriteRepository(Favorite);
+const viewRepository = new ViewRepository(View);
 
 const feedRoute = Router();
 const feedController = new FeedController(
@@ -25,7 +28,8 @@ const feedController = new FeedController(
   vehicleRepository,
   photoRepository,
   userRepository,
-  favoriteRepository
+  favoriteRepository,
+  viewRepository
 );
 
 feedRoute.get("/", protectRoute, feedController.getAllFeeds);

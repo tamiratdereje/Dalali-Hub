@@ -1,5 +1,3 @@
-import 'package:dalali_hub/constants/string_constants.dart';
-import 'package:dalali_hub/data/local/pref/pref.dart';
 import 'package:dalali_hub/domain/config/network_config.dart';
 import 'package:injectable/injectable.dart';
 

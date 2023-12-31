@@ -1,7 +1,10 @@
 import { FeedResponseDTO } from "@dtos/FeedResponseDTO";
 import { LocationResponseDTO } from "@dtos/LocationResponseDTO";
+import { ViewDTO } from "@dtos/ViewDTO";
 import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
 import { UserResponseDTO } from "@dtos/userResponseDTO";
+import { RealState } from "@entities/RealStateEntity";
+import { View } from "@entities/ViewEntity";
 import { JSendResponse } from "@error-custom/JsendResponse";
 import { IFavoriteRepository } from "@interfaces/repositories/IFavoriteRepository";
 
@@ -9,9 +12,11 @@ import { IPhotoRepository } from "@interfaces/repositories/IPhotoRepository";
 import { IRealStateRepository } from "@interfaces/repositories/IRealStateRepository";
 import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
+import { IViewRepository } from "@interfaces/repositories/IViewRepository";
 import { UserRepository } from "@repositories/UserRepository";
 import { id } from "date-fns/locale";
 import { NextFunction, Request, Response } from "express";
+import e = require("express");
 import { StatusCodes } from "http-status-codes";
 import { asyncHandler } from "webapi/middlewares/async.handler.middleware";
 
@@ -21,7 +26,8 @@ export class FeedController {
     private vehicleRepository: IVehicleRepository,
     private _photoRepository: IPhotoRepository,
     private _userRepository: IUserRepository,
-    private _favoriteRepository: IFavoriteRepository
+    private _favoriteRepository: IFavoriteRepository,
+    private _viewRepository: IViewRepository
   ) {}
   getAllFeeds = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -211,12 +217,27 @@ export class FeedController {
       console.log(req.userId);
       console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
       const propertyId = req.params.id;
+      const view = await this._viewRepository.GetMyView(
+        Object(req.userId),
+        Object(propertyId)
+      );
+      const viewDto = new ViewDTO({ property: propertyId, user: req.userId });
+
+      if (!view) {
+        const viewEntity = new View(viewDto);
+        await this._viewRepository.Create(viewEntity);
+      }
+
       const feed: FeedResponseDTO = null;
       const realstate = await this.realstateRepository.GetById(
         Object(propertyId)
       );
 
       if (realstate) {
+        if (!view) {
+          realstate.numberOfViews = Number(realstate.numberOfViews) + 1;
+          await this.realstateRepository.Update(realstate._id, realstate);
+        }
         const realstateImageDto: PhotoResponseDTO[] = [];
         const owner = await this._userRepository.GetById(realstate.owner);
 
@@ -305,6 +326,10 @@ export class FeedController {
         const vehicle = await this.vehicleRepository.GetById(
           Object(propertyId)
         );
+        if (!view) {
+          vehicle.numberOfViews = Number(vehicle.numberOfViews) + 1;
+          await this.vehicleRepository.Update(vehicle._id, vehicle);
+        }
         const vehicleImageDto: PhotoResponseDTO[] = [];
         console.log(vehicle);
         const owner = await this._userRepository.GetById(vehicle.owner);
@@ -391,16 +416,87 @@ export class FeedController {
       }
     }
   );
+  updateNumberOfViews = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const propertyId = req.params.id;
+      const view = await this._viewRepository.GetMyView(
+        Object(req.userId),
+        Object(propertyId)
+      );
+      const viewDto = new ViewDTO({ property: propertyId, user: req.userId });
+
+      if (!view) {
+        const viewEntity = new View(viewDto);
+        await this._viewRepository.Create(viewEntity);
+        const realstate = await this.realstateRepository.GetById(
+          Object(propertyId)
+        );
+        if (realstate) {
+          realstate.numberOfViews = Number(realstate.numberOfViews) + 1;
+          await this.realstateRepository.Update(realstate._id, realstate);
+        } else {
+          const vehicle = await this.vehicleRepository.GetById(
+            Object(propertyId)
+          );
+          vehicle.numberOfViews = Number(vehicle.numberOfViews) + 1;
+          await this.vehicleRepository.Update(vehicle._id, vehicle);
+        }
+      }
+    }
+  );
+
+  getMyStatistics = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      let totalNumOfView: number = 0;
+      let totalListing: number = 0;
+      let numberOfSuccedListing: number = 0;
+      let numberOfFavorite: number = 0;
+
+      const userId = req.userId;
+      const realstates = await this.realstateRepository.GetByFilter(
+        { owner: userId },
+        req.populate
+      );
+      const vehicles = await this.vehicleRepository.GetByFilter(
+        { owner: userId },
+        req.populate
+      );
+      realstates.map((e) => {
+        totalNumOfView += e.numberOfViews.valueOf();
+      });
+      vehicles.map((e) => {
+        totalNumOfView += e.numberOfViews.valueOf();
+      });
+      totalListing = realstates.length + vehicles.length;
+      numberOfSuccedListing =
+        realstates.filter((e) => e.isApproved).length +
+        vehicles.filter((e) => e.isApproved).length;
+      const myFavorites = await this._favoriteRepository.GetMyFavorites(
+        Object(req.userId)
+      );
+      numberOfFavorite = myFavorites.length;
+
+      res.status(StatusCodes.OK).json(
+        new JSendResponse().success({
+          totalNumOfView,
+          totalListing,
+          numberOfSuccedListing,
+          numberOfFavorite,
+        })
+      );
+    }
+  );
 
   getAllMyListing = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      const userId = req.userId;
       const realstates = await this.realstateRepository.GetByFilter(
-        JSON.parse(req.queryString),
+        { owner: userId },
         req.populate
       );
 
       const vehicles = await this.vehicleRepository.GetByFilter(
-        JSON.parse(req.queryString),
+        { owner: userId },
         req.populate
       );
 
