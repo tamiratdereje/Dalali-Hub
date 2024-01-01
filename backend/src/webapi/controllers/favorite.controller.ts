@@ -359,9 +359,9 @@ export class FavoriteController {
           favoriteResponse.push(curFeed);
         }
 
-        if (!realState && !vehicle) {
-          throw new BadRequestError("Property not found");
-        }
+        // if (!realState && !vehicle) {
+        //   throw new BadRequestError("Property not found");
+        // }
       }
 
       res

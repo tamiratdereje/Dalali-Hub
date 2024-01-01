@@ -1,6 +1,6 @@
 import { Favorite } from "@entities/FavoriteEntity";
 import { Photo } from "@entities/PhotoEntity";
-import { RealState } from "@entities/RealStateEntity";
+import { RealState, RealStateEntity } from "@entities/RealStateEntity";
 import { User } from "@entities/UserEntity";
 import { Vehicle } from "@entities/VehicleEntity";
 import { View } from "@entities/ViewEntity";
@@ -13,6 +13,7 @@ import { VehicleRepository } from "@repositories/VehicleRepository";
 import { ViewRepository } from "@repositories/ViewRepository";
 import { Router } from "express";
 import { FeedController } from "webapi/controllers/feed.controller";
+import { advancedResults } from "webapi/middlewares/aggregate.filter.middleware";
 import { protectRoute } from "webapi/middlewares/auth.handler.middleware";
 
 const photoRepository = new PhotoRepository(Photo);
@@ -32,7 +33,14 @@ const feedController = new FeedController(
   viewRepository
 );
 
-feedRoute.get("/", protectRoute, feedController.getAllFeeds);
+feedRoute.get(
+  "/",
+  protectRoute,
+  advancedResults<RealStateEntity>(RealState, "photos"),
+  feedController.getAllFeeds
+);
+feedRoute.get("/stat", protectRoute, feedController.getMyStatistics);
+feedRoute.get("/mine", protectRoute, advancedResults<RealStateEntity>(RealState, "photos"), feedController.getAllMyListing);
 feedRoute.get("/:id", protectRoute, feedController.getProperty);
 
 export { feedRoute };

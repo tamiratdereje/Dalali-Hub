@@ -52,4 +52,19 @@ class FeedRepository implements IFeedRepository {
       return Error(response.error!);
     }
   }
+
+  @override
+  Future<Resource<List<Feed>>> getMyListing(bool? isApproved) async {
+    Map<String, dynamic> filterParameter = {};
+    if (isApproved != null) {
+      filterParameter["isApproved"] = isApproved;
+    }
+    var response = await handleApiCall<List<FeedResponseDto>>(
+        _feedClient.getMyListing(filterParameter));
+    if (response is Success) {
+      return Success(response.data!.map((e) => e.toFeed()).toList());
+    } else {
+      return Error(response.error!);
+    }
+  }
 }

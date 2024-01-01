@@ -19,4 +19,8 @@ abstract class FeedClient {
 
   @GET('feed/stat')
   Future<HttpResponse<JSendResponse<BrokerStatResponseDto>>> getMyStat();
+
+  @GET('feed/mine')
+  Future<HttpResponse<JSendResponse<List<FeedResponseDto>>>> getMyListing(
+      @Query("filterParameter") Map<String, dynamic> filterParameter);
 }

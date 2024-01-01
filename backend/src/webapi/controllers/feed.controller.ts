@@ -224,9 +224,12 @@ export class FeedController {
       const viewDto = new ViewDTO({ property: propertyId, user: req.userId });
 
       if (!view) {
+        console.log("whahahahahahahha");
         const viewEntity = new View(viewDto);
         await this._viewRepository.Create(viewEntity);
       }
+      console.log("whahahahahahahha");
+      console.log(view);
 
       const feed: FeedResponseDTO = null;
       const realstate = await this.realstateRepository.GetById(
@@ -236,6 +239,7 @@ export class FeedController {
       if (realstate) {
         if (!view) {
           realstate.numberOfViews = Number(realstate.numberOfViews) + 1;
+          console.log(realstate.numberOfViews, "realstate numberOfViews");
           await this.realstateRepository.Update(realstate._id, realstate);
         }
         const realstateImageDto: PhotoResponseDTO[] = [];
@@ -319,6 +323,8 @@ export class FeedController {
             );
           });
         }
+
+        console.log(realstateDto);
         res
           .status(StatusCodes.OK)
           .json(new JSendResponse().success(realstateDto));
@@ -447,12 +453,14 @@ export class FeedController {
 
   getMyStatistics = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log("dfrdfedfe gegfe");
       let totalNumOfView: number = 0;
       let totalListing: number = 0;
       let numberOfSuccedListing: number = 0;
       let numberOfFavorite: number = 0;
 
       const userId = req.userId;
+      console.log(userId);
       const realstates = await this.realstateRepository.GetByFilter(
         { owner: userId },
         req.populate
@@ -461,6 +469,8 @@ export class FeedController {
         { owner: userId },
         req.populate
       );
+
+      console.log(realstates, vehicles);
       realstates.map((e) => {
         totalNumOfView += e.numberOfViews.valueOf();
       });
@@ -469,12 +479,13 @@ export class FeedController {
       });
       totalListing = realstates.length + vehicles.length;
       numberOfSuccedListing =
-        realstates.filter((e) => e.isApproved).length +
-        vehicles.filter((e) => e.isApproved).length;
+        realstates.filter((e) => e.isApproved == true).length +
+        vehicles.filter((e) => e.isApproved  == true).length;
       const myFavorites = await this._favoriteRepository.GetMyFavorites(
         Object(req.userId)
       );
       numberOfFavorite = myFavorites.length;
+      console.log(totalNumOfView, totalListing, numberOfSuccedListing, numberOfFavorite)
 
       res.status(StatusCodes.OK).json(
         new JSendResponse().success({
@@ -491,12 +502,13 @@ export class FeedController {
     async (req: Request, res: Response, next: NextFunction) => {
       const userId = req.userId;
       const realstates = await this.realstateRepository.GetByFilter(
-        { owner: userId },
+        { ...JSON.parse(req.queryString), owner: userId },
         req.populate
       );
+      console.log( { ...JSON.parse(req.queryString), owner: userId },)
 
       const vehicles = await this.vehicleRepository.GetByFilter(
-        { owner: userId },
+        { ...JSON.parse(req.queryString), owner: userId },
         req.populate
       );
 

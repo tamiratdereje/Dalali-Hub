@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
+import 'package:dalali_hub/app/pages/broker_property_listing/broker_property_listing.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
+import 'package:dalali_hub/app/pages/favorite/favorite_screen.dart';
 import 'package:dalali_hub/app/pages/profile/profile.dart';
 import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
@@ -87,11 +89,11 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return CreateRealstatePage(
-              serviceName: args["serviceName"],
-              action: args["action"],
-              category: args["category"],
-              realstate: args["realstate"] != null ? args["realstate"]!: null,
-              );
+            serviceName: args["serviceName"],
+            action: args["action"],
+            category: args["category"],
+            realstate: args["realstate"] != null ? args["realstate"]! : null,
+          );
         },
       ),
       GoRoute(
@@ -99,11 +101,11 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           Map<String, dynamic> args = state.extra as Map<String, dynamic>;
           return CreateVehiclePage(
-              serviceName: args["serviceName"],
-              action: args["action"],
-              category: args["category"],
-              vehicle: args["vehicle"] != null ? args["vehicle"]!: null,
-              );
+            serviceName: args["serviceName"],
+            action: args["action"],
+            category: args["category"],
+            vehicle: args["vehicle"] != null ? args["vehicle"]! : null,
+          );
         },
       ),
       GoRoute(
@@ -129,6 +131,23 @@ class AppRouter {
         path: AppRoutes.loginOptions,
         builder: (BuildContext context, GoRouterState state) {
           return const LogInWithGoogleOrAppleId();
+        },
+      ),
+      GoRoute(
+        name: 'propertyListing',
+        path: AppRoutes.propertyListing,
+        builder: (BuildContext context, GoRouterState state) {
+          Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return BrokerPropertyListingPage(
+            serviceName: args["serviceName"],
+          );
+        },
+      ),
+      GoRoute(
+        name: 'favorites',
+        path: AppRoutes.favorites,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Favorite();
         },
       ),
     ],

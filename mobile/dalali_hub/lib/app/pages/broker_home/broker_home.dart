@@ -1,19 +1,36 @@
 import 'package:dalali_hub/app/navigation/routes.dart';
+import 'package:dalali_hub/app/pages/broker_home/bloc/get_my_stat/get_my_stat_bloc.dart';
 import 'package:dalali_hub/app/pages/broker_home/widgets/broker_service_container.dart';
 import 'package:dalali_hub/app/pages/broker_home/widgets/broker_statics.dart';
 import 'package:dalali_hub/app/pages/customer_home/widgets/customer_appbar.dart';
+import 'package:dalali_hub/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class BrokerHomePage extends StatefulWidget {
+class BrokerHomePage extends StatelessWidget {
   const BrokerHomePage({super.key});
 
   @override
-  State<BrokerHomePage> createState() => _BrokerHomePageState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider(
+        create: (context) =>
+            getIt.get<GetMyStatBloc>()..add(const GetMyStatEvent.getMyStat()),
+      ),
+    ], child: const BrokerHome());
+  }
 }
 
-class _BrokerHomePageState extends State<BrokerHomePage> {
+class BrokerHome extends StatefulWidget {
+  const BrokerHome({super.key});
+
+  @override
+  State<BrokerHome> createState() => _BrokerHomeState();
+}
+
+class _BrokerHomeState extends State<BrokerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,41 +139,84 @@ class _BrokerHomePageState extends State<BrokerHomePage> {
               SizedBox(
                 height: 3.9.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  BrokerStatics(
-                    amount: "17",
-                    activity: "Total listings",
-                  ),
-                  SizedBox(
-                    width: 13.3.w,
-                  ),
-                  BrokerStatics(
-                    amount: "82",
-                    activity: "Total views of current listing",
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 1.8.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  BrokerStatics(
-                    amount: "146",
-                    activity: "All time listings",
-                  ),
-                  SizedBox(
-                    width: 13.3.w,
-                  ),
-                  BrokerStatics(
-                    amount: "670",
-                    activity: "All time views",
-                  )
-                ],
-              )
+              BlocConsumer<GetMyStatBloc, GetMyStatState>(
+                  builder: (context, state) {
+                    return state.maybeMap(
+                      orElse: () => Container(),
+                      initial: (value) => Container(),
+                      loading: (value) {
+                        return const CircularProgressIndicator();
+                      },
+                      success: (value) {
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                BrokerStatics(
+                                  amount:
+                                      value.brokerStat.totalListing.toString(),
+                                  activity: "Total listings",
+                                  onTap: () {
+                                    context.push(AppRoutes.propertyListing,
+                                        extra: {
+                                          "serviceName": "Total listings"
+                                        });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 13.3.w,
+                                ),
+                                BrokerStatics(
+                                  amount: value.brokerStat.totalNumOfView
+                                      .toString(),
+                                  activity: "Total Number of views.",
+                                  onTap: () {},
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 1.8.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                BrokerStatics(
+                                  amount: value.brokerStat.numberOfFavorite
+                                      .toString(),
+                                  activity: "Number of favorite listings",
+                                  onTap: () {
+                                    context.push(AppRoutes.favorites);
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 13.3.w,
+                                ),
+                                BrokerStatics(
+                                  amount: value.brokerStat.numberOfSuccedListing
+                                      .toString(),
+                                  activity: "Number of successful listings",
+                                  onTap: () {
+                                    context.push(
+                                      AppRoutes.propertyListing,
+                                      extra: {
+                                        "serviceName":
+                                            "Number of successful listings"
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            )
+                          ],
+                        );
+                      },
+                      error: (value) {
+                        return const Text("Error while loading the stat");
+                      },
+                    );
+                  },
+                  listener: (context, state) {}),
             ],
           ),
         ),

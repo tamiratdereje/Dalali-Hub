@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_my_stat_bloc.dart';
+part of 'my_listing_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,58 +15,64 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$GetMyStatEvent {
+mixin _$MyListingEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getMyStat,
+    required TResult Function(bool? isApproved) myListing,
+    required TResult Function(String propertyId) updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getMyStat,
+    TResult? Function(bool? isApproved)? myListing,
+    TResult? Function(String propertyId)? updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getMyStat,
+    TResult Function(bool? isApproved)? myListing,
+    TResult Function(String propertyId)? updateFavorite,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetMyStat value) getMyStat,
+    required TResult Function(_MyListing value) myListing,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetMyStat value)? getMyStat,
+    TResult? Function(_MyListing value)? myListing,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetMyStat value)? getMyStat,
+    TResult Function(_MyListing value)? myListing,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GetMyStatEventCopyWith<$Res> {
-  factory $GetMyStatEventCopyWith(
-          GetMyStatEvent value, $Res Function(GetMyStatEvent) then) =
-      _$GetMyStatEventCopyWithImpl<$Res, GetMyStatEvent>;
+abstract class $MyListingEventCopyWith<$Res> {
+  factory $MyListingEventCopyWith(
+          MyListingEvent value, $Res Function(MyListingEvent) then) =
+      _$MyListingEventCopyWithImpl<$Res, MyListingEvent>;
 }
 
 /// @nodoc
-class _$GetMyStatEventCopyWithImpl<$Res, $Val extends GetMyStatEvent>
-    implements $GetMyStatEventCopyWith<$Res> {
-  _$GetMyStatEventCopyWithImpl(this._value, this._then);
+class _$MyListingEventCopyWithImpl<$Res, $Val extends MyListingEvent>
+    implements $MyListingEventCopyWith<$Res> {
+  _$MyListingEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +89,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$GetMyStatEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$MyListingEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +103,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'GetMyStatEvent.started()';
+    return 'MyListingEvent.started()';
   }
 
   @override
@@ -113,7 +119,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getMyStat,
+    required TResult Function(bool? isApproved) myListing,
+    required TResult Function(String propertyId) updateFavorite,
   }) {
     return started();
   }
@@ -122,7 +129,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getMyStat,
+    TResult? Function(bool? isApproved)? myListing,
+    TResult? Function(String propertyId)? updateFavorite,
   }) {
     return started?.call();
   }
@@ -131,7 +139,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getMyStat,
+    TResult Function(bool? isApproved)? myListing,
+    TResult Function(String propertyId)? updateFavorite,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -144,7 +153,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetMyStat value) getMyStat,
+    required TResult Function(_MyListing value) myListing,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
   }) {
     return started(this);
   }
@@ -153,7 +163,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetMyStat value)? getMyStat,
+    TResult? Function(_MyListing value)? myListing,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
   }) {
     return started?.call(this);
   }
@@ -162,7 +173,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetMyStat value)? getMyStat,
+    TResult Function(_MyListing value)? myListing,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,72 +184,102 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements GetMyStatEvent {
+abstract class _Started implements MyListingEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$GetMyStatImplCopyWith<$Res> {
-  factory _$$GetMyStatImplCopyWith(
-          _$GetMyStatImpl value, $Res Function(_$GetMyStatImpl) then) =
-      __$$GetMyStatImplCopyWithImpl<$Res>;
+abstract class _$$MyListingImplCopyWith<$Res> {
+  factory _$$MyListingImplCopyWith(
+          _$MyListingImpl value, $Res Function(_$MyListingImpl) then) =
+      __$$MyListingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool? isApproved});
 }
 
 /// @nodoc
-class __$$GetMyStatImplCopyWithImpl<$Res>
-    extends _$GetMyStatEventCopyWithImpl<$Res, _$GetMyStatImpl>
-    implements _$$GetMyStatImplCopyWith<$Res> {
-  __$$GetMyStatImplCopyWithImpl(
-      _$GetMyStatImpl _value, $Res Function(_$GetMyStatImpl) _then)
+class __$$MyListingImplCopyWithImpl<$Res>
+    extends _$MyListingEventCopyWithImpl<$Res, _$MyListingImpl>
+    implements _$$MyListingImplCopyWith<$Res> {
+  __$$MyListingImplCopyWithImpl(
+      _$MyListingImpl _value, $Res Function(_$MyListingImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isApproved = freezed,
+  }) {
+    return _then(_$MyListingImpl(
+      freezed == isApproved
+          ? _value.isApproved
+          : isApproved // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$GetMyStatImpl implements _GetMyStat {
-  const _$GetMyStatImpl();
+class _$MyListingImpl implements _MyListing {
+  const _$MyListingImpl(this.isApproved);
+
+  @override
+  final bool? isApproved;
 
   @override
   String toString() {
-    return 'GetMyStatEvent.getMyStat()';
+    return 'MyListingEvent.myListing(isApproved: $isApproved)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetMyStatImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$MyListingImpl &&
+            (identical(other.isApproved, isApproved) ||
+                other.isApproved == isApproved));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isApproved);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MyListingImplCopyWith<_$MyListingImpl> get copyWith =>
+      __$$MyListingImplCopyWithImpl<_$MyListingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getMyStat,
+    required TResult Function(bool? isApproved) myListing,
+    required TResult Function(String propertyId) updateFavorite,
   }) {
-    return getMyStat();
+    return myListing(isApproved);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getMyStat,
+    TResult? Function(bool? isApproved)? myListing,
+    TResult? Function(String propertyId)? updateFavorite,
   }) {
-    return getMyStat?.call();
+    return myListing?.call(isApproved);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getMyStat,
+    TResult Function(bool? isApproved)? myListing,
+    TResult Function(String propertyId)? updateFavorite,
     required TResult orElse(),
   }) {
-    if (getMyStat != null) {
-      return getMyStat();
+    if (myListing != null) {
+      return myListing(isApproved);
     }
     return orElse();
   }
@@ -246,45 +288,194 @@ class _$GetMyStatImpl implements _GetMyStat {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetMyStat value) getMyStat,
+    required TResult Function(_MyListing value) myListing,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
   }) {
-    return getMyStat(this);
+    return myListing(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetMyStat value)? getMyStat,
+    TResult? Function(_MyListing value)? myListing,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
   }) {
-    return getMyStat?.call(this);
+    return myListing?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetMyStat value)? getMyStat,
+    TResult Function(_MyListing value)? myListing,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
     required TResult orElse(),
   }) {
-    if (getMyStat != null) {
-      return getMyStat(this);
+    if (myListing != null) {
+      return myListing(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetMyStat implements GetMyStatEvent {
-  const factory _GetMyStat() = _$GetMyStatImpl;
+abstract class _MyListing implements MyListingEvent {
+  const factory _MyListing(final bool? isApproved) = _$MyListingImpl;
+
+  bool? get isApproved;
+  @JsonKey(ignore: true)
+  _$$MyListingImplCopyWith<_$MyListingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$GetMyStatState {
+abstract class _$$UpdateFavoriteImplCopyWith<$Res> {
+  factory _$$UpdateFavoriteImplCopyWith(_$UpdateFavoriteImpl value,
+          $Res Function(_$UpdateFavoriteImpl) then) =
+      __$$UpdateFavoriteImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String propertyId});
+}
+
+/// @nodoc
+class __$$UpdateFavoriteImplCopyWithImpl<$Res>
+    extends _$MyListingEventCopyWithImpl<$Res, _$UpdateFavoriteImpl>
+    implements _$$UpdateFavoriteImplCopyWith<$Res> {
+  __$$UpdateFavoriteImplCopyWithImpl(
+      _$UpdateFavoriteImpl _value, $Res Function(_$UpdateFavoriteImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? propertyId = null,
+  }) {
+    return _then(_$UpdateFavoriteImpl(
+      null == propertyId
+          ? _value.propertyId
+          : propertyId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateFavoriteImpl implements _UpdateFavorite {
+  const _$UpdateFavoriteImpl(this.propertyId);
+
+  @override
+  final String propertyId;
+
+  @override
+  String toString() {
+    return 'MyListingEvent.updateFavorite(propertyId: $propertyId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateFavoriteImpl &&
+            (identical(other.propertyId, propertyId) ||
+                other.propertyId == propertyId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, propertyId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateFavoriteImplCopyWith<_$UpdateFavoriteImpl> get copyWith =>
+      __$$UpdateFavoriteImplCopyWithImpl<_$UpdateFavoriteImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(bool? isApproved) myListing,
+    required TResult Function(String propertyId) updateFavorite,
+  }) {
+    return updateFavorite(propertyId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(bool? isApproved)? myListing,
+    TResult? Function(String propertyId)? updateFavorite,
+  }) {
+    return updateFavorite?.call(propertyId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(bool? isApproved)? myListing,
+    TResult Function(String propertyId)? updateFavorite,
+    required TResult orElse(),
+  }) {
+    if (updateFavorite != null) {
+      return updateFavorite(propertyId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_MyListing value) myListing,
+    required TResult Function(_UpdateFavorite value) updateFavorite,
+  }) {
+    return updateFavorite(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_MyListing value)? myListing,
+    TResult? Function(_UpdateFavorite value)? updateFavorite,
+  }) {
+    return updateFavorite?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_MyListing value)? myListing,
+    TResult Function(_UpdateFavorite value)? updateFavorite,
+    required TResult orElse(),
+  }) {
+    if (updateFavorite != null) {
+      return updateFavorite(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateFavorite implements MyListingEvent {
+  const factory _UpdateFavorite(final String propertyId) = _$UpdateFavoriteImpl;
+
+  String get propertyId;
+  @JsonKey(ignore: true)
+  _$$UpdateFavoriteImplCopyWith<_$UpdateFavoriteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$MyListingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(BrokerStat brokerStat) success,
+    required TResult Function(List<Feed> feeds) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -292,7 +483,7 @@ mixin _$GetMyStatState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(BrokerStat brokerStat)? success,
+    TResult? Function(List<Feed> feeds)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -300,7 +491,7 @@ mixin _$GetMyStatState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(BrokerStat brokerStat)? success,
+    TResult Function(List<Feed> feeds)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -333,16 +524,16 @@ mixin _$GetMyStatState {
 }
 
 /// @nodoc
-abstract class $GetMyStatStateCopyWith<$Res> {
-  factory $GetMyStatStateCopyWith(
-          GetMyStatState value, $Res Function(GetMyStatState) then) =
-      _$GetMyStatStateCopyWithImpl<$Res, GetMyStatState>;
+abstract class $MyListingStateCopyWith<$Res> {
+  factory $MyListingStateCopyWith(
+          MyListingState value, $Res Function(MyListingState) then) =
+      _$MyListingStateCopyWithImpl<$Res, MyListingState>;
 }
 
 /// @nodoc
-class _$GetMyStatStateCopyWithImpl<$Res, $Val extends GetMyStatState>
-    implements $GetMyStatStateCopyWith<$Res> {
-  _$GetMyStatStateCopyWithImpl(this._value, this._then);
+class _$MyListingStateCopyWithImpl<$Res, $Val extends MyListingState>
+    implements $MyListingStateCopyWith<$Res> {
+  _$MyListingStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -359,7 +550,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GetMyStatStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$MyListingStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -373,7 +564,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'GetMyStatState.initial()';
+    return 'MyListingState.initial()';
   }
 
   @override
@@ -390,7 +581,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(BrokerStat brokerStat) success,
+    required TResult Function(List<Feed> feeds) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -401,7 +592,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(BrokerStat brokerStat)? success,
+    TResult? Function(List<Feed> feeds)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -412,7 +603,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(BrokerStat brokerStat)? success,
+    TResult Function(List<Feed> feeds)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -460,7 +651,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements GetMyStatState {
+abstract class _Initial implements MyListingState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -473,7 +664,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$GetMyStatStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$MyListingStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -487,7 +678,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'GetMyStatState.loading()';
+    return 'MyListingState.loading()';
   }
 
   @override
@@ -504,7 +695,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(BrokerStat brokerStat) success,
+    required TResult Function(List<Feed> feeds) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -515,7 +706,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(BrokerStat brokerStat)? success,
+    TResult? Function(List<Feed> feeds)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -526,7 +717,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(BrokerStat brokerStat)? success,
+    TResult Function(List<Feed> feeds)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -574,7 +765,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements GetMyStatState {
+abstract class _Loading implements MyListingState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -584,12 +775,12 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({BrokerStat brokerStat});
+  $Res call({List<Feed> feeds});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetMyStatStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$MyListingStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
@@ -598,13 +789,13 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? brokerStat = null,
+    Object? feeds = null,
   }) {
     return _then(_$SuccessImpl(
-      null == brokerStat
-          ? _value.brokerStat
-          : brokerStat // ignore: cast_nullable_to_non_nullable
-              as BrokerStat,
+      null == feeds
+          ? _value._feeds
+          : feeds // ignore: cast_nullable_to_non_nullable
+              as List<Feed>,
     ));
   }
 }
@@ -612,14 +803,19 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.brokerStat);
+  const _$SuccessImpl(final List<Feed> feeds) : _feeds = feeds;
 
+  final List<Feed> _feeds;
   @override
-  final BrokerStat brokerStat;
+  List<Feed> get feeds {
+    if (_feeds is EqualUnmodifiableListView) return _feeds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_feeds);
+  }
 
   @override
   String toString() {
-    return 'GetMyStatState.success(brokerStat: $brokerStat)';
+    return 'MyListingState.success(feeds: $feeds)';
   }
 
   @override
@@ -627,12 +823,12 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            (identical(other.brokerStat, brokerStat) ||
-                other.brokerStat == brokerStat));
+            const DeepCollectionEquality().equals(other._feeds, _feeds));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, brokerStat);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_feeds));
 
   @JsonKey(ignore: true)
   @override
@@ -645,10 +841,10 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(BrokerStat brokerStat) success,
+    required TResult Function(List<Feed> feeds) success,
     required TResult Function(String message) error,
   }) {
-    return success(brokerStat);
+    return success(feeds);
   }
 
   @override
@@ -656,10 +852,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(BrokerStat brokerStat)? success,
+    TResult? Function(List<Feed> feeds)? success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(brokerStat);
+    return success?.call(feeds);
   }
 
   @override
@@ -667,12 +863,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(BrokerStat brokerStat)? success,
+    TResult Function(List<Feed> feeds)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(brokerStat);
+      return success(feeds);
     }
     return orElse();
   }
@@ -715,10 +911,10 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements GetMyStatState {
-  const factory _Success(final BrokerStat brokerStat) = _$SuccessImpl;
+abstract class _Success implements MyListingState {
+  const factory _Success(final List<Feed> feeds) = _$SuccessImpl;
 
-  BrokerStat get brokerStat;
+  List<Feed> get feeds;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -735,7 +931,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$GetMyStatStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$MyListingStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -765,7 +961,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'GetMyStatState.error(message: $message)';
+    return 'MyListingState.error(message: $message)';
   }
 
   @override
@@ -790,7 +986,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(BrokerStat brokerStat) success,
+    required TResult Function(List<Feed> feeds) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -801,7 +997,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(BrokerStat brokerStat)? success,
+    TResult? Function(List<Feed> feeds)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -812,7 +1008,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(BrokerStat brokerStat)? success,
+    TResult Function(List<Feed> feeds)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -860,7 +1056,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements GetMyStatState {
+abstract class _Error implements MyListingState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;

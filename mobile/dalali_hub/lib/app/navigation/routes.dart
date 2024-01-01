@@ -25,4 +25,6 @@ class AppRoutes {
   static const String propertyFilter = '/propertyFiler';
 
   static const String profileEdit = '/profileEdit';
+  static const String propertyListing = '/propertyListing';
+  static const String favorites = "/favorites";
 }

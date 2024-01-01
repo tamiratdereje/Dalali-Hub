@@ -7,10 +7,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class BrokerStatics extends StatelessWidget {
   String amount;
   String activity;
+  Function onTap;
   BrokerStatics({
     super.key,
     required this.amount,
     required this.activity,
+    required this.onTap
   });
 
   @override
@@ -49,7 +51,9 @@ class BrokerStatics extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        onTap();
+      },
     );
   }
 }
