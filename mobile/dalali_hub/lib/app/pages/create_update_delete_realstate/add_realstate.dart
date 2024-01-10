@@ -50,6 +50,9 @@ class CreateRealstatePage extends StatelessWidget {
           BlocProvider(
             create: (context) => getIt.get<UpdateVehicleBloc>(),
           ),
+           BlocProvider(
+            create: (context) => getIt.get<UpdateRealstateBloc>(),
+          ),
         ],
         BlocProvider(
           create: (context) => getIt.get<DeleteImageBloc>(),
