@@ -17,8 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <StateProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
+      <html lang="en" className="h-full bg-white flex items-center justify-center">
+        {/*  {...inter.className} */}
+        <body className="h-3/4 w-3/4 bg-gray-600 items-center justify-center ">{children}</body>
       </html>
     </StateProvider>
   );
