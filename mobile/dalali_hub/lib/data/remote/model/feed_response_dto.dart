@@ -76,6 +76,8 @@ class FeedResponseDto {
   factory FeedResponseDto.fromJson(Map<String, dynamic> json) =>
       _$FeedResponseDtoFromJson(json);
 
+   Map<String, dynamic> toJson() => _$FeedResponseDtoToJson(this);
+
   Feed toFeed() => Feed(
         id: id,
         title: title,
