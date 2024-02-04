@@ -27,4 +27,7 @@ class AppRoutes {
   static const String profileEdit = '/profileEdit';
   static const String propertyListing = '/propertyListing';
   static const String favorites = "/favorites";
+
+  static const String contacts = "/contacts";
+  static const String chatRoom = "/chatRoom";
 }

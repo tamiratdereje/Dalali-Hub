@@ -24,6 +24,9 @@ import * as bcrypt from "bcrypt";
 import { UpdateUserDTO } from "@dtos/UpdateUserDTO";
 import { PhotoResponseDTO } from "@dtos/photoResponseDTO";
 import { UserResponseDTO } from "@dtos/userResponseDTO";
+import * as jose from "node-jose";
+import * as fs from "fs";
+import { getKeyStore } from "config/create_key_store";
 
 export class AuthController {
   constructor(
@@ -442,4 +445,11 @@ export class AuthController {
         .json(new JSendResponse().success(userDto, "User found"));
     }
   );
+
+  getJWKs = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const keyStore = await getKeyStore();
+      res.send(keyStore.toJSON());
+    });
+              
 }

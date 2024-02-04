@@ -9,6 +9,8 @@ import { feedRoute } from "webapi/routes/feed.route";
 import { vehicleRoute } from "webapi/routes/vehicle.route";
 import { realStateRoute } from "webapi/routes/realState.route";
 import { favoriteRoute } from "webapi/routes/favorite.route";
+import { create } from "domain";
+import { createKeyStore } from "./create_key_store";
 
 export class ExpressConfig {
   private app: Express;
@@ -29,13 +31,12 @@ export class ExpressConfig {
       this.app.use(bodyParser.json());
       this.app.use(bodyParser.urlencoded({ extended: false }));
       this.app.use(cors({ origin: "*" }));
-
       this.app.use("/api/v1/auth", authRoute);
       this.app.use("/api/v1/feed", feedRoute);
       this.app.use("/api/v1/vehicles", vehicleRoute);
       this.app.use("/api/v1/realstates", realStateRoute);
       this.app.use("/api/v1/favorites", favoriteRoute);
-      this.app.use("/api/v1/all", (req, res) => {
+      this.app.use("/api/v1/health", (req, res) => {
         res.send("Hello World!");
       });
 

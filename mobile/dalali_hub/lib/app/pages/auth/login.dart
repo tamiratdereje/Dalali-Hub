@@ -151,7 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: bodyTextStyle,
               ),
               GestureDetector(
-                onTap: () => context.push(AppRoutes.register),
+                onTap: () => context.push(AppRoutes.register,
+                    extra: {"isEditingProfile": false}),
                 child: Text(
                   'Click here',
                   style: linkTextStylePrimary,

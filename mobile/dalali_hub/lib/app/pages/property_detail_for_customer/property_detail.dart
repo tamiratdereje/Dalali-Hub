@@ -4,6 +4,7 @@ import 'package:dalali_hub/app/core/widgets/appbar.dart';
 import 'package:dalali_hub/app/core/widgets/snackbar.dart';
 import 'package:dalali_hub/app/core/widgets/yes_or_no_dialog.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
+import 'package:dalali_hub/app/pages/chat/bloc/get_room/get_room_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/delete_realstate/delete_realstate_bloc.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/bloc/delete_vehicle/delete_vehicle_bloc.dart';
 import 'package:dalali_hub/app/pages/favorite/bloc/add_to_my_favorite/add_to_my_favorite_bloc.dart';
@@ -47,7 +48,10 @@ class PropertyDetailPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getIt.get<DeleteVehicleBloc>(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => getIt.get<GetRoomBloc>(),
+        ),
       ],
       child: const PropertyDetail(),
     );
@@ -883,16 +887,43 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                 SizedBox(
                                   width: 1.8.w,
                                 ),
-                                Container(
-                                  width: 9.3.w,
-                                  height: 3.9.h,
-                                  decoration: const BoxDecoration(
-                                      color: AppColors.selectedContainer,
-                                      shape: BoxShape.circle),
-                                  child: const Icon(
-                                    Icons.message,
-                                    color: AppColors.nauticalCreatures,
-                                  ),
+                                BlocConsumer<GetRoomBloc, GetRoomState>(
+                                  listener: (getRoomContext, getRoomState) {
+                                    getRoomState.whenOrNull(
+                                        success: (room) {
+                                          context.push(AppRoutes.chatRoom,
+                                              extra: {"room": room});
+                                        },
+                                        error: (message) => showErrorSnackBar(
+                                              message,
+                                              context,
+                                            ));
+                                  },
+                                  builder: (getRoomContext, getRoomState) {
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          context.read<GetRoomBloc>().add(
+                                                GetRoomEvent.getRoom(
+                                                    value.feed.owner.id),
+                                              ),
+                                      child: getRoomState.maybeWhen(
+                                          loading: () =>
+                                              const CircularProgressIndicator(),
+                                          orElse: () => Container(
+                                                width: 9.3.w,
+                                                height: 3.9.h,
+                                                decoration: const BoxDecoration(
+                                                    color: AppColors
+                                                        .selectedContainer,
+                                                    shape: BoxShape.circle),
+                                                child: const Icon(
+                                                  Icons.message,
+                                                  color: AppColors
+                                                      .nauticalCreatures,
+                                                ),
+                                              )),
+                                    );
+                                  },
                                 )
                               ],
                             ),

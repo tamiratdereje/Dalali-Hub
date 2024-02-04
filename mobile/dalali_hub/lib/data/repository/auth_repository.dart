@@ -26,14 +26,17 @@ import 'package:dalali_hub/domain/repository/auth_repository.dart';
 import 'package:dalali_hub/domain/type/types.dart';
 import 'package:dalali_hub/util/app_exception.dart';
 import 'package:dalali_hub/util/resource.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:realm/realm.dart' as realm;
 
 @LazySingleton(as: IAuthRepository)
 class AuthRepository implements IAuthRepository {
   final AuthClient _authClient;
   final SharedPreference _pref;
+  final realm.App app;
 
-  AuthRepository(this._authClient, this._pref);
+  AuthRepository(this._authClient, this._pref, this.app);
 
   @override
   Future<Resource<LoginResponse>> login(Login login) async {
@@ -41,10 +44,30 @@ class AuthRepository implements IAuthRepository {
         _authClient.login(LoginDto.fromLogin(login)));
     if (response is Success) {
       var token = response.data!.token;
-      await _pref.setString(tokenKey, token);
+      try {
+        await loginToRealm(token);      
+      } on AppException catch (e) {
+        debugPrint('Error logging in to realm: $e');
+        return Error(AppException('Unable to login to server please try again'));
+      }
+      await _pref.setUserAuthDetails(response.data!);
       return Success(response.data!.toLoginResponse());
     } else {
       return Error(response.error!);
+    }
+  }
+
+  @override
+  Future<realm.User> loginToRealm(String token) async {
+    try {
+      final jwtCredentials = realm.Credentials.jwt(token);
+      final realm.User currentUser = await app.logIn(jwtCredentials);
+      debugPrint('Logged in to realm as ${currentUser.identities}');
+      app.currentUser!.refreshCustomData();
+      return currentUser;
+    } catch (e) {
+      debugPrint('Error logging in to realm: $e');
+      throw AppException(e.toString());
     }
   }
 

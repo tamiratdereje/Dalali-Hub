@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dalali_hub/data/remote/model/login_response_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,6 +9,16 @@ class SharedPreference {
   final SharedPreferences _sharedPreferences;
 
   SharedPreference(this._sharedPreferences);
+
+  LoginResponseDto getUserAuthDetails() {
+    return LoginResponseDto.fromJson(
+        json.decode(_sharedPreferences.getString('userAuthDetails')!));
+  }
+
+  Future<bool> setUserAuthDetails(LoginResponseDto userAuthDetails) {
+    return _sharedPreferences.setString(
+        'userAuthDetails', json.encode(userAuthDetails.toJson()));
+  }
 
   Future<bool> setString(String key, String value) async {
     return await _sharedPreferences.setString(key, value);

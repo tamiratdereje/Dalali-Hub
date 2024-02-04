@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dalali_hub/data/remote/client/favorite_client.dart';
 import 'package:dalali_hub/data/remote/client/feed_client.dart';
 import 'package:dalali_hub/data/remote/client/images_client.dart';
 import 'package:dalali_hub/data/remote/client/realstate_client.dart';
 import 'package:dalali_hub/data/remote/client/vehicle_client.dart';
+import 'package:dalali_hub/util/realm.config.dart';
 import 'package:dio/dio.dart' hide LogInterceptor;
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
 import 'package:dalali_hub/data/remote/client/user_client.dart';
@@ -10,12 +13,20 @@ import 'package:dalali_hub/domain/config/network_config.dart';
 import 'package:dalali_hub/util/jwt_interceptor.dart';
 import 'package:dalali_hub/util/log_interceptor.dart';
 import 'package:injectable/injectable.dart';
+import 'package:realm/realm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class AppModule {
+
+  final _appConfig = AppConfiguration("dalali-hub-pjszr", httpClient: HttpClient());
+  App get app => App(_appConfig);
+
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+
+  @preResolve
+  Future<RealmConfig> get realmConfig => RealmConfig.init(app);
 
   @singleton
   Dio dio(

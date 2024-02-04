@@ -8,6 +8,8 @@ import 'package:dalali_hub/domain/entity/user.dart';
 import 'package:dalali_hub/domain/entity/user_response.dart';
 import 'package:dalali_hub/domain/entity/verify_otp.dart';
 import 'package:dalali_hub/util/resource.dart';
+import 'package:realm/realm.dart' as realm;
+
 
 abstract class IAuthRepository {
   Future<Resource<LoginResponse>> login(Login login);
@@ -19,6 +21,7 @@ abstract class IAuthRepository {
   Future<Resource<Empty>> resetPassword(ResetPassword resetPassword);
   Future<Resource<UserResponse>> updateProfile(User user);
   Future<Resource<UserResponse>> getOtherProfile(String id);
-  Future<Resource<List<PhotoResponse>>> updateProfilePicture(List<String> photos);
-  
+  Future<Resource<List<PhotoResponse>>> updateProfilePicture(
+      List<String> photos);
+  Future<realm.User> loginToRealm(String token);
 }

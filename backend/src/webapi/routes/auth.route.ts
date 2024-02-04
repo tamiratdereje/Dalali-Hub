@@ -49,5 +49,5 @@ authRoute.get(
   protectRoute,
   authController.getOtherUserProfile
 );
-
+authRoute.get("/jwks", authController.getJWKs);
 export { authRoute };

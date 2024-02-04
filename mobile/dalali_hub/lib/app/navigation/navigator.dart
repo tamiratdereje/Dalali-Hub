@@ -3,16 +3,22 @@ import 'dart:async';
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/broker_property_listing/broker_property_listing.dart';
+import 'package:dalali_hub/app/pages/chat/message_screen.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
 import 'package:dalali_hub/app/pages/customer_home/customer_home.dart';
 import 'package:dalali_hub/app/pages/favorite/favorite_screen.dart';
+import 'package:dalali_hub/app/pages/forget_password/create_new_password.dart';
+import 'package:dalali_hub/app/pages/forget_password/forgot_password.dart';
+import 'package:dalali_hub/app/pages/forget_password/verify_otp.dart';
 import 'package:dalali_hub/app/pages/profile/profile.dart';
 import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
 import 'package:dalali_hub/app/pages/property_filter/search_result.dart';
+import 'package:dalali_hub/data/remote/model/realm/realm_models.dart';
+import 'package:dalali_hub/domain/type/types.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
@@ -20,7 +26,7 @@ import 'package:dalali_hub/app/pages/auth/login.dart';
 import 'package:dalali_hub/app/pages/auth/signup.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@singleton
 class AppRouter {
   final AuthCubit authCubit;
   AppRouter(this.authCubit);
@@ -65,6 +71,18 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) =>
             const LoginScreen(),
       ),
+      GoRoute(
+        name: 'forget_password',
+        path: AppRoutes.forgotPassword,
+        builder: (BuildContext context, GoRouterState state) =>
+            const ForgotPassword(),
+      ),
+      GoRoute(
+          name: 'create_new_password',
+          path: AppRoutes.createNewPassword,
+          builder: (BuildContext context, GoRouterState state) {
+            return const CreateNewPassword();
+          }),
       GoRoute(
         path: AppRoutes.customerHome,
         builder: (BuildContext context, GoRouterState state) =>
@@ -150,6 +168,27 @@ class AppRouter {
           return const Favorite();
         },
       ),
+      GoRoute(
+        name: 'otp',
+        path: AppRoutes.otp,
+        builder: (BuildContext context, GoRouterState state) {
+          final Map<String, dynamic> args = state.extra as Map<String, dynamic>;
+          return VerifyOTP(
+              email: args['email'] as String?,
+              phone: args['phone'] as String?,
+              otpPurpose: args['otpPurpose'] as OtpPurpose,
+              otpType: args['otpType'] as OtpType);
+        },
+      ),
+      GoRoute(
+          path: AppRoutes.chatRoom,
+          builder: (BuildContext context, GoRouterState state) {
+            final Map<String, dynamic> args =
+                state.extra as Map<String, dynamic>;
+            return ChatRoom(
+              room: args['room'] as Rooms,
+            );
+          }),
     ],
   );
 

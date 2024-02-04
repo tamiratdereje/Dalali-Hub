@@ -107,7 +107,8 @@ class WhoAreYou extends StatelessWidget {
                   style: inputFieldHintStyle,
                 ),
                 TextButton(
-                  onPressed: () => context.go(AppRoutes.register),
+                  onPressed: () => context.go(AppRoutes.register,
+                      extra: {"isEditingProfile": false}),
                   child: Text(
                     "Sign up here ",
                     style: inputFieldLabelMinStyle.copyWith(

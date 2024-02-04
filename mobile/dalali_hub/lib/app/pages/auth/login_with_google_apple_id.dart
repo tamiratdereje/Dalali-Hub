@@ -124,7 +124,8 @@ class _LogInWithGoogleOrAppleIdState extends State<LogInWithGoogleOrAppleId> {
                 ),
                 TextButton(
                   onPressed: () {
-                    context.push(AppRoutes.register);
+                    context.push(AppRoutes.register,
+                        extra: {"isEditingProfile": false});
                   },
                   child: Text(
                     "Click here ",

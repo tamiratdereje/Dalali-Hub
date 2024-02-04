@@ -8,10 +8,12 @@ part of 'login_response_dto.dart';
 
 LoginResponseDto _$LoginResponseDtoFromJson(Map<String, dynamic> json) =>
     LoginResponseDto(
+      json['userId'] as String,
       token: json['token'] as String,
     );
 
 Map<String, dynamic> _$LoginResponseDtoToJson(LoginResponseDto instance) =>
     <String, dynamic>{
       'token': instance.token,
+      'userId': instance.userId,
     };
