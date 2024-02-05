@@ -10,7 +10,11 @@ class SharedPreference {
 
   SharedPreference(this._sharedPreferences);
 
-  LoginResponseDto getUserAuthDetails() {
+  LoginResponseDto? getUserAuthDetails() {
+    var userJson = _sharedPreferences.getString('userAuthDetails');
+    if (userJson == null) {
+      return null;
+    }
     return LoginResponseDto.fromJson(
         json.decode(_sharedPreferences.getString('userAuthDetails')!));
   }

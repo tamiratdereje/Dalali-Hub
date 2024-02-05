@@ -9,14 +9,17 @@ import * as jtp from "jwk-to-pem";
 export async function protectRoute(req: Request, _: Response, next: NextFunction)  {
   const authHeader = req.headers["authorization"];
   let token = authHeader && authHeader.split(" ")[1];
+  
   if (!token)
     return next(
       new CustomError("Access denied", StatusCodes.UNAUTHORIZED, undefined),
     );
 
-  var keyStore: any = (await getKeyStore()).toJSON();
-  var key = keyStore.keys[0];
-  var publicKey = jtp(key);
+  let keyStore: any = (await getKeyStore()).toJSON();
+  let key = keyStore.keys[0];
+  let publicKey = jtp(key);
+
+  console.log("PUBLIC KEY : ", publicKey);
 
 
   jwt.verify(token, publicKey, (err: Error, payload: any) => {

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dalali_hub/constants/string_constants.dart';
 import 'package:dalali_hub/data/local/pref/pref.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,9 +9,9 @@ class JwtInterceptor extends Interceptor {
   
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    var token =  pref.getString(tokenKey);
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
+    var user =  pref.getUserAuthDetails();
+    if (user != null) {
+      options.headers['Authorization'] = 'Bearer ${user.token}';
     }
     super.onRequest(options, handler);
   }

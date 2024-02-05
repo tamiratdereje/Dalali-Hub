@@ -4,6 +4,6 @@ part of 'get_room_bloc.dart';
 class GetRoomState with _$GetRoomState {
   const factory GetRoomState.initial() = _Initial;
   const factory GetRoomState.loading() = _Loading;
-  const factory GetRoomState.success(Rooms rooms) = _Success;
+  const factory GetRoomState.success(RoomWrapper room) = _Success;
   const factory GetRoomState.error(String message) = _Error;
 }

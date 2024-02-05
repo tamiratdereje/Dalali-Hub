@@ -316,7 +316,7 @@ mixin _$GetRoomState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Rooms rooms) success,
+    required TResult Function(RoomWrapper room) success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -324,7 +324,7 @@ mixin _$GetRoomState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Rooms rooms)? success,
+    TResult? Function(RoomWrapper room)? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -332,7 +332,7 @@ mixin _$GetRoomState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Rooms rooms)? success,
+    TResult Function(RoomWrapper room)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -422,7 +422,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Rooms rooms) success,
+    required TResult Function(RoomWrapper room) success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -433,7 +433,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Rooms rooms)? success,
+    TResult? Function(RoomWrapper room)? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -444,7 +444,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Rooms rooms)? success,
+    TResult Function(RoomWrapper room)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -536,7 +536,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Rooms rooms) success,
+    required TResult Function(RoomWrapper room) success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -547,7 +547,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Rooms rooms)? success,
+    TResult? Function(RoomWrapper room)? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -558,7 +558,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Rooms rooms)? success,
+    TResult Function(RoomWrapper room)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -616,7 +616,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Rooms rooms});
+  $Res call({RoomWrapper room});
 }
 
 /// @nodoc
@@ -630,13 +630,13 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? rooms = freezed,
+    Object? room = null,
   }) {
     return _then(_$SuccessImpl(
-      freezed == rooms
-          ? _value.rooms
-          : rooms // ignore: cast_nullable_to_non_nullable
-              as Rooms,
+      null == room
+          ? _value.room
+          : room // ignore: cast_nullable_to_non_nullable
+              as RoomWrapper,
     ));
   }
 }
@@ -644,14 +644,14 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.rooms);
+  const _$SuccessImpl(this.room);
 
   @override
-  final Rooms rooms;
+  final RoomWrapper room;
 
   @override
   String toString() {
-    return 'GetRoomState.success(rooms: $rooms)';
+    return 'GetRoomState.success(room: $room)';
   }
 
   @override
@@ -659,12 +659,11 @@ class _$SuccessImpl implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            const DeepCollectionEquality().equals(other.rooms, rooms));
+            (identical(other.room, room) || other.room == room));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(rooms));
+  int get hashCode => Object.hash(runtimeType, room);
 
   @JsonKey(ignore: true)
   @override
@@ -677,10 +676,10 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Rooms rooms) success,
+    required TResult Function(RoomWrapper room) success,
     required TResult Function(String message) error,
   }) {
-    return success(rooms);
+    return success(room);
   }
 
   @override
@@ -688,10 +687,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Rooms rooms)? success,
+    TResult? Function(RoomWrapper room)? success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(rooms);
+    return success?.call(room);
   }
 
   @override
@@ -699,12 +698,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Rooms rooms)? success,
+    TResult Function(RoomWrapper room)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(rooms);
+      return success(room);
     }
     return orElse();
   }
@@ -748,9 +747,9 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements GetRoomState {
-  const factory _Success(final Rooms rooms) = _$SuccessImpl;
+  const factory _Success(final RoomWrapper room) = _$SuccessImpl;
 
-  Rooms get rooms;
+  RoomWrapper get room;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -822,7 +821,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Rooms rooms) success,
+    required TResult Function(RoomWrapper room) success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -833,7 +832,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Rooms rooms)? success,
+    TResult? Function(RoomWrapper room)? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -844,7 +843,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Rooms rooms)? success,
+    TResult Function(RoomWrapper room)? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

@@ -12,13 +12,17 @@ class Messages extends _Messages
   Messages(
     ObjectId id, {
     String? content,
-    bool? read,
+    DateTime? createdAt,
     Rooms? room,
+    bool? seen,
+    User? sender,
   }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'content', content);
-    RealmObjectBase.set(this, 'read', read);
+    RealmObjectBase.set(this, 'createdAt', createdAt);
     RealmObjectBase.set(this, 'room', room);
+    RealmObjectBase.set(this, 'seen', seen);
+    RealmObjectBase.set(this, 'sender', sender);
   }
 
   Messages._();
@@ -35,14 +39,27 @@ class Messages extends _Messages
   set content(String? value) => RealmObjectBase.set(this, 'content', value);
 
   @override
-  bool? get read => RealmObjectBase.get<bool>(this, 'read') as bool?;
+  DateTime? get createdAt =>
+      RealmObjectBase.get<DateTime>(this, 'createdAt') as DateTime?;
   @override
-  set read(bool? value) => RealmObjectBase.set(this, 'read', value);
+  set createdAt(DateTime? value) =>
+      RealmObjectBase.set(this, 'createdAt', value);
 
   @override
   Rooms? get room => RealmObjectBase.get<Rooms>(this, 'room') as Rooms?;
   @override
   set room(covariant Rooms? value) => RealmObjectBase.set(this, 'room', value);
+
+  @override
+  bool? get seen => RealmObjectBase.get<bool>(this, 'seen') as bool?;
+  @override
+  set seen(bool? value) => RealmObjectBase.set(this, 'seen', value);
+
+  @override
+  User? get sender => RealmObjectBase.get<User>(this, 'sender') as User?;
+  @override
+  set sender(covariant User? value) =>
+      RealmObjectBase.set(this, 'sender', value);
 
   @override
   Stream<RealmObjectChanges<Messages>> get changes =>
@@ -59,9 +76,12 @@ class Messages extends _Messages
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('content', RealmPropertyType.string, optional: true),
-      SchemaProperty('read', RealmPropertyType.bool, optional: true),
+      SchemaProperty('createdAt', RealmPropertyType.timestamp, optional: true),
       SchemaProperty('room', RealmPropertyType.object,
           optional: true, linkTarget: 'rooms'),
+      SchemaProperty('seen', RealmPropertyType.bool, optional: true),
+      SchemaProperty('sender', RealmPropertyType.object,
+          optional: true, linkTarget: 'user'),
     ]);
   }
 }
@@ -147,13 +167,15 @@ class Photo extends _Photo with RealmEntity, RealmObjectBase, RealmObject {
 class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
   Rooms(
     ObjectId id, {
-    int? unred,
+    int? unred1,
+    int? unred2,
     DateTime? updatedAt,
     User? user1,
     User? user2,
   }) {
     RealmObjectBase.set(this, '_id', id);
-    RealmObjectBase.set(this, 'unred', unred);
+    RealmObjectBase.set(this, 'unred1', unred1);
+    RealmObjectBase.set(this, 'unred2', unred2);
     RealmObjectBase.set(this, 'updatedAt', updatedAt);
     RealmObjectBase.set(this, 'user1', user1);
     RealmObjectBase.set(this, 'user2', user2);
@@ -167,9 +189,14 @@ class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
 
   @override
-  int? get unred => RealmObjectBase.get<int>(this, 'unred') as int?;
+  int? get unred1 => RealmObjectBase.get<int>(this, 'unred1') as int?;
   @override
-  set unred(int? value) => RealmObjectBase.set(this, 'unred', value);
+  set unred1(int? value) => RealmObjectBase.set(this, 'unred1', value);
+
+  @override
+  int? get unred2 => RealmObjectBase.get<int>(this, 'unred2') as int?;
+  @override
+  set unred2(int? value) => RealmObjectBase.set(this, 'unred2', value);
 
   @override
   DateTime? get updatedAt =>
@@ -202,7 +229,8 @@ class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
     return const SchemaObject(ObjectType.realmObject, Rooms, 'rooms', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
-      SchemaProperty('unred', RealmPropertyType.int, optional: true),
+      SchemaProperty('unred1', RealmPropertyType.int, optional: true),
+      SchemaProperty('unred2', RealmPropertyType.int, optional: true),
       SchemaProperty('updatedAt', RealmPropertyType.timestamp, optional: true),
       SchemaProperty('user1', RealmPropertyType.object,
           optional: true, linkTarget: 'user'),

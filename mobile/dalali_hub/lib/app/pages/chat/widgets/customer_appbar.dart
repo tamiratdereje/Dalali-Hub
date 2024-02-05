@@ -4,31 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 // ignore: must_be_immutable
-class MessageAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class MessageAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
   bool isCenter;
-  Color? color= AppColors.doctor.withOpacity(0.0);
-  MessageAppBar({super.key, required this.title, this.isCenter = false, this.color});
+  bool? canPop;
+  Color? color = AppColors.doctor.withOpacity(0.0);
+  MessageAppBar(
+      {super.key,
+      required this.title,
+      this.isCenter = false,
+      this.color,
+      this.canPop = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 3.7.h, left: 8.8.w),
-      
       child: Row(
         children: [
-          Container(
-            width: 10.6.w,
-            height: 4.6.h,
-            decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.ultimateGray)),
-            child: const Center(
-              child: Icon(
-                Icons.arrow_back_ios_sharp,
-                size: 15,
+          GestureDetector(
+            onTap: () => canPop == true ? Navigator.pop(context) : null,
+            child: Container(
+              width: 10.6.w,
+              height: 4.6.h,
+              decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppColors.ultimateGray)),
+              child: const Center(
+                child: Icon(
+                  Icons.arrow_back_ios_sharp,
+                  size: 15,
+                ),
               ),
             ),
           ),
@@ -39,7 +46,6 @@ class MessageAppBar extends StatelessWidget
             title,
             style: appBarTitleStyle,
           ),
-          
         ],
       ),
     );

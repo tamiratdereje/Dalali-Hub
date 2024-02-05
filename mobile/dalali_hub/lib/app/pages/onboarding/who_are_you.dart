@@ -1,9 +1,12 @@
+import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/core/widgets/button.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
 import 'package:dalali_hub/constants/image_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -13,6 +16,8 @@ class WhoAreYou extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(
@@ -45,6 +50,9 @@ class WhoAreYou extends StatelessWidget {
               text: "Customer",
               onPressed: () {
                 debugPrint("Customer");
+                context
+                    .read<AuthBloc>()
+                    .add(const AuthEvent.updateAuthStatus());
                 context.go(AppRoutes.loginOptions);
               },
             ),
@@ -93,6 +101,9 @@ class WhoAreYou extends StatelessWidget {
               text: "Broker/Agent",
               onPressed: () {
                 debugPrint("Broker/Agent");
+                context
+                    .read<AuthBloc>()
+                    .add(const AuthEvent.updateAuthStatus());
                 context.go(AppRoutes.loginOptions);
               },
             ),
@@ -107,8 +118,13 @@ class WhoAreYou extends StatelessWidget {
                   style: inputFieldHintStyle,
                 ),
                 TextButton(
-                  onPressed: () => context.go(AppRoutes.register,
-                      extra: {"isEditingProfile": false}),
+                  onPressed: () {
+                    context
+                        .read<AuthBloc>()
+                        .add(const AuthEvent.updateAuthStatus());
+                    context.go(AppRoutes.register,
+                        extra: {"isEditingProfile": false});
+                  },
                   child: Text(
                     "Sign up here ",
                     style: inputFieldLabelMinStyle.copyWith(

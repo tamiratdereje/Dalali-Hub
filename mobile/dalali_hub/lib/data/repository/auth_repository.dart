@@ -74,7 +74,7 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<Resource<Empty>> logout() async {
     try {
-      await _pref.remove(tokenKey);
+      await _pref.remove("userAuthDetails");
       return const Success(Empty());
     } catch (e) {
       return Error(AppException(e.toString()));

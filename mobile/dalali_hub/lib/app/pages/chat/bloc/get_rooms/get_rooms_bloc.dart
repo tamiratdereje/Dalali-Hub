@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dalali_hub/data/remote/model/realm/realm_models.dart';
+import 'package:dalali_hub/data/remote/model/realm/room_wrapper.dart';
 import 'package:dalali_hub/domain/repository/chat_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';

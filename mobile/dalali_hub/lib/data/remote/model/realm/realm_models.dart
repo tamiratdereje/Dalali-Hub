@@ -12,9 +12,13 @@ class _Messages {
 
   String? content;
 
-  bool? read;
+  DateTime? createdAt;
 
   _Rooms? room;
+
+  bool? seen;
+
+  _User? sender;
 }
 
 @RealmModel()
@@ -43,7 +47,9 @@ class _Rooms {
   @MapTo('_id')
   late ObjectId id;
 
-  int? unred;
+  int? unred1;
+
+  int? unred2;
 
   DateTime? updatedAt;
 

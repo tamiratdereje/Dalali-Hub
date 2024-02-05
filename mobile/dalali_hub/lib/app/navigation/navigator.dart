@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/broker_property_listing/broker_property_listing.dart';
@@ -11,36 +12,42 @@ import 'package:dalali_hub/app/pages/favorite/favorite_screen.dart';
 import 'package:dalali_hub/app/pages/forget_password/create_new_password.dart';
 import 'package:dalali_hub/app/pages/forget_password/forgot_password.dart';
 import 'package:dalali_hub/app/pages/forget_password/verify_otp.dart';
+import 'package:dalali_hub/app/pages/onboarding/who_are_you.dart';
 import 'package:dalali_hub/app/pages/profile/profile.dart';
 import 'package:dalali_hub/app/pages/property_filter/propery_filter.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/property_detail_for_customer/property_detail.dart';
 import 'package:dalali_hub/app/core/widgets/bottom_nav.dart';
 import 'package:dalali_hub/app/pages/property_filter/search_result.dart';
-import 'package:dalali_hub/data/remote/model/realm/realm_models.dart';
+import 'package:dalali_hub/data/remote/model/realm/room_wrapper.dart';
 import 'package:dalali_hub/domain/type/types.dart';
+import 'package:dalali_hub/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart';
 import 'package:dalali_hub/app/pages/auth/login.dart';
 import 'package:dalali_hub/app/pages/auth/signup.dart';
 import 'package:injectable/injectable.dart';
 
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+
 @singleton
 class AppRouter {
-  final AuthCubit authCubit;
+  final AuthBloc authCubit;
   AppRouter(this.authCubit);
 
   late final GoRouter router = GoRouter(
-    initialLocation: authCubit.state.maybeWhen(
-      firstTime: () => AppRoutes.onBoarding,
-      authenticated: () => AppRoutes.home,
-      orElse: () => AppRoutes.loginOptions,
-    ),
+    initialLocation: AppRoutes.splashScreen,
+    navigatorKey: _rootNavigatorKey,
     redirect: (context, state) => redirecter(context, state),
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
     debugLogDiagnostics: true,
     routes: <GoRoute>[
+      GoRoute(
+          path: AppRoutes.splashScreen,
+          builder: (context, state) {
+            return const SplashScreen();
+          }),
       GoRoute(
         name: 'home',
         path: AppRoutes.home,
@@ -186,37 +193,33 @@ class AppRouter {
             final Map<String, dynamic> args =
                 state.extra as Map<String, dynamic>;
             return ChatRoom(
-              room: args['room'] as Rooms,
+              room: args['room'] as RoomWrapper,
             );
           }),
+      GoRoute(
+        path: AppRoutes.onBoarding,
+        builder: (BuildContext context, GoRouterState state) {
+          return const WhoAreYou();
+        },
+      )
     ],
   );
 
   FutureOr<String?> redirecter(BuildContext context, GoRouterState state) {
-    final bool loggedIn = authCubit.state.maybeWhen(
-      authenticated: () => true,
-      orElse: () => false,
+    return authCubit.state.maybeWhen(
+      initial: () => AppRoutes.splashScreen,
+      unauthenticated: () {
+        debugPrint(state.matchedLocation);
+        if (state.matchedLocation != AppRoutes.login) {
+          return AppRoutes.loginOptions;
+        }
+        return null;
+      },
+      firstTime: () {
+        return AppRoutes.onBoarding;
+      },
+      orElse: () => null,
     );
-
-    final bool firstTime = authCubit.state.maybeWhen(
-      firstTime: () => true,
-      orElse: () => false,
-    );
-
-    debugPrint(firstTime.toString());
-
-    if (firstTime) {
-      authCubit.unauthenticated();
-      return AppRoutes.onBoarding;
-    }
-
-    debugPrint('Matched Location: ${state.matchedLocation}');
-    final bool loggingIn = state.matchedLocation != AppRoutes.loginOptions;
-    if (!loggedIn) {
-      return loggingIn ? null : AppRoutes.loginOptions;
-    }
-
-    return null;
   }
 }
 

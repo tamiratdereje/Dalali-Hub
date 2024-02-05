@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/core/widgets/dismiss_widgets.dart';
 import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart';
@@ -52,7 +54,9 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) => MaterialApp(
-          title: 'Property Management',
+          scrollBehavior: const MaterialScrollBehavior()
+              .copyWith(dragDevices: PointerDeviceKind.values.toSet()),
+          title: 'Dalali Hub',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),

@@ -1,6 +1,10 @@
 part of 'send_message_bloc.dart';
 
-@immutable
-sealed class SendMessageState {}
 
-final class SendMessageInitial extends SendMessageState {}
+@freezed
+class SendMessageState with _$SendMessageState {
+  const factory SendMessageState.initial() = _Initial;
+  const factory SendMessageState.loading() = _Loading;
+  const factory SendMessageState.success() = _Success;
+  const factory SendMessageState.error(String message) = _Error;
+}
