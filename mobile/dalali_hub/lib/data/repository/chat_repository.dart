@@ -27,16 +27,19 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<bool> loginToRealm() async {
     var user = _sharedPreference.getUserAuthDetails();
     var currentUser = _app.currentUser;
-    if (user == null || currentUser == null) {
+    if (user == null) {
       return false;
     }
-    var credentials = Credentials.jwt(user.token);
-    try {
-      await _app.logIn(credentials);
-      return true;
-    } catch (e) {
-      return false;
+    if (currentUser == null) {
+      var credentials = Credentials.jwt(user.token);
+      try {
+        await _app.logIn(credentials);
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
+    return true;
   }
 
   @override
