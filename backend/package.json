@@ -69,7 +69,7 @@
   "scripts": {
     "build": "tsc -p .",
     "test": " && exit 1",
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "start": "nodemon src/index.ts",
     "dev": "nodemon",
     "lint": "npx eslint src test",
     "lint:fix": "npm run lint -- --fix",
