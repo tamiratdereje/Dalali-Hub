@@ -23,8 +23,8 @@ export default function RootLayout({
         lang="en"
         className="h-full w-full bg-white flex items-center justify-center"
       >
-        <body className="bg-gray-600 w-full min-h-full items-center justify-center ">
-          <SideBar />
+        <body className="bg-white w-full min-h-full items-center justify-center ">
+          {/* <SideBar /> */}
           {children}
         </body>
       </html>
