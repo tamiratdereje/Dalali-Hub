@@ -167,6 +167,7 @@ class Photo extends _Photo with RealmEntity, RealmObjectBase, RealmObject {
 class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
   Rooms(
     ObjectId id, {
+    int? totalMessages,
     int? unred1,
     int? unred2,
     DateTime? updatedAt,
@@ -174,6 +175,7 @@ class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
     User? user2,
   }) {
     RealmObjectBase.set(this, '_id', id);
+    RealmObjectBase.set(this, 'totalMessages', totalMessages);
     RealmObjectBase.set(this, 'unred1', unred1);
     RealmObjectBase.set(this, 'unred2', unred2);
     RealmObjectBase.set(this, 'updatedAt', updatedAt);
@@ -187,6 +189,13 @@ class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
+
+  @override
+  int? get totalMessages =>
+      RealmObjectBase.get<int>(this, 'totalMessages') as int?;
+  @override
+  set totalMessages(int? value) =>
+      RealmObjectBase.set(this, 'totalMessages', value);
 
   @override
   int? get unred1 => RealmObjectBase.get<int>(this, 'unred1') as int?;
@@ -229,6 +238,7 @@ class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
     return const SchemaObject(ObjectType.realmObject, Rooms, 'rooms', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
+      SchemaProperty('totalMessages', RealmPropertyType.int, optional: true),
       SchemaProperty('unred1', RealmPropertyType.int, optional: true),
       SchemaProperty('unred2', RealmPropertyType.int, optional: true),
       SchemaProperty('updatedAt', RealmPropertyType.timestamp, optional: true),

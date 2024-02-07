@@ -115,7 +115,7 @@ class _ContactScreemState extends State<ContactScreem> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                   child: Text(
                     unRead <= 5 ? unRead.toString() : "5+",

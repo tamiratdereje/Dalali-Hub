@@ -49,7 +49,7 @@ class ChatRepositoryImpl implements ChatRepository {
     }
     var room = realm.find<realm_models.Rooms>(ObjectId.fromHexString(roomId));
     var messages = realm.query<realm_models.Messages>(
-        'room == \$0 SORT(createdAt DESC)', [room]);
+        'room == \$0 SORT(createdAt DESC)', [room]);   
     yield* messages.changes.map((event) => event.results.toList());
   }
 
@@ -59,15 +59,18 @@ class ChatRepositoryImpl implements ChatRepository {
       yield* Stream.error([]);
     }
     var userId = _sharedPreference.getUserAuthDetails()!.userId;
+
     var rooms = realm.query<realm_models.Rooms>(
-        'user1.id = \$0 || user2.id = \$0 SORT(updatedAt DESC)',
+        'totalMessages > 0 AND (user1.id = \$0 || user2.id = \$0) SORT(updatedAt DESC)',
         [ObjectId.fromHexString(userId)]);
 
-    yield* rooms.changes.map((event) => event.results
-        .map(
-          (e) => RoomWrapper(currentUserId: userId, room: e),
-        )
-        .toList());
+    yield* rooms.changes
+        .map((event) => event.results
+            .map(
+              (e) => RoomWrapper(currentUserId: userId, room: e),
+            )
+            .toList())
+        .asBroadcastStream();
   }
 
   @override
@@ -94,6 +97,7 @@ class ChatRepositoryImpl implements ChatRepository {
       } else {
         room.unred1 = (room.unred1 ?? 0) + 1;
       }
+      room.totalMessages = (room.totalMessages ?? 0) + 1;
       room.updatedAt = DateTime.now();
       return Stream.value(null);
     });
@@ -126,6 +130,7 @@ class ChatRepositoryImpl implements ChatRepository {
           updatedAt: DateTime.now(),
           unred1: 0,
           unred2: 0,
+          totalMessages: 0,
         ));
       });
       yield* Stream.value(RoomWrapper(currentUserId: senderId, room: room));
@@ -135,5 +140,24 @@ class ChatRepositoryImpl implements ChatRepository {
           (e) => RoomWrapper(currentUserId: senderId, room: e),
         )
         .first);
+  }
+
+  @override
+  Stream<void> setMessagesSeen(String roomId) {
+    var messages = realm.query<realm_models.Messages>(
+        'room.id == \$0 AND seen == false', [ObjectId.fromHexString(roomId)]);
+    return realm.write(() {
+      for (var message in messages) {
+        message.seen = true;
+      }
+      var room = realm.find<realm_models.Rooms>(ObjectId.fromHexString(roomId));
+      var userId = _sharedPreference.getUserAuthDetails()!.userId;
+      if (room!.user1!.id.toString() == userId) {
+        room.unred1 = 0;
+      } else {
+        room.unred2 = 0;
+      }
+      return Stream.value(null);
+    });
   }
 }

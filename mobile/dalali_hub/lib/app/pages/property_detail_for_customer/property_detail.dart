@@ -891,7 +891,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   listener: (getRoomContext, getRoomState) {
                                     getRoomState.whenOrNull(
                                         success: (room) {
-                                          context.push(AppRoutes.chatRoom,
+                                          context.pushReplacement(AppRoutes.chatRoom,
                                               extra: {"room": room});
                                         },
                                         error: (message) => showErrorSnackBar(

@@ -47,6 +47,8 @@ class _Rooms {
   @MapTo('_id')
   late ObjectId id;
 
+  int? totalMessages;
+
   int? unred1;
 
   int? unred2;

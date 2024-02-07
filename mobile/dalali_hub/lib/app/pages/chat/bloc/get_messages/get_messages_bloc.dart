@@ -16,7 +16,12 @@ class GetMessagesBloc extends Bloc<GetMessagesEvent, GetMessagesState> {
     on<_GetMessages>((event, emit) async {
       emit(const GetMessagesState.loading());
       await emit.forEach(_chatRepository.getMessages(event.roomId),
-          onData: (messages) => GetMessagesState.success(messages),
+          onData: (messages) {
+            // if there are unseen messages, set them to seen
+            
+            emit(const GetMessagesState.loading());
+            return GetMessagesState.success(messages);
+          },
           onError: (error, stackTrace) =>
               GetMessagesState.error(error.toString()));
     });
