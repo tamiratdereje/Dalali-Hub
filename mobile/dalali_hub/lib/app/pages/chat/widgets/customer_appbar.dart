@@ -7,14 +7,14 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class MessageAppBar extends StatelessWidget implements PreferredSizeWidget {
   String title;
   bool isCenter;
-  bool? canPop;
+  Function? pop;
   Color? color = AppColors.doctor.withOpacity(0.0);
   MessageAppBar(
       {super.key,
       required this.title,
       this.isCenter = false,
       this.color,
-      this.canPop = false});
+      this.pop});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,11 @@ class MessageAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => canPop == true ? Navigator.pop(context) : null,
+            onTap: () {
+              if (pop != null) {
+                pop!();
+              }
+            },
             child: Container(
               width: 10.6.w,
               height: 4.6.h,

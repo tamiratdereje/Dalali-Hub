@@ -4,6 +4,7 @@ import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart';
 import 'package:dalali_hub/app/pages/auth/login_with_google_apple_id.dart';
 import 'package:dalali_hub/app/pages/broker_home/broker_home.dart';
 import 'package:dalali_hub/app/pages/broker_property_listing/broker_property_listing.dart';
+import 'package:dalali_hub/app/pages/chat/contact_screen.dart';
 import 'package:dalali_hub/app/pages/chat/message_screen.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/add_realstate.dart';
 import 'package:dalali_hub/app/pages/create_update_delete_vehicle/add_vehicle.dart';
@@ -35,6 +36,12 @@ final GlobalKey<NavigatorState> _rootNavigatorKey =
 class AppRouter {
   final AuthBloc authCubit;
   AppRouter(this.authCubit);
+
+  var allowedRoutes = {
+    AppRoutes.login,
+    AppRoutes.register,
+    AppRoutes.otp,
+  };
 
   late final GoRouter router = GoRouter(
     initialLocation: AppRoutes.splashScreen,
@@ -201,6 +208,12 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const WhoAreYou();
         },
+      ),
+      GoRoute(
+        path: AppRoutes.contacts,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ContactScreem();
+        },
       )
     ],
   );
@@ -210,7 +223,7 @@ class AppRouter {
       initial: () => AppRoutes.splashScreen,
       unauthenticated: () {
         debugPrint(state.matchedLocation);
-        if (state.matchedLocation != AppRoutes.login) {
+        if (!allowedRoutes.contains(state.matchedLocation)) {
           return AppRoutes.loginOptions;
         }
         return null;

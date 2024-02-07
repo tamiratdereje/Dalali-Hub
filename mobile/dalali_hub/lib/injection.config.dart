@@ -10,7 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dalali_hub/app/core/auth/bloc/auth_bloc.dart' as _i48;
 import 'package:dalali_hub/app/core/auth/cubit/auth_cubit.dart' as _i4;
-import 'package:dalali_hub/app/navigation/navigator.dart' as _i64;
+import 'package:dalali_hub/app/navigation/navigator.dart' as _i65;
 import 'package:dalali_hub/app/pages/auth/bloc/login/login_bloc.dart' as _i61;
 import 'package:dalali_hub/app/pages/auth/bloc/logout/logout_bloc.dart' as _i62;
 import 'package:dalali_hub/app/pages/auth/bloc/signup/signup_bloc.dart' as _i42;
@@ -26,6 +26,8 @@ import 'package:dalali_hub/app/pages/chat/bloc/get_rooms/get_rooms_bloc.dart'
     as _i60;
 import 'package:dalali_hub/app/pages/chat/bloc/send_message/send_message_bloc.dart'
     as _i63;
+import 'package:dalali_hub/app/pages/chat/bloc/set_messages_seen/set_messages_seen_bloc.dart'
+    as _i64;
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/add_images/add_images_bloc.dart'
     as _i47;
 import 'package:dalali_hub/app/pages/create_update_delete_realstate/bloc/create_realstate/create_realstate_bloc.dart'
@@ -82,7 +84,7 @@ import 'package:dalali_hub/data/repository/feed_repository.dart' as _i18;
 import 'package:dalali_hub/data/repository/images_repository.dart' as _i34;
 import 'package:dalali_hub/data/repository/realstate_repository.dart' as _i36;
 import 'package:dalali_hub/data/repository/vehicle_repository.dart' as _i38;
-import 'package:dalali_hub/di/app_module.dart' as _i65;
+import 'package:dalali_hub/di/app_module.dart' as _i66;
 import 'package:dalali_hub/domain/config/network_config.dart' as _i5;
 import 'package:dalali_hub/domain/repository/auth_repository.dart' as _i31;
 import 'package:dalali_hub/domain/repository/chat_repository.dart' as _i49;
@@ -232,9 +234,11 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i63.SendMessageBloc>(
         () => _i63.SendMessageBloc(gh<_i49.ChatRepository>()));
-    gh.singleton<_i64.AppRouter>(_i64.AppRouter(gh<_i48.AuthBloc>()));
+    gh.factory<_i64.SetMessagesSeenBloc>(
+        () => _i64.SetMessagesSeenBloc(gh<_i49.ChatRepository>()));
+    gh.singleton<_i65.AppRouter>(_i65.AppRouter(gh<_i48.AuthBloc>()));
     return this;
   }
 }
 
-class _$AppModule extends _i65.AppModule {}
+class _$AppModule extends _i66.AppModule {}

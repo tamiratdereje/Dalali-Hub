@@ -8,4 +8,5 @@ abstract class ChatRepository {
   Stream<List<RoomWrapper>> getRooms();
   Stream<void> createRoom(String receiverId);
   Stream<RoomWrapper> getRoom(String senderId, String receiverId);
+  Stream<void> setMessagesSeen(String roomId);
 }

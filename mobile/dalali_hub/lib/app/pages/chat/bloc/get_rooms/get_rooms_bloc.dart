@@ -18,7 +18,7 @@ class GetRoomsBloc extends Bloc<GetRoomsEvent, GetRoomsState> {
       await emit.forEach(
         _chatRepository.getRooms(),
         onData: (rooms) {
-          print(rooms);
+          emit(const GetRoomsState.loading());
           return _Success(rooms);
         },
         onError: (e, s) => _Error(e.toString()),
