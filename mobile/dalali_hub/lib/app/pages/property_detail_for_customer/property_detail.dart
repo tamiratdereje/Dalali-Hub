@@ -858,7 +858,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   width: 3.7.w,
                                 ),
                                 Text(
-                                  " ${value.feed.owner.firstName} ${value.feed.owner.middleName[0]}. ${value.feed.owner.sirName}",
+                                  " ${value.feed.owner.firstName.substring(0,5)} ${value.feed.owner.middleName[0]}. ${value.feed.owner.sirName.substring(0,5)}",
                                   style: inputFieldLabelStyle,
                                 ),
                               ],

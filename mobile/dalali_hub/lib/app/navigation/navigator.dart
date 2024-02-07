@@ -209,7 +209,11 @@ class AppRouter {
     return authCubit.state.maybeWhen(
       initial: () => AppRoutes.splashScreen,
       unauthenticated: () {
-        debugPrint(state.matchedLocation);
+        debugPrint("${state.matchedLocation}  what is this");
+        if (state.matchedLocation == AppRoutes.register) {
+          return AppRoutes.register;
+        }
+        
         if (state.matchedLocation != AppRoutes.login) {
           return AppRoutes.loginOptions;
         }

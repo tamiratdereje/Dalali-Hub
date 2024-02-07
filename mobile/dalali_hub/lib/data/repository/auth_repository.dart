@@ -40,15 +40,20 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<Resource<LoginResponse>> login(Login login) async {
+          debugPrint('Logging in to database with: ${login.email} ${login.password}');
+
     var response = await handleApiCall<LoginResponseDto>(
         _authClient.login(LoginDto.fromLogin(login)));
     if (response is Success) {
       var token = response.data!.token;
+      debugPrint('Logging in to realm with token: $token');
+
       try {
-        await loginToRealm(token);      
+        await loginToRealm(token);
       } on AppException catch (e) {
         debugPrint('Error logging in to realm: $e');
-        return Error(AppException('Unable to login to server please try again'));
+        return Error(
+            AppException('Unable to login to server please try again'));
       }
       await _pref.setUserAuthDetails(response.data!);
       return Success(response.data!.toLoginResponse());
