@@ -18,8 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class AppModule {
-
-  final _appConfig = AppConfiguration("dalali-hub-pjszr", httpClient: HttpClient());
+  final _appConfig =
+      AppConfiguration("dalali-hub-pjszr", httpClient: HttpClient());
   App get app => App(_appConfig);
 
   @preResolve

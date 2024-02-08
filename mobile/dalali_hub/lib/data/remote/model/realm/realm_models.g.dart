@@ -86,6 +86,7 @@ class Messages extends _Messages
   }
 }
 
+// ignore_for_file: type=lint
 class Photo extends _Photo with RealmEntity, RealmObjectBase, RealmObject {
   Photo(
     ObjectId id, {
@@ -164,6 +165,7 @@ class Photo extends _Photo with RealmEntity, RealmObjectBase, RealmObject {
   }
 }
 
+// ignore_for_file: type=lint
 class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
   Rooms(
     ObjectId id, {
@@ -250,6 +252,7 @@ class Rooms extends _Rooms with RealmEntity, RealmObjectBase, RealmObject {
   }
 }
 
+// ignore_for_file: type=lint
 class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
   User(
     ObjectId id, {
