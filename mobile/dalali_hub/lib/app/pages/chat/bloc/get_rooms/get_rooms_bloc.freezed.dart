@@ -12,7 +12,7 @@ part of 'get_rooms_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$GetRoomsEvent {
@@ -101,7 +101,7 @@ class _$StartedImpl implements _Started {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$StartedImpl);
   }
@@ -203,7 +203,7 @@ class _$GetRoomsImpl implements _GetRooms {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$GetRoomsImpl);
   }
@@ -377,7 +377,7 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
@@ -491,7 +491,7 @@ class _$LoadingImpl implements _Loading {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
@@ -628,7 +628,7 @@ class _$SuccessImpl implements _Success {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
@@ -774,7 +774,7 @@ class _$ErrorImpl implements _Error {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&

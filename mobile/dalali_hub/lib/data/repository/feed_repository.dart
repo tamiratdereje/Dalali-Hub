@@ -1,29 +1,56 @@
 import 'dart:async';
 
+import 'package:dalali_hub/data/local/database/dalali_database.dart';
 import 'package:dalali_hub/data/remote/client/feed_client.dart';
 import 'package:dalali_hub/data/remote/model/broker_stat_response_dto.dart';
 import 'package:dalali_hub/data/remote/model/feed_response_dto.dart';
-import 'package:dalali_hub/data/remote/model/jsend_response.dart';
 import 'package:dalali_hub/domain/entity/broker_stats.dart';
 import 'package:dalali_hub/domain/entity/feed.dart';
 import 'package:dalali_hub/domain/repository/feed_repository.dart';
+import 'package:dalali_hub/util/database_init.dart';
 import 'package:dalali_hub/util/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:retrofit/dio.dart';
 
 @LazySingleton(as: IFeedRepository)
 class FeedRepository implements IFeedRepository {
   final FeedClient _feedClient;
-  FeedRepository(this._feedClient);
+  final AppDatabase _appDatabase;
+  FeedRepository(this._feedClient, this._appDatabase);
+
+  DalaliDatabase get database => _appDatabase.database;
 
   @override
-  Future<Resource<List<Feed>>> getAllFeeds() async {
+  Stream<Resource<List<Feed>>> getAllFeeds() {
+    final feedDao = database.feedDao;
+
+    return feedDao.findAllFeeds().map(
+          (event) => Success<List<Feed>>(
+            event
+                .map(
+                  (e) => Feed.fromFeedEntity(e),
+                )
+                .toList(),
+          ),
+        );
+  }
+
+  @override
+  Future<Resource<List<Feed>>> getAllFeedsFeeder() async {
+    final feedDao = database.feedDao;
+
     var response =
         await handleApiCall<List<FeedResponseDto>>(_feedClient.getFeeds());
 
     if (response is Success) {
-      return Success(response.data!.map((e) => e.toFeed()).toList());
+      List<Feed> newFeeds = response.data!.map((e) => e.toFeed()).toList();
+      newFeeds.map(
+        (e) {
+          feedDao.insertFeed(e.toFeedEntity());
+        },
+      );
+
+      return Success(newFeeds);
     } else {
       return Error(response.error!);
     }

@@ -15,6 +15,7 @@ class ChatRepositoryImpl implements ChatRepository {
   final SharedPreference _sharedPreference;
   final IAuthRepository _authRepository;
   Realm get realm => _realmConfig.realm;
+  
 
   ChatRepositoryImpl(this._realmConfig, this._app, this._sharedPreference,
       this._authRepository);

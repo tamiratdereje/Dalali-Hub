@@ -16,12 +16,9 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsState> {
 
   FeedsBloc(this._feedRepository) : super(const _Initial()) {
     on<_Feeds>((event, emit) async {
-      emit(const _Loading());
-      var response = await _feedRepository.getAllFeeds();
-      response.fold(onSuccess: (data) {
-        emit(_Success(data));
-      }, onError: (error) {
-        emit(_Error(error.message));
+      await _feedRepository.getAllFeedsFeeder();
+      await emit.forEach(_feedRepository.getAllFeeds(), onData: (data) {
+        return _Success(data.data!);
       });
     });
     on<_UpdateFavorite>((event, emit) {
@@ -35,14 +32,14 @@ class FeedsBloc extends Bloc<FeedsEvent, FeedsState> {
         // Find the index of the feed to update
         final index =
             updatedData.indexWhere((feed) => feed.id == event.propertyId);
-          
-        
+
         debugPrint("index: $index");
 
         if (index != -1) {
           // Update the favorite status
           updatedData[index].isFavorite = !updatedData[index].isFavorite!;
-          debugPrint("updatedData[index].isFavorite: ${updatedData[index].isFavorite}");
+          debugPrint(
+              "updatedData[index].isFavorite: ${updatedData[index].isFavorite}");
           emit(_Success(updatedData));
         }
       }

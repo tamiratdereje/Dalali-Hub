@@ -12,7 +12,7 @@ part of 'reset_password_bloc_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ResetPasswordEvent {
@@ -135,7 +135,7 @@ class _$ResetPasswordImpl implements _ResetPassword {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResetPasswordImpl &&
@@ -326,7 +326,7 @@ class _$InitialImpl implements _Initial {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
@@ -446,7 +446,7 @@ class _$LoadingImpl implements _Loading {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
@@ -566,7 +566,7 @@ class _$SuccessImpl implements _Success {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$SuccessImpl);
   }
@@ -704,7 +704,7 @@ class _$ErrorImpl implements _Error {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
@@ -855,7 +855,7 @@ class _$TokenExpiredImpl implements _TokenExpired {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TokenExpiredImpl &&

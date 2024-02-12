@@ -5,6 +5,7 @@ import 'package:dalali_hub/data/remote/client/feed_client.dart';
 import 'package:dalali_hub/data/remote/client/images_client.dart';
 import 'package:dalali_hub/data/remote/client/realstate_client.dart';
 import 'package:dalali_hub/data/remote/client/vehicle_client.dart';
+import 'package:dalali_hub/util/database_init.dart';
 import 'package:dalali_hub/util/realm.config.dart';
 import 'package:dio/dio.dart' hide LogInterceptor;
 import 'package:dalali_hub/data/remote/client/auth_client.dart';
@@ -27,6 +28,9 @@ abstract class AppModule {
 
   @preResolve
   Future<RealmConfig> get realmConfig => RealmConfig.init(app);
+
+  @preResolve
+  Future<AppDatabase> get appDatabase => AppDatabase.init();
 
   @singleton
   Dio dio(

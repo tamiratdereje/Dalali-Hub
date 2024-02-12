@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dalali_hub/data/local/entities/feed_db_entity.dart';
 import 'package:dalali_hub/domain/entity/location.dart';
 import 'package:dalali_hub/domain/entity/photo_response.dart';
 import 'package:dalali_hub/domain/entity/realstate.dart';
@@ -119,4 +120,26 @@ class Feed {
       isApproved: isApproved!,
       numberOfViews: numberOfViews,
       isFavorite: isFavorite);
+
+  static Feed fromFeedEntity(FeedEntity feedEntity) {
+    return Feed(
+        id: 'id',
+        photos: [],
+        location: Location(region: '', district: '', ward: ''),
+        owner: UserResponse(
+            middleName: '',
+            email: '',
+            firstName: '',
+            id: '',
+            sirName: '',
+            gender: ' ',
+            phoneNumber: '',
+            photos: []),
+        numberOfViews: 0);
+  }
+
+  FeedEntity toFeedEntity() {
+    return FeedEntity(
+        id: "", photos: "", locationId: 1, owner: "", numberOfViews: 1);
+  }
 }
