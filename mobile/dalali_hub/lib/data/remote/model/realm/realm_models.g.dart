@@ -266,7 +266,7 @@ class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
     String? role,
     String? sirName,
     DateTime? updatedAt,
-    Iterable<ObjectId> photos = const [],
+    Iterable<Photo> photos = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, '__v', v);
@@ -282,8 +282,8 @@ class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
     RealmObjectBase.set(this, 'role', role);
     RealmObjectBase.set(this, 'sirName', sirName);
     RealmObjectBase.set(this, 'updatedAt', updatedAt);
-    RealmObjectBase.set<RealmList<ObjectId>>(
-        this, 'photos', RealmList<ObjectId>(photos));
+    RealmObjectBase.set<RealmList<Photo>>(
+        this, 'photos', RealmList<Photo>(photos));
   }
 
   User._();
@@ -348,10 +348,10 @@ class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
       RealmObjectBase.set(this, 'phoneNumber', value);
 
   @override
-  RealmList<ObjectId> get photos =>
-      RealmObjectBase.get<ObjectId>(this, 'photos') as RealmList<ObjectId>;
+  RealmList<Photo> get photos =>
+      RealmObjectBase.get<Photo>(this, 'photos') as RealmList<Photo>;
   @override
-  set photos(covariant RealmList<ObjectId> value) =>
+  set photos(covariant RealmList<Photo> value) =>
       throw RealmUnsupportedSetError();
 
   @override
@@ -400,8 +400,8 @@ class User extends _User with RealmEntity, RealmObjectBase, RealmObject {
       SchemaProperty('middleName', RealmPropertyType.string, optional: true),
       SchemaProperty('password', RealmPropertyType.string, optional: true),
       SchemaProperty('phoneNumber', RealmPropertyType.string, optional: true),
-      SchemaProperty('photos', RealmPropertyType.objectid,
-          collectionType: RealmCollectionType.list),
+      SchemaProperty('photos', RealmPropertyType.object,
+          linkTarget: 'photo', collectionType: RealmCollectionType.list),
       SchemaProperty('region', RealmPropertyType.string, optional: true),
       SchemaProperty('role', RealmPropertyType.string, optional: true),
       SchemaProperty('sirName', RealmPropertyType.string, optional: true),

@@ -64,7 +64,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     _context = context;
     return Scaffold(
       appBar: MessageAppBar(
-          pop: () => context.go(AppRoutes.contacts),
+          pop: () => context.pop(AppRoutes.contacts),
           title: widget.room.room.user1!.id.toString() ==
                   widget.room.currentUserId
               ? "${widget.room.room.user2!.firstName} ${widget.room.room.user2!.sirName}"

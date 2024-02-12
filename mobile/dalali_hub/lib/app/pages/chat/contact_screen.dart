@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dalali_hub/app/navigation/routes.dart';
 import 'package:dalali_hub/app/pages/chat/bloc/get_rooms/get_rooms_bloc.dart';
 import 'package:dalali_hub/app/pages/chat/widgets/customer_appbar.dart';
@@ -89,15 +90,24 @@ class _ContactScreemState extends State<ContactScreem> {
   }
 
   Widget contactTile(BuildContext context, RoomWrapper room) {
-    var name = room.room.user1!.id.toString() == room.currentUserId
+    var user1Id = room.room.user1!.id;
+    var user2Id = room.room.user2!.id;
+    var isUser1 = user1Id.toString() == room.currentUserId;
+    var name = isUser1
         ? "${room.room.user2!.firstName} ${room.room.user2!.sirName}"
         : "${room.room.user1!.firstName} ${room.room.user1!.sirName}";
-    var email = room.room.user1!.id.toString() == room.currentUserId
+    var email = isUser1
         ? room.room.user2!.email
         : room.room.user1!.email;
-    var unRead = room.room.user1!.id.toString() == room.currentUserId
+    var unRead = isUser1
         ? room.room.unred1!
         : room.room.unred2!;
+      
+    
+    var image = isUser1 
+          ? room.room.user2!.photos.isNotEmpty ? CachedNetworkImage(imageUrl: room.room.user2!.photos[0].secureUrl!) : Text(name[0].toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),)
+            : room.room.user1!.photos.isNotEmpty ? CachedNetworkImage(imageUrl: room.room.user1!.photos[0].secureUrl!) : Text(name[0].toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),);       
+    
     return GestureDetector(
       onTap: () => context.push(AppRoutes.chatRoom, extra: {
         "room": room,
@@ -106,7 +116,7 @@ class _ContactScreemState extends State<ContactScreem> {
           leading:  CircleAvatar(
             radius: 30,
             backgroundColor: Colors.blueGrey,
-            child: Text(name[0].toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),),
+            child: image
           ),
           title: Text(name),
           subtitle: Text(email!),

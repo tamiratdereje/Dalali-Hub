@@ -7,7 +7,7 @@ class NetworkConfig implements INetworkConfig {
   String get baseUrl => 'https://dalali-api.onrender.com/'; 
 
   @override
-  Duration get timeout => const Duration(seconds: 10);
+  Duration get timeout => const Duration(seconds: 3);
 
   @override
   Map<String, String> get headers => {'accept': 'application/json'};

@@ -108,6 +108,9 @@ class ChatRepositoryImpl implements ChatRepository {
     if (!(await loginToRealm())) {
       yield* Stream.error([]);
     }
+    if ( senderId == receiverId) {
+      yield* Stream.error([]);
+    }
     var users = realm.all<realm_models.User>();
     var user1 = await users.changes
         .map((event) => event.results.firstWhere(

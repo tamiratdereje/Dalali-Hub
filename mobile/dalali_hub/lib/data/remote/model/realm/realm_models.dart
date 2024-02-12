@@ -86,7 +86,7 @@ class _User {
 
   String? phoneNumber;
 
-  late List<ObjectId> photos;
+  late List<_Photo> photos;
 
   String? region;
 
