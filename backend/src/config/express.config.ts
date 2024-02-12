@@ -27,8 +27,8 @@ export class ExpressConfig {
       }
 
       this.app.use(bodyParser.json());
-      this.app.use(bodyParser.urlencoded({ extended: false }));
-      this.app.use(cors({ origin: "*" }));
+      this.app.use(bodyParser.urlencoded({ extended: false })); 
+      this.app.use(cors({ origin: ["http://localhost:3000"], credentials:true }));
 
       this.app.use("/api/v1/auth", authRoute);
       this.app.use("/api/v1/feed", feedRoute);

@@ -9,8 +9,8 @@ import 'reflect-metadata';
 
 const main = async () => {
   const isDbInitialized = await new DBConfig().init();
-  if (!isDbInitialized) {
-    console.error("Database connection failed");
+  if (!isDbInitialized) { 
+    console.error("Database connection failed"); 
     return;
   }
   const app = express();

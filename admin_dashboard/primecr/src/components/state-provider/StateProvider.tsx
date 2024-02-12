@@ -1,16 +1,15 @@
 
 'use client'
 
+import { store } from '@/store/stote'
 import { Provider } from 'react-redux'
-import { store } from '../../store/index'
-import {Props } from '@/types/general/reactNode'
+import {ProviderProps } from '@/types/general/reactNode'
 
-const StateProvider = ({children}:Props) => {
-  return (
-    <Provider store={store}>
-        {children}
-    </Provider>
-  )
+
+import React from 'react'
+
+const StateProvider = ({ children }: ProviderProps) => {
+  return <Provider store={store}>{children}</Provider>;
 }
 
 export default StateProvider

@@ -442,4 +442,45 @@ export class AuthController {
         .json(new JSendResponse().success(userDto, "User found"));
     }
   );
+  getAllUser =  asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+
+      let users = await this._userRepository.GetAll();
+      if (!users) {
+        throw new Error("no Users found");
+      }
+      const userDTOsList: UserResponseDTO[] = [];
+
+      for (let user of users) {
+        const userPhotos: PhotoResponseDTO[] = [];
+        const userDto = new UserResponseDTO(
+          user._id,
+          user.firstName,
+          user.middleName,
+          user.sirName,
+          user.email,
+          user.phoneNumber,
+          user.gender,
+          user.region,
+          userPhotos
+        );
+        for (let userPhoto of user.photos) {
+          await this._photoRepository.GetById(userPhoto).then((returnPhoto) => {
+            userPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
+
+        userDTOsList.push(userDto)
+      }
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(userDTOsList, "User found"));
+
+    });
 }

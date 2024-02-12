@@ -29,7 +29,7 @@ const authController = new AuthController(
   otpService,
   fileUploadService,
   tokenRepository
-);
+); 
 
 authRoute.post("/request-otp", authController.requestOtp);
 authRoute.post("/signup", authController.signup);
@@ -43,7 +43,11 @@ authRoute.post(
   upload.array("photos", 5),
   authController.updateProfilePicture
 );
-authRoute.get("/me", protectRoute, authController.getMyProfile);
+authRoute.get("/me", authController.getMyProfile);
+authRoute.get("/get-users", 
+// protectRoute, 
+authController.getAllUser);
+
 authRoute.get(
   "/others-profile/:id",
   protectRoute,
