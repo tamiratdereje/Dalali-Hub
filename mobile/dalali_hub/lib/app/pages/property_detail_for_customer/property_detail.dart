@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:ui';
 
 import 'package:dalali_hub/app/core/widgets/appbar.dart';
@@ -14,9 +16,12 @@ import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/image_
 import 'package:dalali_hub/app/pages/property_detail_for_customer/widgets/other_features_chips.dart';
 import 'package:dalali_hub/app/utils/colors.dart';
 import 'package:dalali_hub/app/utils/font_style.dart';
+import 'package:dalali_hub/data/local/pref/pref.dart';
+import 'package:dalali_hub/data/remote/model/login_response_dto.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:dalali_hub/domain/entity/feed.dart';
@@ -78,12 +83,21 @@ class _PropertyDetailState extends State<PropertyDetail> {
   @override
   void initState() {
     super.initState();
+
     // Check for phone call support.
     canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {
       setState(() {
         _hasCallSupport = result;
       });
     });
+
+    // get user id
+  }
+
+  Future<void> getToken() async {
+    LoginResponseDto? user =
+        SharedPreference(await SharedPreferences.getInstance())
+            .getUserAuthDetails();
   }
 
   Future<void> _makePhoneCall(String phoneNumber) async {
@@ -858,7 +872,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   width: 3.7.w,
                                 ),
                                 Text(
-                                  " ${value.feed.owner.firstName.substring(0,5)} ${value.feed.owner.middleName[0]}. ${value.feed.owner.sirName.substring(0,5)}",
+                                  " ${value.feed.owner.firstName} ${value.feed.owner.middleName[0]}. ${value.feed.owner.sirName}",
                                   style: inputFieldLabelStyle,
                                 ),
                               ],
@@ -891,7 +905,8 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   listener: (getRoomContext, getRoomState) {
                                     getRoomState.whenOrNull(
                                         success: (room) {
-                                          context.pushReplacement(AppRoutes.chatRoom,
+                                          context.pushReplacement(
+                                              AppRoutes.chatRoom,
                                               extra: {"room": room});
                                         },
                                         error: (message) => showErrorSnackBar(
@@ -901,11 +916,20 @@ class _PropertyDetailState extends State<PropertyDetail> {
                                   },
                                   builder: (getRoomContext, getRoomState) {
                                     return GestureDetector(
-                                      onTap: () =>
+                                      onTap: () async {
+                                        LoginResponseDto? user =
+                                            SharedPreference(
+                                                    await SharedPreferences
+                                                        .getInstance())
+                                                .getUserAuthDetails();
+                                        debugPrint( "user id is ${user!.userId}  ${value.feed.owner.id}");
+                                        if (value.feed.owner.id != user.userId) {
                                           context.read<GetRoomBloc>().add(
                                                 GetRoomEvent.getRoom(
                                                     value.feed.owner.id),
-                                              ),
+                                              );
+                                        }
+                                      },
                                       child: getRoomState.maybeWhen(
                                           loading: () =>
                                               const CircularProgressIndicator(),

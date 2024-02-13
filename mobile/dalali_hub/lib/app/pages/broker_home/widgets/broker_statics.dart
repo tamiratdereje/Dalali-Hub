@@ -20,7 +20,7 @@ class BrokerStatics extends StatelessWidget {
     return GestureDetector(
       child: Container(
         width: 28.8.w,
-        height: 10.3.h,
+        height: 12.h,
         padding:
             EdgeInsets.symmetric(horizontal: 3.2.w, vertical: 1.1.h),
         decoration: BoxDecoration(

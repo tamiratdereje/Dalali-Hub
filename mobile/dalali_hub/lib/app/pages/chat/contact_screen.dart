@@ -96,27 +96,41 @@ class _ContactScreemState extends State<ContactScreem> {
     var name = isUser1
         ? "${room.room.user2!.firstName} ${room.room.user2!.sirName}"
         : "${room.room.user1!.firstName} ${room.room.user1!.sirName}";
-    var email = isUser1
-        ? room.room.user2!.email
-        : room.room.user1!.email;
-    var unRead = isUser1
-        ? room.room.unred1!
-        : room.room.unred2!;
-      
-    
-    var image = isUser1 
-          ? room.room.user2!.photos.isNotEmpty ? CachedNetworkImage(imageUrl: room.room.user2!.photos[0].secureUrl!) : Text(name[0].toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),)
-            : room.room.user1!.photos.isNotEmpty ? CachedNetworkImage(imageUrl: room.room.user1!.photos[0].secureUrl!) : Text(name[0].toUpperCase(), style: const TextStyle(fontSize: 20, color: Colors.white),);       
-    
+    var email = isUser1 ? room.room.user2!.email : room.room.user1!.email;
+    var unRead = isUser1 ? room.room.unred1! : room.room.unred2!;
+
+    var image = isUser1
+        ? room.room.user2!.photos.isNotEmpty
+            ? CachedNetworkImage(
+                width: 60,
+                height: 60,
+                imageUrl: room.room.user2!.photos[0].secureUrl!,
+                fit: BoxFit.cover,
+              )
+            : Text(
+                name[0].toUpperCase(),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+              )
+        : room.room.user1!.photos.isNotEmpty
+            ? CachedNetworkImage(
+                width: 60,
+                height: 60,
+                imageUrl: room.room.user1!.photos[0].secureUrl!,
+                fit: BoxFit.cover,
+              )
+            : Text(
+                name[0].toUpperCase(),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+              );
+
     return GestureDetector(
       onTap: () => context.push(AppRoutes.chatRoom, extra: {
         "room": room,
       }),
       child: ListTile(
-          leading:  CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.blueGrey,
-            child: image
+          leading: ClipOval(
+            child: CircleAvatar(
+                radius: 30, backgroundColor: Colors.blueGrey, child: image),
           ),
           title: Text(name),
           subtitle: Text(email!),
