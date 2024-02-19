@@ -271,8 +271,9 @@ export class AuthController {
         updatedUser.email,
         updatedUser.phoneNumber,
         updatedUser.gender,
-        updatedUser.region,
-        updatedUserPhotos
+        updatedUser.location,
+        updatedUserPhotos,
+        user.role
       );
       for (let updatedUserPhoto of updatedUser.photos) {
         await this._photoRepository
@@ -349,8 +350,9 @@ export class AuthController {
         updatedUser.email,
         updatedUser.phoneNumber,
         updatedUser.gender,
-        updatedUser.region,
-        updatedUserPhotos
+        updatedUser.location,
+        updatedUserPhotos,
+        user.role
       );
       for (let updatedUserPhoto of updatedUser.photos) {
         await this._photoRepository
@@ -389,8 +391,9 @@ export class AuthController {
         user.email,
         user.phoneNumber,
         user.gender,
-        user.region,
-        userPhotos
+        user.location,
+        userPhotos,
+        user.role
       );
       for (let userPhoto of user.photos) {
         await this._photoRepository.GetById(userPhoto).then((returnPhoto) => {
@@ -425,8 +428,9 @@ export class AuthController {
         user.email,
         user.phoneNumber,
         user.gender,
-        user.region,
-        userPhotos
+        user.location,
+        userPhotos,
+        user.role
       );
       for (let userPhoto of user.photos) {
         await this._photoRepository.GetById(userPhoto).then((returnPhoto) => {
@@ -450,6 +454,42 @@ export class AuthController {
     async (req: Request, res: Response, next: NextFunction) => {
       const keyStore = await getKeyStore();
       res.send(keyStore.toJSON());
-    });
-              
+    }
+  );
+  getAllUsers = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const users = await this._userRepository.GetAll();
+      const userDtos: UserResponseDTO[] = [];
+      for (let user of users) {
+        const userPhotos: PhotoResponseDTO[] = [];
+        for (let userPhoto of user.photos) {
+          await this._photoRepository.GetById(userPhoto).then((returnPhoto) => {
+            userPhotos.push(
+              new PhotoResponseDTO(
+                returnPhoto.publicId,
+                returnPhoto.secureUrl,
+                returnPhoto._id
+              )
+            );
+          });
+        }
+        const userDto = new UserResponseDTO(
+          user._id,
+          user.firstName,
+          user.middleName,
+          user.sirName,
+          user.email,
+          user.phoneNumber,
+          user.gender,
+          user.location,
+          userPhotos,
+          user.role
+        );
+        userDtos.push(userDto);
+      }
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(userDtos, "Users found"));
+    }
+  );
 }

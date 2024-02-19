@@ -40,7 +40,18 @@ feedRoute.get(
   feedController.getAllFeeds
 );
 feedRoute.get("/stat", protectRoute, feedController.getMyStatistics);
-feedRoute.get("/mine", protectRoute, advancedResults<RealStateEntity>(RealState, "photos"), feedController.getAllMyListing);
+feedRoute.get(
+  "/mine",
+  protectRoute,
+  advancedResults<RealStateEntity>(RealState, "photos"),
+  feedController.getAllMyListing
+);
 feedRoute.get("/:id", protectRoute, feedController.getProperty);
+feedRoute.get("/all/count", protectRoute, feedController.getPropertyCount);
+feedRoute.get(
+  "/all/category/count",
+  protectRoute,
+  feedController.getEachPropertyCount
+);
 
 export { feedRoute };

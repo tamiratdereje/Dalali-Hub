@@ -34,6 +34,8 @@ export class FeedResponseDTO {
     public condition: String | null,
     public owner: UserResponseDTO,
     public numberOfViews: Number,
-    public isFavorite: Boolean | null
+    public isFavorite: Boolean | null,
+    public status: String | null,
+    public boughtBy: UserResponseDTO | null,
   ) {}
 }

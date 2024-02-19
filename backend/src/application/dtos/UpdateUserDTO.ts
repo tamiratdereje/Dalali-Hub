@@ -3,11 +3,16 @@ import {
     IsEmail,
     IsEnum,
     IsNotEmpty,
+    IsNotEmptyObject,
+    IsObject,
     IsPhoneNumber,
     IsString,
     IsStrongPassword,
+    ValidateNested,
   } from "class-validator";
   import { Gender } from "domain/types/types";
+import { LocationDTO } from "./LocationDTO";
+import { Type } from "class-transformer";
   
   
   
@@ -45,7 +50,17 @@ import {
   
     @IsNotEmpty()
     @IsString()
-    region: string;   
+    region: string; 
+    
+    @IsNotEmpty()
+  @IsString()
+  role: string;
+
+  @IsObject()
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => LocationDTO)
+  location: LocationDTO;
   }
   
   

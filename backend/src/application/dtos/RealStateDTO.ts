@@ -89,4 +89,6 @@ export class RealStateDTO {
   @IsNotEmpty({ message: "number of views are required" })
   @IsNumber({}, { message: "number of views must be a Number" })
   numberOfViews: Number
+
+  status: String | null;
 }

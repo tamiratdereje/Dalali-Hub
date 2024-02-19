@@ -3,6 +3,7 @@ import { UserEntity } from "@entities/UserEntity";
 import { differenceInYears } from "date-fns";
 import { Gender } from "domain/types/types";
 import mongoose from "mongoose";
+import { LocationDTO } from "./LocationDTO";
 
 export class UserProfileDTO {
   constructor(props: UserEntity) {
@@ -17,7 +18,7 @@ export class UserProfileDTO {
   readonly email: string;
   readonly phoneNumber: string;
   readonly gender: Gender;
-  readonly region: string;
+  readonly location: LocationDTO;
   readonly photos: PhotoEntity[] | mongoose.Types.ObjectId[];
 
 }

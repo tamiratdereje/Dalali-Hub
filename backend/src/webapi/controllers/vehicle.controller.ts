@@ -109,8 +109,9 @@ export class VehicleController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -152,7 +153,9 @@ export class VehicleController {
         vehicle.isApproved,
         user,
         vehicle.numberOfViews,
-        favorite ? true : false
+        favorite ? true : false,
+        vehicle.status,
+        null
         // vehicle.insuranceDetails.policyNumber,
       );
       res
@@ -184,8 +187,9 @@ export class VehicleController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -228,7 +232,9 @@ export class VehicleController {
           curVehicle.isApproved,
           user,
           curVehicle.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          curVehicle.status,
+          null
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -328,8 +334,9 @@ export class VehicleController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -372,7 +379,9 @@ export class VehicleController {
         updatedVehicle.isApproved,
         user,
         updatedVehicle.numberOfViews,
-        favorite ? true : false
+        favorite ? true : false,
+        updatedVehicle.status,
+        null
         // updatedVehicle.insuranceDetails.policyNumber,
       );
 

@@ -50,4 +50,5 @@ authRoute.get(
   authController.getOtherUserProfile
 );
 authRoute.get("/jwks", authController.getJWKs);
+authRoute.get("/all", authController.getAllUsers);
 export { authRoute };

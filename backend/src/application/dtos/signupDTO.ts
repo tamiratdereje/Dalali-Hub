@@ -1,21 +1,25 @@
+import 'reflect-metadata';
+
 import {
-  IsDateString,
-  IsEmail,
-  IsEnum,
   IsNotEmpty,
-  IsPhoneNumber,
   IsString,
+  IsEnum,
+  ValidateNested,
+  IsNotEmptyObject,
+  IsObject,
+  IsPhoneNumber,
+  IsEmail,
   IsStrongPassword,
 } from "class-validator";
 import { Gender } from "domain/types/types";
-
+import { LocationDTO } from "./LocationDTO";
+import { Type } from "class-transformer";
 
 
 export class SignUpDTO {
   constructor(props: SignUpDTO) {
     Object.assign(this, props);
   }
-
 
   @IsNotEmpty()
   @IsString()
@@ -49,10 +53,24 @@ export class SignUpDTO {
 
   @IsNotEmpty()
   @IsString()
+  district: string;
+
+  @IsNotEmpty()
+  @IsString()
+  ward: string;
+
+  @IsNotEmpty()
+  @IsString()
   @IsStrongPassword()
   password: string;
 
-  
+  @IsNotEmpty()
+  @IsString()
+  role: string;
+
+  @IsObject()
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => LocationDTO)
+  location: LocationDTO;
 }
-
-

@@ -14,7 +14,7 @@ import { IUserRepository } from "@interfaces/repositories/IUserRepository";
 import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository";
 import { IViewRepository } from "@interfaces/repositories/IViewRepository";
 import { UserRepository } from "@repositories/UserRepository";
-import { id } from "date-fns/locale";
+import { id, vi } from "date-fns/locale";
 import { NextFunction, Request, Response } from "express";
 import e = require("express");
 import { StatusCodes } from "http-status-codes";
@@ -29,6 +29,49 @@ export class FeedController {
     private _favoriteRepository: IFavoriteRepository,
     private _viewRepository: IViewRepository
   ) {}
+  getPropertyCount = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      console.log(req.userId);
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      const realstate = await this.realstateRepository.GetAll();
+      const vehicle = await this.vehicleRepository.GetAll();
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(vehicle.length + realstate.length));
+    }
+  );
+  getEachPropertyCount = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      console.log(req.userId);
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      // map through the realstate and vehicle and get the count of each
+      // create map of string and number
+      // return the map
+
+      var eachItemsCount = new Map<string, number>();
+
+      const realstates = await this.realstateRepository.GetAll();
+      const vehicle = await this.vehicleRepository.GetAll();
+
+      for (let curRealstate of realstates) {
+        if (eachItemsCount.has(curRealstate.category)) {
+          eachItemsCount.set(
+            curRealstate.category,
+            eachItemsCount.get(curRealstate.category) + 1
+          );
+        } else {
+          eachItemsCount.set(curRealstate.category, 1);
+        }
+      }
+      eachItemsCount.set("Vehicle", vehicle.length);
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(eachItemsCount));
+    }
+  );
+
   getAllFeeds = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
       console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
@@ -50,8 +93,9 @@ export class FeedController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
@@ -105,7 +149,9 @@ export class FeedController {
           null,
           user,
           curRealstate.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          curRealstate.status,
+          null
         );
 
         for (let curPhoto of curRealstate.photos) {
@@ -136,8 +182,9 @@ export class FeedController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
@@ -191,7 +238,9 @@ export class FeedController {
           curVehicle.condition,
           user,
           curVehicle.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          curVehicle.status,
+          null
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -254,8 +303,9 @@ export class FeedController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
@@ -309,7 +359,9 @@ export class FeedController {
           null,
           user,
           realstate.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          realstate.status,
+          null
         );
 
         for (let curPhoto of realstate.photos) {
@@ -348,8 +400,9 @@ export class FeedController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
@@ -403,7 +456,9 @@ export class FeedController {
           vehicle.condition,
           user,
           vehicle.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          vehicle.status,
+          null
         );
         for (let curPhoto of vehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -480,12 +535,17 @@ export class FeedController {
       totalListing = realstates.length + vehicles.length;
       numberOfSuccedListing =
         realstates.filter((e) => e.isApproved == true).length +
-        vehicles.filter((e) => e.isApproved  == true).length;
+        vehicles.filter((e) => e.isApproved == true).length;
       const myFavorites = await this._favoriteRepository.GetMyFavorites(
         Object(req.userId)
       );
       numberOfFavorite = myFavorites.length;
-      console.log(totalNumOfView, totalListing, numberOfSuccedListing, numberOfFavorite)
+      console.log(
+        totalNumOfView,
+        totalListing,
+        numberOfSuccedListing,
+        numberOfFavorite
+      );
 
       res.status(StatusCodes.OK).json(
         new JSendResponse().success({
@@ -505,7 +565,7 @@ export class FeedController {
         { ...JSON.parse(req.queryString), owner: userId },
         req.populate
       );
-      console.log( { ...JSON.parse(req.queryString), owner: userId },)
+      console.log({ ...JSON.parse(req.queryString), owner: userId });
 
       const vehicles = await this.vehicleRepository.GetByFilter(
         { ...JSON.parse(req.queryString), owner: userId },
@@ -527,9 +587,38 @@ export class FeedController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
+        const buyer = await this._userRepository.GetById(curRealstate.boughtBy);
+        const buyerPhotos: PhotoResponseDTO[] = [];
+        const buyerUser = new UserResponseDTO(
+          buyer._id,
+          buyer.firstName,
+          buyer.middleName,
+          buyer.sirName,
+          buyer.email,
+          buyer.phoneNumber,
+          buyer.gender,
+          buyer.location,
+          buyerPhotos,
+          buyer.role
+        );
+        for (let buyerPhoto of buyer.photos) {
+          await this._photoRepository
+            .GetById(buyerPhoto)
+            .then((returnPhoto) => {
+              buyerPhotos.push(
+                new PhotoResponseDTO(
+                  returnPhoto.publicId,
+                  returnPhoto.secureUrl,
+                  returnPhoto._id
+                )
+              );
+            });
+        }
+
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
             .GetById(ownerPhoto)
@@ -582,7 +671,9 @@ export class FeedController {
           null,
           user,
           curRealstate.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          curRealstate.status,
+          buyerUser
         );
 
         for (let curPhoto of curRealstate.photos) {
@@ -612,14 +703,42 @@ export class FeedController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
             .GetById(ownerPhoto)
             .then((returnPhoto) => {
               ownerPhotos.push(
+                new PhotoResponseDTO(
+                  returnPhoto.publicId,
+                  returnPhoto.secureUrl,
+                  returnPhoto._id
+                )
+              );
+            });
+        }
+        const buyer = await this._userRepository.GetById(curVehicle.boughtBy);
+        const buyerPhotos: PhotoResponseDTO[] = [];
+        const buyerUser = new UserResponseDTO(
+          buyer._id,
+          buyer.firstName,
+          buyer.middleName,
+          buyer.sirName,
+          buyer.email,
+          buyer.phoneNumber,
+          buyer.gender,
+          buyer.location,
+          buyerPhotos,
+          buyer.role
+        );
+        for (let buyerPhoto of buyer.photos) {
+          await this._photoRepository
+            .GetById(buyerPhoto)
+            .then((returnPhoto) => {
+              buyerPhotos.push(
                 new PhotoResponseDTO(
                   returnPhoto.publicId,
                   returnPhoto.secureUrl,
@@ -667,7 +786,9 @@ export class FeedController {
           curVehicle.condition,
           user,
           curVehicle.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          curVehicle.status,
+          buyerUser
         );
         for (let curPhoto of curVehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {

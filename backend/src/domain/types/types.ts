@@ -21,3 +21,10 @@ export enum RealStateCategory {
   OFFICE = "Office",
   LAND = "Land",
 }
+
+
+export enum Status {
+  AVAILABLE = "Available",
+  OCCUPIED = "Occupied",
+  UNAVAILABLE = "Unavailable",
+}

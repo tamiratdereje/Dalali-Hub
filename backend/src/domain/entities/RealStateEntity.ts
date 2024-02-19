@@ -1,4 +1,4 @@
-import { RealStateCategory } from "domain/types/types";
+import { RealStateCategory, Status } from "domain/types/types";
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
 
@@ -14,16 +14,18 @@ export interface RealStateEntity extends IBaseEntity {
   beds: Number | null;
   baths: Number | null;
   kitchens: Number | null;
-  seats: Number | null,
+  seats: Number | null;
 
   sizeWidth: Number;
   sizeHeight: Number;
   sizeUnit: String;
-  location: {region: String, district: String, ward: String};
+  location: { region: String; district: String; ward: String };
   otherFeatures: String[];
   description: String;
   isApproved: Boolean;
   numberOfViews: Number;
+  status: Status | null;
+  boughtBy: mongoose.Types.ObjectId | null;
 }
 
 let realStateSchema = new Schema<RealStateEntity>(
@@ -44,7 +46,7 @@ let realStateSchema = new Schema<RealStateEntity>(
     baths: { type: Number, required: false, default: null },
     kitchens: { type: Number, required: false, default: null },
     seats: { type: Number, required: false, default: null },
-    numberOfViews : { type: Number, required: false, default: 0 },
+    numberOfViews: { type: Number, required: false, default: 0 },
 
     sizeWidth: { type: Number, required: [true, "sizeWidth is required"] },
     sizeHeight: { type: Number, required: [true, "sizeHeight is required"] },
@@ -57,8 +59,13 @@ let realStateSchema = new Schema<RealStateEntity>(
     otherFeatures: [{ type: String }],
     description: { type: String, required: [true, "Description is required"] },
     isApproved: { type: Boolean, default: true },
+    status: { type: String, enum: Status, default: Status.AVAILABLE },
+    boughtBy: { type: Schema.Types.ObjectId, ref: "User", required: false },
   },
   { timestamps: true }
 );
 
-export const RealState = mongoose.model<RealStateEntity>("RealState", realStateSchema);
+export const RealState = mongoose.model<RealStateEntity>(
+  "RealState",
+  realStateSchema
+);

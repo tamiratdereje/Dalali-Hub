@@ -1,5 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
 import { IBaseEntity } from "./BaseEntity";
+import { Status } from "domain/types/types";
 
 export interface VehicleEntity extends IBaseEntity {
   _id: Types.ObjectId;
@@ -24,6 +25,9 @@ export interface VehicleEntity extends IBaseEntity {
   //     policyNumber: String;
   //     expirationDate: Date;
   //   };
+  status: Status | null;
+  boughtBy: mongoose.Types.ObjectId | null;
+
 }
 
 const vehicleSchema = new Schema<VehicleEntity>(
@@ -58,6 +62,9 @@ const vehicleSchema = new Schema<VehicleEntity>(
     //   policyNumber: { type: String, required: [true, "Policy Number is required"] },
     //   expirationDate: { type: Date, required: [true, "Expiration date is required"] },
     // },
+    status: { type: String, enum: Status, default: Status.AVAILABLE },
+    boughtBy: { type: Schema.Types.ObjectId, ref: "User", required: false },
+
   },
   { timestamps: true }
 );

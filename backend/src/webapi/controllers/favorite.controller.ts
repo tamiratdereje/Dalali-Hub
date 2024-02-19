@@ -73,8 +73,9 @@ export class FavoriteController {
         owner.email,
         owner.phoneNumber,
         owner.gender,
-        owner.region,
-        ownerPhotos
+        owner.location,
+        ownerPhotos,
+        owner.role
       );
       for (let ownerPhoto of owner.photos) {
         await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -124,7 +125,9 @@ export class FavoriteController {
           null,
           user,
           realState.numberOfViews,
-          true
+          true,
+          realState.status,
+          null
         );
         for (let curPhoto of realState.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -178,7 +181,9 @@ export class FavoriteController {
           vehicle.condition,
           user,
           vehicle.numberOfViews,
-          true
+          true,
+          vehicle.status,
+          null
         );
         for (let curPhoto of vehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -230,8 +235,9 @@ export class FavoriteController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
@@ -283,7 +289,9 @@ export class FavoriteController {
             null,
             user,
             realState.numberOfViews,
-            true
+            true,
+            realState.status,
+            null
           );
           for (let curPhoto of realState.photos) {
             await this._photoRepository
@@ -341,7 +349,9 @@ export class FavoriteController {
             vehicle.condition,
             user,
             vehicle.numberOfViews,
-            true
+            true,
+            vehicle.status,
+            null
           );
           for (let curPhoto of vehicle.photos) {
             await this._photoRepository
@@ -405,8 +415,9 @@ export class FavoriteController {
         owner.email,
         owner.phoneNumber,
         owner.gender,
-        owner.region,
-        ownerPhotos
+        owner.location,
+        ownerPhotos,
+        owner.role
       );
       for (let ownerPhoto of owner.photos) {
         await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -456,7 +467,9 @@ export class FavoriteController {
           null,
           user,
           realState.numberOfViews,
-          true
+          true,
+          realState.status,
+          null
         );
         for (let curPhoto of realState.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -510,7 +523,9 @@ export class FavoriteController {
           vehicle.condition,
           user,
           vehicle.numberOfViews,
-          true
+          true,
+          vehicle.status,
+          null
         );
         for (let curPhoto of vehicle.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {

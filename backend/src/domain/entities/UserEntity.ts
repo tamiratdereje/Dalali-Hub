@@ -16,6 +16,8 @@ export interface UserEntity extends IBaseEntity {
   password: string;
   isVerified: boolean;
   role: Role;
+  location: {region: String, district: String, ward: String};
+
 }
 
 let userSchema = new Schema<UserEntity>(
@@ -42,7 +44,11 @@ let userSchema = new Schema<UserEntity>(
     },
     role: { type: String, enum: Role, default: Role.Customer },
     password: { type: String, required: [true, "Password is required"] },
-    region: { type: String, required: [true, "Region is required"] },
+    location: {
+      region: { type: String, required: [true, "Region is required"] },
+      district: { type: String, required: [true, "District is required"] },
+      ward: { type: String, required: [true, "Ward is required"] },
+    },
     isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }

@@ -113,8 +113,9 @@ export class RealStateController {
         owner.email,
         owner.phoneNumber,
         owner.gender,
-        owner.region,
-        ownerPhotos
+        owner.location,
+        ownerPhotos,
+        owner.role
       );
       for (let ownerPhoto of owner.photos) {
         await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -152,7 +153,9 @@ export class RealStateController {
         realState.kitchens,
         user,
         realState.numberOfViews,
-        favorite ? true : false
+        favorite ? true : false,
+        realState.status,
+        null
       );
       res
         .status(StatusCodes.OK)
@@ -179,8 +182,9 @@ export class RealStateController {
           owner.email,
           owner.phoneNumber,
           owner.gender,
-          owner.region,
-          ownerPhotos
+          owner.location,
+          ownerPhotos,
+          owner.role
         );
         for (let ownerPhoto of owner.photos) {
           await this._photoRepository
@@ -227,7 +231,9 @@ export class RealStateController {
           curRealstate.kitchens,
           user,
           curRealstate.numberOfViews,
-          favorite ? true : false
+          favorite ? true : false,
+          curRealstate.status,
+          null
         );
         for (let curPhoto of curRealstate.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -329,8 +335,9 @@ export class RealStateController {
         owner.email,
         owner.phoneNumber,
         owner.gender,
-        owner.region,
-        ownerPhotos
+        owner.location,
+        ownerPhotos,
+        owner.role
       );
       for (let ownerPhoto of owner.photos) {
         await this._photoRepository.GetById(ownerPhoto).then((returnPhoto) => {
@@ -373,7 +380,10 @@ export class RealStateController {
         updatedRealState.kitchens,
         user,
         updatedRealState.numberOfViews,
-        favorite ? true : false
+        favorite ? true : false,
+        updatedRealState.status,
+        null
+
       );
 
       res

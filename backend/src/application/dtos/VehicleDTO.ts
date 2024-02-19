@@ -11,6 +11,7 @@ import {
 } from "class-validator";
 import { Transform, TransformFnParams, Type } from "class-transformer";
 import { LocationDTO } from './LocationDTO';
+import { stat } from 'fs';
 
 export class VehicleDTO {
   constructor(props: VehicleDTO) {
@@ -79,5 +80,7 @@ export class VehicleDTO {
   @IsNotEmpty({ message: "number of views are required" })
   @IsNumber({}, { message: "number of views must be a Number" })
   numberOfViews: Number
+
+  status: String | null;
 
 }
