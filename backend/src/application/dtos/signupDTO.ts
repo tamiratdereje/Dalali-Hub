@@ -47,17 +47,17 @@ export class SignUpDTO {
   @IsEnum(Gender)
   gender: Gender;
 
-  @IsNotEmpty()
-  @IsString()
-  region: string;
+  // @IsNotEmpty()
+  // @IsString()
+  // region: string;
 
-  @IsNotEmpty()
-  @IsString()
-  district: string;
+  // @IsNotEmpty()
+  // @IsString()
+  // district: string;
 
-  @IsNotEmpty()
-  @IsString()
-  ward: string;
+  // @IsNotEmpty()
+  // @IsString()
+  // ward: string;
 
   @IsNotEmpty()
   @IsString()

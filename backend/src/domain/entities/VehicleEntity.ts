@@ -54,7 +54,7 @@ const vehicleSchema = new Schema<VehicleEntity>(
     },
     condition: { type: String, required: [true, "Condition is required"] },
     category: { type: String, default: "Vehicle" },
-    owner: { type: Schema.Types.ObjectId, ref: "User" },
+    owner: { type: Schema.Types.ObjectId, ref: "User", },
     isApproved: { type: Boolean, default: true },
     numberOfViews : { type: Number, required: false, default: 0 },
 

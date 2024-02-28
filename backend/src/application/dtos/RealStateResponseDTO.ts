@@ -27,6 +27,7 @@ export class RealStateResponseDTO {
         public isFavorite: Boolean |null,
         public status: String | null,
          public boughtBy: UserResponseDTO | null,
+         public createdAt: Date | null
 
 
      ) {}

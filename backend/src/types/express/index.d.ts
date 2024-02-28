@@ -6,6 +6,7 @@ declare namespace Express {
     page?: number;
     limit?: number;
     customQuery: {};
+    sort: string;
   }
   interface ReqQuery {
     filterParameter?: {};

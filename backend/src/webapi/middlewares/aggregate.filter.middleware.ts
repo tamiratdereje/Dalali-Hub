@@ -9,6 +9,8 @@ export const advancedResults = <T>(model: Model<T>, populate: string) =>
 
     let reqQuery = {};
     reqQuery = { ...req.query };
+    let sortParams = req.query.sort ? req.query.sort : "-createdAt";
+    console.log("sortParams \n\n\n\n\n\n\n\\n\n", sortParams);
     const filterParameter = req.query.filterParameter;
     console.log("reqQuery \n\n\n\n\n\n\n\\n\n");
     console.log(reqQuery);
@@ -21,7 +23,6 @@ export const advancedResults = <T>(model: Model<T>, populate: string) =>
     delete (reqQuery as any)["filterParameter"];
 
     reqQuery = { ...reqQuery, ...(filterParameter as any) };
-    
 
     console.log("reqQuery After reset \n\n\n\n  \n\n\n\\n\n", reqQuery);
     // Loop to remove from reqQuery
@@ -45,6 +46,7 @@ export const advancedResults = <T>(model: Model<T>, populate: string) =>
     req.populate = populate;
     req.page = page;
     req.limit = limit;
+    req.sort = sortParams as string;
 
     next();
   });

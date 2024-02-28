@@ -53,5 +53,10 @@ feedRoute.get(
   protectRoute,
   feedController.getEachPropertyCount
 );
+feedRoute.get(
+  "/all/admin",
+  protectRoute,
+  feedController.filterPropertiesByDate
+);
 
 export { feedRoute };

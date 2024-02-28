@@ -15,6 +15,7 @@ import { IVehicleRepository } from "@interfaces/repositories/IVehicleRepository"
 import { IViewRepository } from "@interfaces/repositories/IViewRepository";
 import { UserRepository } from "@repositories/UserRepository";
 import { id, vi } from "date-fns/locale";
+import { RealStateCategory, Status } from "domain/types/types";
 import { NextFunction, Request, Response } from "express";
 import e = require("express");
 import { StatusCodes } from "http-status-codes";
@@ -518,6 +519,7 @@ export class FeedController {
       console.log(userId);
       const realstates = await this.realstateRepository.GetByFilter(
         { owner: userId },
+        req.sort,
         req.populate
       );
       const vehicles = await this.vehicleRepository.GetByFilter(
@@ -563,6 +565,7 @@ export class FeedController {
       const userId = req.userId;
       const realstates = await this.realstateRepository.GetByFilter(
         { ...JSON.parse(req.queryString), owner: userId },
+        req.sort,
         req.populate
       );
       console.log({ ...JSON.parse(req.queryString), owner: userId });
@@ -805,6 +808,104 @@ export class FeedController {
       }
 
       res.status(StatusCodes.OK).json(new JSendResponse().success(feeds));
+    }
+  );
+
+  //   {
+  //     category(7): [
+  //        jan : [5,8,0]
+  //        feb:  [status]
+  //        mar:  [status]
+  //     ]
+  //  }
+  filterPropertiesByDate = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      console.log(req.userId);
+      console.log("User ID \n\n\n\n\n\n\n\n\n\n\n\n");
+      const feeds: FeedResponseDTO[] = [];
+
+      const realstates = await this.realstateRepository
+        .GetAll
+        // JSON.parse(req.queryString),
+        // req.populate
+        ();
+
+      // Initialize category map
+      const categoryMap: { [key in string]: { [key: string]: number[] } } = {
+        [RealStateCategory.HOUSEFORRENT]: {},
+        [RealStateCategory.HOUSEFORSELL]: {},
+        [RealStateCategory.SHORTSTAYAPRTMENT]: {},
+        [RealStateCategory.HALL]: {},
+        [RealStateCategory.OFFICE]: {},
+        [RealStateCategory.LAND]: {},
+      };
+
+      console.log("monthIndex", categoryMap);
+
+      // Initialize months array
+      const months: string[] = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      console.log("anoth montindex", months);
+
+      // Populate category map with initial arrays
+      for (let category in categoryMap) {
+        for (let month of months) {
+          categoryMap[category][month] = [0, 0, 0];
+        }
+      }
+
+      console.log("lenghth of categories", realstates.length);
+      // Populate category map and eachItemsByMonth
+      for (let curRealstate of realstates) {
+        const monthIndex = curRealstate.createdAt.getMonth();
+        console.log(
+          monthIndex,
+          "monthIndex",
+          curRealstate.status,
+          "status",
+          curRealstate.createdAt,
+          "createdAt",
+          curRealstate.createdAt.getDate(),
+          "date",
+          curRealstate.createdAt.getMonth(),
+          "month",
+          curRealstate.createdAt.getFullYear(),
+          "year"
+        );
+        const month = months[monthIndex];
+        const category = curRealstate.category;
+        console.log(
+          curRealstate.status,
+          "status",
+          curRealstate.category,
+          "category",
+          month,
+          "month"
+        );
+        const statusIndex = Object.values(Status).indexOf(curRealstate.status);
+        if (statusIndex !== -1) {
+          categoryMap[category][month][statusIndex]++;
+        }
+      }
+
+      // Log or use categoryMap as needed
+      console.log(categoryMap);
+
+      // Respond with success
+      res.status(StatusCodes.OK).json(new JSendResponse().success(categoryMap));
     }
   );
 }

@@ -155,7 +155,8 @@ export class RealStateController {
         realState.numberOfViews,
         favorite ? true : false,
         realState.status,
-        null
+        null,
+        realState.createdAt
       );
       res
         .status(StatusCodes.OK)
@@ -165,8 +166,10 @@ export class RealStateController {
 
   getAllRealState = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log(req.queryString, req.sort, "Teshome");
       const realstate = await this.realStateRepository.GetByFilter(
         JSON.parse(req.queryString),
+        req.sort,
         req.populate
       );
 
@@ -233,7 +236,8 @@ export class RealStateController {
           curRealstate.numberOfViews,
           favorite ? true : false,
           curRealstate.status,
-          null
+          null,
+          curRealstate.createdAt
         );
         for (let curPhoto of curRealstate.photos) {
           await this._photoRepository.GetById(curPhoto).then((returnPhoto) => {
@@ -259,6 +263,7 @@ export class RealStateController {
       const filter = req.body;
       const realStates = await this.realStateRepository.GetByFilter(
         filter,
+        req.sort,
         req.populate
       );
       res.status(StatusCodes.OK).json(new JSendResponse().success(realStates));
@@ -382,8 +387,8 @@ export class RealStateController {
         updatedRealState.numberOfViews,
         favorite ? true : false,
         updatedRealState.status,
-        null
-
+        null,
+        updatedRealState.createdAt
       );
 
       res
@@ -448,7 +453,6 @@ export class RealStateController {
 
         await Promise.all(uploadedImages);
 
-
         for (let uploadedImage of uploadedImages) {
           await uploadedImage.then(async (image) => {
             const photo = new Photo(image);
@@ -462,7 +466,9 @@ export class RealStateController {
         }
       }
       await this.realStateRepository.Update(Object(realStateId), realState);
-      res.status(StatusCodes.OK).json(new JSendResponse().success(photoResponseDTOs));
+      res
+        .status(StatusCodes.OK)
+        .json(new JSendResponse().success(photoResponseDTOs));
     }
   );
 

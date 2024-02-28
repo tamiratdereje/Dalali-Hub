@@ -26,8 +26,8 @@ export interface RealStateEntity extends IBaseEntity {
   numberOfViews: Number;
   status: Status | null;
   boughtBy: mongoose.Types.ObjectId | null;
+  createdAt: Date | null;
 }
-
 let realStateSchema = new Schema<RealStateEntity>(
   {
     _id: { type: Schema.Types.ObjectId, auto: true },
@@ -61,6 +61,7 @@ let realStateSchema = new Schema<RealStateEntity>(
     isApproved: { type: Boolean, default: true },
     status: { type: String, enum: Status, default: Status.AVAILABLE },
     boughtBy: { type: Schema.Types.ObjectId, ref: "User", required: false },
+    // createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
