@@ -13,6 +13,7 @@ import { OtpModel } from "@entities/OtpEntity";
 import { Token } from "@entities/TokenEntity";
 import { TokenRepository } from "@repositories/TokenRepository";
 import { protectRoute } from "webapi/middlewares/auth.handler.middleware";
+import { OneSignalService } from "infrastructure/service/OneSignalService";
 
 const authRoute = Router();
 const mailService = new MailService();
@@ -22,13 +23,15 @@ const otpRepository = new OtpRepository(OtpModel);
 const photoRepository = new PhotoRepository(Photo);
 const tokenRepository = new TokenRepository(Token);
 const otpService = new OtpService(mailService, otpRepository, userRepository);
+const oneSignalService = new OneSignalService();
 
 const authController = new AuthController(
   userRepository,
   photoRepository,
   otpService,
   fileUploadService,
-  tokenRepository
+  tokenRepository,
+  oneSignalService
 );
 
 authRoute.post("/request-otp", authController.requestOtp);
@@ -51,4 +54,5 @@ authRoute.get(
 );
 authRoute.get("/jwks", authController.getJWKs);
 authRoute.get("/all", authController.getAllUsers);
+authRoute.get("/check-one-signal", authController.checkOneSignal);
 export { authRoute };

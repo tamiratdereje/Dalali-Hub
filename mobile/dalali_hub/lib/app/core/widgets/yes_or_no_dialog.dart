@@ -46,7 +46,7 @@ Future<String?> showYesOrNoDialog({
                     ),
                     child: !isUrl
                         ? Image.file(
-                            File(image!),
+                            File(image),
                             fit: BoxFit.cover,
                           )
                         : Image.network(

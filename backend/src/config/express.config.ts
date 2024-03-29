@@ -11,6 +11,9 @@ import { realStateRoute } from "webapi/routes/realState.route";
 import { favoriteRoute } from "webapi/routes/favorite.route";
 import { create } from "domain";
 import { createKeyStore } from "./create_key_store";
+import * as OneSignal from "@onesignal/node-onesignal";
+import assert = require("assert");
+import fetch from "node-fetch";
 
 export class ExpressConfig {
   private app: Express;
@@ -42,7 +45,7 @@ export class ExpressConfig {
 
       this.app.use(errorHandler);
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   }
 }

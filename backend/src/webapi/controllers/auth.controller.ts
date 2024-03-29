@@ -27,6 +27,7 @@ import { UserResponseDTO } from "@dtos/userResponseDTO";
 import * as jose from "node-jose";
 import * as fs from "fs";
 import { getKeyStore } from "config/create_key_store";
+import { IOneSignalService } from "@interfaces/services/IOneSignalService";
 
 export class AuthController {
   constructor(
@@ -34,8 +35,15 @@ export class AuthController {
     private _photoRepository: IPhotoRepository,
     private _otpService: IOtpService,
     private _fileUploadService: IFileUploadService,
-    private _tokenRepository: ITokenRepository
+    private _tokenRepository: ITokenRepository,
+    private _oneSignalService: IOneSignalService
   ) {}
+  checkOneSignal = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      await this._oneSignalService.createNotification();
+      res.status(StatusCodes.OK).json(new JSendResponse().success({}));
+    }
+  );
 
   requestOtp = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {

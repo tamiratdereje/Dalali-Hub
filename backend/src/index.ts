@@ -9,11 +9,11 @@ import { createKeyStore } from "config/create_key_store";
 
 
 const main = async () => {
-  const isDbInitialized = await new DBConfig().init();
-  if (!isDbInitialized) {
-    console.error("Database connection failed");
-    return;
-  }
+  // const isDbInitialized = await new DBConfig().init();
+  // if (!isDbInitialized) {
+  //   console.error("Database connection failed");
+  //   return;
+  // }
   const app = express();
   new ExpressConfig(app).init();
   const httpServer = http.createServer(app);
